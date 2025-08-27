@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/linked/list.hh
+ * @file        pokemon/latios/internal/linked/list.hh
  * @brief
  * @details
  *
@@ -7,15 +7,15 @@
  * @since       Aug 27, 2025
  */
 
-#ifndef   __POKEMONISM_POKEMON_LATIOS_LINKED_LIST__HH__
-#define   __POKEMONISM_POKEMON_LATIOS_LINKED_LIST__HH__
+#ifndef   __POKEMONISM_POKEMON_LATIOS_INTERNAL_LINKED_LIST__HH__
+#define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_LINKED_LIST__HH__
 
 #include <pokemon/log.hh>
 #include <pokemon/allocator.hh>
 
 #include <pokemon/latios/linked.hh>
 
-namespace pokemon { namespace latios { namespace linked {
+namespace pokemon { namespace latios { namespace internal { namespace linked {
 
     // ReSharper disable once CppClassCanBeFinal
     class list {
@@ -141,6 +141,6 @@ namespace pokemon { namespace latios { namespace linked {
         while ((node = list::pop<container_type, node_type>(container)) != nullptr) allocator::del<node_type>(destructor(node));
     }
 
-} } }
+} } } }
 
-#endif // __POKEMONISM_POKEMON_LATIOS_LINKED_LIST__HH__
+#endif // __POKEMONISM_POKEMON_LATIOS_INTERNAL_LINKED_LIST__HH__

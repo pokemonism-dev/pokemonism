@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/linked/list.hh
+ * @file        pokemon/latios/internal/linked/list.cc
  * @brief
  * @details
  *
