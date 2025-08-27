@@ -39,6 +39,18 @@ namespace pokemon {
             }
             typedef char *                          string;
 
+            union primitive {
+                int8   i8;
+                int16  i16;
+                int32  i32;
+                int64  i64;
+                uint8  u8;
+                uint16 u16;
+                uint32 u32;
+                uint64 u64;
+                void * ptr;
+            };
+
             template <typename description> using   function = std::function<description>;
             using                                   exception = std::exception;
             using                                   ostream = std::ostream;

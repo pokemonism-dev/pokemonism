@@ -10,6 +10,8 @@
 #ifndef   __POKEMONISM_POKEMON_LATIOS_COMMAND__HH__
 #define   __POKEMONISM_POKEMON_LATIOS_COMMAND__HH__
 
+#include <pokemon/primitivable.hh>
+
 #include <pokemon/latios/object.hh>
 
 #include <pokemon/latios/subscription.hh>
@@ -25,7 +27,8 @@ namespace pokemon { namespace latios {
                 public:     subscription & operator=(const subscription & o) = delete;
                 public:     subscription & operator=(subscription && o) noexcept = delete;
                 };
-    public:     virtual int64 operator()(void) = 0;
+    public:     typedef int64 (*on)(command *, uint32, primitivable::object *);
+    public:     virtual primitivable::object * operator()(void) = 0;
     public:     inline command(void) {}
     public:     inline ~command(void) override {}
     public:     command(const command & o) = delete;

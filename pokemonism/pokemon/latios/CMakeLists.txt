@@ -36,6 +36,8 @@ set(LATIOS_IMPLEMENT_SOURCE
         external/engine.hh
         external/command.cc
         external/command.hh
+        handler.cc
+        handler.hh
         command.cc
         command.hh)
 

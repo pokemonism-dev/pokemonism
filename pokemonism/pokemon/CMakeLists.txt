@@ -28,6 +28,8 @@ set(POKEMON_IMPLEMENT_SOURCE
         log.hh
         memorizer.template.unsigned.char.hh
         memorizer.template.unsigned.char.one.hh
+        primitivable.hh
+        primitivable.cc
 )
 
 add_library(pokemonism-dev              ${POKEMON_ROOT_HEADER}

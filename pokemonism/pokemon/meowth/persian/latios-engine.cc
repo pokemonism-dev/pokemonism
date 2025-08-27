@@ -13,9 +13,11 @@
 using namespace pokemon;
 
 namespace pokemon { namespace meowth { namespace persian {
-
+    /**
+     * 사용자에게 중간 단계 ...
+     */
     class command : public latios::command {
-    public:     int64 operator()(void) override { return random(); }
+    public:     primitivable::object * operator()(void) override { return primitivable::object::gen(1004); }
     public:     inline command(void) {}
     public:     inline ~command(void) override {}
     public:     command(const command & o) = delete;
@@ -23,6 +25,7 @@ namespace pokemon { namespace meowth { namespace persian {
     public:     command & operator=(const command & o) = delete;
     public:     command & operator=(command && o) noexcept = delete;
     };
+
 } } }
 
 using namespace pokemon::meowth::persian;
@@ -34,9 +37,9 @@ int main(int argc, char ** argv) {
 
     command o;
 
-    printf("%ld\n", o());
+    printf("%ld\n", primitivable::object::to::int64(o()));
 
-    latios::engine.reg(addressof(o));
+    // latios::engine.reg(addressof(o));
 
     return 0;
 }

@@ -27,7 +27,7 @@ namespace pokemon { namespace latios {
 
         class engine {
         public:     virtual const char * tag(void) const = 0;
-        public:     virtual command::subscription * reg(command * command) = 0;
+        // public:     virtual command::subscription * reg(command * command, uint64 type, external::command::) = 0;
         protected:  engine(void) {}
         public:     virtual ~engine(void) {}
         public:     engine(engine & o) = delete;

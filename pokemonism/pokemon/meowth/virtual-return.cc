@@ -9,7 +9,7 @@
 
 #include <pokemon/meowth.hh>
 
-#include <pokemon/primitive.hh>
+#include <pokemon/primitivable.hh>
 
 #include <variant>
 

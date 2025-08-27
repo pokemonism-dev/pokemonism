@@ -25,6 +25,8 @@ namespace pokemon { namespace latios { namespace external { namespace command {
     public:     subscription & operator=(subscription && o) noexcept = delete;
     };
 
+    typedef int64 (*handler)(latios::command *, uint32, int64);
+
 } } } }
 
 #endif // __POKEMONISM_POKEMON_LATIOS_EXTERNAL_COMMAND__HH__

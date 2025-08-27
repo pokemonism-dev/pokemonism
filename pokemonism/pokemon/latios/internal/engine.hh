@@ -18,7 +18,7 @@ namespace pokemon { namespace latios { namespace internal {
     class engine : public external::engine {
     public:     static engine & get(void);
     public:     const char * tag(void) const override { return "internal"; }
-    public:     command::subscription * reg(command * command) override;
+    // public:     command::subscription * reg(command * command) override;
     protected:  engine(void);
     public:     ~engine(void) override;
     public:     engine(engine & o) = delete;

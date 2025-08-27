@@ -26,9 +26,9 @@ namespace pokemon { namespace latios { namespace internal {
     }
 
     /** METHOD: EXTERNAL::ENGINE */
-    command::subscription * engine::reg(command * command) {
-        return nullptr;
-    }
+    // command::subscription * engine::reg(command * command) {
+    //     return nullptr;
+    // }
 
 
 } } }

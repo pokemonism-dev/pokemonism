@@ -16,3 +16,7 @@ target_include_directories(meowth-variant   PRIVATE ../)
 add_executable(meowth-sizeof-function       sizeof-function.cc)
 
 add_executable(meowth-lamda-parameter       lamda-parameter.cc)
+
+add_executable(meowth-virtual-return        virtual-return.cc)
+
+add_executable(meowth-primitivable-object   primitivable-object.cc)
