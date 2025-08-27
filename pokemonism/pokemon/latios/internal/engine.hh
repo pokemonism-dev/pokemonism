@@ -13,12 +13,30 @@
 #include <pokemon/latios/command.hh>
 #include <pokemon/latios/external/engine.hh>
 
+#include <pokemon/latios/internal/queue.hh>
+#include <pokemon/latios/internal/command/subscription.hh>
+
 namespace pokemon { namespace latios { namespace internal {
 
+    namespace command {
+        class generator;
+    }
+
     class engine : public external::engine {
-    public:     static engine & get(void);
+    /** PROTECTED MEMBER VARIABLE */
+    protected:  queue * queue;
+    protected:  struct {
+                    command::generator * command;
+                } generator;
+    /** OVERRIDE METHOD IN EXTERNAL::ENGINE */
     public:     const char * tag(void) const override { return "internal"; }
-    protected:  engine(void);
+    public:     command::subscription * reg(latios::command * command, latios::command::event::handler (*on)[latios::command::event::max]) override;
+    public:     command::subscription * mod(latios::command * command, uint32 type, latios::command::event::handler on) override;
+    public:     void cancel(void (*func)(external::engine &)) override;
+    public:     engine & on(void) override;
+    public:     int run(void) override;
+    /** DEFAULT CLASS METHOD */
+    public:     engine(void);
     public:     ~engine(void) override;
     public:     engine(engine & o) = delete;
     public:     engine(engine && o) noexcept = delete;

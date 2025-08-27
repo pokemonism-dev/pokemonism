@@ -13,13 +13,13 @@
 #include <pokemonism.hh>
 
 #include <pokemon/latios/internal/linked/list.hh>
-#include <pokemon/latios/internal/pure/event.hh>
+#include <pokemon/latios/external/event.hh>
 #include <pokemon/latios/exception.hh>
 
 namespace pokemon { namespace latios { namespace internal {
 
     template <typename link_type>
-    class event : protected virtual pure::event {
+    class event : protected virtual external::event {
     /** PUBLIC STATIC TYPE DEFINITION */
     public:     typedef link_type   node;
     /** PUBLIC STATIC METHOD */
@@ -65,7 +65,7 @@ namespace pokemon { namespace latios { namespace internal {
 
     template <typename node>
      event<node> * event<node>::rem(event<node> * o, node * link) {
-        if (o != nullptr) delete o;
+        if (o != nullptr) delete o; // NOLINT(*-delete-null-pointer)
 
         return nullptr;
     }
@@ -79,7 +79,7 @@ namespace pokemon { namespace latios { namespace internal {
     /** CUSTOM CONSTRUCTOR */
 
     template <typename node>
-    event<node>::event(const uint32 type, node * link) : pure::event(type), link(link) {
+    event<node>::event(const uint32 type, node * link) : external::event(type), link(link) {
 
     }
 

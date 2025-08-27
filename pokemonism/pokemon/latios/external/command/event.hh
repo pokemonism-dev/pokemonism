@@ -1,5 +1,5 @@
 /**
-* @file        pokemon/latios/event.hh
+ * @file        pokemon/latios/external/command/event.hh
  * @brief
  * @details
  *
@@ -18,7 +18,8 @@ namespace pokemon { namespace latios { namespace external { namespace command {
 
     class event : public virtual latios::event {
     /** CUSTOM CONSTRUCTOR */
-    protected:  inline explicit event(const uint32 type) : latios::event(type) {}
+    // ReSharper disable once CppParameterMayBeConst
+    protected:  inline explicit event(uint32 type) : latios::event(type) {}
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
     public:     inline event(void) = delete;
     protected:  inline ~event(void) override {}

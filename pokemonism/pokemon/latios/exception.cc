@@ -1,5 +1,10 @@
-//
-// Created by snorlax on 25. 8. 27..
-//
+/**
+ * @file        pokemon/latios/exception.cc
+ * @brief
+ * @details
+ *
+ * @author      snorlax <developer@snorlax.dev>
+ * @since       Aug 26, 2025
+ */
 
 #include "exception.hh"

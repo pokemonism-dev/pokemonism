@@ -24,7 +24,7 @@ namespace pokemon { namespace latios { namespace internal {
     public:     typedef object_type                             object;
     public:     typedef event_type                              event;
     public:     typedef node_type                               node;
-    public:     typedef object::event::callback                 handler;
+    public:     typedef object::event::handler                  handler;
     public:     typedef handler                                 callback[object::event::max];
     public:     constexpr static uint32                         max = object::event::max;
     /** PRIVATE MEMBER DESCRIPTION */

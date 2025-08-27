@@ -19,14 +19,8 @@ namespace pokemon { namespace latios {
     class subscription;
     class object;
 
-    namespace external {
-        class engine;
-    }
-
-    // extern external::engine & engine;
-
 } }
 
-#include <pokemon/latios/external/engine.hh>
+#include <pokemon/latios/engine.hh>
 
 #endif // __POKEMONISM_POKEMON_LATIOS__HH__

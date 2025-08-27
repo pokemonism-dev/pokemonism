@@ -14,21 +14,20 @@
 
 #include <pokemon/latios/object.hh>
 
-#include <pokemon/latios/subscription.hh>
+#include <pokemon/latios/external/command/event.hh>
 
 namespace pokemon { namespace latios {
 
     class command : public object {
     public:     class event {
-                public:     typedef int (*handler)(command *, uint32, event *, primitivable::object *);
-                public:     constexpr static int gen = 0;
-                public:     constexpr static int rem = 1;
-                public:     constexpr static int reg = 2;
-                public:     constexpr static int del = 3;
-                public:     constexpr static int exe = 4;
-                public:     constexpr static int max = 5;
+                public:     typedef int (*handler)(command *, uint32, external::command::event *, primitivable::object *);
+                public:     constexpr static int gen = object::event::gen;
+                public:     constexpr static int rem = object::event::rem;
+                public:     constexpr static int reg = object::event::reg;
+                public:     constexpr static int del = object::event::del;
+                public:     constexpr static int exe = object::event::max + 0;
+                public:     constexpr static int max = object::event::max + 1;
                 };
-    public:     typedef int64 (*on)(command *, uint32, primitivable::object *);
     public:     virtual primitivable::object * operator()(void) = 0;
     public:     inline command(void) {}
     public:     inline ~command(void) override {}

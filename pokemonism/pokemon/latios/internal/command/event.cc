@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal.temp/command/event.cc
+ * @file        pokemon/latios/internal/command/event.cc
  * @brief
  * @details
  *

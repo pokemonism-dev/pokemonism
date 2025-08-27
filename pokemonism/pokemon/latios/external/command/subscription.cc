@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/link.cc
+ * @file        pokemon/latios/external/command/subscription.cc
  * @brief
  * @details
  *
@@ -7,4 +7,4 @@
  * @since       Aug 27, 2025
  */
 
-#include "../internal/link.hh"
+#include "subscription.hh"

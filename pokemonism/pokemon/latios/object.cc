@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/object.hh
+ * @file        pokemon/latios/object.cc
  * @brief
  * @details
  *

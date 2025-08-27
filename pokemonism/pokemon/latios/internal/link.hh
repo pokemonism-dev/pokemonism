@@ -56,7 +56,7 @@ namespace pokemon { namespace latios { namespace internal {
 
     template <typename subscription, typename event>
     link<subscription, event> * link<subscription, event>::rem(link<subscription, event> * o, event * link) {
-        if (link != nullptr) delete link;
+        if (link != nullptr) delete link; // NOLINT(*-delete-null-pointer)
         return nullptr;
     }
 

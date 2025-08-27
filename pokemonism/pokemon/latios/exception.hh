@@ -1,9 +1,14 @@
-//
-// Created by snorlax on 25. 8. 27..
-//
+/**
+ * @file        pokemon/latios/exception.hh
+ * @brief
+ * @details
+ *
+ * @author      snorlax <developer@snorlax.dev>
+ * @since       Aug 26, 2025
+ */
 
-#ifndef POKEMONISM_EXCEPTION_HH
-#define POKEMONISM_EXCEPTION_HH
+#ifndef   __POKEMONISM_POKEMON_LATIOS_EXCEPTION__HH__
+#define   __POKEMONISM_POKEMON_LATIOS_EXCEPTION__HH__
 
 #include <pokemon/exception.hh>
 
@@ -19,4 +24,4 @@ using first = pokemon::exception;                                               
 
 latios_exception_class_quick_declare(deleted, event);
 
-#endif //POKEMONISM_EXCEPTION_HH
+#endif // __POKEMONISM_POKEMON_LATIOS_EXCEPTION__HH__

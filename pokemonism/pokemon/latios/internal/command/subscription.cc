@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/subscription.cc
+ * @file        pokemon/latios/internal/command/subscription.cc
  * @brief
  * @details
  *
