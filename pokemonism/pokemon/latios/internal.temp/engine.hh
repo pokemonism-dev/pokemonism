@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/engine.hh
+ * @file        pokemon/latios/internal.temp/engine.hh
  * @brief
  * @details
  *
@@ -18,6 +18,9 @@ namespace pokemon { namespace latios { namespace internal {
     class engine : public external::engine {
     public:     static engine & get(void);
     public:     const char * tag(void) const override { return "internal"; }
+    public:     command::subscription * reg(command * command, command::on (*on)[command::event::max]) override;
+    public:     command::subscription * reg(command::subscription * subscription, uint64 type, command::on on) override;
+    public:     command::subscription * reg(command::subscription * subscription, command::on (*on)[command::event::max]) override;
     protected:  engine(void);
     public:     ~engine(void) override;
     public:     engine(engine & o) = delete;

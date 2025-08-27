@@ -9,10 +9,10 @@
 
 #include "latios.hh"
 
-#include "latios/internal/engine.hh"
+// #include "latios/internal.temp/engine.hh"
 
 namespace pokemon { namespace latios {
 
-    external::engine & engine = internal::engine::get();
+    // external::engine & engine = internal::engine::get();
 
 } }

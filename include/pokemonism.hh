@@ -25,12 +25,20 @@ namespace pokemon {
     typedef unsigned int                            uint32;
     typedef unsigned long                           uint64;
 
+    constexpr int                                   infinite = -1;
+    constexpr int                                   invalid = -1;
+    constexpr int                                   fail = -1;
+    constexpr int                                   success = 0;
+    constexpr int                                   none = 0;
+
     // ReSharper disable once CppEnforceNestedNamespacesStyle
     namespace declaration {
         constexpr int                               infinite = -1;
         constexpr int                               invalid = -1;
         constexpr int                               fail = -1;
+        constexpr int                               retry = -2;
         constexpr int                               success = 0;
+        constexpr int                               none = 0;
         namespace type {
             typedef __SIZE_TYPE__                   size;
             typedef decltype(nullptr)               null;

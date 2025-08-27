@@ -23,7 +23,7 @@ namespace pokemon { namespace latios {
         class engine;
     }
 
-    extern external::engine & engine;
+    // extern external::engine & engine;
 
 } }
 

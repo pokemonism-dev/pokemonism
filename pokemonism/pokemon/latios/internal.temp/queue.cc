@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/queue.cc
+ * @file        pokemon/latios/internal.temp/queue.cc
  * @brief
  * @details
  *
@@ -9,7 +9,7 @@
 
 #include "queue.hh"
 
-#include "pure/event.hh"
+#include "event.hh"
 
 namespace pokemon { namespace latios { namespace internal {
 
@@ -18,17 +18,13 @@ namespace pokemon { namespace latios { namespace internal {
         uint64 count = 0;
         lock();
         while (count < limit && size > 0) {
-            if (pure::event * o = linked::list::pop<queue, pure::event>(this)) {
+            if (event * e = linked::list::pop<queue, event>(this)) {
                 unlock();
                 count = count + 1;
-
-                if (const int ret = o->on(nullptr); ret != event::retry) {
-                    delete o;
-                    lock();
-                    continue;
-                }
+                e = e->on();
                 lock();
-                linked::list::push<queue, pure::event>(this, o);
+                if (e != nullptr) linked::list::push<queue, event>(this, e);
+                continue;
             }
             break;
         }
@@ -40,7 +36,7 @@ namespace pokemon { namespace latios { namespace internal {
     void queue::clear(void) {
         on();
 
-        linked::list::clear<queue, pure::event>(this);
+        linked::list::clear<queue, event>(this, event::cancel);
     }
 
 } } }

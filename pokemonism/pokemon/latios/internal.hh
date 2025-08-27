@@ -12,11 +12,14 @@
 
 namespace pokemon { namespace latios { namespace internal {
 
+    template <typename subscription, typename event> class link;
+
+
     class event;
     class object;
     class engine;
-    class generator;
-    class subscription;
+    template <typename object, typename subscription> class generator;
+    template <typename object, typename event, typename link> class subscription;
 
 } } }
 

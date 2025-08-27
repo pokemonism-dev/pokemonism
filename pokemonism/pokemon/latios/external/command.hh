@@ -25,6 +25,15 @@ namespace pokemon { namespace latios { namespace external { namespace command {
     public:     subscription & operator=(subscription && o) noexcept = delete;
     };
 
+    public:     class subscription : public virtual latios::subscription {
+    protected:  subscription(void) {};
+    protected:  ~subscription(void) override {};
+    public:     subscription(const subscription & o) = delete;
+    public:     subscription(subscription && o) noexcept = delete;
+    public:     subscription & operator=(const subscription & o) = delete;
+    public:     subscription & operator=(subscription && o) noexcept = delete;
+    };
+
     typedef int64 (*handler)(latios::command *, uint32, int64);
 
 } } } }

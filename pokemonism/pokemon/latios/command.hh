@@ -19,13 +19,14 @@
 namespace pokemon { namespace latios {
 
     class command : public object {
-    public:     class subscription : public latios::subscription {
-                protected:  subscription(void) {};
-                protected:  ~subscription(void) override {};
-                public:     subscription(const subscription & o) = delete;
-                public:     subscription(subscription && o) noexcept = delete;
-                public:     subscription & operator=(const subscription & o) = delete;
-                public:     subscription & operator=(subscription && o) noexcept = delete;
+    public:     class event {
+                public:     typedef int (*handler)(command *, uint32, event *, primitivable::object *);
+                public:     constexpr static int gen = 0;
+                public:     constexpr static int rem = 1;
+                public:     constexpr static int reg = 2;
+                public:     constexpr static int del = 3;
+                public:     constexpr static int exe = 4;
+                public:     constexpr static int max = 5;
                 };
     public:     typedef int64 (*on)(command *, uint32, primitivable::object *);
     public:     virtual primitivable::object * operator()(void) = 0;

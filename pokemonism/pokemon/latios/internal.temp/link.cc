@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/linked.cc
+ * @file        pokemon/latios/internal/link.cc
  * @brief
  * @details
  *
@@ -7,4 +7,4 @@
  * @since       Aug 27, 2025
  */
 
-#include "linked.hh"
+#include "../internal/link.hh"

@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/event.cc
+ * @file        pokemon/latios/internal.temp/command/generator.cc
  * @brief
  * @details
  *
@@ -7,4 +7,4 @@
  * @since       Aug 26, 2025
  */
 
-#include "event.hh"
+#include "generator.hh"

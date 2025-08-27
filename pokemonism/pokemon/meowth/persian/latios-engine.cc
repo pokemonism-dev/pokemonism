@@ -9,6 +9,8 @@
 
 #include <pokemon/latios.hh>
 #include <pokemon/latios/command.hh>
+// #include <pokemon/latios/internal.hh>
+// #include <pokemon/latios/internal.temp/queue.hh>
 
 using namespace pokemon;
 
@@ -33,7 +35,9 @@ using namespace pokemon::meowth::persian;
 int main(int argc, char ** argv) {
     srandom(time(nullptr));
 
-    printf("%s\n", latios::engine.tag());
+    // latios::internal::queue queue;
+    //
+    // printf("%s\n", latios::engine.tag());
 
     command o;
 

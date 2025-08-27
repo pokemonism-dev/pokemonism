@@ -12,22 +12,15 @@
 
 #include <pokemon/latios/command.hh>
 
-// #include <pokemon/latios/command.hh>
-
 namespace pokemon { namespace latios {
-
-    // class command;
-    // class command::subscription;
-
-    // namespace pokemon { namespace latios {
-    //
-    //     class command
 
     namespace external {
 
         class engine {
         public:     virtual const char * tag(void) const = 0;
-        // public:     virtual command::subscription * reg(command * command, uint64 type, external::command::) = 0;
+        // public:     virtual command::subscription * reg(command * command, command::on (*on)[command::event::max]) = 0;
+        // public:     virtual command::subscription * reg(command::subscription * subscription, uint64 type, command::on on) = 0;
+        // public:     virtual command::subscription * reg(command::subscription * subscription, command::on (*on)[command::event::max]) = 0;
         protected:  engine(void) {}
         public:     virtual ~engine(void) {}
         public:     engine(engine & o) = delete;

@@ -1,5 +1,5 @@
 /**
-* @file        pokemon/latios/event.hh
+ * @file        pokemon/latios/internal/event.hh
  * @brief
  * @details
  *
@@ -11,24 +11,29 @@
 #define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_EVENT__HH__
 
 #include <pokemonism.hh>
-#include <pokemon/latios.hh>
-#include <pokemon/latios/internal.hh>
 
-#include <pokemon/latios/event.hh>
-#include <pokemon/latios/internal/queue.hh>
 #include <pokemon/latios/internal/linked/list.hh>
+#include <pokemon/latios/internal/pure/event.hh>
+#include <pokemon/latios/exception.hh>
 
 namespace pokemon { namespace latios { namespace internal {
 
-    class event : public latios::event {
-    public:     inline static event * cancel(event * e);
-    protected:  queue * container;
-    protected:  event * prev;
-    protected:  event * next;
-    public:     virtual event * on(void) = 0;
-    public:     virtual event * cancel(void) = 0;
-    public:     inline event(void);
-    public:     inline ~event(void) override;
+    template <typename link_type>
+    class event : protected virtual pure::event {
+    /** PUBLIC STATIC TYPE DEFINITION */
+    public:     typedef link_type   node;
+    /** PUBLIC STATIC METHOD */
+    public:     inline static event<node> * rem(event<node> * o);
+    public:     inline static event<node> * rem(event<node> * o, node * link);
+    /** PROTECTED MEMBER VARIABLE */
+    protected:  node *              link;
+    /** OVERRIDE PURE::EVENT */
+    public:     inline void del(void) override;
+    /** CUSTOM CONSTRUCTOR */
+    protected:  inline explicit event(uint32 type, node * link);
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    public:     inline event(void) = delete;
+    protected:  inline ~event(void) override;
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;
     public:     event & operator=(const event & o) = delete;
@@ -36,20 +41,53 @@ namespace pokemon { namespace latios { namespace internal {
     public:     friend class linked::list;
     };
 
-    /** STATIC METHOD */
-    event * event::cancel(event * e) {
-        if (e != nullptr) return e->cancel();
-        return e;
+    /** PUBLIC STATIC METHOD */
+    template <typename node>
+    event<node> * event<node>::rem(event<node> * o) {
+        if (o != nullptr) {
+            if (o->container != nullptr) {
+                linked::list::del(o->container, o);
+                // ReSharper disable once CppAbstractVirtualFunctionCallInCtor
+                if (const int ret = o->on(nullptr); ret == retry) {
+                    // ReSharper disable once CppAbstractVirtualFunctionCallInCtor
+                    o->on(new latios::exceptional::deleted::event());
+                }
+            }
+
+            node * link = o->link;
+
+            o->link = nullptr;
+            node::rem(link, o);
+        }
+
+        return o;
     }
 
-    /** DEFAULT EVENT METHOD */
+    template <typename node>
+     event<node> * event<node>::rem(event<node> * o, node * link) {
+        if (o != nullptr) delete o;
 
-    event::event(void) : container(nullptr), prev(nullptr), next(nullptr) {
+        return nullptr;
+    }
+
+    /** OVERRIDE PURE::EVENT */
+    template <typename node>
+    void event<node>::del(void) {
+        linked::list::del(container, this);
+    }
+
+    /** CUSTOM CONSTRUCTOR */
+
+    template <typename node>
+    event<node>::event(const uint32 type, node * link) : pure::event(type), link(link) {
 
     }
 
-    event::~event(void) {
-        allocator::del(linked::list::del(this->container, this));
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+
+    template <typename node>
+    event<node>::~event(void) {
+        event<node>::rem(this);
     }
 
 } } }

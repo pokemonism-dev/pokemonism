@@ -262,6 +262,7 @@ exception_class_quick_declare(should, notcall)
 exception_class_quick_declare(overflow, index)
 exception_class_quick_declare(unclean, node)
 exception_class_quick_declare(unmatched, container)
+exception_class_quick_declare(invalid, operation)
 
 single_namespace_exception_class_quick_declare(critical)
 single_namespace_exception_class_quick_declare(warning)

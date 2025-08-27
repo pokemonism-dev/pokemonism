@@ -14,7 +14,7 @@
 
 namespace pokemon { namespace latios {
 
-    class subscription : public mareep::subscription {
+    class subscription : public virtual mareep::subscription {
     protected:  subscription(void) {}
     protected:  ~subscription(void) override {}
     public:     subscription(const subscription & o) = delete;

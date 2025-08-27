@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/latios/internal/queue.hh
+ * @file        pokemon/latios/internal.temp/queue.hh
  * @brief
  * @details
  *
@@ -13,19 +13,18 @@
 #include <pokemon/object.hh>
 #include <pokemon/exception.hh>
 
-#include <pokemon/latios/internal/linked/list.hh>
+#include <pokemon/latios.hh>
+
+#include <pokemon/latios/internal.temp/event.hh>
+#include <pokemon/latios/internal.temp/linked/list.hh>
 
 namespace pokemon { namespace latios { namespace internal {
-
-    namespace pure {
-        class event;
-    }
 
     // ReSharper disable once CppClassCanBeFinal
     class queue : public virtual pokemon::object {
     protected:  uint64 size;
-    protected:  pure::event * head;
-    protected:  pure::event * tail;
+    protected:  event * head;
+    protected:  event * tail;
     public:     virtual uint64 on(void);
     public:     virtual void clear(void);
     public:     inline queue(void);
