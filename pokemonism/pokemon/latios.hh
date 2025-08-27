@@ -11,23 +11,14 @@
 #define   __POKEMONISM_POKEMON_LATIOS__HH__
 
 #include <pokemonism.hh>
+#include <pokemon/object.hh>
 
 namespace pokemon { namespace latios {
 
-    class event;
     class engine;
+    class event;
     class subscription;
-    class generator;
-    class processor;
-    class queue;
-
-    // event
-    // event subscription
-    // event subscription node
-    // event processor
-    // event queue
-    // event generator
-    // event engine
+    class object;
 
 } }
 
