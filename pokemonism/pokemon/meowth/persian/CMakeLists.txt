@@ -10,4 +10,6 @@ add_executable(persian-sprigatito-stream            sprigatito-stream.cc)
 target_link_libraries(persian-sprigatito-stream     pokemonism-sprigatito)
 
 add_executable(persian-latios-engine                latios-engine.cc)
-target_link_libraries(persian-latios-engine         pokemonism-latio)
+target_link_libraries(persian-latios-engine         pokemonism-latio
+                                                    pokemonism-sprigatito
+                                                    pokemonism-dev)

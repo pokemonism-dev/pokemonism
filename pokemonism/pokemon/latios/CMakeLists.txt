@@ -34,6 +34,8 @@ set(LATIOS_IMPLEMENT_SOURCE
         subscription.hh
         external/engine.cc
         external/engine.hh
+        external/command.cc
+        external/command.hh
         command.cc
         command.hh
         command/object.cc
