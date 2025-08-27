@@ -10,18 +10,33 @@
 #ifndef   __POKEMONISM_POKEMON_LATIOS_EXTERNAL_ENGINE__HH__
 #define   __POKEMONISM_POKEMON_LATIOS_EXTERNAL_ENGINE__HH__
 
-namespace pokemon { namespace latios { namespace external {
+#include <pokemon/latios/command.hh>
 
-    class engine {
-    public:     virtual const char * tag(void) const = 0;
-    protected:  engine(void) {}
-    public:     virtual ~engine(void) {}
-    public:     engine(engine & o) = delete;
-    public:     engine(engine && o) noexcept = delete;
-    public:     engine & operator=(engine & o) = delete;
-    public:     engine & operator=(engine && o) noexcept = delete;
-    };
+// #include <pokemon/latios/command.hh>
 
-} } }
+namespace pokemon { namespace latios {
+
+    // class command;
+    // class command::subscription;
+
+    // namespace pokemon { namespace latios {
+    //
+    //     class command
+
+    namespace external {
+
+        class engine {
+        public:     virtual const char * tag(void) const = 0;
+        public:     virtual command::subscription * reg(command * command) = 0;
+        protected:  engine(void) {}
+        public:     virtual ~engine(void) {}
+        public:     engine(engine & o) = delete;
+        public:     engine(engine && o) noexcept = delete;
+        public:     engine & operator=(engine & o) = delete;
+        public:     engine & operator=(engine && o) noexcept = delete;
+        };
+
+    }
+} }
 
 #endif // __POKEMONISM_POKEMON_LATIOS_EXTERNAL_ENGINE__HH__

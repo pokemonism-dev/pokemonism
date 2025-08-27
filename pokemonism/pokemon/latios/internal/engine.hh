@@ -10,15 +10,17 @@
 #ifndef   __POKEMONISM_POKEMON_LATIOS_INTERNAL_ENGINE__HH__
 #define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_ENGINE__HH__
 
+#include <pokemon/latios/command.hh>
 #include <pokemon/latios/external/engine.hh>
 
 namespace pokemon { namespace latios { namespace internal {
 
     class engine : public external::engine {
-    public:     static internal::engine & get(void);
+    public:     static engine & get(void);
     public:     const char * tag(void) const override { return "internal"; }
-    protected:  engine(void) {}
-    public:     ~engine(void) override {}
+    public:     command::subscription * reg(command * command) override;
+    protected:  engine(void);
+    public:     ~engine(void) override;
     public:     engine(engine & o) = delete;
     public:     engine(engine && o) noexcept = delete;
     public:     engine & operator=(engine & o) = delete;

@@ -44,6 +44,9 @@ namespace pokemon {
             using                                   ostream = std::ostream;
         }
     }
+
+    template <typename type> inline type * addressof(type & x) noexcept { return __builtin_addressof(x); }
+
 }
 
 #define pointof(o)                                  (&(o))

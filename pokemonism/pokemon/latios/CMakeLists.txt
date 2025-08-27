@@ -37,9 +37,7 @@ set(LATIOS_IMPLEMENT_SOURCE
         external/command.cc
         external/command.hh
         command.cc
-        command.hh
-        command/object.cc
-        command/object.hh)
+        command.hh)
 
 add_library(pokemonism-latio-dev        ${LATIOS_INTERNAL_HEADER}
                                         ${LATIOS_INTERNAL_SOURCE})

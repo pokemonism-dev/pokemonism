@@ -10,15 +10,13 @@
 #ifndef   __POKEMONISM_POKEMON_LATIOS_SUBSCRIPTION__HH__
 #define   __POKEMONISM_POKEMON_LATIOS_SUBSCRIPTION__HH__
 
-#include <pokemon/latios.hh>
-
 #include <pokemon/mareep/subscription.hh>
 
 namespace pokemon { namespace latios {
 
     class subscription : public mareep::subscription {
-    protected:  subscription(void) {};
-    protected:  ~subscription(void) override {};
+    protected:  subscription(void) {}
+    protected:  ~subscription(void) override {}
     public:     subscription(const subscription & o) = delete;
     public:     subscription(subscription && o) noexcept = delete;
     public:     subscription & operator=(const subscription & o) = delete;

@@ -7,6 +7,7 @@
  * @since       Aug 27, 2025
  */
 
+#include <pokemon/latios.hh>
 #include <pokemon/latios/command.hh>
 
 using namespace pokemon;
@@ -34,6 +35,8 @@ int main(int argc, char ** argv) {
     command o;
 
     printf("%ld\n", o());
+
+    latios::engine.reg(addressof(o));
 
     return 0;
 }

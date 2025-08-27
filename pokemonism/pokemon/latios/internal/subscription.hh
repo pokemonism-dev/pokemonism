@@ -1,5 +1,5 @@
 /**
-* @file        pokemon/latios/subscription.hh
+* @file        pokemon/latios/internal/subscription.hh
  * @brief
  * @details
  *
@@ -7,16 +7,16 @@
  * @since       Aug 27, 2025
  */
 
-#ifndef   __POKEMONISM_POKEMON_LATIOS_SUBSCRIPTION__HH__
-#define   __POKEMONISM_POKEMON_LATIOS_SUBSCRIPTION__HH__
+#ifndef   __POKEMONISM_POKEMON_LATIOS_INTERNAL_SUBSCRIPTION__HH__
+#define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_SUBSCRIPTION__HH__
 
 #include <pokemon/latios.hh>
 
 #include <pokemon/mareep/subscription.hh>
 
-namespace pokemon { namespace latios {
+namespace pokemon { namespace latios { namespace internal {
 
-    class subscription : public mareep::subscription {
+    class subscription : public latios::subscription {
     public:     class node {
                 public:     node(void) {}
                 public:     virtual ~node(void) {}
@@ -29,15 +29,15 @@ namespace pokemon { namespace latios {
     // protected:  subscription * prev;
     // protected:  subscription * next;
     // protected:
-    protected:  latios::object * origin;
-    public:     subscription(void);
-    public:     ~subscription(void) override;
+    protected:  object * origin;
+    public:     subscription(void) : origin(nullptr) {}
+    public:     ~subscription(void) override {}
     public:     subscription(const subscription & o) = delete;
     public:     subscription(subscription && o) noexcept;
     public:     subscription & operator=(const subscription & o) = delete;
     public:     subscription & operator=(subscription && o) noexcept;
     };
 
-} }
+} } }
 
-#endif // __POKEMONISM_POKEMON_LATIOS_SUBSCRIPTION__HH__
+#endif // __POKEMONISM_POKEMON_LATIOS_INTERNAL_SUBSCRIPTION__HH__

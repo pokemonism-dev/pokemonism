@@ -14,12 +14,17 @@
 
 #include <pokemon/latios/object.hh>
 
-namespace pokemon { namespace latios { namespace external {
+namespace pokemon { namespace latios { namespace external { namespace command {
 
-    class command : public object {
-
+    class subscription : latios::command::subscription {
+    public:     subscription(void) {};
+    public:     ~subscription(void) override {};
+    public:     subscription(const subscription & o) = delete;
+    public:     subscription(subscription && o) noexcept = delete;
+    public:     subscription & operator=(const subscription & o) = delete;
+    public:     subscription & operator=(subscription && o) noexcept = delete;
     };
 
-} } }
+} } } }
 
 #endif // __POKEMONISM_POKEMON_LATIOS_EXTERNAL_COMMAND__HH__

@@ -10,13 +10,21 @@
 #ifndef   __POKEMONISM_POKEMON_LATIOS_COMMAND__HH__
 #define   __POKEMONISM_POKEMON_LATIOS_COMMAND__HH__
 
-#include <pokemon/latios.hh>
-
 #include <pokemon/latios/object.hh>
+
+#include <pokemon/latios/subscription.hh>
 
 namespace pokemon { namespace latios {
 
     class command : public object {
+    public:     class subscription : public latios::subscription {
+                protected:  subscription(void) {};
+                protected:  ~subscription(void) override {};
+                public:     subscription(const subscription & o) = delete;
+                public:     subscription(subscription && o) noexcept = delete;
+                public:     subscription & operator=(const subscription & o) = delete;
+                public:     subscription & operator=(subscription && o) noexcept = delete;
+                };
     public:     virtual int64 operator()(void) = 0;
     public:     inline command(void) {}
     public:     inline ~command(void) override {}
