@@ -15,8 +15,7 @@
 namespace pokemon { namespace mareep {
 
     class subscription : public virtual object {
-    public:     virtual void cancel(void);
-    // public:     virtual void cancel(const function<> &)
+    public:     virtual void cancel(void) = 0;
     public:     subscription(void) {}
     public:     ~subscription(void) override {};
     public:     subscription(const subscription & o) = delete;
