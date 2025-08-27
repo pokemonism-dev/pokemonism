@@ -12,7 +12,6 @@
 using namespace pokemon;
 
 int main(int argc, char ** argv) {
-    printf("%s\n", latios::engine::singleton.name());
 
     return 0;
 }
