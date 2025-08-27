@@ -12,20 +12,16 @@
 
 #include <pokemon/latios.hh>
 
-#include <pokemon/latios/queue.hh>
-
 namespace pokemon { namespace latios {
 
     class engine {
     public:     static const engine & singleton;
     public:     static engine & get(void);
-    protected:  queue queue;
-    public:     inline virtual const char * name(void) const { return "latios"; }
     protected:  engine(void);
     public:     virtual ~engine(void);
-    protected:  engine(engine & o) = delete;
+    public:     engine(engine & o) = delete;
     protected:  engine(engine && o) noexcept {}
-    protected:  engine & operator=(engine & o) = delete;
+    public:     engine & operator=(engine & o) = delete;
     protected:  engine & operator=(engine && o) noexcept { return *this; }
     };
 

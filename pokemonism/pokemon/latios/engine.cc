@@ -18,21 +18,11 @@ namespace pokemon { namespace latios {
 
     const engine & engine::singleton = engine::get();
 
-    engine::engine(void) : queue() {
+    engine::engine(void) {
     }
 
     engine::~engine(void) {
 
     }
-
-    // class engine {
-    // protected:  queue queue;
-    // public:     engine(void);
-    // public:     virtual ~engine(void);
-    // public:     engine(engine & o);
-    // public:     engine(engine && o) noexcept;
-    // public:     engine & operator=(engine & o);
-    // public:     engine & operator=(engine && o) noexcept;
-    // };
 
 } }
