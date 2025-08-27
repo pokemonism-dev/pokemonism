@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(LATIOS_ROOT_HEADER                  ../latios.hh)
 
-set(LATIOS_ROOT_SOURCE                  ../latios.hh)
+set(LATIOS_ROOT_SOURCE                  ../latios.cc)
 
 set(LATIOS_HEADER                       event.cc)
 
@@ -24,16 +24,16 @@ set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/subscription.cc)
 
 set(LATIOS_IMPLEMENT_SOURCE
+        internal/engine.cc
+        internal/engine.hh
+        internal/linked.cc
+        internal/linked.hh
         object.cc
         object.hh
         subscription.cc
         subscription.hh
-        linked.cc
-        linked.hh
-        linked/list.cc
-        linked/list.hh
-        engine.cc
-        engine.hh
+        external/engine.cc
+        external/engine.hh
         command.cc
         command.hh
         command/object.cc

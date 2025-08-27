@@ -13,7 +13,7 @@
 #include <pokemon/log.hh>
 #include <pokemon/allocator.hh>
 
-#include <pokemon/latios/linked.hh>
+#include <pokemon/latios/internal/linked.hh>
 
 namespace pokemon { namespace latios { namespace internal { namespace linked {
 

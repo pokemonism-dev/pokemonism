@@ -16,6 +16,7 @@ namespace pokemon { namespace latios {
 
     class object : public virtual pokemon::object {
     protected:  subscription * subscription;
+    public:     virtual int64 on(uint32 type);
     public:     object(void) ;
     public:     ~object(void) override;
     public:     inline object(const object & o) = delete;
@@ -23,6 +24,8 @@ namespace pokemon { namespace latios {
     public:     inline object & operator=(const object & o) = delete;
     public:     inline object & operator=(object && o) noexcept = delete;
     };
+
+    // latios::engine.
 
 } }
 
