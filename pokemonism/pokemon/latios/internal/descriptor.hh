@@ -15,10 +15,10 @@
 namespace pokemon { namespace latios { namespace internal {
 
         class descriptor : public virtual latios::descriptor {
-        protected:  int v;
-        protected:  uint32 state;
-        protected:  uint32 property;
-        protected:  pokemon::exception * exception;
+        // protected:  int v;
+        // protected:  uint32 state;
+        // protected:  uint32 property;
+        // protected:  pokemon::exception * exception;
 
 
         public:     inline int value(void) const { return v; }
