@@ -12,6 +12,7 @@
 
 #include <pokemonism.hh>
 
+#include <pokemon/latios/event.hh>
 #include <pokemon/latios/internal/queue.hh>
 #include <pokemon/latios/exception.hh>
 
@@ -25,6 +26,7 @@ namespace pokemon { namespace latios { namespace internal {
     public:     constexpr static int    success = latios::event::success;
     public:     constexpr static int    fail = latios::event::fail;
     public:     constexpr static int    retry = latios::event::retry;
+    public:     inline static internal::event * on(internal::event * o, pokemon::exception * e);
     /** PROTECTED MEMBER VARIABLE */
     protected:  queue *                 container;
     protected:  event *                 prev;
@@ -34,6 +36,7 @@ namespace pokemon { namespace latios { namespace internal {
     public:     inline virtual const queue * queueGet(void) const;
     /** PUBLIC VIRTUAL METHOD */
     public:     virtual int on(pokemon::exception * e) = 0;
+    public:     inline virtual int raise(pokemon::exception * e);
     /** CUSTOM CONSTRUCTOR */
     protected:  inline event(uint32 type, subscription::node * node);
     protected:  inline explicit  event(subscription::node * node);
@@ -46,15 +49,31 @@ namespace pokemon { namespace latios { namespace internal {
     public:     event & operator=(event && o) noexcept = delete;
     /** FRIEND CLASS & METHOD */
     public:     friend class linked::list<queue, internal::event>;
+    public:     friend class subscription::node;
     };
 
 } } }
 
 namespace pokemon { namespace latios { namespace internal {
 
+    internal::event * event::on(internal::event * o, pokemon::exception * e) {
+        if (o != nullptr) {
+            if (const int ret = o->on(e); ret == retry) return o;
+
+            delete o;
+        }
+        return nullptr;
+    }
+
     /** PUBLIC GET & SET */
     const queue * event::queueGet(void) const {
         return container;
+    }
+
+    int event::raise(pokemon::exception * e) {
+        if (e != nullptr && exception != nullptr) delete exception;
+        exception = e;
+        return fail;
     }
 
     /** CUSTOM CONSTRUCTOR */
@@ -70,6 +89,8 @@ namespace pokemon { namespace latios { namespace internal {
     event::~event(void) {
         // TODO: IMPLEMENT THIS
     }
+
+
 
 } } }
 

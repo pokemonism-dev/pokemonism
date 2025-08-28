@@ -17,10 +17,9 @@ namespace pokemon { namespace latios { namespace external {
 
     class engine {
     public:     virtual const char * tag(void) const = 0;
-    public:     virtual command::subscription * reg(latios::command * command, latios::command::event::handler (*on)[latios::command::event::max]) = 0;
-    public:     virtual command::subscription * mod(latios::command * command, uint32 type, latios::command::event::handler on) = 0;
-    public:     virtual void cancel(void (*func)(engine &)) = 0;
-    public:     virtual engine & on(void) = 0;
+    public:     virtual command::subscription * reg(latios::command * command, uint32 properties, latios::command::event::listener (*on)[latios::command::event::max]) = 0;
+    public:     virtual void off(void (*func)(engine &)) = 0;
+    public:     virtual external::engine & on(void) = 0;
     public:     virtual int run(void) = 0;
     protected:  engine(void) {}
     public:     virtual ~engine(void) {}

@@ -15,15 +15,17 @@
 #include <pokemon/latios/event.hh>
 
 #include <pokemon/latios/internal/event.hh>
+#include <pokemon/latios/internal/command/subscription.hh>
 #include <pokemon/latios/external/command/event.hh>
 
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
-    class event;
     class generator;
-    class subscription;
 
     class event : public internal::event, public external::command::event {
+    public:     inline command::subscription * subscriptionGet(void) const { return dynamic_cast<command::subscription *>(node->subscriptionGet()); }
+    /** OVERRIDE INTERNAL::EVENT */
+    public:     int on(pokemon::exception * e) override;
     /** CUSTOM CONSTRUCTOR */
     public:     inline explicit event(uint32 type, subscription::node * node);
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */

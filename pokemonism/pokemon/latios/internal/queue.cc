@@ -28,8 +28,7 @@ namespace pokemon { namespace latios { namespace internal {
                 unlock();
                 count = count + 1;
 
-                if (const int ret = o->on(nullptr); ret != internal::event::retry) {
-                    delete o;
+                if ((o = internal::event::on(o, nullptr)) == nullptr) {
                     lock();
                     continue;
                 }
@@ -47,6 +46,10 @@ namespace pokemon { namespace latios { namespace internal {
         on();
 
         linked::list<queue, internal::event>::clear(this);
+    }
+
+    internal::event * queue::del(internal::event * item) {
+        return linked::list<queue, internal::event>::del(this, item);
     }
 
 } } }

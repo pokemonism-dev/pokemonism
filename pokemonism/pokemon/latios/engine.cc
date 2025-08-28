@@ -20,12 +20,8 @@ namespace pokemon { namespace latios {
         return o != nullptr ? o->tag() : nullptr;
     }
 
-    external::command::subscription * engine::reg(command * command, command::event::handler (*on)[command::event::max]) {
-        return o != nullptr ? o->reg(command, on) : nullptr;
-    }
-
-    external::command::subscription * engine::mod(command * command, const uint32 type, const command::event::handler on) {
-        return o != nullptr? o->mod(command, type, on) : nullptr;
+    external::command::subscription * engine::reg(command * command, uint32 properties, command::event::listener (*on)[command::event::max]) {
+        return o != nullptr ? o->reg(command, properties, on) : nullptr;
     }
 
     external::engine & engine::on(void (*bootstrap)(external::engine &)) {
@@ -33,7 +29,7 @@ namespace pokemon { namespace latios {
             // ### 20250828 | ATEXIT 에 등록하자.
             o = new internal::engine();
 
-            bootstrap(referenceof(o));
+            if (bootstrap != nullptr) bootstrap(valueof(o));
 
             o->on();
         }
@@ -41,12 +37,17 @@ namespace pokemon { namespace latios {
         return *o;
     }
 
-    void engine::cancel(void (*func)(external::engine &)) {
-        if (o != nullptr) o->cancel(func);
+    void engine::off(void (*func)(external::engine &)) {
+        if (o != nullptr) o->off(func);
     }
 
     int engine::run(void) {
-        return o != nullptr ? o->run() : fail;
+        if (o == nullptr) {
+            o = new internal::engine();
+            o->on();
+        }
+
+        return o->run();
     }
 
 } }

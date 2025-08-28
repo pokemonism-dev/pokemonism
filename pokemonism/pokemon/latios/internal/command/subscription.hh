@@ -18,18 +18,49 @@
 
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
-    class link;
-    class generator;
+    class processor;
 
     class subscription : public internal::subscription, public external::command::subscription {
-    protected:  subscription(void) = delete;
-    protected:  ~subscription(void) override;
+    /** CLASS DEFINITION */
+    public:     class node;
+    /** STATIC TYPE DEFINITION */
+    public:     typedef latios::command                     target;
+    public:     typedef latios::command::event::listener    listener;
+    public:     typedef latios::command::event::listener    handlerSet[latios::command::event::max];
+    public:     constexpr static uint32                     max = latios::command::event::max;
+    public:     inline latios::command * objectGet(void) const override { return dynamic_cast<latios::command *>(object); }
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    public:     inline subscription(latios::command * object, uint32 properties, subscription::handlerSet * callback);
+    public:     subscription(void) = delete;
+    protected:  inline ~subscription(void) override;
     public:     subscription(const subscription & o) = delete;
     public:     subscription(subscription && o) noexcept = delete;
     public:     subscription & operator=(const subscription & o) = delete;
     public:     subscription & operator=(subscription && o) noexcept = delete;
-    public:     friend class linked::list<command::subscription, command::link>;
+    public:     friend class processor;
     };
+
+    class subscription::node : public internal::subscription::node {
+    public:     inline command::subscription * subscriptionGet(void) const override { return dynamic_cast<command::subscription *>(container); }
+    public:     inline explicit node(command::subscription * container) : internal::subscription::node(container) {}
+    public:     node(void) = delete;
+    public:     inline ~node(void) override {}
+    public:     node(const node & o) = delete;
+    public:     node(node && o) noexcept = delete;
+    public:     node & operator=(const node & o) = delete;
+    public:     node & operator=(node && o) noexcept = delete;
+    };
+
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    // ReSharper disable once CppParameterNamesMismatch
+    subscription::subscription(latios::command * object, const uint32 properties, subscription::handlerSet * callbackSet)
+    : internal::subscription(object, properties, reinterpret_cast<internal::subscription::handlerSet>(callbackSet)) {
+    }
+
+    subscription::~subscription(void) {
+    }
+
+
 
 } } } }
 

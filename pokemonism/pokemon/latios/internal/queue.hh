@@ -25,6 +25,7 @@ namespace pokemon { namespace latios { namespace internal {
     protected:  internal::event * head;
     protected:  internal::event * tail;
     public:     virtual void push(internal::event * item);
+    public:     virtual internal::event * del(internal::event * item);
     public:     virtual uint64 on(void);
     public:     virtual void clear(void);
     public:     inline queue(void);

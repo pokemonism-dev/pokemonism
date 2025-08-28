@@ -23,6 +23,6 @@ using first = pokemon::exception;                                               
 } } }
 
 latios_exception_class_quick_declare(deleted, event);
-latios_exception_class_quick_declare(deleted, event);
+latios_exception_class_quick_declare(unsupported, event);
 
 #endif // __POKEMONISM_POKEMON_LATIOS_EXCEPTION__HH__

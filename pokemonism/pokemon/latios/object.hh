@@ -19,7 +19,7 @@ namespace pokemon { namespace latios {
 
     class object : public virtual pokemon::object {
     public:     struct event {
-                public:     typedef int (*handler)(object *, uint32, event *, primitivable::object *);
+                public:     typedef int (*listener)(object *, uint32, event *, primitivable::object *);
                 public:     constexpr static int gen = 0;
                 public:     constexpr static int rem = 1;
                 public:     constexpr static int reg = 2;

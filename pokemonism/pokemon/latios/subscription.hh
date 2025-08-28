@@ -15,6 +15,10 @@
 namespace pokemon { namespace latios {
 
     class subscription : public virtual mareep::subscription {
+    public:     struct property {
+                constexpr static uint32 release_on_del = (0x00000001U << 30U);
+                constexpr static uint32 release_object_on_rel = (0x00000001U << 31U);
+                };
     protected:  subscription(void) {}
     protected:  ~subscription(void) override {}
     public:     subscription(const subscription & o) = delete;

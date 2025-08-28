@@ -33,9 +33,11 @@ set(LATIOS_INTERNAL_HEADER              internal.hh
                                         internal/event.hh
                                         internal/engine.hh
                                         internal/generator.hh
+                                        internal/processor.hh
                                         internal/subscription.hh
                                         internal/command/event.hh
                                         internal/command/generator.hh
+                                        internal/command/processor.hh
                                         internal/command/subscription.hh
                                         )
 
@@ -47,9 +49,11 @@ set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/event.cc
                                         internal/engine.cc
                                         internal/generator.cc
+                                        internal/processor.cc
                                         internal/subscription.cc
                                         internal/command/event.cc
                                         internal/command/generator.cc
+                                        internal/command/processor.cc
                                         internal/command/subscription.cc
                                         )
 

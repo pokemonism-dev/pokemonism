@@ -8,3 +8,14 @@
  */
 
 #include "command.hh"
+
+namespace pokemon { namespace latios {
+
+    const command::event::handlerSet    command::event::printableCallbackSet = {
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn
+    };
+} }

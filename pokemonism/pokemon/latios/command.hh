@@ -20,13 +20,19 @@ namespace pokemon { namespace latios {
 
     class command : public object {
     public:     class event {
-                public:     typedef int (*handler)(command *, uint32, external::command::event *, primitivable::object *);
+                public:     typedef int (*listener)(command *, uint32, external::command::event *, primitivable::object *);
                 public:     constexpr static int gen = object::event::gen;
                 public:     constexpr static int rem = object::event::rem;
                 public:     constexpr static int reg = object::event::reg;
                 public:     constexpr static int del = object::event::del;
                 public:     constexpr static int exe = object::event::max + 0;
                 public:     constexpr static int max = object::event::max + 1;
+                public:     typedef listener     handlerSet[max];
+                public:     inline static int printableOn(command * o, const uint32 type, external::command::event * event, primitivable::object * result) {
+                                printf("command event type: %u\n", type);
+                                return success;
+                            }
+                public:     static const handlerSet     printableCallbackSet;
                 };
     public:     virtual primitivable::object * operator()(void) = 0;
     public:     inline command(void) {}

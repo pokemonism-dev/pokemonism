@@ -23,10 +23,23 @@ namespace pokemon { namespace latios { namespace internal {
     class event;
 
     class subscription : public virtual latios::subscription {
+    /** PUBLIC TYPE DEFINITION */
+    public:     typedef int (*listener)(latios::object *, uint32, internal::event *, primitivable::object *);
+    public:     typedef listener *          handlerSet;
     /** PUBLIC CLASS DEFINITION */
     public:     class node;
+    public:     struct function {
+                public:     typedef uint32 (*bootstrapper)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **);
+                public:     typedef void (*packer)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int);
+                public:     uint32 (*bootstrap)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **);
+                public:     void (*pack)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int);
+                public:     inline function(bootstrapper bootstrap, packer pack);
+                };
     /** PUBLIC STATIC METHOD */
     public:     static subscription * rel(subscription * o);
+    public:     static subscription * rem(subscription * o);
+    public:     inline static uint32 bootstrap(subscription * o, uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result);
+    public:     inline static void pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret);
     /** PRIVATE MEMBER DESCRIPTION */
     private:    internal::generator *       container;
     private:    internal::subscription *    prev;
@@ -36,20 +49,27 @@ namespace pokemon { namespace latios { namespace internal {
     protected:  subscription::node *        tail;
     protected:  uint32                      properties;
     protected:  uint32                      status;
-    /** PROTECTED VIRTUAL METHOD */
-    protected:  inline virtual uint32 pre(uint32 type, internal::event ** parameter, primitivable::object ** result);
-    protected:  inline virtual void post(uint32 type, internal::event * parameter, primitivable::object * result, int ret);
+    protected:  latios::object *            object;
+    protected:  handlerSet                  callbackSet;
+    protected:  subscription::function      func;
+    /** OVERRIDE MAREEP SUBSCRIPTION */
+    public:     void cancel(void) override;
+    public:     inline virtual latios::object * objectGet(void) const { return object; }
+    /** PUBLIC  */
+    public:     inline virtual uint32 max(void) const { return latios::object::event::max; }
+    public:     int on(uint32 type, internal::event * event, primitivable::object * result);
     /** PUBLIC VIRTUAL METHOD */
     public:     inline virtual subscription::node * add(subscription::node * link);
     public:     inline virtual subscription::node * del(subscription::node * link);
     public:     inline virtual void clear(void);
-    public:     inline virtual int on(uint32 type, internal::event * parameter, primitivable::object * result) = 0;
     /** PUBLIC GET & SET */
     public:     inline virtual const internal::generator * generatorGet(void) const;
+    protected:  inline void boostrapSet(function::bootstrapper f);
+    protected:  inline void packSet(function::packer f);
     /** CUSTOM CONSTRUCTOR METHOD */
-    protected:  inline explicit subscription(uint32 properties);
+    protected:  inline explicit subscription(latios::object * object, uint32 properties, listener * callbackSet);
     /** DEFAULT CLASS METHOD */
-    public:     inline ~subscription(void) override;
+    public:     ~subscription(void) override;
     public:     subscription(const internal::subscription & o) = delete;
     public:     subscription(internal::subscription && o) noexcept = delete;
     public:     internal::subscription & operator=(const internal::subscription & o) = delete;
@@ -59,12 +79,19 @@ namespace pokemon { namespace latios { namespace internal {
     public:     friend class linked::list<subscription, subscription::node>;
     };
 
+    // ReSharper disable CppParameterMayBeConst
+    subscription::function::function(bootstrapper bootstrap, packer pack) : bootstrap(bootstrap), pack(pack) {}
+    // ReSharper restore CppParameterMayBeConst
+
     class subscription::node : public virtual latios::object {
+    /** STATIC PUBLIC METHOD */
+    public:     static subscription::node * rem(subscription::node * o);
     /** PROTECTED MEMBER DESCRIPTION */
     protected:  internal::subscription *    container;
     protected:  subscription::node *        prev;
     protected:  subscription::node *        next;
     protected:  internal::event *           event;
+    public:     inline virtual internal::subscription * subscriptionGet(void) { return container; }
     /** CUSTOM CONSTRUCTOR */
     protected:  inline explicit node(internal::subscription * container);
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
@@ -76,22 +103,13 @@ namespace pokemon { namespace latios { namespace internal {
     public:     subscription::node & operator=(subscription::node && o) noexcept = delete;
     /** FRIEND CLASS & METHOD DESCRIPTION */
     public:     friend class linked::list<internal::subscription, subscription::node>;
+    public:     friend class internal::event;
     };
 
-} } }
+    /** PUBLIC STATIC METHOD */
 
-#include <pokemon/latios/internal/generator.hh>
-
-namespace pokemon { namespace latios { namespace internal {
-
-    /** PROTECTED VIRTUAL METHOD */
-    uint32 subscription::pre(uint32 type, internal::event ** parameter, primitivable::object ** result) {
-        return type;
-    }
-
-    void subscription::post(uint32 type, internal::event * parameter, primitivable::object * result, int ret) {
-
-    }
+    uint32 subscription::bootstrap(subscription * o, const uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result) { return type; }
+    void subscription::pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret) {}
 
     /** PUBLIC VIRTUAL METHOD */
     subscription::node * subscription::add(subscription::node * link) {
@@ -103,7 +121,7 @@ namespace pokemon { namespace latios { namespace internal {
     }
 
     void subscription::clear(void) {
-        linked::list<generator, subscription>::clear(container, subscription::rel);
+        linked::list<subscription, subscription::node>::clear(this, subscription::node::rem);
     }
 
     /** PUBLIC GET & SET */
@@ -111,18 +129,22 @@ namespace pokemon { namespace latios { namespace internal {
         return container;
     }
 
+    // ReSharper disable CppParameterMayBeConst
+    void subscription::boostrapSet(function::bootstrapper f) {
+        func.bootstrap = f;
+    }
+
+    void subscription::packSet(function::packer f) {
+        func.pack = f;
+    }
+    // ReSharper restore CppParameterMayBeConst
+
     /** CUSTOM CONSTRUCTOR METHOD */
-    subscription::subscription(const uint32 properties) :
-    container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(none) {
-
+    subscription::subscription(latios::object * object, const uint32 properties, listener * callbackSet) :
+    container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(none), object(object), callbackSet(callbackSet), func(bootstrap, pack) {
+        on(latios::object::event::max, nullptr, primitivable::object::gen(success));
     }
 
-    /** DEFAULT CLASS METHOD */
-
-    subscription::~subscription(void) {
-        properties = none;
-        status = none;
-    }
 
     /** CUSTOM CONSTRUCTOR */
     subscription::node::node(internal::subscription * container) : container(nullptr), prev(nullptr), next(nullptr), event(nullptr) {
@@ -132,8 +154,7 @@ namespace pokemon { namespace latios { namespace internal {
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
     // node(void) = delete;
     subscription::node::~node(void) {
-        if (container != nullptr) linked::list<internal::subscription, subscription::node>::del(container, this);
-        // TODO: IMPLEMENT
+        subscription::node::rem(this);
     }
 
 } } }

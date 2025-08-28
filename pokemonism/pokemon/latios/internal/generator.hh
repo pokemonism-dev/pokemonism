@@ -26,8 +26,8 @@ namespace pokemon { namespace latios { namespace internal {
     protected:  internal::subscription *    head;
     protected:  internal::subscription *    tail;
     /** PUBLIC VIRTUAL METHOD */
-    public:     inline virtual internal::subscription * reg(internal::subscription * o);
-    public:     inline virtual internal::subscription * del(internal::subscription * o);
+    public:     inline internal::subscription * reg(internal::subscription * o);
+    public:     inline internal::subscription * del(internal::subscription * o);
     public:     inline virtual void clear(void);
     public:     inline virtual uint64 on(void);
     /** CUSTOM CLASS CONSTRUCTOR */

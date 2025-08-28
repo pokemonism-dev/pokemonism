@@ -9,7 +9,7 @@
 
 #include "subscription.hh"
 
-
+#include "event.hh"
 
 namespace pokemon { namespace latios { namespace internal { namespace command {
 

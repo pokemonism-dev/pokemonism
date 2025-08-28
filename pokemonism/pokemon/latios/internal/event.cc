@@ -8,3 +8,7 @@
  */
 
 #include "event.hh"
+
+namespace pokemon { namespace latios { namespace internal {
+
+} } }

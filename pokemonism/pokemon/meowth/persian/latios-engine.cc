@@ -7,10 +7,11 @@
  * @since       Aug 27, 2025
  */
 
-#include <pokemon/latios.hh>
 #include <pokemon/latios/command.hh>
 // #include <pokemon/latios/internal.hh>
-// #include <pokemon/latios/internal.temp/queue.hh>
+
+#include <pokemon/latios/engine.hh>
+#include <pokemon/latios/internal/queue.hh>
 
 using namespace pokemon;
 
@@ -35,17 +36,34 @@ using namespace pokemon::meowth::persian;
 int main(int argc, char ** argv) {
     srandom(time(nullptr));
 
-    // latios::internal::queue queue;
-    //
-    // printf("%s\n", latios::engine.tag());
+    latios::internal::queue queue;
+
+    printf("%s\n", latios::engine::tag());
 
     command o;
 
     printf("%ld\n", primitivable::object::to::int64(o()));
 
+    latios::engine::on(nullptr);
+
+    printf("%s\n", latios::engine::tag());
+
+    // const command::event::listener *set = command::event::printableCallbackSet;
+    // const command::event::listener *set = command::event::printableCallbackSet;
+
+    command::event::listener set[command::event::max] = {
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn,
+        command::event::printableOn
+    };
+
+    latios::engine::reg(addressof(o), none, addressof(set));
+
     // latios::engine.reg(addressof(o));
 
     // latios::engine::run
 
-    return 0;
+    return latios::engine::run();
 }
