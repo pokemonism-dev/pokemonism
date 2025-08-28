@@ -35,6 +35,30 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
         return declaration::fail;
     }
 
+    int processor::gen(command::subscription * subscription, uint32 type, command::event * event) {
+        diagnosticLog("event processor gen\n");
+        return declaration::fail;
+    }
+
+    int processor::rel(command::subscription * subscription, uint32 type, command::event * event) {
+        diagnosticLog("event processor rel\n");
+        return declaration::fail;
+    }
+
+    int processor::add(command::subscription * subscription, uint32 type, command::event * event) {
+        diagnosticLog("event processor add\n");
+        return declaration::fail;
+    }
+
+    int processor::del(command::subscription * subscription, uint32 type, command::event * event) {
+        diagnosticLog("event processor del\n");
+        command::generator * generator = dynamic_cast<command::generator *>(subscription->generatorGet());
+
+        generator->del(subscription);
+
+        return subscription->generatorGet() == nullptr ? declaration::success : declaration::fail;
+    }
+
     int processor::on(command::subscription * subscription, const uint32 type, command::event * event) {
         pokemon::exception * e = event->exceptionGet();
         return subscription->on(type, event, (e != nullptr ? primitivable::object::gen(fail) : primitivable::object::gen(success)), e);

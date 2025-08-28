@@ -59,7 +59,15 @@ int main(int argc, char ** argv) {
 
     command cancelling;
 
+    command::event::listener cancellingSet[command::event::max] = {
+        command::event::function::print,
+        command::event::function::print,
+        command::event::function::print,
+        command::event::function::engine::off,
+        command::event::function::print
+    };
 
+    latios::engine::reg(addressof(cancelling), none, pointof(cancellingSet));
 
     return latios::engine::run();
 }

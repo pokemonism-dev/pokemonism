@@ -7,6 +7,8 @@
  * @since       Aug 27, 2025
  */
 
+#include <pokemon/log.hh>
+
 #include "engine.hh"
 
 #include "command/generator.hh"
@@ -43,6 +45,7 @@ namespace pokemon { namespace latios { namespace internal {
         } while (0));
 
         if (o != nullptr) queue->push(o);
+        diagnosticLog("queue push: %ld\n", queue->length());
     }
 
     void engine::off(void (*func)(external::engine &)) {

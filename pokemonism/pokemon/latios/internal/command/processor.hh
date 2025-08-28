@@ -18,6 +18,10 @@
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
     class processor : public internal::processor {
+    public:     static int gen(command::subscription * subscription, uint32 type, command::event * event);
+    public:     static int rel(command::subscription * subscription, uint32 type, command::event * event);
+    public:     static int add(command::subscription * subscription, uint32 type, command::event * event);
+    public:     static int del(command::subscription * subscription, uint32 type, command::event * event);
     public:     static int execute(command::subscription * subscription, uint32 type, command::event * event);
     public:     static int on(command::subscription * subscription, uint32 type, command::event * event);
     public:     processor(void) {}

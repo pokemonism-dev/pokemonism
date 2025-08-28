@@ -20,6 +20,10 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
 
         switch (type()) {
             case latios::command::event::exe:   return processor::execute(subscriptionGet(), no, this);
+            case latios::command::event::gen:   return processor::gen(subscriptionGet(), no, this);
+            case latios::command::event::rem:   return processor::rel(subscriptionGet(), no, this);
+            case latios::command::event::reg:   return processor::add(subscriptionGet(), no, this);
+            case latios::command::event::del:   return processor::del(subscriptionGet(), no, this);
             default:                            return raise(new pokemon::latios::exception::unsupported::event());
         }
     }

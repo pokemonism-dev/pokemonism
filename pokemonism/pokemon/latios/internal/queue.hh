@@ -24,6 +24,7 @@ namespace pokemon { namespace latios { namespace internal {
     protected:  uint64 size;
     protected:  internal::event * head;
     protected:  internal::event * tail;
+    public:     inline virtual uint64 length(void) const { return size; }
     public:     virtual void push(internal::event * item);
     public:     virtual internal::event * del(internal::event * item);
     public:     virtual uint64 on(void);
