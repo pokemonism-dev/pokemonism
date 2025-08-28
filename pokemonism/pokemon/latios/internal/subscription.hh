@@ -11,117 +11,130 @@
 #define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_SUBSCRIPTION__HH__
 
 #include <pokemon/primitivable.hh>
+
+#include <pokemon/latios/object.hh>
 #include <pokemon/latios/subscription.hh>
 
 #include <pokemon/latios/internal/linked/list.hh>
 
 namespace pokemon { namespace latios { namespace internal {
 
-    template <typename generator_type, typename object_type, typename event_type, typename node_type>
+    class generator;
+    class event;
+
     class subscription : public virtual latios::subscription {
-    /** PUBLIC TYPE DEFINITION */
-    public:     typedef generator_type                          generator;
-    public:     typedef object_type                             object;
-    public:     typedef event_type                              event;
-    public:     typedef node_type                               node;
-    public:     typedef object::event::handler                  handler;
-    public:     typedef handler                                 callback[object::event::max];
-    public:     constexpr static uint32                         max = object::event::max;
+    /** PUBLIC CLASS DEFINITION */
+    public:     class node;
+    /** PUBLIC STATIC METHOD */
+    public:     static subscription * rel(subscription * o);
     /** PRIVATE MEMBER DESCRIPTION */
-    private:    generator *                                     container;
-    private:    subscription<generator, object, event, node> *  prev;
-    private:    subscription<generator, object, event, node> *  next;
-    protected:  uint64                                          size;
-    protected:  node *                                          head;
-    protected:  node *                                          tail;
-    protected:  uint32                                          properties;
-    protected:  uint32                                          status;
-    protected:  object *                                        origin;
-    protected:  callback *                                      callbackSet;
+    private:    internal::generator *       container;
+    private:    internal::subscription *    prev;
+    private:    internal::subscription *    next;
+    protected:  uint64                      size;
+    protected:  subscription::node *        head;
+    protected:  subscription::node *        tail;
+    protected:  uint32                      properties;
+    protected:  uint32                      status;
     /** PROTECTED VIRTUAL METHOD */
-    protected:  virtual uint32 pre(uint32 type, event ** parameter, primitivable::object ** result);
-    protected:  virtual void post(uint32 type, event * parameter, primitivable::object * result, int ret);
+    protected:  inline virtual uint32 pre(uint32 type, internal::event ** parameter, primitivable::object ** result);
+    protected:  inline virtual void post(uint32 type, internal::event * parameter, primitivable::object * result, int ret);
     /** PUBLIC VIRTUAL METHOD */
-    public:     virtual node * add(node * link);
-    public:     virtual node * del(node * link);
-    public:     virtual void clear(void);
-    public:     virtual int on(uint32 type, event * parameter, primitivable::object * result);
+    public:     inline virtual subscription::node * add(subscription::node * link);
+    public:     inline virtual subscription::node * del(subscription::node * link);
+    public:     inline virtual void clear(void);
+    public:     inline virtual int on(uint32 type, internal::event * parameter, primitivable::object * result) = 0;
+    /** PUBLIC GET & SET */
+    public:     inline virtual const internal::generator * generatorGet(void) const;
     /** CUSTOM CONSTRUCTOR METHOD */
-    public:     subscription(object * origin, uint32 properties, callback * callbackSet);
+    protected:  inline explicit subscription(uint32 properties);
     /** DEFAULT CLASS METHOD */
-    public:     subscription(void) = delete;
-    public:     ~subscription(void) override;
-    public:     subscription(const subscription<generator, object, event, node> & o) = delete;
-    public:     subscription(subscription<generator, object, event, node> && o) noexcept = delete;
-    public:     subscription<generator, object, event, node> & operator=(const subscription<generator, object, event, node> & o) = delete;
-    public:     subscription<generator, object, event, node> & operator=(subscription<generator, object, event, node> && o) noexcept = delete;
+    public:     inline ~subscription(void) override;
+    public:     subscription(const internal::subscription & o) = delete;
+    public:     subscription(internal::subscription && o) noexcept = delete;
+    public:     internal::subscription & operator=(const internal::subscription & o) = delete;
+    public:     internal::subscription & operator=(internal::subscription && o) noexcept = delete;
+    /** FRIEND CLASS & METHOD DESCRIPTION */
+    public:     friend class linked::list<generator, subscription>;
+    public:     friend class linked::list<subscription, subscription::node>;
     };
 
+    class subscription::node : public virtual latios::object {
+    /** PROTECTED MEMBER DESCRIPTION */
+    protected:  internal::subscription *    container;
+    protected:  subscription::node *        prev;
+    protected:  subscription::node *        next;
+    protected:  internal::event *           event;
+    /** CUSTOM CONSTRUCTOR */
+    protected:  inline explicit node(internal::subscription * container);
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    public:     node(void) = delete;
+    public:     inline ~node(void) override;
+    public:     node(const subscription::node & o) = delete;
+    public:     node(subscription::node && o) noexcept = delete;
+    public:     subscription::node & operator=(const subscription::node & o) = delete;
+    public:     subscription::node & operator=(subscription::node && o) noexcept = delete;
+    /** FRIEND CLASS & METHOD DESCRIPTION */
+    public:     friend class linked::list<internal::subscription, subscription::node>;
+    };
+
+} } }
+
+#include <pokemon/latios/internal/generator.hh>
+
+namespace pokemon { namespace latios { namespace internal {
+
     /** PROTECTED VIRTUAL METHOD */
-    template<typename generator, typename object, typename event, typename node>
-    uint32 subscription<generator, object, event, node>::pre(const uint32 type, event ** parameter, primitivable::object ** result) {
+    uint32 subscription::pre(uint32 type, internal::event ** parameter, primitivable::object ** result) {
         return type;
     }
 
-    template<typename generator, typename object, typename event, typename node>
-    void subscription<generator, object, event, node>::post(uint32 type, event * parameter, primitivable::object * result, int ret) {
-        // ### 20250828 | IMPLEMENT THIS
+    void subscription::post(uint32 type, internal::event * parameter, primitivable::object * result, int ret) {
+
     }
 
     /** PUBLIC VIRTUAL METHOD */
-    template<typename generator, typename object, typename event, typename node>
-    node * subscription<generator, object, event, node>::add(node * link) {
-        return linked::list::add(this, link);
+    subscription::node * subscription::add(subscription::node * link) {
+        return linked::list<subscription, subscription::node>::add(this, link);
     }
 
-    template<typename generator, typename object, typename event, typename node>
-    node * subscription<generator, object, event, node>::del(node * link) {
-        return linked::list::del(this, link);
+    subscription::node * subscription::del(subscription::node * link) {
+        return linked::list<subscription, subscription::node>::del(this, link);
     }
 
-    template<typename generator, typename object, typename event, typename node>
-    void subscription<generator, object, event, node>::clear(void) {
-        linked::list::clear(container);
+    void subscription::clear(void) {
+        linked::list<generator, subscription>::clear(container, subscription::rel);
     }
 
-    template<typename generator, typename object, typename event, typename node>
-    int subscription<generator, object, event, node>::on(uint32 type, event * parameter, primitivable::object * result) {
-        if ((type = pre(type, addressof(parameter), addressof(result))) < max) {
-            const int ret = on(type, parameter, result);
-            post(type, parameter, result, ret);
-
-            return ret;
-        }
-
-        return event::fail;
+    /** PUBLIC GET & SET */
+    const internal::generator * subscription::generatorGet(void) const {
+        return container;
     }
 
     /** CUSTOM CONSTRUCTOR METHOD */
-    template<typename generator, typename object, typename event, typename node>
-    subscription<generator, object, event, node>::subscription(object * origin, const uint32 properties, callback * callbackSet) :
-    container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(none), origin(origin), callbackSet(callbackSet) {
-        // ReSharper disable once CppVirtualFunctionCallInsideCtor
-        on(object::event::gen, nullptr, primitivable::object::gen(success));
+    subscription::subscription(const uint32 properties) :
+    container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(none) {
+
     }
 
     /** DEFAULT CLASS METHOD */
-    template<typename generator, typename object, typename event, typename node>
-    subscription<generator, object, event, node>::~subscription() {
-        // ReSharper disable CppVirtualFunctionCallInsideCtor
-        on(object::event::rem, nullptr, primitivable::object::gen(success));
-        clear();
-        // ReSharper restore CppVirtualFunctionCallInsideCtor
 
-        if (container != nullptr) container->del(this);
-
-        // ### 20250828 | RELEASE OBJECT WHEN PROPERTIES SET RELEASE OBJECT ON REM
-        if (origin != nullptr) origin = nullptr;
-
+    subscription::~subscription(void) {
         properties = none;
         status = none;
-        callbackSet = nullptr;
     }
 
+    /** CUSTOM CONSTRUCTOR */
+    subscription::node::node(internal::subscription * container) : container(nullptr), prev(nullptr), next(nullptr), event(nullptr) {
+        linked::list<internal::subscription, subscription::node>::add(container, this);
+    }
+
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    // node(void) = delete;
+    subscription::node::~node(void) {
+        if (container != nullptr) linked::list<internal::subscription, subscription::node>::del(container, this);
+        // TODO: IMPLEMENT
+    }
 
 } } }
 

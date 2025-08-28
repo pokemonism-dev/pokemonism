@@ -21,7 +21,7 @@ namespace pokemon { namespace latios { namespace external { namespace command {
     // ReSharper disable once CppParameterMayBeConst
     protected:  inline explicit event(uint32 type) : latios::event(type) {}
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
-    public:     inline event(void) = delete;
+    protected:  inline event(void) {}
     protected:  inline ~event(void) override {}
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;

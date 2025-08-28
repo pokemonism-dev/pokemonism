@@ -31,7 +31,7 @@ namespace pokemon { namespace latios {
     /** CUSTOM CONSTRUCTOR */
     protected:  inline explicit event(const uint32 type) : no(type), exception(nullptr) {}
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
-    public:     inline event(void) = delete;
+    public:     inline event(void) : no(declaration::invalid), exception(nullptr) {}
     protected:  inline virtual ~event(void) { exception = allocator::del(exception); }
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;

@@ -12,19 +12,21 @@
 
 #include <pokemon/log.hh>
 #include <pokemon/allocator.hh>
+#include <pokemon/exception.hh>
 
-#include <pokemon/latios/internal/linked.hh>
+#include <pokemon/latios/exception.hh>
 
 namespace pokemon { namespace latios { namespace internal { namespace linked {
 
     // ReSharper disable once CppClassCanBeFinal
+    template <typename container_type, typename node_type>
     class list {
-    public:     template <typename container_type, typename node_type> inline static void clear(container_type * container);
-    public:     template <typename container_type, typename node_type> inline static void clear(container_type * container, node_type * (*destructor)(node_type *));
-    public:     template <typename container_type, typename node_type> inline static node_type * add(container_type * container, node_type * node);
-    public:     template <typename container_type, typename node_type> inline static node_type * del(container_type * container, node_type * node);
-    public:     template <typename container_type, typename node_type> inline static node_type * pop(container_type * container);
-    public:     template <typename container_type, typename node_type> inline static node_type * push(container_type * container, node_type * node);
+    public:     inline static void clear(container_type * container);
+    public:     inline static void clear(container_type * container, node_type * (*destructor)(node_type *));
+    public:     inline static node_type * add(container_type * container, node_type * node);
+    public:     inline static node_type * del(container_type * container, node_type * node);
+    public:     inline static node_type * pop(container_type * container);
+    public:     inline static node_type * push(container_type * container, node_type * node);
     public:     list(void) {}
     public:     virtual ~list(void) {}
     public:     list(const list & o) = delete;
@@ -35,7 +37,7 @@ namespace pokemon { namespace latios { namespace internal { namespace linked {
 
     // ReSharper disable once CppDFAConstantFunctionResult
     template <typename container_type, typename node_type>
-    node_type * list::add(container_type * container, node_type * node) {
+    node_type * list<container_type, node_type>::add(container_type * container, node_type * node) {
         critical_quick_throw_check(container == nullptr || node == nullptr, exceptional::nullpointer, return node);
         critical_quick_throw_check(node->container != nullptr, exceptional::unclean::node, return node);
 
@@ -55,7 +57,7 @@ namespace pokemon { namespace latios { namespace internal { namespace linked {
 
     // ReSharper disable once CppDFAConstantFunctionResult
     template <typename container_type, typename node_type>
-    node_type * list::push(container_type * container, node_type * node) {
+    node_type * list<container_type, node_type>::push(container_type * container, node_type * node) {
         critical_quick_throw_check(container == nullptr || node == nullptr, exceptional::nullpointer, return node);
         critical_quick_throw_check(node->container != nullptr, exceptional::unclean::node, return node);
 
@@ -74,7 +76,7 @@ namespace pokemon { namespace latios { namespace internal { namespace linked {
     }
 
     template <typename container_type, typename node_type>
-    node_type * list::del(container_type * container, node_type * node) {
+    node_type * list<container_type, node_type>::del(container_type * container, node_type * node) {
         critical_quick_throw_check(node == nullptr, exceptional::nullpointer, return node);
         develop_quick_throw_check(node->container == nullptr, exceptional::nullpointer, return node);
         develop_quick_throw_check(container == nullptr, exceptional::nullpointer, return node);
@@ -105,7 +107,7 @@ namespace pokemon { namespace latios { namespace internal { namespace linked {
     }
 
     template <typename container_type, typename node_type>
-    node_type * list::pop(container_type * container) {
+    node_type * list<container_type, node_type>::pop(container_type * container) {
         critical_quick_throw_check(container == nullptr, exceptional::nullpointer, return nullptr);
         critical_quick_throw_check(container->size == 0 && container->head != nullptr, exceptional::critical, exit(0));
 
@@ -126,19 +128,19 @@ namespace pokemon { namespace latios { namespace internal { namespace linked {
     }
 
     template <typename container_type, typename node_type>
-    void list::clear(container_type * container) {
+    void list<container_type, node_type>::clear(container_type * container) {
         critical_quick_throw_check(container == nullptr, exceptional::nullpointer, return);
 
         node_type * node = nullptr;
-        while ((node = list::pop<container_type, node_type>(container)) != nullptr) allocator::del<node_type>(node);
+        while ((node = list<container_type, node_type>::pop(container)) != nullptr) allocator::del<node_type>(node);
     }
 
     template <typename container_type, typename node_type>
-    void list::clear(container_type * container, node_type * (*destructor)(node_type *)) {
+    void list<container_type, node_type>::clear(container_type * container, node_type * (*destructor)(node_type *)) {
         critical_quick_throw_check(container == nullptr || destructor == nullptr, exceptional::nullpointer, return);
 
         node_type * node = nullptr;
-        while ((node = list::pop<container_type, node_type>(container)) != nullptr) allocator::del<node_type>(destructor(node));
+        while ((node = list<container_type, node_type>::pop(container)) != nullptr) allocator::del<node_type>(destructor(node));
     }
 
 } } } }

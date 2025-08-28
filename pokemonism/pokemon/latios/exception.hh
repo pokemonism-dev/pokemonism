@@ -13,15 +13,16 @@
 #include <pokemon/exception.hh>
 
 #define latios_exception_class_quick_declare(first, second)                         \
-namespace pokemon { namespace latios { namespace exceptional { namespace first {    \
+namespace pokemon { namespace latios { namespace exception { namespace first {      \
 using second = pokemon::exception;                                                  \
 } } } }
 
 #define latios_single_namespace_exception_class_quick_declare(first)                \
-namespace pokemon { namespace latios { namespace exceptional {                      \
+namespace pokemon { namespace latios { namespace exception {                        \
 using first = pokemon::exception;                                                   \
 } } }
 
+latios_exception_class_quick_declare(deleted, event);
 latios_exception_class_quick_declare(deleted, event);
 
 #endif // __POKEMONISM_POKEMON_LATIOS_EXCEPTION__HH__

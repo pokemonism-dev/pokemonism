@@ -12,82 +12,63 @@
 
 #include <pokemonism.hh>
 
-#include <pokemon/latios/internal/linked/list.hh>
-#include <pokemon/latios/external/event.hh>
+#include <pokemon/latios/internal/queue.hh>
 #include <pokemon/latios/exception.hh>
+
+#include <pokemon/latios/internal/subscription.hh>
+#include <pokemon/latios/internal/linked/list.hh>
 
 namespace pokemon { namespace latios { namespace internal {
 
-    template <typename link_type>
-    class event : protected virtual external::event {
-    /** PUBLIC STATIC TYPE DEFINITION */
-    public:     typedef link_type   node;
-    /** PUBLIC STATIC METHOD */
-    public:     inline static event<node> * rem(event<node> * o);
-    public:     inline static event<node> * rem(event<node> * o, node * link);
+    class event : protected virtual latios::event {
+    /** STATIC MEMBER DEFINITION */
+    public:     constexpr static int    success = latios::event::success;
+    public:     constexpr static int    fail = latios::event::fail;
+    public:     constexpr static int    retry = latios::event::retry;
     /** PROTECTED MEMBER VARIABLE */
-    protected:  node *              link;
-    /** OVERRIDE PURE::EVENT */
-    public:     inline void del(void) override;
+    protected:  queue *                 container;
+    protected:  event *                 prev;
+    protected:  event *                 next;
+    protected:  subscription::node *    node;
+    /** PUBLIC GET & SET */
+    public:     inline virtual const queue * queueGet(void) const;
+    /** PUBLIC VIRTUAL METHOD */
+    public:     virtual int on(pokemon::exception * e) = 0;
     /** CUSTOM CONSTRUCTOR */
-    protected:  inline explicit event(uint32 type, node * link);
+    protected:  inline event(uint32 type, subscription::node * node);
+    protected:  inline explicit  event(subscription::node * node);
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
     public:     inline event(void) = delete;
-    protected:  inline ~event(void) override;
+    public:     inline ~event(void) override;
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;
     public:     event & operator=(const event & o) = delete;
     public:     event & operator=(event && o) noexcept = delete;
-    public:     friend class linked::list;
+    /** FRIEND CLASS & METHOD */
+    public:     friend class linked::list<queue, internal::event>;
     };
 
-    /** PUBLIC STATIC METHOD */
-    template <typename node>
-    event<node> * event<node>::rem(event<node> * o) {
-        if (o != nullptr) {
-            if (o->container != nullptr) {
-                linked::list::del(o->container, o);
-                // ReSharper disable once CppAbstractVirtualFunctionCallInCtor
-                if (const int ret = o->on(nullptr); ret == retry) {
-                    // ReSharper disable once CppAbstractVirtualFunctionCallInCtor
-                    o->on(new latios::exceptional::deleted::event());
-                }
-            }
+} } }
 
-            node * link = o->link;
+namespace pokemon { namespace latios { namespace internal {
 
-            o->link = nullptr;
-            node::rem(link, o);
-        }
-
-        return o;
-    }
-
-    template <typename node>
-     event<node> * event<node>::rem(event<node> * o, node * link) {
-        if (o != nullptr) delete o; // NOLINT(*-delete-null-pointer)
-
-        return nullptr;
-    }
-
-    /** OVERRIDE PURE::EVENT */
-    template <typename node>
-    void event<node>::del(void) {
-        linked::list::del(container, this);
+    /** PUBLIC GET & SET */
+    const queue * event::queueGet(void) const {
+        return container;
     }
 
     /** CUSTOM CONSTRUCTOR */
-
-    template <typename node>
-    event<node>::event(const uint32 type, node * link) : external::event(type), link(link) {
+    event::event(const uint32 type, subscription::node * node) : latios::event(type), node(node), container(nullptr), prev(nullptr), next(nullptr) {
 
     }
 
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    event::event(subscription::node * node) : node(node), container(nullptr), prev(nullptr), next(nullptr) {
 
-    template <typename node>
-    event<node>::~event(void) {
-        event<node>::rem(this);
+    }
+
+    event::~event(void) {
+        // TODO: IMPLEMENT THIS
     }
 
 } } }

@@ -9,13 +9,13 @@
 
 #include "queue.hh"
 
-#include "../external/event.hh"
+#include "event.hh"
 
 namespace pokemon { namespace latios { namespace internal {
 
-    void queue::push(external::event * item) {
-        if (item != nullptr && item->containerGet() == nullptr) {
-            linked::list::add(this, item);
+    void queue::push(internal::event * item) {
+        if (item != nullptr && item->queueGet() == nullptr) {
+            linked::list<queue, internal::event>::add(this, item);
         }
     }
 
@@ -24,17 +24,17 @@ namespace pokemon { namespace latios { namespace internal {
         uint64 count = 0;
         lock();
         while (count < limit && size > 0) {
-            if (external::event * o = linked::list::pop<queue, external::event>(this)) {
+            if (internal::event * o = linked::list<queue, internal::event>::pop(this)) {
                 unlock();
                 count = count + 1;
 
-                if (const int ret = o->on(nullptr); ret != event::retry) {
+                if (const int ret = o->on(nullptr); ret != internal::event::retry) {
                     delete o;
                     lock();
                     continue;
                 }
                 lock();
-                linked::list::push<queue, external::event>(this, o);
+                linked::list<queue, internal::event>::push(this, o);
             }
             break;
         }
@@ -46,7 +46,7 @@ namespace pokemon { namespace latios { namespace internal {
     void queue::clear(void) {
         on();
 
-        linked::list::clear<queue, external::event>(this);
+        linked::list<queue, internal::event>::clear(this);
     }
 
 } } }

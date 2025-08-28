@@ -11,22 +11,24 @@
 #define   __POKEMONISM_POKEMON_LATIOS_INTERNAL_COMMAND_SUBSCRIPTION__HH__
 
 #include <pokemon/latios/command.hh>
+
 #include <pokemon/latios/external/command/subscription.hh>
 #include <pokemon/latios/internal/subscription.hh>
+
 
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
     class link;
-    class event;
     class generator;
 
-    class subscription : public internal::subscription<generator, latios::command, event,  link>, public external::command::subscription {
-    protected:  subscription(void);
+    class subscription : public internal::subscription, public external::command::subscription {
+    protected:  subscription(void) = delete;
     protected:  ~subscription(void) override;
     public:     subscription(const subscription & o) = delete;
     public:     subscription(subscription && o) noexcept = delete;
     public:     subscription & operator=(const subscription & o) = delete;
     public:     subscription & operator=(subscription && o) noexcept = delete;
+    public:     friend class linked::list<command::subscription, command::link>;
     };
 
 } } } }

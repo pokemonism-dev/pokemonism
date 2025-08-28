@@ -19,19 +19,34 @@
 
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
-    class link;
+    class event;
+    class generator;
+    class subscription;
 
-    class event : public internal::event<link>, public external::command::event {
+    class event : public internal::event, public external::command::event {
     /** CUSTOM CONSTRUCTOR */
-    protected:  explicit event(uint32 type);
+    public:     inline explicit event(uint32 type, subscription::node * node);
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
     public:     event(void) = delete;
-    protected:  ~event(void) override;
+    public:     inline ~event(void) override;
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;
     public:     event & operator=(const event & o) = delete;
     public:     event & operator=(event && o) noexcept = delete;
+    public:     friend class generator;
     };
+
+} } } }
+
+namespace pokemon { namespace latios { namespace internal { namespace command {
+
+    /** CUSTOM CONSTRUCTOR */
+    event::event(const uint32 type, subscription::node * node) : latios::event(type), internal::event(node) {
+    }
+
+    /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
+    event::~event(void) {
+    }
 
 } } } }
 

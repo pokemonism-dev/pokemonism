@@ -30,8 +30,8 @@ namespace pokemon { namespace latios { namespace internal {
                 } generator;
     /** OVERRIDE METHOD IN EXTERNAL::ENGINE */
     public:     const char * tag(void) const override { return "internal"; }
-    public:     command::subscription * reg(latios::command * command, latios::command::event::handler (*on)[latios::command::event::max]) override;
-    public:     command::subscription * mod(latios::command * command, uint32 type, latios::command::event::handler on) override;
+    public:     external::command::subscription * reg(latios::command * command, latios::command::event::handler (*on)[latios::command::event::max]) override;
+    public:     external::command::subscription * mod(latios::command * command, uint32 type, latios::command::event::handler on) override;
     public:     void cancel(void (*func)(external::engine &)) override;
     public:     engine & on(void) override;
     public:     int run(void) override;

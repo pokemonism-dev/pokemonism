@@ -16,76 +16,68 @@
 
 namespace pokemon { namespace latios { namespace internal {
 
-    template <typename subscription_type, typename event_type>
+    class subscription;
+    class engine;
+
     class generator : public virtual object {
-    /** STATIC TYPE DEFINITION */
-    public:     typedef subscription_type       subscription;
-    public:     typedef event_type              event;
     /** PROTECTED MEMBER VARIABLE */
-    protected:  engine *                        parent;
-    protected:  uint64                          size;
-    protected:  subscription *                  head;
-    protected:  subscription *                  tail;
+    protected:  engine *                    parent;
+    protected:  uint64                      size;
+    protected:  internal::subscription *    head;
+    protected:  internal::subscription *    tail;
     /** PUBLIC VIRTUAL METHOD */
-    public:     virtual subscription * reg(subscription * o);
-    public:     virtual subscription * del(subscription * o);
-    public:     virtual void clear(void);
-    public:     virtual uint64 on(void);
-    public:     virtual event * eventGen(subscription * o, uint32 type) = 0;
-    public:     virtual void dispatch(subscription * o, uint32 type) = 0;
+    public:     inline virtual internal::subscription * reg(internal::subscription * o);
+    public:     inline virtual internal::subscription * del(internal::subscription * o);
+    public:     inline virtual void clear(void);
+    public:     inline virtual uint64 on(void);
     /** CUSTOM CLASS CONSTRUCTOR */
-    public:     explicit generator(engine * parent);
+    protected:  inline explicit generator(engine * parent);
     /** DEFAULT CLASS METHOD */
     public:     generator(void) = delete;
-    public:     ~generator(void) override;
+    public:     inline ~generator(void) override;
     public:     generator(const generator & o) = delete;
     public:     generator(generator && o) noexcept = delete;
     public:     generator & operator=(const generator & o) = delete;
     public:     generator & operator=(generator && o) noexcept = delete;
-    public:     friend class linked::list;
+    public:     friend class linked::list<generator, internal::subscription>;
     };
 
-    /** PUBLIC VIRTUAL METHOD */
-    template <typename subscription, typename event>
-    subscription * generator<subscription, event>::reg(subscription * o) {
-        if (o != nullptr && o->generatorGet() == nullptr) {
-            linked::list::add(this, o);
+} } }
 
+#include <pokemon/latios/internal/subscription.hh>
+
+namespace pokemon { namespace latios { namespace internal {
+    /** PUBLIC VIRTUAL METHOD */
+    internal::subscription * generator::reg(internal::subscription * o) {
+        if (o != nullptr && o->generatorGet() == nullptr) {
+            linked::list<generator, internal::subscription>::add(this, o);
             o->on(object::event::reg, nullptr, primitivable::object::gen(success));
         }
-
         return o;
     }
 
-    template <typename subscription, typename event>
-    subscription * generator<subscription, event>::del(subscription * o) {
+    internal::subscription * generator::del(internal::subscription * o) {
         if (o != nullptr && o->generatorGet() == this) {
-            o = linked::list::del(this, o);
+            linked::list<generator, internal::subscription>::del(this, o);
             o->on(object::event::del, nullptr, primitivable::object::gen(success));
         }
-
         return o;
     }
 
-    template <typename subscription, typename event>
-    void generator<subscription, event>::clear(void) {
-        while (head) del(head);
+    void generator::clear(void) {
+        while (head != nullptr) linked::list<generator, internal::subscription>::del(this, head);
     }
 
-    template <typename subscription, typename event>
-    uint64 generator<subscription, event>::on(void) {
-        return success;
+    uint64 generator::on(void) {
+        return 0;
     }
 
     /** CUSTOM CLASS CONSTRUCTOR */
-    template <typename subscription, typename event>
-    generator<subscription, event>::generator(engine * parent) : parent(parent), size(0), head(nullptr), tail(nullptr) {
-
+    generator::generator(engine * parent) : parent(parent), size(0), head(nullptr), tail(nullptr) {
     }
 
     /** DEFAULT CLASS METHOD */
-    template <typename subscription, typename event>
-    generator<subscription, event>::~generator(void) {
+    generator::~generator(void) {
         // ReSharper disable once CppVirtualFunctionCallInsideCtor
         clear();
     }

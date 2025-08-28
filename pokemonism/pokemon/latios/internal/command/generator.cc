@@ -8,3 +8,10 @@
  */
 
 #include "generator.hh"
+
+#include "event.hh"
+#include "subscription.hh"
+
+namespace pokemon { namespace latios { namespace internal { namespace command {
+
+} } } }

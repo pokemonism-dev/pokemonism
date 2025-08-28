@@ -12,6 +12,19 @@
 
 namespace pokemon { namespace latios { namespace internal {
 
+    template <typename first_type, typename second_type>
+    inline first_type * eventRel(first_type * x, second_type * y) {
+        x->origin = nullptr;
+        y->origin = nullptr;
+        delete y;
+        return x;
+    }
+
+//     template <typename event, typename node>
+// inline event * eventRel(event * e, node * n) {
+//         return nullptr;
+//     }
+
     // template <typename subscription, typename event> class link;
     //
     //

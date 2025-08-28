@@ -8,3 +8,10 @@
  */
 
 #include "subscription.hh"
+
+
+
+namespace pokemon { namespace latios { namespace internal { namespace command {
+
+
+} } } }

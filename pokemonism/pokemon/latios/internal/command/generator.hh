@@ -16,11 +16,13 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
 
     class subscription;
     class event;
+    class link;
 
-    class generator : public internal::generator<subscription, event> {
+    class generator : public internal::generator {
     /** IMPLEMENT OVERRIDE METHOD */
-    public:     event * eventGen(subscription * o, uint32 type) override;
-    public:     void dispatch(subscription * o, uint32 type) override;
+    public:     command::event * eventGen(command::subscription * o, uint32 type);
+    // public:     void eventRel(event * e, link * origin);
+    public:     void dispatch(command::subscription * o, uint32 type);
     /** CUSTOM CLASS CONSTRUCTOR */
     public:     explicit generator(engine * parent);
     /** DEFAULT CLASS METHOD */
