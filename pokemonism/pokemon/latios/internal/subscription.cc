@@ -52,7 +52,7 @@ namespace pokemon { namespace latios { namespace internal {
 
     int subscription::on(uint32 type, internal::event * event, primitivable::object * result) {
         if (callbackSet) {
-            if ((type = func.bootstrap != nullptr ? func.bootstrap(this, type, addressof(event), object, addressof(result)) : type) < max()) {
+            if ((type = func.bootstrap != nullptr ? func.bootstrap(this, type, addressof(event), object, addressof(result)) : type) < maximum()) {
                 const listener f = callbackSet[type];
 
                 const int ret = f != nullptr ? f(object, type, event, result) : declaration::success;

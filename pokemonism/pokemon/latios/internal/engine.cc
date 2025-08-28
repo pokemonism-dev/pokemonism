@@ -30,6 +30,7 @@ namespace pokemon { namespace latios { namespace internal {
     external::command::subscription * engine::reg(latios::command * command, const uint32 properties, latios::command::event::listener (*on)[latios::command::event::max]) {
         critical_quick_throw_check(generator.command == nullptr, exceptional::nullpointer, return nullptr);
 
+        printf("hello\n");
         internal::command::subscription * subscription = generator.command->subscriptionGen(command, properties, on);
 
         if (subscription != nullptr) generator.command->reg(subscription);

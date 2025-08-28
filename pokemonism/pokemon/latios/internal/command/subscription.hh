@@ -28,6 +28,7 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
     public:     typedef latios::command::event::listener    listener;
     public:     typedef latios::command::event::listener    handlerSet[latios::command::event::max];
     public:     constexpr static uint32                     max = latios::command::event::max;
+    public:     uint32 maximum(void) const override { return subscription::max; }
     public:     inline latios::command * objectGet(void) const override { return dynamic_cast<latios::command *>(object); }
     /** DEFAULT CONSTRUCTOR & DESTRUCTOR */
     public:     inline subscription(latios::command * object, uint32 properties, subscription::handlerSet * callback);

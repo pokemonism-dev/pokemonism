@@ -21,6 +21,7 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
 
     command::event * generator::dispatch(command::subscription * o, const uint32 type) {
         command::event * event = nullptr;
+        printf("hello 2\n");
         switch (type) { // NOLINT(*-multiway-paths-covered)
         case latios::command::event::exe:   event = (processor::execute(o, type, nullptr) == command::event::retry && parent != nullptr ? eventGen(o, type) : nullptr);
         }

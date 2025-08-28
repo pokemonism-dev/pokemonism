@@ -56,7 +56,7 @@ namespace pokemon { namespace latios { namespace internal {
     public:     void cancel(void) override;
     public:     inline virtual latios::object * objectGet(void) const { return object; }
     /** PUBLIC  */
-    public:     inline virtual uint32 max(void) const { return latios::object::event::max; }
+    public:     inline virtual uint32 maximum(void) const { return latios::object::event::max; }
     public:     int on(uint32 type, internal::event * event, primitivable::object * result);
     /** PUBLIC VIRTUAL METHOD */
     public:     inline virtual subscription::node * add(subscription::node * link);
