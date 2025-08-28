@@ -24,24 +24,24 @@ namespace pokemon { namespace latios { namespace internal {
 
     class subscription : public virtual latios::subscription {
     /** PUBLIC TYPE DEFINITION */
-    public:     typedef int (*listener)(latios::object *, uint32, internal::event *, primitivable::object *);
+    public:     typedef int (*listener)(latios::object *, uint32, internal::event *, primitivable::object *, pokemon::exception *);
     public:     typedef listener *          handlerSet;
     /** PUBLIC CLASS DEFINITION */
     public:     class node;
     public:     struct function {
-                public:     typedef uint32 (*bootstrapper)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **);
-                public:     typedef void (*packer)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int);
-                public:     uint32 (*bootstrap)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **);
-                public:     void (*pack)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int);
+                public:     typedef uint32 (*bootstrapper)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **, pokemon::exception **);
+                public:     typedef void (*packer)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int, pokemon::exception *);
+                public:     uint32 (*bootstrap)(subscription *, uint32, internal::event **, latios::object *, primitivable::object **, pokemon::exception **);
+                public:     void (*pack)(subscription *, uint32, internal::event *, latios::object *, primitivable::object *, int, pokemon::exception *);
                 public:     inline function(bootstrapper bootstrap, packer pack);
                 };
     /** PUBLIC STATIC METHOD */
     public:     static subscription * rel(subscription * o);
     public:     static subscription * rem(subscription * o);
-    public:     inline static uint32 bootstrap(subscription * o, uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result);
-    public:     inline static void pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret);
+    public:     inline static uint32 bootstrap(subscription * o, uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result, pokemon::exception ** e);
+    public:     inline static void pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret, pokemon::exception * e);
     /** PRIVATE MEMBER DESCRIPTION */
-    private:    internal::generator *       container;
+    protected:  internal::generator *       container;
     private:    internal::subscription *    prev;
     private:    internal::subscription *    next;
     protected:  uint64                      size;
@@ -57,13 +57,14 @@ namespace pokemon { namespace latios { namespace internal {
     public:     inline virtual latios::object * objectGet(void) const { return object; }
     /** PUBLIC  */
     public:     inline virtual uint32 maximum(void) const { return latios::object::event::max; }
-    public:     int on(uint32 type, internal::event * event, primitivable::object * result);
+    public:     int on(uint32 type, internal::event * event, primitivable::object * result, pokemon::exception * e);
     /** PUBLIC VIRTUAL METHOD */
     public:     inline virtual subscription::node * add(subscription::node * link);
     public:     inline virtual subscription::node * del(subscription::node * link);
     public:     inline virtual void clear(void);
     /** PUBLIC GET & SET */
-    public:     inline virtual const internal::generator * generatorGet(void) const;
+    public:     inline virtual const internal::generator * generatorGet(void) const { return container; }
+    public:     inline virtual internal::generator * generatorGet(void) { return container; }
     protected:  inline void boostrapSet(function::bootstrapper f);
     protected:  inline void packSet(function::packer f);
     /** CUSTOM CONSTRUCTOR METHOD */
@@ -108,8 +109,8 @@ namespace pokemon { namespace latios { namespace internal {
 
     /** PUBLIC STATIC METHOD */
 
-    uint32 subscription::bootstrap(subscription * o, const uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result) { return type; }
-    void subscription::pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret) {}
+    uint32 subscription::bootstrap(subscription * o, const uint32 type, internal::event ** event, latios::object * object, primitivable::object ** result, pokemon::exception ** e) { return type; }
+    void subscription::pack(subscription * o, uint32 type, internal::event * event, latios::object * object, primitivable::object * result, int ret, pokemon::exception * e) {}
 
     /** PUBLIC VIRTUAL METHOD */
     subscription::node * subscription::add(subscription::node * link) {
@@ -122,11 +123,6 @@ namespace pokemon { namespace latios { namespace internal {
 
     void subscription::clear(void) {
         linked::list<subscription, subscription::node>::clear(this, subscription::node::rem);
-    }
-
-    /** PUBLIC GET & SET */
-    const internal::generator * subscription::generatorGet(void) const {
-        return container;
     }
 
     // ReSharper disable CppParameterMayBeConst
@@ -142,7 +138,7 @@ namespace pokemon { namespace latios { namespace internal {
     /** CUSTOM CONSTRUCTOR METHOD */
     subscription::subscription(latios::object * object, const uint32 properties, listener * callbackSet) :
     container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(none), object(object), callbackSet(callbackSet), func(bootstrap, pack) {
-        on(latios::object::event::max, nullptr, primitivable::object::gen(success));
+        on(latios::object::event::max, nullptr, primitivable::object::gen(success), nullptr);
     }
 
 

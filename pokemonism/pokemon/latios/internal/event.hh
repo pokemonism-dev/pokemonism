@@ -21,6 +21,8 @@
 
 namespace pokemon { namespace latios { namespace internal {
 
+    class processor;
+
     class event : protected virtual latios::event {
     /** STATIC MEMBER DEFINITION */
     public:     constexpr static int    success = latios::event::success;
@@ -33,9 +35,10 @@ namespace pokemon { namespace latios { namespace internal {
     protected:  event *                 next;
     protected:  subscription::node *    node;
     /** PUBLIC GET & SET */
+    public:     inline virtual pokemon::exception * exceptionGet(void) const { return exception; }
     public:     inline virtual const queue * queueGet(void) const;
     /** PUBLIC VIRTUAL METHOD */
-    public:     virtual int on(pokemon::exception * e) = 0;
+    protected:  virtual int on(pokemon::exception * e) = 0;
     public:     inline virtual int raise(pokemon::exception * e);
     /** CUSTOM CONSTRUCTOR */
     protected:  inline event(uint32 type, subscription::node * node);

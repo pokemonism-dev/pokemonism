@@ -36,8 +36,6 @@ using namespace pokemon::meowth::persian;
 int main(int argc, char ** argv) {
     srandom(time(nullptr));
 
-    latios::internal::queue queue;
-
     printf("%s\n", latios::engine::tag());
 
     command o;
@@ -48,24 +46,20 @@ int main(int argc, char ** argv) {
 
     printf("%s\n", latios::engine::tag());
 
-    // const command::event::listener *set = command::event::printableCallbackSet;
-    // const command::event::listener *set = command::event::printableCallbackSet;
 
     command::event::listener set[command::event::max] = {
-        command::event::printableOn,
-        command::event::printableOn,
-        command::event::printableOn,
-        command::event::printableOn,
-        command::event::printableOn
+        command::event::function::print,
+        command::event::function::print,
+        command::event::function::print,
+        command::event::function::print,
+        command::event::function::print
     };
 
-    latios::engine::reg(addressof(o), none, addressof(set));
+    latios::engine::reg(addressof(o), none, pointof(set));
+
+    command cancelling;
 
 
-
-    // latios::engine.reg(addressof(o));
-
-    // latios::engine::run
 
     return latios::engine::run();
 }

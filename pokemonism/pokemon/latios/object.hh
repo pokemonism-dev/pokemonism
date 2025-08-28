@@ -11,6 +11,7 @@
 #define   __POKEMONISM_POKEMON_LATIOS_OBJECT__HH__
 
 #include <pokemon/object.hh>
+#include <pokemon/exception.hh>
 #include <pokemon/primitivable.hh>
 
 namespace pokemon { namespace latios {
@@ -19,7 +20,7 @@ namespace pokemon { namespace latios {
 
     class object : public virtual pokemon::object {
     public:     struct event {
-                public:     typedef int (*listener)(object *, uint32, event *, primitivable::object *);
+                public:     typedef int (*listener)(object *, uint32, event *, primitivable::object *, pokemon::exception * e);
                 public:     constexpr static int gen = 0;
                 public:     constexpr static int rem = 1;
                 public:     constexpr static int reg = 2;

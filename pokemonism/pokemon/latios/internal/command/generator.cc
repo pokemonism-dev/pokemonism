@@ -7,6 +7,8 @@
  * @since       Aug 28, 2025
  */
 
+#include <pokemon/log.hh>
+
 #include "generator.hh"
 
 #include "event.hh"
@@ -19,15 +21,21 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
         return new command::event(type, new command::subscription::node(o));
     }
 
-    command::event * generator::dispatch(command::subscription * o, const uint32 type) {
-        command::event * event = nullptr;
-        printf("hello 2\n");
-        switch (type) { // NOLINT(*-multiway-paths-covered)
-        case latios::command::event::exe:   event = (processor::execute(o, type, nullptr) == command::event::retry && parent != nullptr ? eventGen(o, type) : nullptr);
-        }
-        if (event != nullptr) parent->dispatch(event);
+    void generator::dispatch(command::subscription * o, const uint32 type) {
+        critical_quick_throw_check(latios::command::event::max <= type, exceptional::overflow::index, return);
 
-        return event;
+        if (type == latios::command::event::exe) {
+            if (processor::execute(o, type, nullptr) == command::event::retry) post(o, type);
+        } else {
+            if (processor::on(o, type, nullptr) == command::event::retry) post(o, type);
+        }
+    }
+
+    void generator::post(command::subscription * o, uint32 type) {
+        critical_quick_throw_check(latios::command::event::max <= type, exceptional::overflow::index, return);
+        critical_quick_throw_check(parent == nullptr, exceptional::nullpointer, return);
+
+        parent->dispatch(eventGen(o, type));
     }
 
     command::subscription * generator::subscriptionGen(latios::command * command, const  uint32 properties, latios::command::event::listener (*on)[latios::command::event::max]) {
@@ -41,7 +49,13 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
     command::subscription * generator::reg(command::subscription * o) {
         if (o != nullptr && o->generatorGet() == nullptr) {
             internal::generator::reg(o);
-            dispatch(o, latios::command::event::exe);
+            if (parent->queueGet() != nullptr) {
+                diagnosticLog("queue push\n");
+                parent->dispatch(eventGen(o, latios::command::event::exe));
+            } else {
+                dispatch(o, latios::command::event::exe);
+            }
+
         }
 
         return o;

@@ -51,7 +51,7 @@ namespace pokemon { namespace latios { namespace internal {
     internal::subscription * generator::reg(internal::subscription * o) {
         if (o != nullptr && o->generatorGet() == nullptr) {
             linked::list<generator, internal::subscription>::add(this, o);
-            o->on(object::event::reg, nullptr, primitivable::object::gen(success));
+            o->on(object::event::reg, nullptr, primitivable::object::gen(success), nullptr);
         }
         return o;
     }
@@ -59,7 +59,7 @@ namespace pokemon { namespace latios { namespace internal {
     internal::subscription * generator::del(internal::subscription * o) {
         if (o != nullptr && o->generatorGet() == this) {
             linked::list<generator, internal::subscription>::del(this, o);
-            o->on(object::event::del, nullptr, primitivable::object::gen(success));
+            o->on(object::event::del, nullptr, primitivable::object::gen(success), nullptr);
         }
         return o;
     }

@@ -25,6 +25,7 @@ set(LATIOS_SOURCE                       event.cc
                                         external/command/event.cc
                                         external/command/subscription.cc)
 
+
 set(LATIOS_INTERNAL_HEADER              internal.hh
                                         internal/linked/list.hh
                                         internal/linked.hh
@@ -39,7 +40,7 @@ set(LATIOS_INTERNAL_HEADER              internal.hh
                                         internal/command/generator.hh
                                         internal/command/processor.hh
                                         internal/command/subscription.hh
-                                        )
+                                        internal/command/subscription/repeat.hh)
 
 set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/linked/list.cc
@@ -55,7 +56,7 @@ set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/command/generator.cc
                                         internal/command/processor.cc
                                         internal/command/subscription.cc
-                                        )
+                                        internal/command/subscription/repeat.cc)
 
 set(LATIOS_IMPLEMENT_SOURCE             )
 

@@ -36,7 +36,7 @@ namespace pokemon {
         constexpr int                               infinite = -1;
         constexpr int                               invalid = -1;
         constexpr int                               fail = -1;
-        constexpr int                               retry = -2;
+        constexpr int                               retry = 1;
         constexpr int                               success = 0;
         constexpr int                               none = 0;
         namespace type {

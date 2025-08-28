@@ -13,12 +13,15 @@
 #include <pokemon/latios/internal/command/event.hh>
 #include <pokemon/latios/internal/command/subscription.hh>
 
+#include <pokemon/latios/internal/processor.hh>
+
 namespace pokemon { namespace latios { namespace internal { namespace command {
 
-    class processor {
+    class processor : public internal::processor {
     public:     static int execute(command::subscription * subscription, uint32 type, command::event * event);
+    public:     static int on(command::subscription * subscription, uint32 type, command::event * event);
     public:     processor(void) {}
-    public:     inline virtual ~processor() {}
+    public:     inline ~processor() override {}
     public:     processor(const processor & o) = delete;
     public:     processor(processor && o) noexcept = delete;
     public:     processor & operator=(const processor & o) = delete;

@@ -50,14 +50,14 @@ namespace pokemon { namespace latios { namespace internal {
         status = none;
     }
 
-    int subscription::on(uint32 type, internal::event * event, primitivable::object * result) {
+    int subscription::on(uint32 type, internal::event * event, primitivable::object * result, pokemon::exception * e) {
         if (callbackSet) {
-            if ((type = func.bootstrap != nullptr ? func.bootstrap(this, type, addressof(event), object, addressof(result)) : type) < maximum()) {
+            if ((type = func.bootstrap != nullptr ? func.bootstrap(this, type, addressof(event), object, addressof(result), pointof(e)) : type) < maximum()) {
                 const listener f = callbackSet[type];
 
-                const int ret = f != nullptr ? f(object, type, event, result) : declaration::success;
+                const int ret = f != nullptr ? f(object, type, event, result, e) : declaration::success;
 
-                if (func.pack != nullptr) func.pack(this, type, event, object, result, ret);
+                if (func.pack != nullptr) func.pack(this, type, event, object, result, ret, e);
 
                 return ret;
             }
@@ -82,7 +82,7 @@ namespace pokemon { namespace latios { namespace internal {
                 if (internal::queue * queue = event->container; queue != nullptr) {
                     queue->del(event);
 
-                    if (subscription != nullptr) subscription->on(event->type(), event, primitivable::object::gen(internal::event::fail));
+                    if (subscription != nullptr) subscription->on(event->type(), event, primitivable::object::gen(internal::event::fail), nullptr);
                 }
                 event->node = nullptr;
                 o->event = nullptr;

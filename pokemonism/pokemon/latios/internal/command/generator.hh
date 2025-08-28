@@ -20,8 +20,9 @@ namespace pokemon { namespace latios { namespace internal { namespace command {
 
     class generator : public internal::generator {
     /** IMPLEMENT OVERRIDE METHOD */
-    public:     virtual command::event * eventGen(command::subscription * o, uint32 type);
-    public:     virtual command::event * dispatch(command::subscription * o, uint32 type);
+    protected:  virtual command::event * eventGen(command::subscription * o, uint32 type);
+    public:     virtual void dispatch(command::subscription * o, uint32 type);
+    public:     virtual void post(command::subscription * o, uint32 type);
     public:     virtual command::subscription * subscriptionGen(latios::command * command, uint32 properties, latios::command::event::listener (*on)[latios::command::event::max]);
     public:     command::subscription * reg(command::subscription * o);
     public:     command::subscription * del(command::subscription * o);
