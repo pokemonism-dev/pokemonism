@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 include_directories(include pokemonism ./)
 
 add_subdirectory(pokemonism/pokemon)
+add_subdirectory(pokemonism/psyduck)
 add_subdirectory(pokemonism/mareep)
 add_subdirectory(pokemonism/latios)
 

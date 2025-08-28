@@ -13,6 +13,7 @@ namespace pokemonism {
     namespace mareep {
 
         class subscription {
+        public:     virtual bool cancel(void) = 0;
         public:     subscription(void) {}
         public:     virtual ~subscription(void) {}
         public:     subscription(const subscription & o) = delete;
@@ -22,6 +23,9 @@ namespace pokemonism {
         };
 
     }
+
+    using subscription = mareep::subscription;
+
 }
 
 #endif // __POKEMONISM_MAREEP_SUBSCRIPTION__HH__
