@@ -14,7 +14,7 @@
 #include <exception>
 #include <iostream>
 
-namespace pokemon {
+namespace pokemonism {
     typedef char                                    int8;
     typedef short                                   int16;
     typedef int                                     int32;
@@ -64,13 +64,13 @@ namespace pokemon {
             using                                   ostream = std::ostream;
         }
     }
-
-    template <typename type> inline type * addressof(type & x) noexcept { return __builtin_addressof(x); }
-
 }
 
 #define pointof(o)                                  (&(o))
 #define referenceof(o)                              (*(o))
 #define valueof(o)                                  (*(o))
+
+// ReSharper disable once CppUnusedIncludeDirective
+#include <pokemon/object.hh>
 
 #endif // __POKEMONISM__HH__

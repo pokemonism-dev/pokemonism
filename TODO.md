@@ -1,3 +1,1 @@
-### 20250828 | LATIOS | DESCRIPTOR EVENT 
-
-
+### 20250828 | TEMPLATE 상속을 통한 멤버 변수 변환
