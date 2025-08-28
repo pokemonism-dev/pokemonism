@@ -13,6 +13,9 @@ set(LATIOS_HEADER                       event.hh
                                         exception.hh
                                         subscription.hh
                                         command.hh
+                                        descriptor.hh
+                                        external/descriptor/event.hh
+                                        external/descriptor/subscription.hh
                                         external/command/event.hh
                                         external/command/subscription.hh)
 
@@ -22,6 +25,9 @@ set(LATIOS_SOURCE                       event.cc
                                         exception.cc
                                         subscription.cc
                                         command.cc
+                                        descriptor.cc
+                                        external/descriptor/event.cc
+                                        external/descriptor/subscription.cc
                                         external/command/event.cc
                                         external/command/subscription.cc)
 
@@ -35,12 +41,7 @@ set(LATIOS_INTERNAL_HEADER              internal.hh
                                         internal/engine.hh
                                         internal/generator.hh
                                         internal/processor.hh
-                                        internal/subscription.hh
-                                        internal/command/event.hh
-                                        internal/command/generator.hh
-                                        internal/command/processor.hh
-                                        internal/command/subscription.hh
-                                        internal/command/subscription/repeat.hh)
+                                        internal/subscription.hh)
 
 set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/linked/list.cc
@@ -51,17 +52,36 @@ set(LATIOS_INTERNAL_SOURCE              internal.cc
                                         internal/engine.cc
                                         internal/generator.cc
                                         internal/processor.cc
-                                        internal/subscription.cc
-                                        internal/command/event.cc
+                                        internal/subscription.cc)
+
+set(LATIOS_INTERNAL_COMMAND_HEADER      internal/command/event.hh
+                                        internal/command/generator.hh
+                                        internal/command/processor.hh
+                                        internal/command/subscription.hh
+                                        internal/command/subscription/repeat.hh)
+
+set(LATIOS_INTERNAL_COMMAND_SOURCE      internal/command/event.cc
                                         internal/command/generator.cc
                                         internal/command/processor.cc
                                         internal/command/subscription.cc
                                         internal/command/subscription/repeat.cc)
 
+set(LATIOS_INTERNAL_DESCRIPTOR_HEADER   internal/descriptor.hh
+                                        internal/descriptor/event.hh
+                                        internal/descriptor/subscription.hh)
+
+set(LATIOS_INTERNAL_DESCRIPTOR_SOURCE   internal/descriptor.cc
+                                        internal/descriptor/event.cc
+                                        internal/descriptor/subscription.cc)
+
 set(LATIOS_IMPLEMENT_SOURCE             )
 
 add_library(pokemonism-latio-dev        ${LATIOS_INTERNAL_HEADER}
-                                        ${LATIOS_INTERNAL_SOURCE})
+                                        ${LATIOS_INTERNAL_SOURCE}
+                                        ${LATIOS_INTERNAL_COMMAND_HEADER}
+                                        ${LATIOS_INTERNAL_COMMAND_SOURCE}
+                                        ${LATIOS_INTERNAL_DESCRIPTOR_HEADER}
+                                        ${LATIOS_INTERNAL_DESCRIPTOR_SOURCE})
 
 add_library(pokemonism-latio            ${LATIOS_ROOT_HEADER}
                                         ${LATIOS_ROOT_SOURCE}

@@ -35,6 +35,8 @@ set(SPRIGATITO_IMPLEMENT_SOURCE
         stream.hh
         string.cc
         string.hh
+        packet.hh
+        packet.cc
 )
 
 add_library(pokemonism-sprigatito       ${SPRIGATITO_ROOT_HEADER}

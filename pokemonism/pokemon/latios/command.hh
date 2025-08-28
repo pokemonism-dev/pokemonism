@@ -23,7 +23,7 @@ namespace pokemon { namespace latios {
         class engine;
     }
 
-    class command : public object {
+    class command : public virtual object {
     public:     class event {
                 public:     struct subscription {
                             public:     struct property {
