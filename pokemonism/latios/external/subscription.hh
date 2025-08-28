@@ -1,0 +1,8 @@
+//
+// Created by snorlax on 25. 8. 28..
+//
+
+#ifndef POKEMONISM_SUBSCRIPTION_HH
+#define POKEMONISM_SUBSCRIPTION_HH
+
+#endif //POKEMONISM_SUBSCRIPTION_HH
