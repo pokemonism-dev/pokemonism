@@ -67,10 +67,12 @@ set(LATIOS_INTERNAL_COMMAND_SOURCE      internal/command/event.cc
                                         internal/command/subscription/repeat.cc)
 
 set(LATIOS_INTERNAL_DESCRIPTOR_HEADER   internal/descriptor.hh
+                                        internal/descriptor/object.hh
                                         internal/descriptor/event.hh
                                         internal/descriptor/subscription.hh)
 
 set(LATIOS_INTERNAL_DESCRIPTOR_SOURCE   internal/descriptor.cc
+                                        internal/descriptor/object.cc
                                         internal/descriptor/event.cc
                                         internal/descriptor/subscription.cc)
 
