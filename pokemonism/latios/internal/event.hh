@@ -51,6 +51,7 @@ namespace pokemonism {
                                     public:     node & operator=(node && o) noexcept = delete;
                                     public:     friend class event;
                                     };
+                        public:     static event<objectable, generatable> * eventGen(event<objectable, generatable>::subscription * subscription, uint32 type);
                         public:     using                               collector = pokemonism::linked::list<subscription, subscription::node>;
                         protected:  uint64                              size;
                         protected:  subscription::node *                head;
@@ -73,7 +74,6 @@ namespace pokemonism {
                         public:     subscription & operator=(subscription && o) noexcept = delete;
                         };
             protected:  subscription::node * node;
-            public:     int completeGet(void) const override = 0;
             public:     int on(void) override;
             public:     event(uint32 tag, subscription::node * node);
             public:     event(void) = delete;
@@ -131,6 +131,11 @@ namespace pokemonism {
                 }
 
                 return fail;
+            }
+
+            template <class target, class generator>
+            event<target, generator> * event<target, generator>::subscription::eventGen(event<target, generator>::subscription * subscription, uint32 type) {
+                return new event<target, generator>(type, new event<target, generator>::subscription::node(subscription));
             }
 
             template <class target, class generator>

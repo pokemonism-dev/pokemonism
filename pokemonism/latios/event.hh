@@ -17,7 +17,6 @@ namespace pokemonism {
 
         class event {
         public:     virtual uint32 typeGet(void) const = 0;
-        public:     virtual int completeGet(void) const = 0;
         public:     virtual const pokemonism::exception * exceptionGet(void) const = 0;
         public:     event(void) {}
         public:     virtual ~event(void) {}

@@ -26,7 +26,6 @@ namespace pokemonism {
             private:    general::event *           prev;
             private:    general::event *           next;
             public:     virtual int on(void) = 0;
-            public:     int completeGet(void) const override = 0;
             public:     inline virtual pokemonism::exception * raise(pokemonism::exception * e) {
                             exception = allocator::del(exception);
                             return (exception = e);

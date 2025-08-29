@@ -37,11 +37,15 @@ set(LATIOS_GENERAL_SOURCE           general/event.cc
                                     general/generator.cc
                                     general/subscription.cc)
 
-set(LATIOS_INTERNAL_HEADER          internal/observable.hh
-                                    internal/event.hh)
+set(LATIOS_INTERNAL_HEADER          internal/event.hh
+                                    internal/observable.hh
+                                    internal/generator.hh
+                                    internal/processor.hh)
 
-set(LATIOS_INTERNAL_SOURCE          internal/observable.cc
-                                    internal/event.cc)
+set(LATIOS_INTERNAL_SOURCE          internal/event.cc
+                                    internal/observable.cc
+                                    internal/generator.cc
+                                    internal/processor.cc)
 
 add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_ROOT_SOURCE}

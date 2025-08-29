@@ -1,5 +1,10 @@
-// //
-// // Created by snorlax on 25. 8. 29..
-// //
-//
-// #include "processor.hh"
+/**
+ * @file        pokemonism/latios/internal/processor.cc
+ * @brief
+ * @details
+ *
+ * @author      snorlax <snorlax@pokemonism.dev>
+ * @since       Aug 29, 2025
+ */
+
+#include "processor.hh"
