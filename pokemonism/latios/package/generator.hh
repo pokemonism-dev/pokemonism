@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/latios/package/generatable.hh
+ * @file        pokemonism/latios/package/generator.hh
  * @brief
  * @details
  *
@@ -7,8 +7,8 @@
  * @since       Aug 29, 2025
  */
 
-#ifndef   __POKEMONISM_LATIOS_PACKAGE_GENERATABLE__HH__
-#define   __POKEMONISM_LATIOS_PACKAGE_GENERATABLE__HH__
+#ifndef   __POKEMONISM_LATIOS_PACKAGE_GENERATOR__HH__
+#define   __POKEMONISM_LATIOS_PACKAGE_GENERATOR__HH__
 
 #include <pokemonism/latios/general/generator.hh>
 
@@ -29,4 +29,4 @@ namespace pokemonism {
     }
 }
 
-#endif // __POKEMONISM_LATIOS_PACKAGE_GENERATABLE__HH__
+#endif // __POKEMONISM_LATIOS_PACKAGE_GENERATOR__HH__

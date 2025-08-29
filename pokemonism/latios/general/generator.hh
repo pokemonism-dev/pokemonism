@@ -21,7 +21,7 @@ namespace pokemonism {
             class generator : public virtual pokemonism::object {
             public:     using                                   processor = general::processor;
             protected:  general::engine *                       engine;
-            protected:  uint64                                  size;
+
             public:     virtual void clear(void) = 0;
             public:     inline virtual uint64 on(void);
             public:     inline explicit generator(general::engine * engine);
@@ -33,13 +33,12 @@ namespace pokemonism {
             public:     generator & operator=(generator && o) noexcept = delete;
             };
 
-            generator::generator(general::engine * engine) : engine(engine), size(declaration::zero) {
+            generator::generator(general::engine * engine) : engine(engine) {
 
             }
 
             generator::~generator(void) {
                 engine = nullptr;
-                generator::clear();
             }
 
             uint64 generator::on(void) { return declaration::success; }

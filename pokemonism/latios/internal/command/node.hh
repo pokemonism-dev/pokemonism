@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/latios/internal/node.hh
+ * @file        pokemonism/latios/internal/command/node.hh
  * @brief
  * @details
  *
@@ -7,8 +7,8 @@
  * @since       Aug 29, 2025
  */
 
-#ifndef   __POKEMONISM_LATIOS_INTERNAL_NODE__HH__
-#define   __POKEMONISM_LATIOS_INTERNAL_NODE__HH__
+#ifndef   __POKEMONISM_LATIOS_INTERNAL_COMMAND_NODE__HH__
+#define   __POKEMONISM_LATIOS_INTERNAL_COMMAND_NODE__HH__
 
 // #include <pokemonism/latios/general/event.hh>
 // #include <pokemonism/latios/general/queue.hh>
@@ -25,15 +25,17 @@
 namespace pokemonism {
     namespace latios {
         namespace internal {
+            namespace command {
+                class node : public package::pack<pokemonism::command, pokemonism::command, pokemonism::command>::node {
+
+                };
+            }
 
             // subscription::node ... node, subscription
-            template <class object, class objectable, class generatable = void>
-            class node : public package::pack<object, objectable, generatable>::node {
 
-            };
 
         }
     }
 }
 
-#endif // __POKEMONISM_LATIOS_INTERNAL_EVENT__HH__
+#endif // __POKEMONISM_LATIOS_INTERNAL_COMMAND_NODE__HH__

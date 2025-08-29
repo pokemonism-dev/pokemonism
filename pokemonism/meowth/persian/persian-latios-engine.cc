@@ -9,12 +9,18 @@
 
 #include <pokemonism/latios.hh>
 
+#include <pokemonism/latios/internal/command/node.hh>
 #include <pokemonism/latios/internal/command/event.hh>
+#include <pokemonism/latios/internal/command/generator.hh>
+#include <pokemonism/latios/internal/command/subscription.hh>
 
 using namespace pokemonism::latios::internal;
 
 int main(int argc, char ** argv) {
-    command::event o(1, nullptr);
+    command::event event(1, nullptr);
+    command::subscription subscription;
+    command::node node;
+    command::generator generator(nullptr);
 
     return pokemonism::engine::run();
 }

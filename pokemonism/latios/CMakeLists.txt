@@ -37,19 +37,39 @@ set(LATIOS_GENERAL_SOURCE           general/event.cc
                                     general/generator.cc
                                     general/subscription.cc)
 
-set(LATIOS_PACKAGE_HEADER           package/event.hh
+set(LATIOS_PACKAGE_HEADER           package/pack.hh
+                                    package/processor.hh
+                                    package/generator.hh
+                                    package/subscription.hh
                                     package/eventable.hh
                                     package/eventable/command.hh
                                     package/observable.hh)
 
-set(LATIOS_PACKAGE_SOURCE           package/event.cc
+set(LATIOS_PACKAGE_SOURCE           package/pack.cc
+                                    package/processor.cc
+                                    package/generator.cc
+                                    package/subscription.cc
                                     package/eventable.cc
                                     package/eventable/command.cc
                                     package/observable.cc)
 
-set(LATIOS_INTERNAL_HEADER          )
+set(LATIOS_INTERNAL_HEADER          internal/node.hh
+                                    internal/event.hh
+                                    internal/subscription.hh)
 
-set(LATIOS_INTERNAL_SOURCE          )
+set(LATIOS_INTERNAL_SOURCE          internal/node.cc
+                                    internal/event.cc
+                                    internal/subscription.cc)
+
+set(LATIOS_INTERNAL_COMMAND_HEADER  internal/command/node.hh
+                                    internal/command/event.hh
+                                    internal/command/generator.hh
+                                    internal/command/subscription.hh)
+
+set(LATIOS_INTERNAL_COMMAND_SOURCE  internal/command/node.cc
+                                    internal/command/event.cc
+                                    internal/command/generator.cc
+                                    internal/command/subscription.cc)
 
 add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_ROOT_SOURCE}
@@ -62,6 +82,8 @@ add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_PACKAGE_HEADER}
                                     ${LATIOS_PACKAGE_SOURCE}
                                     ${LATIOS_INTERNAL_HEADER}
-                                    ${LATIOS_INTERNAL_SOURCE})
+                                    ${LATIOS_INTERNAL_SOURCE}
+                                    ${LATIOS_INTERNAL_COMMAND_HEADER}
+                                    ${LATIOS_INTERNAL_COMMAND_SOURCE})
 
 target_link_libraries(latios-dev    pokemon-dev)

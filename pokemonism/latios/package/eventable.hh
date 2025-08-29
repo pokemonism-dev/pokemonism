@@ -26,7 +26,6 @@ namespace pokemonism {
             public:     class subscription;
             public:     typedef package::generator<object, eventable<object, objectable, generatable>::subscription> generator;
             public:     class event : public virtual external::event<object>, public general::event {
-                        public:     int on(void) override = 0;
                         public:     eventable<object, objectable, generatable>::node * node;
                         public:     event(const uint32 tag, eventable<object, objectable, generatable>::node * node) : general::event(tag), node(node) {}
                         public:     event(void) = delete;
@@ -43,12 +42,11 @@ namespace pokemonism {
                         public:     generator * container;
                         public:     generator::subscription * prev;
                         public:     generator::subscription * next;
+                        public:     object * target;
+                        public:     uint32 properties;
+                        public:     uint32 status;
                         };
             public:     class node {
-                        // public:     virtual int on(void) = 0;
-                        public:     virtual void cancel(void) = 0;
-                        public:     virtual int on(void) = 0;
-
                         public:     eventable<object, objectable, generatable>::event * event;
                         public:     subscription * container;
                         public:     node * prev;

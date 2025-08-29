@@ -18,7 +18,6 @@ namespace pokemonism {
         namespace general {
 
             class processor {
-            public:     static int on(general::subscription * subscription, uint32 type, general::event * event) { return declaration::fail; }
             public:     processor(void) {}
             public:     virtual ~processor(void) {}
             public:     processor(const processor & o) = delete;
