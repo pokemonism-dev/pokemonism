@@ -20,11 +20,13 @@ namespace pokemonism {
 
             template <class objectable>
             class event : public virtual pokemonism::event {
-            public:     constexpr static uint32     gen = 0;
-            public:     constexpr static uint32     rel = 1;
-            public:     constexpr static uint32     add = 2;
-            public:     constexpr static uint32     del = 3;
-            public:     constexpr static uint32     max = 4;
+            public:     class type {
+                        public:     constexpr static uint32     gen = 0;
+                        public:     constexpr static uint32     rel = 1;
+                        public:     constexpr static uint32     add = 2;
+                        public:     constexpr static uint32     del = 3;
+                        public:     constexpr static uint32     max = 4;
+                        };
             public:     event(void) {}
             public:     ~event(void) override {}
             public:     event(const event<objectable> & o) = delete;

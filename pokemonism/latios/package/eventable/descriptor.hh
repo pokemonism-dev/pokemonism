@@ -26,16 +26,32 @@ namespace pokemonism {
             public:     class generator : public package::generator<object, subscription> {
                         public:     explicit generator(general::engine * engine) : package::generator<object, subscription>(engine) {}
                         };
+            // public:     class processor : public package::processor<subscription, event> {
+            //             protected:  static int (*on)(subscription *, uint32, event *);
+            //             protected:  static int (*open)(subscription *, event *);
+            //             protected:  static int (*read)(subscription *, event *);
+            //             protected:  static int (*write)(subscription *, event *);
+            //             protected:  static int (*close)(subscription *, event *);
+            //             public:     friend general::engine;
+            //             public:     processor(void) {}
+            //             public:     ~processor(void) {}
+            //             public:     processor(const processor & o) = delete;
+            //             public:     processor(processor && o) noexcept = delete;
+            //             public:     processor & operator=(const processor & o) = delete;
+            //             public:     processor & operator=(processor && o) noexcept = delete;
+            //             };
             public:     class event : public virtual external::event<object>, public general::event {
-                        public:     constexpr static uint32 gen     = external::event<object>::gen;
-                        public:     constexpr static uint32 rel     = external::event<object>::rel;
-                        public:     constexpr static uint32 add     = external::event<object>::add;
-                        public:     constexpr static uint32 del     = external::event<object>::del;
-                        public:     constexpr static uint32 open    = external::event<object>::max;
-                        public:     constexpr static uint32 read    = external::event<object>::max + 1;
-                        public:     constexpr static uint32 write   = external::event<object>::max + 2;
-                        public:     constexpr static uint32 close   = external::event<object>::max + 3;
-                        public:     constexpr static uint32 max     = external::event<object>::max + 4;
+                        public:     class type {
+                        public:     constexpr static uint32 gen     = external::event<object>::type::gen;
+                        public:     constexpr static uint32 rel     = external::event<object>::type::rel;
+                        public:     constexpr static uint32 add     = external::event<object>::type::add;
+                        public:     constexpr static uint32 del     = external::event<object>::type::del;
+                        public:     constexpr static uint32 open    = external::event<object>::type::max;
+                        public:     constexpr static uint32 read    = external::event<object>::type::max + 1;
+                        public:     constexpr static uint32 write   = external::event<object>::type::max + 2;
+                        public:     constexpr static uint32 close   = external::event<object>::type::max + 3;
+                        public:     constexpr static uint32 max     = external::event<object>::type::max + 4;
+                        };
                         public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * node;
                         public:     event(const uint32 tag, eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * node) : general::event(tag), node(node) {}
                         public:     event(void) = delete;
@@ -46,6 +62,7 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public package::observable<object>, public external::subscription<object>, public general::subscription {
+                        public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *);
                         public:     uint32  size;
                         public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * head;
                         public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * tail;
@@ -55,6 +72,22 @@ namespace pokemonism {
                         public:     object * target;
                         public:     uint32 properties;
                         public:     uint32 status;
+                        public:     callback callbacks[event::type::max];
+
+
+                        // public:     virtual uint32 bootstrapOn(uint32 type, event ** event, primitivable::object ** result, pokemonism::exception ** exception) { return type; }
+                        // public:     virtual int eventOn(uint32 type, event * event, primitivable::object * result, pokemonism::exception * exception) {
+                        //     if ((type = bootstrapOn(type, pointof(event), pointof(result), pointof(exception))) < event::type::max) {
+                        //         typename subscription::callback func = this->callbacks[type];
+                        //
+                        //         const int ret = func != nullptr ? func(this, type, event, result, exception) : declaration::success;
+                        //
+                        //         return completeOn(type, event, result, exception, ret);
+                        //     }
+                        //
+                        //     return completeOn(type, event, result, exception, declaration::fail);
+                        // }
+                        // public:     virtual int completeOn(uint32 type, event * event, primitivable::object * result, pokemonism::exception * exception, int ret) { return ret; }
                         };
             public:     class node {
                         public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::event * event;
@@ -66,6 +99,21 @@ namespace pokemonism {
                         };
 
             };
+
+            // template <class object>
+            // int (*eventable<object, pokemonism::descriptor, pokemonism::descriptor>::processor::on)(subscription *, uint32, event *) = nullptr;
+            //
+            // template <class object>
+            // int (*eventable<object, pokemonism::descriptor, pokemonism::descriptor>::processor::open)(subscription *, event *) = nullptr;
+            //
+            // template <class object>
+            // int (*eventable<object, pokemonism::descriptor, pokemonism::descriptor>::processor::read)(subscription *, event *) = nullptr;
+            //
+            // template <class object>
+            // int (*eventable<object, pokemonism::descriptor, pokemonism::descriptor>::processor::write)(subscription *, event *) = nullptr;
+            //
+            // template <class object>
+            // int (*eventable<object, pokemonism::descriptor, pokemonism::descriptor>::processor::close)(subscription *, event *) = nullptr;
 
         }
     }

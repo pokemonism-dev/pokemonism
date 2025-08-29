@@ -61,10 +61,12 @@ set(LATIOS_PACKAGE_SOURCE           package/pack.cc
 
 set(LATIOS_INTERNAL_HEADER          internal/node.hh
                                     internal/event.hh
+                                    internal/pack.hh
                                     internal/subscription.hh)
 
 set(LATIOS_INTERNAL_SOURCE          internal/node.cc
                                     internal/event.cc
+                                    internal/pack.cc
                                     internal/subscription.cc)
 
 set(LATIOS_INTERNAL_COMMAND_HEADER  internal/command/node.hh

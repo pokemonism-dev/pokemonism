@@ -22,16 +22,10 @@ namespace pokemonism {
             public:     class event;
             public:     class subscription;
             public:     typedef eventable<object, pokemonism::descriptor, generatable>::generator   generator;
+            // public:     typedef eventable<object, pokemonism::descriptor, generatable>::processor   processor;
+
             public:     class event : public eventable<object, pokemonism::descriptor, generatable>::event {
-                        public:     constexpr static uint32 gen     = external::event<object>::gen;
-                        public:     constexpr static uint32 rel     = external::event<object>::rel;
-                        public:     constexpr static uint32 add     = external::event<object>::add;
-                        public:     constexpr static uint32 del     = external::event<object>::del;
-                        public:     constexpr static uint32 open    = external::event<object>::max;
-                        public:     constexpr static uint32 read    = external::event<object>::max + 1;
-                        public:     constexpr static uint32 write   = external::event<object>::max + 2;
-                        public:     constexpr static uint32 close   = external::event<object>::max + 3;
-                        public:     constexpr static uint32 max     = external::event<object>::max + 4;
+                        public:     typedef typename eventable<object, pokemonism::descriptor, pokemonism::descriptor>::event::type     type;
                         public:     event(const uint32 tag, eventable<object, pokemonism::descriptor, generatable>::node * node) : eventable<object, pokemonism::descriptor, generatable>::event(tag, node) {}
                         public:     event(void) = delete;
                         public:     ~event(void) override {}
@@ -41,12 +35,14 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public eventable<object, pokemonism::descriptor, generatable>::subscription {
-            // public:     const object * objectGet(void) const override { return this->target; }
+
             };
             public:     class node : public eventable<object, pokemonism::descriptor, generatable>::node {
 
             };
             };
+
+
 
         }
     }

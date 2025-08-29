@@ -22,13 +22,10 @@ namespace pokemonism {
             public:     class event;
             public:     class subscription;
             public:     typedef eventable<object, pokemonism::command, generatable>::generator   generator;
+            // public:     typedef eventable<object, pokemonism::command, generatable>::processor   processor;
+
             public:     class event : public eventable<object, pokemonism::command, generatable>::event {
-                        public:     constexpr static uint32 gen     = external::event<object>::gen;
-                        public:     constexpr static uint32 rel     = external::event<object>::rel;
-                        public:     constexpr static uint32 add     = external::event<object>::add;
-                        public:     constexpr static uint32 del     = external::event<object>::del;
-                        public:     constexpr static uint32 execute = external::event<object>::max;
-                        public:     constexpr static uint32 max     = external::event<object>::max + 1;
+                        public:     typedef typename eventable<object, pokemonism::command, pokemonism::command>::event::type     type;
                         public:     event(const uint32 tag, eventable<object, pokemonism::command, generatable>::node * node) : eventable<object, pokemonism::command, generatable>::event(tag, node) {}
                         public:     event(void) = delete;
                         public:     ~event(void) override {}
@@ -38,12 +35,14 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public eventable<object, pokemonism::command, generatable>::subscription {
-            // public:     const object * objectGet(void) const override { return this->target; }
+
             };
             public:     class node : public eventable<object, pokemonism::command, generatable>::node {
 
             };
             };
+
+
 
         }
     }

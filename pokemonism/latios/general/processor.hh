@@ -19,7 +19,7 @@ namespace pokemonism {
 
             class processor {
             public:     processor(void) {}
-            public:     virtual ~processor(void) {}
+            public:     ~processor(void) {}
             public:     processor(const processor & o) = delete;
             public:     processor(processor && o) noexcept = delete;
             public:     processor & operator=(const processor & o) = delete;

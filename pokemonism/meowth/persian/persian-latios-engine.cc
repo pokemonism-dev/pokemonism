@@ -27,40 +27,48 @@ int main(int argc, char ** argv) {
             command::subscription subscription;
             command::node node;
             command::generator generator(nullptr);
+        } catch (const pokemonism::exception & e) {
+            printf("pokemon exception\n");
         } catch (...) {
-
+            printf("error\n");
         }
 
-        printf("%u\n", command::event::max);
+        printf("%u\n", command::event::type::max);
     }
 
 
     {
         try {
             process::event event(1, nullptr);
+        } catch (const pokemonism::exception & e) {
+            printf("pokemon exception\n");
         } catch (...) {
-
+            printf("error\n");
         }
 
-        printf("%u\n", process::event::max);
+        printf("%u\n", process::event::type::max);
     }
 
     {
         try {
             socket::event event(1, nullptr);
+        } catch (const pokemonism::exception & e) {
+            printf("pokemon exception\n");
         } catch (...) {
-
+            printf("error\n");
         }
-        printf("%u\n", socket::event::max);
+        printf("%u\n", socket::event::type::max);
     }
 
     {
         try {
             descriptor::event event(1, nullptr);
+        } catch (const pokemonism::exception & e) {
+            printf("pokemon exception\n");
         } catch (...) {
-
+            printf("error\n");
         }
-        printf("%u\n", descriptor::event::max);
+        printf("%u\n", descriptor::event::type::max);
     }
 
     return pokemonism::engine::run();

@@ -10,14 +10,16 @@
 #ifndef   __POKEMONISM_LATIOS_INTERNAL_EVENT__HH__
 #define   __POKEMONISM_LATIOS_INTERNAL_EVENT__HH__
 
-#include <pokemonism/latios/package/pack.hh>
+// ReSharper disable once CppUnusedIncludeDirective
+#include <pokemonism/latios/general/queue.hh>
+#include <pokemonism/latios/internal/pack.hh>
 
 namespace pokemonism {
     namespace latios {
         namespace internal {
 
             template <class object, class objectable = pokemonism::command, class generatable = void>
-            class event : public package::pack<object, objectable, generatable>::event {
+            class event : public internal::pack<object, objectable, generatable>::event {
             public:     int on(void) override;
             public:     event(uint32 tag, package::eventable<object, objectable, generatable>::node * node);
             public:     event(void) = delete;
@@ -30,14 +32,20 @@ namespace pokemonism {
 
             template <class object, class objectable, class generatable>
             event<object, objectable, generatable>::event(uint32 tag, typename package::eventable<object, objectable, generatable>::node * node) :
-            package::pack<object, objectable, generatable>::event(tag, node) {
-                if (node == nullptr) throw pokemonism::exception();
+            internal::pack<object, objectable, generatable>::event(tag, node) {
+                if (node == nullptr || node->container == nullptr) throw pokemonism::exception();
 
                 node->event = nullptr;
             }
 
             template <class object, class objectable, class generatable>
             event<object, objectable, generatable>::~event(void) {
+                if (this->container != nullptr) {
+                    this->container->del(this);
+                } else if (this->node != nullptr) {
+                    this->node->event = nullptr;
+                    this->node = allocator::del(this->node);
+                }
                 // if (this->container != nullptr) {
                 //     this->container->del(this);
                 //
@@ -54,6 +62,11 @@ namespace pokemonism {
 
             template <class object, class objectable, class generatable>
             int event<object, objectable, generatable>::on(void) {
+                if (this->container != nullptr || this->node == nullptr || this->node->container == nullptr) throw pokemonism::exception();
+
+
+
+
                 // if (this->container != nullptr || this->node == nullptr) throw pokemonism::exception();
                 //
                 // // TODO: REMOVE CANCEL FUNC WHEN PROCESSOR IMPLEMENTED

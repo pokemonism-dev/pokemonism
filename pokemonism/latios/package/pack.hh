@@ -21,8 +21,10 @@ namespace pokemonism {
             public:     class node;
             public:     class event;
             public:     class subscription;
-            public:     typedef eventable<object, objectable, generatable>::generator   generator;
+            public:     typedef eventable<object, objectable, objectable>::generator   generator;
+            // public:     typedef eventable<object, objectable, objectable>::processor   processor;
             public:     class event : public eventable<object, objectable, generatable>::event {
+                        public:     typedef typename eventable<object, objectable, generatable>::event::type     type;
                         public:     event(const uint32 tag, eventable<object, objectable, generatable>::node * node) : eventable<object, objectable, generatable>::event(tag, node) {}
                         public:     event(void) = delete;
                         public:     ~event(void) override {}

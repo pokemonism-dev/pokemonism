@@ -11,12 +11,17 @@
 #define   __POKEMONISM_LATIOS_GENERAL_SUBSCRIPTION__HH__
 
 #include <pokemonism/latios/external/subscription.hh>
+#include <pokemonism/latios/general/event.hh>
 
 namespace pokemonism {
     namespace latios {
         namespace general {
 
             class subscription : public virtual pokemonism::subscription {
+                // TODO: PROTECTED 로 변경할 수 있는지 확인해보자.
+            public:     template <typename sup = subscription, typename event = general::event> static int eventOn(sup * o, uint32 type, event * e, primitivable::object * result, pokemonism::exception * exception) {
+                throw pokemonism::exception();
+            }
             public:     subscription(void) {}
             public:     ~subscription(void) override {}
             public:     subscription(const subscription & o) = delete;
