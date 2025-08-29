@@ -12,17 +12,21 @@
 
 #include <pokemonism/latios/external/engine.hh>
 
-namespace pokemonism { namespace latios { namespace internal {
+namespace pokemonism {
+    namespace latios {
+        namespace internal {
 
-    class engine : public external::engine {
-    public:     engine(void);
-    public:     ~engine(void) override;
-    public:     engine(const engine & o) = delete;
-    public:     engine(engine && o) noexcept = delete;
-    public:     engine & operator=(const engine & o) = delete;
-    public:     engine & operator=(engine && o) noexcept = delete;
-    };
+            class engine : public external::engine {
+            public:     engine(void);
+            public:     ~engine(void) override;
+            public:     engine(const engine & o) = delete;
+            public:     engine(engine && o) noexcept = delete;
+            public:     engine & operator=(const engine & o) = delete;
+            public:     engine & operator=(engine && o) noexcept = delete;
+            };
 
-} } }
+        }
+    }
+}
 
 #endif // __POKEMONISM_LATIOS_INTERNAL_ENGINE__HH__

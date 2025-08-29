@@ -72,7 +72,4 @@ namespace pokemonism {
 #define referenceof(o)                              (*(o))
 #define valueof(o)                                  (*(o))
 
-// ReSharper disable once CppUnusedIncludeDirective
-#include <pokemon/object.hh>
-
 #endif // __POKEMONISM__HH__

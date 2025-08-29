@@ -10,8 +10,13 @@
 #ifndef   __POKEMONISM_POKEMON__HH__
 #define   __POKEMONISM_POKEMON__HH__
 
-namespace pokemon {
+#include <pokemonism.hh>
 
-}
+#include <primitivable.hh>
+#include <synchronizable.hh>
+
+#include <pokemon/object.hh>
+#include <pokemon/allocator.hh>
+#include <pokemon/exception.hh>
 
 #endif // __POKEMONISM_POKEMON__HH__

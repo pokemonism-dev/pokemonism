@@ -7,23 +7,31 @@ set(LATIOS_ROOT_HEADER              ../latios.hh)
 
 set(LATIOS_ROOT_SOURCE              ../latios.cc)
 
-set(LATIOS_HEADER                   engine.hh)
+set(LATIOS_HEADER                   engine.hh
+                                    event.hh
+                                    command.hh)
 
-set(LATIOS_SOURCE                   engine.cc)
+set(LATIOS_SOURCE                   engine.cc
+                                    event.cc
+                                    command.cc)
 
 set(LATIOS_EXTERNAL_HEADER          external/engine.hh)
 
 set(LATIOS_EXTERNAL_SOURCE          external/engine.cc)
 
-set(LATIOS_INTERNAL_HEADER          internal/metadata.hh
+set(LATIOS_INTERNAL_HEADER          internal/event.hh
+                                    internal/queue.hh
                                     internal/engine.hh
                                     internal/generator.hh
-                                    internal/subscription.hh)
+                                    internal/subscription.hh
+                                    internal/command/event.hh)
 
-set(LATIOS_INTERNAL_SOURCE          internal/metadata.cc
+set(LATIOS_INTERNAL_SOURCE          internal/event.cc
+                                    internal/queue.cc
                                     internal/engine.cc
                                     internal/generator.cc
-                                    internal/subscription.cc)
+                                    internal/subscription.cc
+                                    internal/command/event.cc)
 
 add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_ROOT_SOURCE}

@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_LATIOS_ENGINE__HH__
 #define   __POKEMONISM_LATIOS_ENGINE__HH__
 
-#include <pokemonism.hh>
+#include <pokemon.hh>
 
 namespace pokemonism {
     namespace latios {
