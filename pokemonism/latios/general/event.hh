@@ -21,21 +21,20 @@ namespace pokemonism {
 
             class event : public virtual pokemonism::event {
             protected:  general::queue *           container;
-            protected:  pokemonism::exception *     exception;
-            protected:  uint32                      tag;
+            protected:  pokemonism::exception *    exception;
+            protected:  uint32                     tag;
             private:    general::event *           prev;
             private:    general::event *           next;
             public:     virtual int on(void) = 0;
-            public:     int completeGet(void) const override = 0;;
-            public:     inline virtual int raise(pokemonism::exception * e) {
+            public:     int completeGet(void) const override = 0;
+            public:     inline virtual pokemonism::exception * raise(pokemonism::exception * e) {
                             exception = allocator::del(exception);
-                            exception = e;
-                            return declaration::fail;
+                            return (exception = e);
                         }
             public:     inline uint32 typeGet(void) const override { return tag; }
             public:     inline const pokemonism::exception * exceptionGet(void) const override { return exception; }
-            protected:  event(void) = delete;
             public:     inline explicit event(const uint32 type) : container(nullptr), exception(nullptr), tag(type), prev(nullptr), next(nullptr) {}
+            protected:  event(void) = delete;
             public:     ~event(void) override;
             public:     event(const event & o) = delete;
             public:     event(event && o) noexcept = delete;

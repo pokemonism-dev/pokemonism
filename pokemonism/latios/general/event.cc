@@ -16,7 +16,8 @@ namespace pokemonism {
         namespace general {
 
             event::~event(void) {
-                if (container != nullptr) container->del(this);
+                exception = allocator::del(exception);
+                if (container != nullptr) pokemonism::exception::exit("");
             }
 
         }

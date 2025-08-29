@@ -10,17 +10,17 @@
 #include "engine.hh"
 
 #include "external/engine.hh"
-#include "internal/engine.hh"
+#include "general/engine.hh"
 
 namespace pokemonism { namespace latios {
 
     static engine singleton;
-    static internal::engine * o = nullptr;
+    static general::engine * o = nullptr;
 
     int engine::on(void (*bootstrap)(pokemonism::latios::external::engine &)) {
         singleton.lock();
         if (o == nullptr) {
-            o = new internal::engine();
+            o = new general::engine();
             if (bootstrap != nullptr) bootstrap(referenceof(o));
         }
         singleton.unlock();

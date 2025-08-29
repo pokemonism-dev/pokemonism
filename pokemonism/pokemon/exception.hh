@@ -26,7 +26,8 @@ namespace pokemonism {
                 public:     constexpr static uint32 caution         = 6;
                 public:     constexpr static uint32 warning         = 7;
                 public:     constexpr static uint32 critical        = 8;
-    };
+                };
+    public:     static inline void exit(const char * format, ...);
     protected:  static inline char * dup(const char * s);
     protected:  static inline exception * dup(const exception * o);
     protected:  static inline char * rel(char * s);
@@ -52,6 +53,16 @@ namespace pokemonism {
     public:     inline exception & operator=(const exception & o);
     public:     inline exception& operator=(exception && o) noexcept;
     };
+
+    void exception::exit(const char * format, ...) {
+        if (strnlen(format, 8) > 0) {
+            va_list ap;
+            va_start(ap, format);
+            vfprintf(stdout, format, ap);
+            va_end(ap);
+            fprintf(stdout, "\n");
+        }
+    }
 
     char * exception::dup(const char * s) {
         if (s != nullptr) return strdup(s);

@@ -31,6 +31,8 @@ namespace pokemonism {
     constexpr int                                   success = 0;
     constexpr int                                   none = 0;
 
+
+
     // ReSharper disable once CppEnforceNestedNamespacesStyle
     namespace declaration {
         constexpr int                               infinite = -1;
@@ -39,6 +41,8 @@ namespace pokemonism {
         constexpr int                               retry = 1;
         constexpr int                               success = 0;
         constexpr int                               none = 0;
+        constexpr int                               zero = 0;
+        constexpr int                               max = -1;
         namespace type {
             typedef __SIZE_TYPE__                   size;
             typedef decltype(nullptr)               null;

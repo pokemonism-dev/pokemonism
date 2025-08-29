@@ -7,25 +7,19 @@
 //  * @since       Aug 29, 2025
 //  */
 //
-// #ifndef   __POKEMONISM_LATIOS_INTERNAL_SUBSCRIPTION__HH__
-// #define   __POKEMONISM_LATIOS_INTERNAL_SUBSCRIPTION__HH__
+// #ifndef   __POKEMONISM_LATIOS_INTERNAL_COMMAND_SUBSCRIPTION__HH__
+// #define   __POKEMONISM_LATIOS_INTERNAL_COMMAND_SUBSCRIPTION__HH__
 //
-// #include <pokemonism/latios/external/event.hh>
-// #include <pokemonism/latios/external/subscription.hh>
-//
-// #include <pokemonism/latios/internal/general/generator.hh>
-//
-// #include <pokemonism/latios/internal/event.hh>
-// #include <pokemonism/latios/internal/queue.hh>
-// #include <pokemonism/latios/internal/observable.hh>
+// #include <pokemonism/latios/internal/subscription.hh>
+// #include <pokemonism/latios/internal/command/generator.hh>
 //
 // namespace pokemonism {
 //     namespace latios {
 //         namespace internal {
-//             template <class objectable, class generatable = internal::general::generator>
-//             class subscription : public internal::observable<objectable>, public external::subscription<objectable>, public general::subscription, protected generatable::node {
-//             public:     typedef objectable      target;
-//             public:     typedef generatable     generator;
+//             template <class objectable>
+//             class subscription<objectable, internal::generator::tag::command> : public internal::observable<objectable>, public external::subscription<objectable> {
+//             public:     typedef objectable                      target;
+//             public:     typedef internal::command::generator    generator;
 //             public:     class node;
 //             public:     class event : public internal::event, public external::event<target> {
 //                         public:     typedef int                                 (*callback)(external::subscription<target> &, uint32, const external::event<target> *, const pokemonism::primitivable::object *, const pokemonism::exception *);
@@ -33,7 +27,8 @@
 //                         public:     constexpr static uint32                     rel = 1;
 //                         public:     constexpr static uint32                     add = 2;
 //                         public:     constexpr static uint32                     del = 3;
-//                         public:     constexpr static uint32                     max = 4;
+//                         public:     constexpr static uint32                     exe = 4;
+//                         public:     constexpr static uint32                     max = 5;
 //                         protected:  subscription<target, generator>::node *     node;
 //                         public:     int on(void) override;
 //                         public:     int completeGet(void) const override;
@@ -73,8 +68,6 @@
 //             protected:  uint32                                              status;
 //             protected:  subscription<target, generator>::event::callback    callback[subscription<target, generator>::event::max];
 //             protected:  void *                                              userdata;
-//             public:     bool cancel(void) override = 0;
-//             public:     const objectable * objectGet(void) const override = 0;
 //             public:     virtual void add(subscription<target, generator>::node * node);
 //             public:     virtual void del(subscription<target, generator>::node * node);
 //             public:     virtual void clear(void);
@@ -96,21 +89,8 @@
 //
 //             template <class target, class generator>
 //             subscription<target, generator>::~subscription(void) {
-//                 if (container != nullptr) container->del(this);
-//             }
-//
-//             template <class target, class generator>
-//             bool subscription<target, generator>::cancel(void) {
-//                 if (container != nullptr) {
-//                     container->del(this);
-//                     return true;
-//                 }
-//                 return false;
-//             }
-//
-//             template <class target, class generator>
-//             const target * subscription<target, generator>::objectGet(void) const {
-//                 return object;
+//                 subscription<target, generator>::clear();
+//                 subscription<target, generator>::on(subscription<target, generator>::event::rel, nullptr, pokemonism::primitivable::object::gen(success), nullptr);
 //             }
 //
 //             template <class target, class generator>
@@ -217,4 +197,4 @@
 //     }
 // }
 //
-// #endif // __POKEMONISM_LATIOS_INTERNAL_SUBSCRIPTION__HH__
+// #endif // __POKEMONISM_LATIOS_INTERNAL_COMMAND_SUBSCRIPTION__HH__

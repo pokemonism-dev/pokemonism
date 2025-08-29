@@ -12,13 +12,19 @@
 
 #include <pokemon.hh>
 
+#include <latios/external/event.hh>
+
 namespace pokemonism {
     namespace latios {
 
         class command : public virtual pokemonism::object {
-        public:     class event {
-                    public:     constexpr static uint32     execute = 0;
-                    public:     constexpr static uint32     max = 1;
+        public:     class event : public virtual external::event<command> {
+                    public:     constexpr static uint32     gen     = external::event<command>::gen;
+                    public:     constexpr static uint32     rel     = external::event<command>::rel;
+                    public:     constexpr static uint32     add     = external::event<command>::add;
+                    public:     constexpr static uint32     del     = external::event<command>::del;
+                    public:     constexpr static uint32     execute = external::event<command>::max;
+                    public:     constexpr static uint32     max     = external::event<command>::max + 1;
                     };
         public:     virtual primitivable::object * operator()(void) = 0;
         public:     inline command(void) {}
