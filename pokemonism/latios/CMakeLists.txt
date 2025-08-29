@@ -9,11 +9,17 @@ set(LATIOS_ROOT_SOURCE              ../latios.cc)
 
 set(LATIOS_HEADER                   engine.hh
                                     event.hh
-                                    command.hh)
+                                    command.hh
+                                    process.hh
+                                    descriptor.hh
+                                    socket.hh)
 
 set(LATIOS_SOURCE                   engine.cc
                                     event.cc
-                                    command.cc)
+                                    command.cc
+                                    process.cc
+                                    descriptor.cc
+                                    socket.cc)
 
 set(LATIOS_EXTERNAL_HEADER          external/event.hh
                                     external/engine.hh
@@ -38,17 +44,17 @@ set(LATIOS_GENERAL_SOURCE           general/event.cc
                                     general/subscription.cc)
 
 set(LATIOS_PACKAGE_HEADER           package/pack.hh
+                                    package/pack/command.hh
                                     package/processor.hh
                                     package/generator.hh
-                                    package/subscription.hh
                                     package/eventable.hh
                                     package/eventable/command.hh
                                     package/observable.hh)
 
 set(LATIOS_PACKAGE_SOURCE           package/pack.cc
+                                    package/pack/command.cc
                                     package/processor.cc
                                     package/generator.cc
-                                    package/subscription.cc
                                     package/eventable.cc
                                     package/eventable/command.cc
                                     package/observable.cc)
@@ -64,12 +70,20 @@ set(LATIOS_INTERNAL_SOURCE          internal/node.cc
 set(LATIOS_INTERNAL_COMMAND_HEADER  internal/command/node.hh
                                     internal/command/event.hh
                                     internal/command/generator.hh
-                                    internal/command/subscription.hh)
+                                    internal/command/subscription.hh
+                                    internal/process/event.hh)
 
 set(LATIOS_INTERNAL_COMMAND_SOURCE  internal/command/node.cc
                                     internal/command/event.cc
                                     internal/command/generator.cc
-                                    internal/command/subscription.cc)
+                                    internal/command/subscription.cc
+                                    internal/process/event.cc)
+
+set(LATIOS_INTERNAL_DESCRIPTOR_HEADER   internal/descriptor/event.hh
+                                        internal/socket/event.hh)
+
+set(LATIOS_INTERNAL_DESCRIPTOR_SOURCE   internal/descriptor/event.cc
+                                        internal/socket/event.cc)
 
 add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_ROOT_SOURCE}
@@ -84,6 +98,8 @@ add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_INTERNAL_HEADER}
                                     ${LATIOS_INTERNAL_SOURCE}
                                     ${LATIOS_INTERNAL_COMMAND_HEADER}
-                                    ${LATIOS_INTERNAL_COMMAND_SOURCE})
+                                    ${LATIOS_INTERNAL_COMMAND_SOURCE}
+                                    ${LATIOS_INTERNAL_DESCRIPTOR_HEADER}
+                                    ${LATIOS_INTERNAL_DESCRIPTOR_SOURCE})
 
 target_link_libraries(latios-dev    pokemon-dev)

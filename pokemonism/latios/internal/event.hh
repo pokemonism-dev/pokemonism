@@ -16,7 +16,7 @@ namespace pokemonism {
     namespace latios {
         namespace internal {
 
-            template <class object, class objectable, class generatable = void>
+            template <class object, class objectable = pokemonism::command, class generatable = void>
             class event : public package::pack<object, objectable, generatable>::event {
             public:     int on(void) override;
             public:     event(uint32 tag, package::eventable<object, objectable, generatable>::node * node);

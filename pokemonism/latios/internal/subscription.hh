@@ -32,6 +32,7 @@ namespace pokemonism {
             class subscription : public package::pack<object, objectable, generatable>::subscription {
             public:     bool cancel(void) override;
             public:     virtual int on(void);
+            public:     const object * objectGet(void) const override { return this->target; }
 
 
             };

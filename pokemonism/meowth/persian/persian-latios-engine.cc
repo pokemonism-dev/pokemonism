@@ -14,13 +14,54 @@
 #include <pokemonism/latios/internal/command/generator.hh>
 #include <pokemonism/latios/internal/command/subscription.hh>
 
+#include <pokemonism/latios/internal/process/event.hh>
+#include <pokemonism/latios/internal/descriptor/event.hh>
+#include <pokemonism/latios/internal/socket/event.hh>
+
 using namespace pokemonism::latios::internal;
 
 int main(int argc, char ** argv) {
-    command::event event(1, nullptr);
-    command::subscription subscription;
-    command::node node;
-    command::generator generator(nullptr);
+    {
+        try {
+            command::event event(1, nullptr);
+            command::subscription subscription;
+            command::node node;
+            command::generator generator(nullptr);
+        } catch (...) {
+
+        }
+
+        printf("%u\n", command::event::max);
+    }
+
+
+    {
+        try {
+            process::event event(1, nullptr);
+        } catch (...) {
+
+        }
+
+        printf("%u\n", process::event::max);
+    }
+
+    {
+        try {
+            socket::event event(1, nullptr);
+        } catch (...) {
+
+        }
+        printf("%u\n", socket::event::max);
+    }
+
+    {
+        try {
+            descriptor::event event(1, nullptr);
+        } catch (...) {
+
+        }
+        printf("%u\n", descriptor::event::max);
+    }
 
     return pokemonism::engine::run();
 }

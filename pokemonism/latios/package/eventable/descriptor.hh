@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/latios/package/eventable/command.hh
+ * @file        pokemonism/latios/package/eventable/descriptor.hh
  * @brief
  * @details
  *
@@ -7,9 +7,10 @@
  * @since       Aug 29, 2025
  */
 
-#ifndef   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_COMMAND__HH__
-#define   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_COMMAND__HH__
+#ifndef   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_DESCRIPTOR__HH__
+#define   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_DESCRIPTOR__HH__
 
+#include <pokemonism/latios/descriptor.hh>
 #include <pokemonism/latios/package/eventable.hh>
 
 namespace pokemonism {
@@ -17,7 +18,7 @@ namespace pokemonism {
         namespace package {
 
             template <class object>
-            class eventable<object, pokemonism::command, pokemonism::command> {
+            class eventable<object, pokemonism::descriptor, pokemonism::descriptor> {
             public:     class node;
             public:     class event;
             public:     class subscription;
@@ -30,10 +31,13 @@ namespace pokemonism {
                         public:     constexpr static uint32 rel     = external::event<object>::rel;
                         public:     constexpr static uint32 add     = external::event<object>::add;
                         public:     constexpr static uint32 del     = external::event<object>::del;
-                        public:     constexpr static uint32 execute = external::event<object>::max;
-                        public:     constexpr static uint32 max     = external::event<object>::max + 1;
-                        public:     eventable<object, pokemonism::command, pokemonism::command>::node * node;
-                        public:     event(const uint32 tag, eventable<object, pokemonism::command, pokemonism::command>::node * node) : general::event(tag), node(node) {}
+                        public:     constexpr static uint32 open    = external::event<object>::max;
+                        public:     constexpr static uint32 read    = external::event<object>::max + 1;
+                        public:     constexpr static uint32 write   = external::event<object>::max + 2;
+                        public:     constexpr static uint32 close   = external::event<object>::max + 3;
+                        public:     constexpr static uint32 max     = external::event<object>::max + 4;
+                        public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * node;
+                        public:     event(const uint32 tag, eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * node) : general::event(tag), node(node) {}
                         public:     event(void) = delete;
                         public:     ~event(void) override {}
                         public:     event(const event & o) = delete;
@@ -43,8 +47,8 @@ namespace pokemonism {
                         };
             public:     class subscription : public package::observable<object>, public external::subscription<object>, public general::subscription {
                         public:     uint32  size;
-                        public:     eventable<object, pokemonism::command, pokemonism::command>::node * head;
-                        public:     eventable<object, pokemonism::command, pokemonism::command>::node * tail;
+                        public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * head;
+                        public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::node * tail;
                         public:     generator * container;
                         public:     generator::subscription * prev;
                         public:     generator::subscription * next;
@@ -53,7 +57,7 @@ namespace pokemonism {
                         public:     uint32 status;
                         };
             public:     class node {
-                        public:     eventable<object, pokemonism::command, pokemonism::command>::event * event;
+                        public:     eventable<object, pokemonism::descriptor, pokemonism::descriptor>::event * event;
                         public:     subscription * container;
                         public:     node * prev;
                         public:     node * next;
@@ -67,4 +71,4 @@ namespace pokemonism {
     }
 }
 
-#endif // __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_COMMAND__HH__
+#endif // __POKEMONISM_LATIOS_PACKAGE_EVENTABLE_DESCRIPTOR__HH__

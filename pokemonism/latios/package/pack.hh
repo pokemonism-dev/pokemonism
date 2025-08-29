@@ -16,7 +16,7 @@ namespace pokemonism {
     namespace latios {
         namespace package {
 
-            template <class object, class objectable, class generatable = pokemonism::command>
+            template <class object, class objectable = pokemonism::command, class generatable = void>
             class pack {
             public:     class node;
             public:     class event;
@@ -32,7 +32,7 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public eventable<object, objectable, generatable>::subscription {
-                        public:     const object * objectGet(void) const override { return this->target; }
+
                         };
             public:     class node : public eventable<object, objectable, generatable>::node {
 
@@ -42,5 +42,8 @@ namespace pokemonism {
         }
     }
 }
+
+#include <pokemonism/latios/package/pack/command.hh>
+#include <pokemonism/latios/package/pack/descriptor.hh>
 
 #endif // __POKEMONISM_LATIOS_PACKAGE_PACK__HH__
