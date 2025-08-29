@@ -33,7 +33,7 @@ namespace pokemonism {
             public:     bool cancel(void) override;
             public:     virtual int on(void);
             public:     const object * objectGet(void) const override { return this->target; }
-
+            // public:     subscription(object * target, uint32 properties, )
 
             };
 

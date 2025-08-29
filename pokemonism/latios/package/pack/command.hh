@@ -35,8 +35,12 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public eventable<object, pokemonism::command, generatable>::subscription {
+                        public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *);
+                        public:     subscription(object * target, uint32 properties, const callback * callbacks, uint32 n)
+                                    : eventable<object, pokemonism::command, generatable>::subscription(target, properties, reinterpret_cast<const typename eventable<object, pokemonism::command, generatable>::subscription::callback *>(callbacks), n) {
 
-            };
+                                    }
+                        };
             public:     class node : public eventable<object, pokemonism::command, generatable>::node {
 
             };

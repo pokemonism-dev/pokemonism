@@ -18,7 +18,7 @@ namespace pokemonism {
         namespace package {
 
             class processor : public general::processor {
-            public:     template <class subscription = general::subscription, class event> static int on(subscription * o, uint32 type, event * e) {
+            public:     template <class subscription = general::subscription, class event> static int on(subscription * o, uint32 type, primitivable::object ** result, event * e) {
                             throw pokemonism::exception();
                         }
             public:     processor(void) {}

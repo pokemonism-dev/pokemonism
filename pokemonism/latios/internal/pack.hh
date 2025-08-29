@@ -23,8 +23,7 @@ namespace pokemonism {
             public:     class node;
             public:     class event;
             public:     class subscription;
-            public:     typedef package::pack<object, objectable, generatable>::generator       generator;
-            // public:     typedef package::pack<object, objectable, generatable>::processor       processor;
+            public:     typedef package::pack<object, objectable, generatable>::generator   generator;
             public:     class event : protected package::pack<object, objectable, generatable>::event {
                         public:     typedef typename package::pack<object, objectable, generatable>::event::type    type;
                         protected:  int on(void) override;
@@ -37,14 +36,16 @@ namespace pokemonism {
                         public:     pack<object, objectable, generatable>::event & operator=(pack<object, objectable, generatable>::event && o) noexcept = delete;
                         };
             public:     class subscription : public package::pack<object, objectable, generatable>::subscription {
-                        // public:     typedef typename package::pack<object, objectable, generatable>::subscription::origin  origin;
-                        //
-                        // public:     inline int on(uint32 type, package::pack<object, objectable, generatable>::event * event, primitivable::object * result, pokemonism::exception * e) override {
-                        //                 return fail;
-                        //             }
+                        public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *);
+                        public:     const object * objectGet(void) const override { return this->target; }
+                        public:     bool cancel(void) override { return false; }
+                        public:     subscription(object * target, uint32 type, const callback * callbacks, uint32 n) :
+                                    package::pack<object, objectable, generatable>::subscription(target, type, reinterpret_cast<const typename package::pack<object, objectable, generatable>::subscription::callback *>(callbacks), n) {
+
+                                    }
+                        public:     subscription(void) = delete;
                         };
             public:     class node : public package::pack<object, objectable, generatable>::node {
-
                         };
             };
 
@@ -64,11 +65,8 @@ namespace pokemonism {
                     if (this->node != nullptr) {
                         // ReSharper disable once CppVirtualFunctionCallInsideCtor
                         if (this->on() > declaration::success) {
-                            // typename subscription::origin * subscription = this->node->container;
-
-                            this->exception = allocator::del(this->exception);
-
-                            general::subscription::eventOn(this->node->container, this->tag, this, nullptr, this->exception = new pokemonism::exception());
+                            this->exception = this->exception ? this->exception : new pokemonism::exception();
+                            general::subscription::eventOn(this->node->container, this->tag, this, nullptr, this->exception);
                         }
                         this->node->event = nullptr;
                         this->node = allocator::del(this->node);
@@ -83,15 +81,17 @@ namespace pokemonism {
             int pack<object, objectable, generatable>::event::on(void) {
                 if (this->container != nullptr || this->node == nullptr || this->node->container == nullptr) throw pokemonism::exception();
 
+                primitivable::object * result = nullptr;
 
-
-                package::processor::on(this->node->container, this->tag, this);
-
-
-                // if (this->container != nullptr || this->node == nullptr) throw pokemonism::exception();
-                //
-                // // TODO: REMOVE CANCEL FUNC WHEN PROCESSOR IMPLEMENTED
-                // return this->node->on();
+                try {
+                    return package::processor::on(this->node->container, this->tag, pointof(result), this);
+                } catch (const pokemonism::exception & e) {
+                    this->exception = allocator::del(this->exception);
+                    general::subscription::eventOn(this->node->container, this->tag, this, result, this->exception = e.clone());
+                } catch (...) {
+                    this->exception = allocator::del(this->exception);
+                    general::subscription::eventOn(this->node->container, this->tag, this, result, this->exception = new pokemonism::exception());
+                }
                 return declaration::fail;
             }
 

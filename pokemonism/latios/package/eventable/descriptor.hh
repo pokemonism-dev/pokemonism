@@ -73,6 +73,12 @@ namespace pokemonism {
                         public:     uint32 properties;
                         public:     uint32 status;
                         public:     callback callbacks[event::type::max];
+                        public:     subscription(object * target, uint32 properties, const callback * callbacks, uint32 n)
+                                    : size(0), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr),
+                                    target(target), properties(properties), status(none), callbacks() {
+                                            if (event::type::max < n) throw pokemonism::exception();
+                                            if (n > 0) memset(this->callbacks, callbacks, n * sizeof(callback));
+                                    }
 
 
                         // public:     virtual uint32 bootstrapOn(uint32 type, event ** event, primitivable::object ** result, pokemonism::exception ** exception) { return type; }

@@ -13,6 +13,8 @@
 #include <functional>
 #include <exception>
 #include <iostream>
+#include <cstdlib>
+#include <cstring>
 
 namespace pokemonism {
     typedef char                                    int8;
