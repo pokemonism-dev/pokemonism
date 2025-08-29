@@ -15,11 +15,6 @@ namespace pokemonism {
     namespace latios {
         namespace general {
 
-            event::~event(void) {
-                exception = allocator::del(exception);
-                if (container != nullptr) pokemonism::exception::exit("");
-            }
-
         }
     }
 }

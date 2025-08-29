@@ -1,0 +1,68 @@
+/**
+ * @file        pokemonism/latios/package/eventable.hh
+ * @brief
+ * @details
+ *
+ * @author      snorlax <snorlax@pokemonism.dev>
+ * @since       Aug 29, 2025
+ */
+
+#ifndef   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE__HH__
+#define   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE__HH__
+
+#include <pokemonism/latios/command.hh>
+
+#include <pokemonism/latios/package/generator.hh>
+#include <pokemonism/latios/package/observable.hh>
+
+namespace pokemonism {
+    namespace latios {
+        namespace package {
+
+            template <class object, class objectable, class generatable = pokemonism::command>
+            class eventable {
+            public:     class node;
+            public:     class event;
+            public:     class subscription;
+            public:     typedef package::generator<object, eventable<object, objectable, generatable>::subscription> generator;
+            public:     class event : public virtual external::event<object>, public general::event {
+                        public:     int on(void) override = 0;
+                        public:     eventable<object, objectable, generatable>::node * node;
+                        public:     event(const uint32 tag, eventable<object, objectable, generatable>::node * node) : general::event(tag), node(node) {}
+                        public:     event(void) = delete;
+                        public:     ~event(void) override {}
+                        public:     event(const event & o) = delete;
+                        public:     event(event && o) noexcept = delete;
+                        public:     event & operator=(const event & o) = delete;
+                        public:     event & operator=(event && o) noexcept = delete;
+                        };
+            public:     class subscription : public package::observable<object>, public external::subscription<object>, public general::subscription {
+                        public:     uint32  size;
+                        public:     eventable<object, objectable, generatable>::node * head;
+                        public:     eventable<object, objectable, generatable>::node * tail;
+                        public:     generator * container;
+                        public:     generator::subscription * prev;
+                        public:     generator::subscription * next;
+                        };
+            public:     class node {
+                        // public:     virtual int on(void) = 0;
+                        public:     virtual void cancel(void) = 0;
+                        public:     virtual int on(void) = 0;
+
+                        public:     eventable<object, objectable, generatable>::event * event;
+                        public:     subscription * container;
+                        public:     node * prev;
+                        public:     node * next;
+                        public:     node(void) : event(nullptr), container(nullptr), prev(nullptr), next(nullptr) {}
+                        public:     virtual ~node(void) {}
+                        };
+
+            };
+
+        }
+    }
+}
+
+#include <pokemonism/latios/package/eventable/command.hh>
+
+#endif // __POKEMONISM_LATIOS_PACKAGE_EVENTABLE__HH__

@@ -19,15 +19,6 @@ namespace pokemonism {
         namespace general {
 
             class generator : public virtual pokemonism::object {
-            public:     struct                                  node;
-            public:     typedef struct node                     node;
-            public:     struct node {
-                        public:     general::generator *        container;
-                        protected:  general::generator::node *  prev;
-                        protected:  general::generator::node *  next;
-                        public:     inline node(void);
-                        public:     inline ~node(void);
-                        };
             public:     using                                   processor = general::processor;
             protected:  general::engine *                       engine;
             protected:  uint64                                  size;
@@ -52,14 +43,6 @@ namespace pokemonism {
             }
 
             uint64 generator::on(void) { return declaration::success; }
-
-            generator::node::node(void) : container(nullptr), prev(nullptr), next(nullptr) {
-
-            }
-
-            generator::node::~node(void) {
-                pokemonism::exception::exit("");
-            }
 
         }
     }

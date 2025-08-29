@@ -34,7 +34,7 @@ namespace pokemonism {
             public:     inline const pokemonism::exception * exceptionGet(void) const override { return exception; }
             public:     inline explicit event(const uint32 type) : container(nullptr), exception(nullptr), tag(type), prev(nullptr), next(nullptr) {}
             protected:  event(void) = delete;
-            public:     ~event(void) override;
+            public:     ~event(void) override { exception = allocator::del(exception); }
             public:     event(const event & o) = delete;
             public:     event(event && o) noexcept = delete;
             public:     event & operator=(const event & o) = delete;

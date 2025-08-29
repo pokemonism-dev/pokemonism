@@ -9,6 +9,12 @@
 
 #include <pokemonism/latios.hh>
 
+#include <pokemonism/latios/internal/command/event.hh>
+
+using namespace pokemonism::latios::internal;
+
 int main(int argc, char ** argv) {
+    command::event o(1, nullptr);
+
     return pokemonism::engine::run();
 }

@@ -37,15 +37,19 @@ set(LATIOS_GENERAL_SOURCE           general/event.cc
                                     general/generator.cc
                                     general/subscription.cc)
 
-set(LATIOS_INTERNAL_HEADER          internal/event.hh
-                                    internal/observable.hh
-                                    internal/generator.hh
-                                    internal/processor.hh)
+set(LATIOS_PACKAGE_HEADER           package/event.hh
+                                    package/eventable.hh
+                                    package/eventable/command.hh
+                                    package/observable.hh)
 
-set(LATIOS_INTERNAL_SOURCE          internal/event.cc
-                                    internal/observable.cc
-                                    internal/generator.cc
-                                    internal/processor.cc)
+set(LATIOS_PACKAGE_SOURCE           package/event.cc
+                                    package/eventable.cc
+                                    package/eventable/command.cc
+                                    package/observable.cc)
+
+set(LATIOS_INTERNAL_HEADER          )
+
+set(LATIOS_INTERNAL_SOURCE          )
 
 add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_ROOT_SOURCE}
@@ -55,6 +59,8 @@ add_library(latios-dev              ${LATIOS_ROOT_HEADER}
                                     ${LATIOS_EXTERNAL_SOURCE}
                                     ${LATIOS_GENERAL_HEADER}
                                     ${LATIOS_GENERAL_SOURCE}
+                                    ${LATIOS_PACKAGE_HEADER}
+                                    ${LATIOS_PACKAGE_SOURCE}
                                     ${LATIOS_INTERNAL_HEADER}
                                     ${LATIOS_INTERNAL_SOURCE})
 
