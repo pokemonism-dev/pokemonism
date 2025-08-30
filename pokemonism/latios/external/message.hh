@@ -10,13 +10,14 @@
 #ifndef   __POKEMONISM_LATIOS_EXTERNAL_MESSAGE__HH__
 #define   __POKEMONISM_LATIOS_EXTERNAL_MESSAGE__HH__
 
+#include <primitivable.hh>
 #include <pokemonism/pokemon/exception.hh>
 
 namespace pokemonism {
     namespace latios {
         namespace external {
 
-            template <class format>
+            template <class formattable = primitivable::object>
             class message {
             public:     virtual const exception * exceptionGet(void) const = 0;
             public:     message(void) {}

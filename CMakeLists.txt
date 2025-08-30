@@ -15,11 +15,11 @@ set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
 
 set(POKEMONISM_ROOT_SOURCE          src/pokemonism.cc)
 
-set(POKEMONISM_HEADER               src/primitivable.hh
-                                    src/synchronizable.hh)
+set(POKEMONISM_HEADER               src/pokemonism/primitivable.hh
+                                    src/pokemonism/synchronizable.hh)
 
-set(POKEMONISM_SOURCE               src/primitivable.cc
-                                    src/synchronizable.cc)
+set(POKEMONISM_SOURCE               src/pokemonism/primitivable.cc
+                                    src/pokemonism/synchronizable.cc)
 
 set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
                                     pokemonism/latios.hh
