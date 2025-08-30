@@ -21,8 +21,8 @@ namespace pokemonism {
             class node;
 
             class subscription : public virtual pokemonism::subscription {
-                // TODO: REMOVE THIS
-            public:     virtual general::event * eventGen(uint32 type) { throw pokemonism::exception(); }
+            public:     virtual general::node * nodeGen(uint32 type) = 0;
+            public:     virtual general::event * eventOn(uint32 type) { throw pokemonism::exception(); }
 
             public:     subscription(void) {}
             public:     ~subscription(void) override {}

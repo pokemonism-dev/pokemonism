@@ -23,7 +23,7 @@ namespace pokemonism {
                     public:     constexpr static uint32     del = 3;
                     public:     constexpr static uint32     max = 4;
                     };
-        public:     virtual uint32 typeGet(void) const = 0;
+        public:     virtual uint32 eventGet(void) const = 0;
         public:     virtual const pokemonism::exception * exceptionGet(void) const = 0;
         public:     event(void) {}
         public:     virtual ~event(void) {}

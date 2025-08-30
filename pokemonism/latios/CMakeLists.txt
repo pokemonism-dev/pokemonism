@@ -23,10 +23,12 @@ set(LATIOS_SOURCE                   engine.cc
 
 set(LATIOS_EXTERNAL_HEADER          external/event.hh
                                     external/engine.hh
+                                    external/message.hh
                                     external/subscription.hh)
 
 set(LATIOS_EXTERNAL_SOURCE          external/event.cc
                                     external/engine.cc
+                                    external/message.cc
                                     external/subscription.cc)
 
 set(LATIOS_GENERAL_HEADER           general/node.hh

@@ -20,7 +20,19 @@ namespace pokemonism {
             class subscription;
 
             class node {
-            public:     virtual int eventOn(void) = 0;
+            public:     virtual int emit(exception * e) = 0;
+            public:     virtual int emit(void) = 0;
+            public:     virtual int complete(void) = 0;
+            public:     virtual void cancel(void) = 0;
+
+                // message
+                // output, status, result
+                // channel
+                // observe event parameter ...
+                // content
+                // observe progress
+                // observe(result), observe(response), observe(output)
+
             public:     node(void) {}
             public:     virtual ~node(void) {}
             public:     node(const node & o) = delete;

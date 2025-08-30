@@ -41,14 +41,17 @@ namespace pokemonism {
                         public:     const object * objectGet(void) const override;
                         public:     bool cancel(void) override;
                         public:     int eventOn(package::eventable<object, objectable, generatable>::node * o) override;
+                        public:     pack<object, objectable, generatable>::event * eventOn(uint32 type) override;
+                        public:     int eventOn(uint32 type, package::eventable<object, objectable, generatable>::event * event) override;
+                        public:     int callbackOn(uint32 type, event * event, primitivable::object * result, pokemonism::exception * exception, int ret) override;
+                        public:     pack<object, objectable, generatable>::node * nodeGen(uint32 type) override;
                         public:     pack<object, objectable, generatable>::node * add(package::eventable<object, objectable, generatable>::node * node) override;
                         public:     pack<object, objectable, generatable>::node * del(package::eventable<object, objectable, generatable>::node * node) override;
                         public:     void clear(void) override;
                         public:     virtual int processOn(uint32 type, pack<object, objectable, generatable>::event * event, primitivable::object ** result, pokemonism::exception ** exception);
                         public:     virtual uint32 bootstrapOn(uint32 type, pack<object, objectable, generatable>::event ** event, primitivable::object ** result, pokemonism::exception ** exception, int * ret);
                         public:     virtual int completeOn(uint32 type, pack<object, objectable, generatable>::event * event, primitivable::object * result, pokemonism::exception * exception, int ret);
-                        // public:     virtual int eventGen(pack<object, objectable, generatable>::node * node);
-                        // public:     virtual int eventRel(pack<object, objectable, generatable>::node * node);
+
                         private:    inline subscription::callback callbackGet(uint32 type) const;
 
                         public:     subscription(object * target, uint32 type, const callback * callbacks, uint32 n) :
@@ -60,7 +63,7 @@ namespace pokemonism {
                         };
             public:     class node : public package::pack<object, objectable, generatable>::node {
                         public:     int eventOn(void) override;
-                        public:
+                        public:     void cancel(void) override { throw pokemonism::exception(); }
                         };
             };
 
@@ -70,7 +73,7 @@ namespace pokemonism {
             package::pack<object, objectable, generatable>::event(tag, node) {
                 if (node == nullptr || node->container == nullptr) throw pokemonism::exception();
 
-                node->event = nullptr;
+                node->event = this;
             }
 
             template <class object, class objectable, class generatable>
@@ -78,19 +81,9 @@ namespace pokemonism {
                 if (this->container != nullptr) {
                     this->container->del(this);
                     if (this->node != nullptr) {
-                        if (this->node->eventOn() > declaration::success) {
-
-                        }
-                        // this->node->cancel();
-                        // throw pokemonism::exception();
-                        // TODO: IMPLEMENT THIS
-                        // ReSharper disable once CppVirtualFunctionCallInsideCtor
-                        // if (this->on() > declaration::success) {
-                        //     this->exception = this->exception ? this->exception : new pokemonism::exception();
-                        //     general::subscription::eventOn(this->node->container, this->tag, this, nullptr, this->exception);
-                        // }
-                        // this->node->event = nullptr;
-                        // this->node = allocator::del(this->node);
+                        if (this->node->eventOn() > declaration::success) this->node->cancel();
+                        this->node->event = nullptr;
+                        this->node = allocator::del(this->node);
                     }
                 } else if (this->node != nullptr) {
                     this->node->event = nullptr;
@@ -102,21 +95,7 @@ namespace pokemonism {
             int pack<object, objectable, generatable>::event::on(void) {
                 if (this->container != nullptr || this->node == nullptr || this->node->container == nullptr) throw pokemonism::exception();
 
-                primitivable::object * result = nullptr;
-
-                // TODO: IMPLEMENT THIS
-
-
-                // try {
-                //     return package::processor::on(this->node->container, this->tag, pointof(result), this);
-                // } catch (const pokemonism::exception & e) {
-                //     ;
-                //     general::subscription::eventOn<>(this->node->container, this->tag, this, result, this->exception = (allocator::del(this->exception), e.clone()));
-                // } catch (...) {
-                //     ;
-                //     general::subscription::eventOn<>(this->node->container, this->tag, this, result, this->exception = (allocator::del(this->exception), new pokemonism::exception()));
-                // }
-                return declaration::fail;
+                return this->node->eventOn();
             }
 
             template <class object, class objectable, class generatable>
@@ -126,6 +105,7 @@ namespace pokemonism {
 
             template <class object, class objectable, class generatable>
             bool pack<object, objectable, generatable>::subscription::cancel(void) {
+
                 throw pokemonism::exception();
             }
 
@@ -141,6 +121,21 @@ namespace pokemonism {
 
             template <class object, class objectable, class generatable>
             int pack<object, objectable, generatable>::subscription::processOn(uint32 type, pack<object, objectable, generatable>::event * event, primitivable::object ** result, pokemonism::exception ** exception) {
+                throw pokemonism::exception();
+            }
+
+            template <class object, class objectable, class generatable>
+            pack<object, objectable, generatable>::event * pack<object, objectable, generatable>::subscription::eventOn(uint32 type) {
+
+            }
+
+            template <class object, class objectable, class generatable>
+            int pack<object, objectable, generatable>::subscription::eventOn(uint32 type, package::eventable<object, objectable, generatable>::event * event) {
+                throw pokemonism::exception();
+            }
+
+            template <class object, class objectable, class generatable>
+            int pack<object, objectable, generatable>::subscription::callbackOn(uint32 type, event * event, primitivable::object * result, pokemonism::exception * exception, int ret) {
                 throw pokemonism::exception();
             }
 
@@ -169,6 +164,11 @@ namespace pokemonism {
             template <class object, class objectable, class generatable>
             int pack<object, objectable, generatable>::subscription::completeOn(uint32 type, pack<object, objectable, generatable>::event * event, primitivable::object * result, pokemonism::exception * exception, int ret) {
                 return  ret;
+            }
+
+            template <class object, class objectable, class generatable>
+            pack<object, objectable, generatable>::node * pack<object, objectable, generatable>::subscription::nodeGen(uint32 type) {
+                return new pack<object, objectable, generatable>::node(this);
             }
 
             template <class object, class objectable, class generatable>

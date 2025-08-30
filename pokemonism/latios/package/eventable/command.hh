@@ -56,6 +56,8 @@ namespace pokemonism {
                         public:     uint32 status;
                         public:     callback callbacks[event::type::max];
                         public:     virtual int eventOn(eventable<object, pokemonism::command, pokemonism::command>::node * node) = 0;
+                        public:     virtual int eventOn(uint32 type, eventable<object, pokemonism::command, pokemonism::command>::event * event) = 0;
+                        public:     virtual int callbackOn(uint32 type, event * event, primitivable::object * result, pokemonism::exception * exception, int ret) = 0;
                         public:     virtual eventable<object, pokemonism::command, pokemonism::command>::node * add(eventable<object, pokemonism::command, pokemonism::command>::node * node) = 0;
                         public:     virtual eventable<object, pokemonism::command, pokemonism::command>::node * del(eventable<object, pokemonism::command, pokemonism::command>::node * node) = 0;
                         public:     virtual void clear(void) = 0;
