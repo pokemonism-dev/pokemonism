@@ -12,7 +12,7 @@
 
 #include <pokemonism.hh>
 
-namespace pokemon {
+namespace pokemonism {
     // ReSharper disable once CppClassCanBeFinal
     class exception : public declaration::type::exception {
     public:     constexpr static const char * tag = "exception";
@@ -26,7 +26,8 @@ namespace pokemon {
                 public:     constexpr static uint32 caution         = 6;
                 public:     constexpr static uint32 warning         = 7;
                 public:     constexpr static uint32 critical        = 8;
-    };
+                };
+    public:     static inline void exit(const char * format, ...);
     protected:  static inline char * dup(const char * s);
     protected:  static inline exception * dup(const exception * o);
     protected:  static inline char * rel(char * s);
@@ -52,6 +53,16 @@ namespace pokemon {
     public:     inline exception & operator=(const exception & o);
     public:     inline exception& operator=(exception && o) noexcept;
     };
+
+    void exception::exit(const char * format, ...) {
+        if (strnlen(format, 8) > 0) {
+            va_list ap;
+            va_start(ap, format);
+            vfprintf(stdout, format, ap);
+            va_end(ap);
+            fprintf(stdout, "\n");
+        }
+    }
 
     char * exception::dup(const char * s) {
         if (s != nullptr) return strdup(s);
@@ -256,21 +267,21 @@ using first = pokemon::exception;                                               
 #define verbose_quick_throw_check(condition, exception_type, code)                                  exception_conditional_quick_throw(condition, exception_type, pokemon::exception::level::verbose, code)
 #define develop_quick_throw_check(condition, exception_type, code)                                  exception_conditional_quick_throw(condition, exception_type, pokemon::exception::level::develop, code)
 
-single_namespace_exception_class_quick_declare(nullpointer)
-exception_class_quick_declare(unimplemented, method)
-exception_class_quick_declare(should, notcall)
-exception_class_quick_declare(overflow, index)
-exception_class_quick_declare(unclean, node)
-exception_class_quick_declare(unmatched, container)
-exception_class_quick_declare(invalid, operation)
-
-single_namespace_exception_class_quick_declare(critical)
-single_namespace_exception_class_quick_declare(warning)
-single_namespace_exception_class_quick_declare(caution)
-single_namespace_exception_class_quick_declare(notice)
-single_namespace_exception_class_quick_declare(information)
-single_namespace_exception_class_quick_declare(debug)
-single_namespace_exception_class_quick_declare(verbose)
-single_namespace_exception_class_quick_declare(develop)
+// single_namespace_exception_class_quick_declare(nullpointer)
+// exception_class_quick_declare(unimplemented, method)
+// exception_class_quick_declare(should, notcall)
+// exception_class_quick_declare(overflow, index)
+// exception_class_quick_declare(unclean, node)
+// exception_class_quick_declare(unmatched, container)
+// exception_class_quick_declare(invalid, operation)
+//
+// single_namespace_exception_class_quick_declare(critical)
+// single_namespace_exception_class_quick_declare(warning)
+// single_namespace_exception_class_quick_declare(caution)
+// single_namespace_exception_class_quick_declare(notice)
+// single_namespace_exception_class_quick_declare(information)
+// single_namespace_exception_class_quick_declare(debug)
+// single_namespace_exception_class_quick_declare(verbose)
+// single_namespace_exception_class_quick_declare(develop)
 
 #endif // __POKEMONISM_POKEMON_EXCEPTION__HH__

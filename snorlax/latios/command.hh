@@ -12,6 +12,12 @@
 
 #include <pokemonism.hh>
 
+#include <pokemonism/functionable.hh>
+
+#include <pokemonism/pokemon/general/command.hh>
+
+#include <pokemonism/latios/subscription.hh>
+
 namespace pokemonism {
     namespace latios {
         namespace command {
@@ -31,10 +37,9 @@ namespace pokemonism {
             public:     type & operator=(type && o) noexcept = delete;
             };
 
-            // subscription, ... subscription, envelope, object, envelope ...
-
-            struct callback {
-
+            template <class output, class objectable = pokemon::general::command<output>>
+            struct callback : public functionable {
+            public:     typedef int (*type)(commandable *, uint32, envelope<output, message<output>> &, subscription<pokemon::general::command<output>, envelope<output, message<output>>> &);
             };
 
         }

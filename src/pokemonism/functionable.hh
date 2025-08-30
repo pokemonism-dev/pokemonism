@@ -14,6 +14,7 @@ namespace pokemonism {
 
     struct functionable {
     public:     typedef void (*type)(void);
+    public:     type func;
     };
 
 }

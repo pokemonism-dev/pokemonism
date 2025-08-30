@@ -3,45 +3,47 @@
  * @brief
  * @details
  *
- * @author      snorlax <developer@snorlax.dev>
- * @since       Aug 25, 2025
+ * @author      snorlax <snorlax@pokemonism.dev>
+ * @since       Aug 28, 2025
  */
 
 #ifndef   __POKEMONISM_POKEMON_OBJECT__HH__
 #define   __POKEMONISM_POKEMON_OBJECT__HH__
 
-#include <pokemonism.hh>
+#include <synchronizable.hh>
 
-#include <pokemon/allocator.hh>
+namespace pokemonism {
+    namespace pokemon {
+        class object : public pokemonism::synchronizable {
+        public:     class meta {
+                    public:     virtual const object::meta & self(void) const { return *this; }
+                    public:     virtual object::meta * clone(void) const { return nullptr; }
+                    public:     meta(void) {}
+                    public:     virtual ~meta(void) {}
+                    public:     meta(const meta & o) = delete;
+                    public:     meta(meta && o) noexcept = delete;
+                    public:     meta & operator=(const meta & o) = delete;
+                    public:     meta & operator=(meta && o) noexcept = delete;
+                    };
+        protected:  object::meta * meta;
+        public:     virtual const object & self(void) const { return *this; }
+        public:     virtual object * clone(void) const { return nullptr; }
+        public:     int lock(void) override { return pokemonism::fail; }
+        public:     int unlock(void) override { return pokemonism::fail; }
+        public:     int wait(void) override { return pokemonism::fail; }
+        public:     int wait(int64 second, int64 nano) override { return pokemonism::fail; }
+        public:     int wakeup(void) override { return pokemonism::fail; }
+        public:     int wakeup(bool all) override { return pokemonism::fail; }
+        public:     object(void) : meta(nullptr) {}
+        public:     ~object(void) override {}
+        public:     object(const object & o) = delete;
+        public:     object(object && o) noexcept = delete;
+        public:     object & operator=(const object & o) = delete;
+        public:     object & operator=(object && o) noexcept = delete;
+        };
+    }
 
-namespace pokemon {
-    class object {
-    public:     class meta {
-                public:     virtual meta * clone(void) const = 0;
-                public:     virtual const meta * self(void) const = 0;
-                public:     meta(void) {}
-                public:     virtual ~meta(void) {}
-                public:     meta(const meta & o) = delete;
-                public:     meta(meta && o) noexcept = delete;
-                public:     meta & operator=(const meta & o) = delete;
-                public:     meta & operator=(meta && o) noexcept = delete;
-                };
-    protected:  meta * meta;
-    public:     inline virtual object * clone(void) const { return nullptr; }
-    public:     inline virtual const object * self(void) const { return this; }
-    public:     inline virtual int lock(void) { return declaration::fail; }
-    public:     inline virtual int unlock(void) { return declaration::fail; }
-    public:     inline virtual int wait(void) { return declaration::fail; }
-    public:     inline virtual int wait(int64 second, int64 nano) { return declaration::fail; }
-    public:     inline virtual int wakeup(void) { return declaration::fail; }
-    public:     inline virtual int wakeup(bool all) { return declaration::fail; }
-    public:     inline object(void) : meta(nullptr) {}
-    public:     inline virtual ~object(void) { meta = allocator::del(meta); }
-    public:     object(const object & o) = delete;
-    public:     object(object && o) noexcept = delete;
-    public:     object & operator=(const object & o) = delete;
-    public:     object & operator=(object && o) noexcept = delete;
-    };
+    using object = pokemon::object;
 }
 
 #endif // __POKEMONISM_POKEMON_OBJECT__HH__

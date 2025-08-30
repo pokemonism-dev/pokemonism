@@ -3,8 +3,8 @@
  * @brief
  * @details
  *
- * @author      snorlax <developer@snorlax.dev>
- * @since       Aug 25, 2025
+ * @author      snorlax <snorlax@pokemonism.dev>
+ * @since       Aug 28, 2025
  */
 
 #include "object.hh"

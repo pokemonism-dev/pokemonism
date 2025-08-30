@@ -10,6 +10,8 @@
 #ifndef   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE__HH__
 #define   __POKEMONISM_LATIOS_PACKAGE_EVENTABLE__HH__
 
+#include <pokemonism/functionable.hh>
+
 #include <pokemonism/latios/command.hh>
 
 #include <pokemonism/latios/general/node.hh>
@@ -47,6 +49,9 @@ namespace pokemonism {
                         public:     event & operator=(event && o) noexcept = delete;
                         };
             public:     class subscription : public package::observable<object>, public external::subscription<object>, public general::subscription {
+                        public:     struct callback2 : public functionable {
+                                    public:     typedef int (*type)(subscription *, ...);
+                                    };
                         public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *, int);
                         public:     uint32  size;
                         public:     eventable<object, objectable, generatable>::node * head;

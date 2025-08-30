@@ -1,5 +1,5 @@
 /**
- * @file        pokemon/allocator.cc
+ * @file        pokemon/object.cc
  * @brief
  * @details
  *
@@ -7,4 +7,4 @@
  * @since       Aug 25, 2025
  */
 
-#include "allocator.hh"
+#include "object.hh"

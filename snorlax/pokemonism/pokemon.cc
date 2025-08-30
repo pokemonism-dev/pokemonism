@@ -1,10 +1,5 @@
-/**
- * @file        pokemon.cc
- * @brief
- * @details
- *
- * @author      snorlax <developer@snorlax.dev>
- * @since       Aug 25, 2025
- */
+//
+// Created by snorlax on 25. 8. 28..
+//
 
 #include "pokemon.hh"
