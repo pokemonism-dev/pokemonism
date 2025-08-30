@@ -27,14 +27,16 @@ namespace pokemonism {
     namespace latios {
         namespace internal {
 
+            class event;
+
             // subscription::node ... node, subscription
             template <class object, class objectable, class generatable = void>
             class subscription : public package::pack<object, objectable, generatable>::subscription {
+            public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *, int);
             public:     bool cancel(void) override;
             public:     virtual int on(void);
             public:     const object * objectGet(void) const override { return this->target; }
             // public:     subscription(object * target, uint32 properties, )
-
             };
 
             template <class object, class objectable, class generatable>

@@ -24,7 +24,7 @@ namespace pokemonism {
                 class event;
 
                 class subscription : public internal::pack<pokemonism::command, pokemonism::command, pokemonism::command>::subscription {
-                public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *);
+                public:     typedef int (*callback)(subscription *, uint32, event *, primitivable::object *, pokemonism::exception *, int);
                 public:     subscription(pokemonism::command * target, uint32 properties, const callback * callbacks, uint32 n);
 
                 };

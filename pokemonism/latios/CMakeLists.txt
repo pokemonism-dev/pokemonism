@@ -29,14 +29,16 @@ set(LATIOS_EXTERNAL_SOURCE          external/event.cc
                                     external/engine.cc
                                     external/subscription.cc)
 
-set(LATIOS_GENERAL_HEADER           general/event.hh
+set(LATIOS_GENERAL_HEADER           general/node.hh
+                                    general/event.hh
                                     general/queue.hh
                                     general/engine.hh
                                     general/processor.hh
                                     general/generator.hh
                                     general/subscription.hh)
 
-set(LATIOS_GENERAL_SOURCE           general/event.cc
+set(LATIOS_GENERAL_SOURCE           general/node.cc
+                                    general/event.cc
                                     general/queue.cc
                                     general/engine.cc
                                     general/processor.cc

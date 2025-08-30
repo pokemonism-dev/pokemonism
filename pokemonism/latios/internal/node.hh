@@ -20,7 +20,7 @@
 // #include <pokemonism/latios/internal/observable.hh>
 // #include <pokemonism/psyduck/linked/list.hh>
 
-#include <pokemonism/latios/package/pack.hh>
+#include <pokemonism/latios/internal/pack.hh>
 
 namespace pokemonism {
     namespace latios {
@@ -28,7 +28,7 @@ namespace pokemonism {
 
             // subscription::node ... node, subscription
             template <class object, class objectable, class generatable = void>
-            class node : public package::pack<object, objectable, generatable>::node {
+            class node : public internal::pack<object, objectable, generatable>::node {
 
             };
 

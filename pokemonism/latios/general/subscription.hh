@@ -17,11 +17,13 @@ namespace pokemonism {
     namespace latios {
         namespace general {
 
+            class event;
+            class node;
+
             class subscription : public virtual pokemonism::subscription {
-                // TODO: PROTECTED 로 변경할 수 있는지 확인해보자.
-            public:     template <typename sup = subscription, typename event = general::event> static int eventOn(sup * o, uint32 type, event * e, primitivable::object * result, pokemonism::exception * exception) {
-                throw pokemonism::exception();
-            }
+                // TODO: REMOVE THIS
+            public:     virtual general::event * eventGen(uint32 type) { throw pokemonism::exception(); }
+
             public:     subscription(void) {}
             public:     ~subscription(void) override {}
             public:     subscription(const subscription & o) = delete;

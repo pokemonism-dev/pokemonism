@@ -19,15 +19,16 @@ namespace pokemonism {
             namespace command {
 
                 class event : public internal::event<pokemonism::command, pokemonism::command, pokemonism::command> {
-                public:     event(void) = delete;
                 public:     event(const uint32 tag, package::eventable<pokemonism::command, pokemonism::command, pokemonism::command>::node * node) :
                             internal::event<pokemonism::command, pokemonism::command, pokemonism::command>(tag, node) {}
+                public:     event(void) = delete;
+                public:     ~event(void) override {}
+                public:     event(const event & o) = delete;
+                public:     event(event && o) noexcept = delete;
+                public:     event & operator=(const event & o) = delete;
+                public:     event & operator=(event && o) noexcept = delete;
                 };
             }
-
-
-
-
 
         }
     }

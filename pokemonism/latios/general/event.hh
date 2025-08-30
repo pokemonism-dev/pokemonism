@@ -26,10 +26,7 @@ namespace pokemonism {
             private:    general::event *           prev;
             private:    general::event *           next;
             public:     virtual int on(void) = 0;
-            public:     inline virtual pokemonism::exception * raise(pokemonism::exception * e) {
-                            exception = allocator::del(exception);
-                            return (exception = e);
-                        }
+            public:     inline virtual pokemonism::exception * raise(pokemonism::exception * e) { return exception = (allocator::del(exception), e); }
             public:     inline uint32 typeGet(void) const override { return tag; }
             public:     inline const pokemonism::exception * exceptionGet(void) const override { return exception; }
             public:     inline explicit event(const uint32 type) : container(nullptr), exception(nullptr), tag(type), prev(nullptr), next(nullptr) {}

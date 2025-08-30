@@ -21,12 +21,13 @@
 // #include <pokemonism/psyduck/linked/list.hh>
 
 #include <pokemonism/latios/package/pack.hh>
+#include <pokemonism/latios/internal/node.hh>
 
 namespace pokemonism {
     namespace latios {
         namespace internal {
             namespace command {
-                class node : public package::pack<pokemonism::command, pokemonism::command, pokemonism::command>::node {
+                class node : public internal::node<pokemonism::command, pokemonism::command, pokemonism::command> {
 
                 };
             }
