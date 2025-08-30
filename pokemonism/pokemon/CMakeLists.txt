@@ -5,17 +5,23 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(POKEMON_HEADER                  object.hh
                                     message.hh
+                                    envelope.hh
                                     exception.hh
                                     allocator.hh)
 
 set(POKEMON_SOURCE                  object.cc
                                     message.cc
+                                    envelope.cc
                                     exception.cc
                                     allocator.cc)
 
-set(POKEMON_GENERAL_HEADER          general/message.hh)
+set(POKEMON_GENERAL_HEADER          general/message.hh
+                                    general/command.hh
+                                    general/envelope.hh)
 
-set(POKEMON_GENERAL_SOURCE          general/message.cc)
+set(POKEMON_GENERAL_SOURCE          general/message.cc
+                                    general/command.cc
+                                    general/envelope.cc)
 
 add_library(pokemon-dev             ${POKEMON_HEADER}
                                     ${POKEMON_SOURCE}

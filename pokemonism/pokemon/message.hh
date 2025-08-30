@@ -12,15 +12,11 @@
 
 #include <primitivable.hh>
 
-#include <pokemon/exception.hh>
-
 namespace pokemonism {
     namespace pokemon {
 
         class message {
-        public:     virtual primitivable::object * pop(void) const = 0;
-        public:     virtual const primitivable::object * peak(void) const = 0;
-        public:     virtual const exception * exceptionGet(void) const  = 0;
+        public:     virtual const primitivable::object & peak(void) const = 0;
         public:     message(void) {}
         public:     virtual ~message(void) {}
         public:     message(const message & o) = delete;
@@ -30,6 +26,8 @@ namespace pokemonism {
         };
 
     }
+
+    using message = pokemon::message;
 }
 
 #endif // __POKEMONISM_POKEMON_MESSAGE__HH__

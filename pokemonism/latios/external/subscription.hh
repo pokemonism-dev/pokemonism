@@ -5,6 +5,8 @@
  *
  * @author      snorlax <snorlax@pokemonism.dev>
  * @since       Aug 29, 2025
+ *
+ * @todo        Move to pokemonism/latios/subscription
  */
 
 #ifndef   __POKEMONISM_LATIOS_EXTERNAL_SUBSCRIPTION__HH__
@@ -21,6 +23,9 @@ namespace pokemonism {
             public:     struct property {
                         public:     constexpr static uint32 release_on_del          = (0x00000001U << 30U);
                         public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 31U);
+                        };
+            public:     class envelope {
+
                         };
             public:     bool cancel(void) override = 0;
             public:     virtual const objectable * objectGet(void) const = 0;

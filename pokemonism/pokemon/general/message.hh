@@ -18,9 +18,7 @@ namespace pokemonism {
 
             template <typename formattable = primitivable::object>
             class message : public pokemon::message {
-            public:     message<formattable> * pop(void) const override = 0;
-            public:     const message * peak(void) const override = 0;
-            public:     const exception * exceptionGet(void) const override = 0;
+            public:     const formattable & peak(void) const override = 0;
             public:     message(void) {}
             public:     ~message(void) override {}
             public:     message(const message<formattable> & o) = delete;

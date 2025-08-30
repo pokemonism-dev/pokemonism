@@ -11,24 +11,28 @@ set(LATIOS_HEADER                   engine.hh
                                     event.hh
                                     command.hh
                                     process.hh
+                                    message.hh
                                     descriptor.hh
-                                    socket.hh)
+                                    socket.hh
+                                    subscription.hh)
 
 set(LATIOS_SOURCE                   engine.cc
                                     event.cc
                                     command.cc
                                     process.cc
+                                    message.cc
                                     descriptor.cc
-                                    socket.cc)
+                                    socket.cc
+                                    subscription.cc)
 
 set(LATIOS_EXTERNAL_HEADER          external/event.hh
                                     external/engine.hh
-                                    external/message.hh
+                                    external/message/format.hh
                                     external/subscription.hh)
 
 set(LATIOS_EXTERNAL_SOURCE          external/event.cc
                                     external/engine.cc
-                                    external/message.cc
+                                    external/message/format.cc
                                     external/subscription.cc)
 
 set(LATIOS_GENERAL_HEADER           general/node.hh
@@ -49,19 +53,23 @@ set(LATIOS_GENERAL_SOURCE           general/node.cc
 
 set(LATIOS_PACKAGE_HEADER           package/pack.hh
                                     package/pack/command.hh
+                                    package/message.hh
                                     package/processor.hh
                                     package/generator.hh
                                     package/eventable.hh
                                     package/eventable/command.hh
-                                    package/observable.hh)
+                                    package/observable.hh
+                                    package/messageable/command.hh)
 
 set(LATIOS_PACKAGE_SOURCE           package/pack.cc
                                     package/pack/command.cc
+                                    package/message.cc
                                     package/processor.cc
                                     package/generator.cc
                                     package/eventable.cc
                                     package/eventable/command.cc
-                                    package/observable.cc)
+                                    package/observable.cc
+                                    package/messageable/command.cc)
 
 set(LATIOS_INTERNAL_HEADER          internal/node.hh
                                     internal/event.hh
