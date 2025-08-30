@@ -17,12 +17,12 @@
 namespace pokemonism {
     namespace pokemon {
 
-        class message : public primitivable::object {
-        public:     virtual message * pop(void) const = 0;
-        public:     virtual const message * peak(void) const = 0;
+        class message {
+        public:     virtual primitivable::object * pop(void) const = 0;
+        public:     virtual const primitivable::object * peak(void) const = 0;
         public:     virtual const exception * exceptionGet(void) const  = 0;
         public:     message(void) {}
-        public:     ~message(void) override {}
+        public:     virtual ~message(void) {}
         public:     message(const message & o) = delete;
         public:     message(message && o) noexcept = delete;
         public:     message & operator=(const message & o) = delete;

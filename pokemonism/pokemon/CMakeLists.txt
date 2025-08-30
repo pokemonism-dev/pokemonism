@@ -13,5 +13,11 @@ set(POKEMON_SOURCE                  object.cc
                                     exception.cc
                                     allocator.cc)
 
+set(POKEMON_GENERAL_HEADER          general/message.hh)
+
+set(POKEMON_GENERAL_SOURCE          general/message.cc)
+
 add_library(pokemon-dev             ${POKEMON_HEADER}
-                                    ${POKEMON_SOURCE})
+                                    ${POKEMON_SOURCE}
+                                    ${POKEMON_GENERAL_HEADER}
+                                    ${POKEMON_GENERAL_SOURCE})
