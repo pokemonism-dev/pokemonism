@@ -16,9 +16,11 @@ set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
 set(POKEMONISM_ROOT_SOURCE          src/pokemonism.cc)
 
 set(POKEMONISM_HEADER               src/pokemonism/primitivable.hh
+                                    src/pokemonism/commandable.hh
                                     src/pokemonism/synchronizable.hh)
 
 set(POKEMONISM_SOURCE               src/pokemonism/primitivable.cc
+                                    src/pokemonism/commandable.cc
                                     src/pokemonism/synchronizable.cc)
 
 set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
