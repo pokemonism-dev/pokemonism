@@ -14,6 +14,7 @@ set(LATIOS_HEADER                   engine.hh
                                     message.hh
                                     descriptor.hh
                                     socket.hh
+                                    envelope.hh
                                     subscription.hh)
 
 set(LATIOS_SOURCE                   engine.cc
@@ -23,6 +24,7 @@ set(LATIOS_SOURCE                   engine.cc
                                     message.cc
                                     descriptor.cc
                                     socket.cc
+                                    envelope.cc
                                     subscription.cc)
 
 set(LATIOS_EXTERNAL_HEADER          external/event.hh

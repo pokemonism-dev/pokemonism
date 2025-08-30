@@ -17,11 +17,13 @@ set(POKEMON_SOURCE                  object.cc
 
 set(POKEMON_GENERAL_HEADER          general/message.hh
                                     general/command.hh
-                                    general/envelope.hh)
+                                    general/envelope.hh
+                                    general/functionable.hh)
 
 set(POKEMON_GENERAL_SOURCE          general/message.cc
                                     general/command.cc
-                                    general/envelope.cc)
+                                    general/envelope.cc
+                                    general/functionable.cc)
 
 add_library(pokemon-dev             ${POKEMON_HEADER}
                                     ${POKEMON_SOURCE}

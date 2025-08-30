@@ -1,0 +1,8 @@
+//
+// Created by snorlax on 25. 8. 31..
+//
+
+#ifndef POKEMONISM_FUNCTIONABLE_HH
+#define POKEMONISM_FUNCTIONABLE_HH
+
+#endif //POKEMONISM_FUNCTIONABLE_HH

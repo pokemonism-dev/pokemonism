@@ -18,7 +18,7 @@
 namespace pokemonism {
     namespace latios {
 
-        template <class format = external::message::format>
+        template <class format = primitivable::object>
         class message : public pokemon::general::message<format> {
         public:     const format & peak(void) const override = 0;
         public:     virtual const format & pop(void) const = 0;

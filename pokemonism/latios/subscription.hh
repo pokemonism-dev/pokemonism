@@ -12,29 +12,21 @@
 #define   __POKEMONISM_LATIOS_SUBSCRIPTION__HH__
 
 #include <pokemonism/mareep.hh>
-#include <pokemonism/pokemon/general/envelope.hh>
+
+#include <pokemonism/latios/message.hh>
+#include <pokemonism/latios/envelope.hh>
+
 
 namespace pokemonism {
     namespace latios {
 
-        template <class objectable, class messageable = primitivable::object>
+        template <class objectable, class envelopeable>
         class subscription : public virtual pokemonism::subscription {
         public:     struct property {
-        public:     constexpr static uint32 release_on_del          = (0x00000001U << 30U);
-        public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 31U);
-        };
-        public:     class envelope : public pokemon::general::envelope<messageable> {
-                    public:     const messageable & peak(void) const override = 0;
-                    public:     virtual messageable * pop(void) const = 0;
-                    public:     virtual const exception * exceptionGet(void) const = 0;
-                    public:     virtual int processRet(void) const = 0;
-                    public:     envelope(void) {}
-                    public:     ~envelope(void) override {}
-                    public:     envelope(const envelope & o) = delete;
-                    public:     envelope(envelope && o) noexcept = delete;
-                    public:     envelope & operator=(const envelope & o) = delete;
-                    public:     envelope & operator=(envelope && o) noexcept = delete;
+                    public:     constexpr static uint32 release_on_del          = (0x00000001U << 30U);
+                    public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 31U);
                     };
+        public:     typedef envelopeable    envelope;
         public:     bool cancel(void) override = 0;
         public:     virtual const objectable * objectGet(void) const = 0;
         public:     subscription(void) {}

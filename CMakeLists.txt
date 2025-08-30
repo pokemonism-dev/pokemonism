@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 23)
 
 include_directories(include src pokemonism ./)
 
+add_subdirectory(pokemonism/meowth)
+
 add_subdirectory(pokemonism/pokemon)
 add_subdirectory(pokemonism/sprigatito)
 add_subdirectory(pokemonism/psyduck)
@@ -17,10 +19,12 @@ set(POKEMONISM_ROOT_SOURCE          src/pokemonism.cc)
 
 set(POKEMONISM_HEADER               src/pokemonism/primitivable.hh
                                     src/pokemonism/commandable.hh
+                                    src/pokemonism/functionable.hh
                                     src/pokemonism/synchronizable.hh)
 
 set(POKEMONISM_SOURCE               src/pokemonism/primitivable.cc
                                     src/pokemonism/commandable.cc
+                                    src/pokemonism/functionable.cc
                                     src/pokemonism/synchronizable.cc)
 
 set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh

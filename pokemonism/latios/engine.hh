@@ -12,6 +12,10 @@
 
 #include <pokemonism/pokemon.hh>
 
+#include <pokemonism/pokemon/general/command.hh>
+
+#include <pokemonism/latios/subscription.hh>
+
 namespace pokemonism {
     namespace latios {
 
@@ -19,9 +23,13 @@ namespace pokemonism {
             class engine;
         }
 
+        // subscription, ... subscription, envelope, object, envelope ...
+
         class engine : public object {
         public:     static int on(void (*bootstrap)(pokemonism::latios::external::engine &));
         public:     static int run(void);
+        public:     template <class output = primitivable::object> subscription<pokemon::general::command<output>, envelope<output, message<output>>>
+                    reg(pokemon::general::command<output> command, uint32 properties, const callback *, uint32 n);
         public:     engine(void);
         public:     ~engine(void) override;
         public:     engine(const engine & o) = delete;
