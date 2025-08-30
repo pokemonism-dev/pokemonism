@@ -25,14 +25,14 @@ namespace pokemonism {
             public:     class generator : public package::generator<object, subscription> {
                         public:     explicit generator(general::engine * engine) : package::generator<object, subscription>(engine) {}
                         };
-            public:     class event : public virtual external::event<object>, public general::event {
+            public:     class event : public virtual pokemonism::event, public general::event {
                         public:     class type {
-                                    public:     constexpr static uint32 gen     = external::event<object>::type::gen;
-                                    public:     constexpr static uint32 rel     = external::event<object>::type::rel;
-                                    public:     constexpr static uint32 add     = external::event<object>::type::add;
-                                    public:     constexpr static uint32 del     = external::event<object>::type::del;
-                                    public:     constexpr static uint32 execute = external::event<object>::type::max;
-                                    public:     constexpr static uint32 max     = external::event<object>::type::max + 1;
+                                    public:     constexpr static uint32 gen     = pokemonism::event::type::gen;
+                                    public:     constexpr static uint32 rel     = pokemonism::event::type::rel;
+                                    public:     constexpr static uint32 add     = pokemonism::event::type::add;
+                                    public:     constexpr static uint32 del     = pokemonism::event::type::del;
+                                    public:     constexpr static uint32 execute = pokemonism::event::type::max;
+                                    public:     constexpr static uint32 max     = pokemonism::event::type::max + 1;
                                     };
                         public:     eventable<object, pokemonism::command, pokemonism::command>::node * node;
                         public:     event(const uint32 tag, eventable<object, pokemonism::command, pokemonism::command>::node * node) : general::event(tag), node(node) {}

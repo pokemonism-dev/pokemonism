@@ -11,6 +11,8 @@
 #define   __POKEMONISM_LATIOS_EXTERNAL_MESSAGE__HH__
 
 #include <primitivable.hh>
+
+#include <pokemonism/pokemon/general/message.hh>
 #include <pokemonism/pokemon/exception.hh>
 
 namespace pokemonism {
@@ -18,10 +20,12 @@ namespace pokemonism {
         namespace external {
 
             template <class formattable = primitivable::object>
-            class message {
-            public:     virtual const exception * exceptionGet(void) const = 0;
+            class message : public pokemon::general::message<formattable> {
+            public:     message<formattable> * pop(void) const override = 0;
+            public:     const message * peak(void) const override = 0;
+            public:     const exception * exceptionGet(void) const override = 0;
             public:     message(void) {}
-            public:     virtual ~message(void) {}
+            public:     ~message(void) override {}
             public:     message(const message & o) = delete;
             public:     message(message && o) noexcept = delete;
             public:     message & operator=(const message & o) = delete;

@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_LATIOS_ENGINE__HH__
 #define   __POKEMONISM_LATIOS_ENGINE__HH__
 
-#include <pokemon.hh>
+#include <pokemonism/pokemon.hh>
 
 namespace pokemonism {
     namespace latios {
@@ -19,7 +19,7 @@ namespace pokemonism {
             class engine;
         }
 
-        class engine : public pokemonism::object {
+        class engine : public object {
         public:     static int on(void (*bootstrap)(pokemonism::latios::external::engine &));
         public:     static int run(void);
         public:     engine(void);

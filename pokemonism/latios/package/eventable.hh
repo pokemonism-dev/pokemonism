@@ -29,13 +29,13 @@ namespace pokemonism {
             public:     class event;
             public:     class subscription;
             public:     typedef package::generator<object, eventable<object, objectable, generatable>::subscription>    generator;
-            public:     class event : public virtual external::event<object>, public general::event {
+            public:     class event : public virtual pokemonism::event, public general::event {
                         public:     class type {
-                                    public:     constexpr static uint32 gen     = external::event<object>::type::gen;
-                                    public:     constexpr static uint32 rel     = external::event<object>::type::rel;
-                                    public:     constexpr static uint32 add     = external::event<object>::type::add;
-                                    public:     constexpr static uint32 del     = external::event<object>::type::del;
-                                    public:     constexpr static uint32 max     = external::event<object>::type::max;
+                                    public:     constexpr static uint32 gen     = pokemonism::event::type::gen;
+                                    public:     constexpr static uint32 rel     = pokemonism::event::type::rel;
+                                    public:     constexpr static uint32 add     = pokemonism::event::type::add;
+                                    public:     constexpr static uint32 del     = pokemonism::event::type::del;
+                                    public:     constexpr static uint32 max     = pokemonism::event::type::max;
                                     };
                         public:     eventable<object, objectable, generatable>::node * node;
                         public:     event(const uint32 tag, eventable<object, objectable, generatable>::node * node) : general::event(tag), node(node) {}
