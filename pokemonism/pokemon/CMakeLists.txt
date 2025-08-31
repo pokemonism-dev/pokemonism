@@ -7,13 +7,15 @@ set(POKEMON_INTERFACE_SOURCE        interface/callable.hh
                                     interface/runnable.hh
                                     interface/functionable.hh
                                     interface/primitivable.hh
-                                    interface/synchronizable.hh)
+                                    interface/synchronizable.hh
+                                    interface/terminatable.hh)
 
 set(POKEMON_INTERFACE_HEADER        interface/callable.cc
                                     interface/runnable.cc
                                     interface/functionable.cc
                                     interface/primitivable.cc
-                                    interface/synchronizable.cc)
+                                    interface/synchronizable.cc
+                                    interface/terminatable.cc)
 
 set(POKEMON_GENERIC_SOURCE          generic/command.hh
                                     generic/envelope.hh

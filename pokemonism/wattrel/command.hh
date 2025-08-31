@@ -28,7 +28,7 @@ namespace pokemonism {
             class node;
             class subscription;
 
-            class envelope : public pokemon::command::envelope {
+            class envelope : public virtual pokemon::command::envelope {
             public:     typedef wattrel::command::output     message;
             protected:  pokemon::exception * exception;
             protected:  int ret;

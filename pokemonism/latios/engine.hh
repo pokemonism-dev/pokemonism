@@ -13,25 +13,62 @@
 #include <pokemonism.hh>
 
 #include <pokemonism/wattrel/engine.hh>
+#include <pokemonism/pokemon/generic/command.hh>
 
 namespace pokemonism {
     namespace latios {
 
-        class engine {
-        public:     static void on(wattrel::engine::bootstrapper bootstrap);
-        public:     static void off(wattrel::engine::terminator executor);
-        public:     static int run(void);
-        // TODO: IMPLEMENT THIS
-        // public:     template <typename output> pokemon::subscription * reg(pokemon::general::command<output> * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
+        namespace command {
+            template <typename objectable> class subscription;
+        }
 
+        class engine : protected wattrel::engine {
+        public:     static  pokemon::interface::terminatable<1, latios::engine *> T;
+        public:     typedef void (*bootstrapper)(latios::engine & o);
+        public:     typedef void (*cancellation)(latios::engine * o);
+        public:     static void t1000(latios::engine * o);
+        public:     static void on(latios::engine::bootstrapper bootstrap, wattrel::engine::bootstrapper wattrel);
+        public:     static void off(latios::engine::cancellation terminator, wattrel::engine::cancellation wattrel);
+        public:     static int run(int n);
+        public:     template <class outputable, typename objectable = pokemon::generic::command<outputable>> static latios::command::subscription<objectable> * commandReg(objectable * target, uint32 properties, objectable::callback::type * callbacks, uint32 n);
         protected:  engine(void);
-        protected:  virtual ~engine(void);
+        protected:  ~engine(void) override;
         public:     engine(const engine & o) = delete;
         public:     engine(engine && o) noexcept = delete;
         public:     engine & operator=(const engine & o) = delete;
         public:     engine & operator=(engine && o) noexcept = delete;
         };
 
+    }
+}
+
+#include <pokemonism/latios/command.hh>
+
+namespace pokemonism {
+    namespace latios {
+        namespace command {
+
+            template <class outputable, class objectable>
+            latios::command::subscription<objectable> * generator::reg(objectable * target, uint32 properties, typename objectable::callback::type * callbacks, uint32 n) {
+                latios::command::subscription<objectable> * subscription = new latios::command::subscription<objectable>(target, properties, callbacks, n);
+
+                subscription->on(wattrel::command::event::type::gen);
+
+                if (add(subscription) != declaration::success) return allocator::del(subscription);
+
+                wattrel::command::event * event = new wattrel::command::event(wattrel::command::event::type::execute, new wattrel::command::node(subscription));
+
+                engine->push(event);
+
+                return subscription;
+            }
+
+        }
+
+        template <class outputable, typename objectable>
+        latios::command::subscription<objectable> * engine::commandReg(objectable * target, uint32 properties, typename objectable::callback::type * callbacks, uint32 n) {
+            return nullptr;
+        }
     }
 }
 

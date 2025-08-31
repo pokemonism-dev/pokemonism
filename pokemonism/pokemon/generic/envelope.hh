@@ -20,8 +20,7 @@ namespace pokemonism {
             template <class messageable = pokemonism::message>
             class envelope : public virtual pokemon::envelope {
             public:     typedef messageable     message;
-            public:     message * pop(void) const override = 0;
-            public:     const message * peak(void) const override = 0;
+            public:     message * pop(void) override = 0;
             public:     envelope(void) {}
             public:     ~envelope(void) override {}
             public:     envelope(const envelope & o) = delete;

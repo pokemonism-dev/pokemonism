@@ -15,28 +15,53 @@
 namespace pokemonism {
     namespace latios {
 
-        static wattrel::engine * internal = nullptr;
+        static latios::engine * singleton = nullptr;
 
-        void engine::on(wattrel::engine::bootstrapper bootstrap) {
-            if (internal != nullptr) throw exception();
+        pokemon::interface::terminatable<1, latios::engine *> latios::engine::T;
 
-            internal = new wattrel::engine();
+        pokemon::interface::terminator<latios::engine *> terminator;
 
-            internal->on(bootstrap);
+        void engine::t1000(latios::engine * o) {}
+
+        void engine::on(latios::engine::bootstrapper bootstrap, wattrel::engine::bootstrapper wattrel) {
+            T.func[0] = engine::t1000;
+            T.basic = engine::t1000;
+            if (singleton != nullptr) throw exception();
+
+            singleton = new latios::engine();
+
+            if (bootstrap != nullptr) bootstrap(*singleton);
+
+            if (singleton->queue == nullptr) singleton->queue = new wattrel::queue();
+            if (singleton->generator.command == nullptr) singleton->generator.command = new latios::command::generator(singleton);
+
+
+            singleton->wattrel::engine::on(wattrel);
         }
 
-        void engine::off(wattrel::engine::terminator executor) {
-            if (internal == nullptr) throw exception();
+        void engine::off(latios::engine::cancellation t1000, wattrel::engine::cancellation t800) {
+            if (singleton == nullptr) throw exception();
 
-            internal->off(executor);
+            if (latios::terminator == nullptr && t1000 == nullptr) {
+                latios::terminator = T-1000;
+            } else if (latios::terminator == nullptr) {
+                latios::terminator = t1000;
+            }
+
+            if (singleton->terminator == nullptr && t800 == nullptr) {
+                singleton->terminator = wattrel::engine::T-800;
+            } else if (singleton->terminator == nullptr) {
+                singleton->terminator = t800;
+            }
         }
 
-        int engine::run(void) {
-            if (internal == nullptr) throw exception();
+        int engine::run(int n) {
+            if (singleton == nullptr) throw exception();
 
-            const int ret = internal->run();
+            const int ret = singleton->wattrel::engine::run();
 
-            internal = allocator::del(internal);
+            delete singleton;
+            singleton = nullptr;
 
             return ret;
         }

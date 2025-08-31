@@ -16,15 +16,18 @@
 
 #include <pokemonism/wattrel/command.hh>
 #include <pokemonism/wattrel/queue.hh>
+#include <pokemonism/pokemon/interface/terminatable.hh>
 
 namespace pokemonism {
 
     namespace wattrel {
 
+        inline void t800(wattrel::engine * o) {}
+
         class engine {
-        public:     static void t800(engine * o);
-        public:     typedef void (*terminator)(engine * o);
-        public:     typedef void (*bootstrapper)(engine & o);
+        public:     typedef void (*cancellation)(wattrel::engine * o);
+        public:     typedef void (*bootstrapper)(wattrel::engine & o);
+        public:     static  pokemon::interface::terminatable<1, wattrel::engine *> T;
         public:     struct generator {
                     public:     struct set {
                                 public:     command::generator * command;
@@ -33,12 +36,12 @@ namespace pokemonism {
                                 };
                     };
         public:     virtual int run(void);
-        public:     virtual void on(engine::bootstrapper bootstrap);
-        public:     virtual void off(engine::terminator executor);
+        public:     virtual void on(wattrel::engine::bootstrapper bootstrap);
+        public:     virtual void off(wattrel::engine::cancellation executor);
         public:     inline virtual void push(wattrel::event * event) { queue->add(event); }
         public:     virtual pokemon::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
         protected:  wattrel::queue * queue;
-        protected:  wattrel::engine::terminator cancel;
+        protected:  pokemon::interface::terminator<wattrel::engine *> terminator;
         protected:  wattrel::engine::generator::set generator;
         public:     engine(void);
         public:     virtual ~engine(void);
@@ -48,9 +51,16 @@ namespace pokemonism {
         public:     engine & operator=(engine && o) noexcept = delete;
         };
 
-        engine::generator::set::~set(void) {
+        inline engine::generator::set::~set(void) {
             command = pokemon::allocator::del(command);
         }
+
+        // inline wattrel::engine::terminator * operator-(wattrel::engine::terminator * func, long n) {
+        //     switch (n) {
+        //         case 800:   return wattrel::engine::t800;
+        //         default:    return wattrel::engine::t800;
+        //     }
+        // }
     }
 }
 

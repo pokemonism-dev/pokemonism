@@ -4,14 +4,10 @@ project(latios CXX)
 set(CMAKE_CXX_STANDARD 23)
 
 set(LATIOS_SOURCE               engine.cc
-                                subscription.cc
-                                command.cc
-                                envelope.cc)
+                                command.cc)
 
 set(LATIOS_HEADER               engine.hh
-                                subscription.hh
-                                command.hh
-                                envelope.hh)
+                                command.hh)
 
 add_library(latios-dev          ${LATIOS_HEADER}
                                 ${LATIOS_SOURCE})

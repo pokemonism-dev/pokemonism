@@ -23,7 +23,7 @@ namespace pokemonism {
             public:     typedef pokemon::command::event event;
             public:     class envelope : public virtual pokemon::generic::envelope<outputable> {
                         public:     typedef pokemon::generic::envelope<outputable>::message  message;
-                        public:     pokemon::generic::envelope<output>::message * pop(void) const override = 0;
+                        public:     pokemon::generic::envelope<output>::message * pop(void) override = 0;
                         public:     envelope(void) {}
                         public:     ~envelope(void) override {}
                         public:     envelope(const envelope & o) = delete;

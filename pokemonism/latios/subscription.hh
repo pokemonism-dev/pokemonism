@@ -4,7 +4,7 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           8월 31, 2025
+ * @since           9월 01, 2025
  */
 
 #ifndef   __POKEMONISM_LATIOS_SUBSCRIPTION_HH__
@@ -14,10 +14,11 @@
 
 namespace pokemonism {
     namespace latios {
-
-        template <class objectable, class envelopeable>
-        class subscription : public wattrel::subscription {
-        public:     subscription(void) {}
+        template <class objectable, class messageable = objectable::output, class tag = objectable::tag>
+        class subscription : public virtual wattrel::subscription {
+        public:     constexpr static const char * name = "interface";   // ### 20250901 | REMOVE THIS FOR DEBUG
+        public:     explicit subscription(uint32 properties) : wattrel::subscription(properties) {}
+        public:     subscription(void) = delete;
         public:     ~subscription(void) override {}
         public:     subscription(const subscription & o) = delete;
         public:     subscription(subscription && o) noexcept = delete;

@@ -17,8 +17,6 @@
 
 #include <pokemonism/pokemon/event.hh>
 
-#include "latios/subscription.hh"
-
 namespace pokemonism {
     namespace wattrel {
 

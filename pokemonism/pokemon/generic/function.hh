@@ -18,7 +18,7 @@ namespace pokemonism {
 
             template <typename returnable, typename... argumentable>
             class function {
-            public:     virtual returnable & operator(argumentable...)(void) const = 0;
+            public:     virtual returnable & operator()(argumentable...) const = 0;
             public:     function(void) {}
             public:     virtual ~function(void) {}
             public:     function(const function & o) = delete;

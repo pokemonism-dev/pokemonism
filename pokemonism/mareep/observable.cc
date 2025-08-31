@@ -8,7 +8,7 @@
  */
 
 
-#include "subscription.hh"
+#include "observable.hh"
 
 namespace pokemonism {
 }

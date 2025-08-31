@@ -42,8 +42,7 @@ static int commandEventRelOn(pokemon::command & command, uint32 type, pokemon::c
 
     printf("event on => %u\n", type);
 
-    if (engine != nullptr) engine->off(wattrel::engine::t800);
-
+    if (engine != nullptr) engine->off(wattrel::t800);
 
     return declaration::success;
 }
