@@ -15,15 +15,7 @@
 namespace pokemonism {
     namespace pokemon {
 
-        class message {
-        public:     virtual const pokemonism::primitivable::object * peak(void) const = 0;
-        public:     message(void) {}
-        public:     virtual ~message(void) {}
-        public:     message(const message & o) = delete;
-        public:     message(message && o) noexcept = delete;
-        public:     message & operator=(const message & o) = delete;
-        public:     message & operator=(message && o) noexcept = delete;
-        };
+        typedef pokemon::primitivable::object message;
 
     }
 

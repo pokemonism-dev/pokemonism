@@ -33,7 +33,7 @@ namespace pokemonism {
                                 };
                     };
         public:     virtual int run(void);
-        public:     virtual void on(bootstrapper bootstrap);
+        public:     virtual void on(engine::bootstrapper bootstrap);
         public:     virtual void off(engine::terminator executor);
         public:     virtual pokemon::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
         protected:  engine::terminator cancel;

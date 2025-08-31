@@ -15,4 +15,6 @@
 namespace pokemonism {
 }
 
+#include <pokemonism/latios/engine.hh>
+
 #endif // __POKEMONISM_LATIOS_HH__

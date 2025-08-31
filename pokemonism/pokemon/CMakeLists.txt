@@ -3,17 +3,19 @@ cmake_minimum_required(VERSION 3.28.3)
 project(pokemon CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-set(POKEMON_INTERFACE_SOURCE        interface/commandable.hh
-                                    interface/functionable.hh
+set(POKEMON_INTERFACE_SOURCE        interface/functionable.hh
                                     interface/primitivable.hh
-                                    interface/synchronizable.hh
-                                    interface/throwable.hh)
+                                    interface/synchronizable.hh)
 
-set(POKEMON_INTERFACE_HEADER        interface/commandable.cc
-                                    interface/functionable.cc
+set(POKEMON_INTERFACE_HEADER        interface/functionable.cc
                                     interface/primitivable.cc
-                                    interface/synchronizable.cc
-                                    interface/throwable.cc)
+                                    interface/synchronizable.cc)
+
+set(POKEMON_GENERIC_SOURCE          generic/command.hh
+                                    generic/envelope.hh)
+
+set(POKEMON_GENERIC_HEADER          generic/command.cc
+                                    generic/envelope.cc)
 
 set(POKEMON_SOURCE                  allocator.cc
                                     object.cc
@@ -33,5 +35,7 @@ set(POKEMON_HEADER                  allocator.hh
 
 add_library(pokemon-dev             ${POKEMON_INTERFACE_HEADER}
                                     ${POKEMON_INTERFACE_SOURCE}
+                                    ${POKEMON_GENERIC_HEADER}
+                                    ${POKEMON_GENERIC_SOURCE}
                                     ${POKEMON_HEADER}
                                     ${POKEMON_SOURCE})

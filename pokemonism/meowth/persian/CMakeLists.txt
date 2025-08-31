@@ -5,3 +5,6 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(persian-wattrel-engine           persian-wattrel-engine.cc)
 target_link_libraries(persian-wattrel-engine    wattrel-dev)
+
+add_executable(persian-latios-engine            persian-latios-engine.cc)
+target_link_libraries(persian-latios-engine     latios-dev wattrel-dev)

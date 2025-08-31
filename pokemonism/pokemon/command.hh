@@ -13,21 +13,30 @@
 #include <pokemon/interface/primitivable.hh>
 #include <pokemon/interface/functionable.hh>
 
-#include <pokemonism/pokemon/envelope.hh>
+#include <pokemonism/pokemon/generic/envelope.hh>
 
 namespace pokemonism {
     namespace pokemon {
 
-
-
         class command {
+        public:     typedef primitivable::object output;
         public:     struct type {
-                    public:     constexpr static int execute        = 0;
+                    public:     constexpr static int execute    = 0;
                     };
-        public:     struct callback : public pokemonism::functionable {
-                    public:     typedef int (*type)(command &, uint32, pokemonism::envelope &);
+        public:     class envelope : public pokemon::envelope {
+                    public:     typedef command::output     message;
+                    public:     command::output * pop(void) const override = 0;
+                    public:     envelope(void) {}
+                    public:     ~envelope(void) override {}
+                    public:     envelope(const envelope & o) = delete;
+                    public:     envelope(envelope && o) noexcept = delete;
+                    public:     envelope & operator=(const envelope & o) = delete;
+                    public:     envelope & operator=(envelope && o) noexcept = delete;
                     };
-        public:     virtual pokemonism::primitivable::object * operator()(void) = 0;
+        public:     struct callback : public virtual pokemon::functionable {
+                    public:     typedef int (*type)(command &, uint32, command::envelope *);
+                    };
+        public:     virtual command::output * operator()(void) = 0;
         public:     command(void) {}
         public:     virtual ~command(void) {}
         public:     command(const command & o) = delete;
