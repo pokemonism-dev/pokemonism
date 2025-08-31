@@ -12,6 +12,8 @@
 
 #include <pokemonism.hh>
 
+#include <pokemonism/mareep/subscription.hh>
+
 namespace pokemonism {
     namespace pokemon {
         class event {
@@ -21,6 +23,12 @@ namespace pokemonism {
                     public:     constexpr static uint32 add = 2;
                     public:     constexpr static uint32 del = 3;
                     public:     constexpr static uint32 max = 4;
+                    };
+        public:     struct subscription : public mareep::subscription {
+                    public:     struct property {
+                                public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 30U);
+                                public:     constexpr static uint32 release_on_del          = (0x00000001U << 31U);
+                                };
                     };
         public:     virtual uint32 eventGet(void) const = 0;
         public:     event(void) {}

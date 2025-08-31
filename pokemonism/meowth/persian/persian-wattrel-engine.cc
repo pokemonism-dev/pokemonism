@@ -8,6 +8,7 @@
  */
 
 #include <pokemonism/wattrel.hh>
+#include <pokemonism/wattrel/command.hh>
 
 namespace pokemonism {
 }
@@ -15,6 +16,7 @@ namespace pokemonism {
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
+    printf("%u\n", wattrel::command::event::type::max);
     wattrel::engine * engine = new wattrel::engine();
 
     engine->on(nullptr);

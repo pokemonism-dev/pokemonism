@@ -21,7 +21,7 @@ namespace pokemonism {
 
         class command {
         public:     typedef primitivable::object output;
-        public:     struct event : public pokemon::event {
+        public:     struct event : public virtual pokemon::event {
                     public:     struct type : public pokemon::event::type {
                                 public:     constexpr static int gen        = pokemon::event::type::gen;
                                 public:     constexpr static int rel        = pokemon::event::type::rel;
@@ -29,11 +29,13 @@ namespace pokemonism {
                                 public:     constexpr static int del        = pokemon::event::type::del;
                                 public:     constexpr static int exception  = pokemon::event::type::max;
                                 public:     constexpr static int execute    = pokemon::event::type::max + 1;
+                                public:     constexpr static int max        = pokemon::event::type::max + 2;
                                 };
+                    public:     typedef pokemon::event::subscription subscription;
                     };
         public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;
-                    public:     message * pop(void) const override = 0;
+                    public:     message * pop(void) override = 0;
                     public:     envelope(void) {}
                     public:     ~envelope(void) override {}
                     public:     envelope(const envelope & o) = delete;

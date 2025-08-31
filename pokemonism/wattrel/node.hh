@@ -26,6 +26,7 @@ namespace pokemonism {
         protected:  wattrel::node * prev;
         protected:  wattrel::node * next;
         protected:  wattrel::event * event;
+        public:     inline virtual wattrel::event * eventGet(void) const { return event; }
         public:     virtual int dispatch(void);
         public:     virtual void raise(pokemon::exception * e);
         public:     virtual void complete(void);

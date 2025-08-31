@@ -17,8 +17,7 @@ namespace pokemonism {
 
         class envelope {
         public:     typedef pokemon::message    message;
-        public:     virtual message * pop(void) const = 0;
-        public:     virtual const message * peak(void) const = 0;
+        public:     virtual message * pop(void) = 0;
         public:     envelope(void) {}
         public:     virtual ~envelope(void) {}
         public:     envelope(const envelope & o) = delete;

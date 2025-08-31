@@ -50,7 +50,7 @@ namespace pokemonism {
         }
 
         int node::dispatch(void) {
-            return container != nullptr ? container->dispatch() : declaration::success;
+            return container != nullptr ? container->dispatch(this) : declaration::success;
         }
 
         void node::raise(pokemon::exception * e) {
@@ -60,7 +60,7 @@ namespace pokemonism {
         }
 
         void node::complete(void) {
-            if (container != nullptr) container->complete();
+            if (container != nullptr) container->complete(this);
         }
 
     }

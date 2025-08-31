@@ -17,16 +17,19 @@
 
 #include <pokemonism/pokemon/event.hh>
 
+#include "latios/subscription.hh"
+
 namespace pokemonism {
     namespace wattrel {
 
         class queue;
         class node;
 
-        class event : public pokemon::event {
+        class event : public virtual pokemon::event {
         public:     typedef pokemon::event::type type;
         public:     typedef psyduck::linked::list<queue, event> collection;
         public:     static event * rel(wattrel::event * o);
+        public:     struct subscription : public virtual pokemon::event::subscription {};
         protected:  wattrel::queue * container;
         protected:  wattrel::event * prev;
         protected:  wattrel::event * next;
