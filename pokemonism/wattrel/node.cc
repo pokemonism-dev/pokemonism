@@ -20,9 +20,7 @@ namespace pokemonism {
         node * node::rel(node * o) {
             if (o == nullptr) throw pokemon::exception();
 
-            wattrel::event * event = o->event;
-
-            if (event->container != nullptr) {
+            if (wattrel::event * event = o->event; event->container != nullptr) {
                 event->container->del(event);
 
                 if (o->dispatch() > declaration::success) {
@@ -47,8 +45,8 @@ namespace pokemonism {
             return o;
         }
 
-        node::node(void) : container(nullptr), prev(nullptr), next(nullptr), event(nullptr) {
-
+        node::node(wattrel::subscription * subscription) : container(nullptr), prev(nullptr), next(nullptr), event(nullptr) {
+            if (subscription != nullptr) subscription->add(this);
         }
 
         int node::dispatch(void) {

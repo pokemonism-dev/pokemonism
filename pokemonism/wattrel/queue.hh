@@ -21,9 +21,9 @@ namespace pokemonism {
 
         class queue : public pokemon::object {
         public:     typedef psyduck::linked::list<queue, event> collection;
-        public:     uint32 size;
-        public:     wattrel::event * head;
-        public:     wattrel::event * tail;
+        protected:  uint32 size;
+        protected:  wattrel::event * head;
+        protected:  wattrel::event * tail;
         public:     virtual uint64 on(uint64 total = declaration::infinite);
         public:     virtual void clear(void);
         public:     virtual void add(wattrel::event * item);
@@ -34,6 +34,8 @@ namespace pokemonism {
         public:     queue(queue && o) noexcept = delete;
         public:     queue & operator=(const queue & o) = delete;
         public:     queue & operator=(queue && o) noexcept = delete;
+        public:     friend collection;
+        public:     friend event;
         };
     }
 }

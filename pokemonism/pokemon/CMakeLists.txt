@@ -18,6 +18,7 @@ set(POKEMON_GENERIC_HEADER          generic/command.cc
                                     generic/envelope.cc)
 
 set(POKEMON_SOURCE                  allocator.cc
+                                    event.cc
                                     object.cc
                                     command.cc
                                     message.cc
@@ -26,6 +27,7 @@ set(POKEMON_SOURCE                  allocator.cc
                                     descriptor.cc)
 
 set(POKEMON_HEADER                  allocator.hh
+                                    event.hh
                                     object.hh
                                     command.hh
                                     message.hh

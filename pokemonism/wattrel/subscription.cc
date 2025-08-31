@@ -15,15 +15,6 @@
 
 namespace pokemonism {
     namespace wattrel {
-        // public:     wattrel::generator * container;
-        // public:     wattrel::subscription * prev;
-        // public:     wattrel::subscription * next;
-        // public:     uint32 size;
-        // public:     wattrel::node * head;
-        // public:     wattrel::node * tail;
-        subscription::subscription(void) : container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr) {
-
-        }
 
         subscription::~subscription(void) {
             clear();

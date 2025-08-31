@@ -10,9 +10,9 @@
 #ifndef   __POKEMONISM_WATTREL_NODE_HH__
 #define   __POKEMONISM_WATTREL_NODE_HH__
 
-#include <pokemonism.hh>
-
 #include <pokemonism/pokemon/exception.hh>
+
+#include "subscription.hh"
 
 namespace pokemonism {
     namespace wattrel {
@@ -22,19 +22,22 @@ namespace pokemonism {
 
         class node {
         public:     static node * rel(node * o);
-        public:     wattrel::subscription * container;
-        public:     wattrel::node * prev;
-        public:     wattrel::node * next;
-        public:     wattrel::event * event;
+        protected:  wattrel::subscription * container;
+        protected:  wattrel::node * prev;
+        protected:  wattrel::node * next;
+        protected:  wattrel::event * event;
         public:     virtual int dispatch(void);
         public:     virtual void raise(pokemon::exception * e);
         public:     virtual void complete(void);
-        public:     node(void);
+        public:     explicit node(wattrel::subscription * subscription);
         public:     virtual ~node(void) { node::rel(this); }
         public:     node(const node & o) = delete;
         public:     node(node && o) noexcept = delete;
         public:     node & operator=(const node & o) = delete;
         public:     node & operator=(node && o) noexcept = delete;
+        public:     friend psyduck::linked::list<subscription, node>;
+        public:     friend wattrel::subscription;
+        public:     friend wattrel::event;
         };
     }
 }

@@ -16,11 +16,11 @@ namespace pokemonism {
 
         uint64 queue::on(uint64 total) {
             lock();
-            uint64 limit = total < size ? total : size;
+            const uint64 limit = total < size ? total : size;
 
             total = 0;
 
-            for (uint64 i = 0; i < size; i = i + 1) {
+            for (uint64 i = 0; i < size && i < limit; i = i + 1) {
                 wattrel::event * event = collection::pop(this);
                 unlock();
                 if (event != nullptr) {

@@ -12,20 +12,31 @@
 
 #include <pokemonism.hh>
 
+#include <pokemonism/psyduck/linked/list.hh>
+
 namespace pokemonism {
     namespace wattrel {
         class subscription;
+        class engine;
 
         class generator {
-        public:     virtual int reg(wattrel::subscription * o);
-        public:     virtual int del(wattrel::subscription * o);
+        public:     typedef psyduck::linked::list<generator, subscription> collection;
+        protected:  wattrel::engine * engine;
+        protected:  uint64 size;
+        protected:  wattrel::subscription * head;
+        protected:  wattrel::subscription * tail;
+        public:     int add(wattrel::subscription * o);
+        public:     int del(wattrel::subscription * o);
         public:     virtual void clear(void);
-        public:     generator(void) {}
-        public:     virtual ~generator(void) {}
+        public:     explicit generator(wattrel::engine * engine) : engine(engine), size(0), head(nullptr), tail(nullptr) {}
+        public:     generator(void) : engine(nullptr), size(0), head(nullptr), tail(nullptr) {}
+        public:     virtual ~generator(void) { clear(); }
         public:     generator(const generator & o) = delete;
         public:     generator(generator && o) noexcept = delete;
         public:     generator & operator=(const generator & o) = delete;
         public:     generator & operator=(generator && o) noexcept = delete;
+        public:     friend collection;
+        public:     friend wattrel::subscription;
         };
     }
 }

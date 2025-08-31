@@ -13,6 +13,7 @@
 #include <pokemon/interface/primitivable.hh>
 #include <pokemon/interface/functionable.hh>
 
+#include <pokemonism/pokemon/event.hh>
 #include <pokemonism/pokemon/generic/envelope.hh>
 
 namespace pokemonism {
@@ -20,9 +21,13 @@ namespace pokemonism {
 
         class command {
         public:     typedef primitivable::object output;
-        public:     struct type {
-                    public:     constexpr static int exception  = 0;
-                    public:     constexpr static int execute    = 1;
+        public:     struct type : public pokemon::event::type {
+                    public:     constexpr static int gen        = pokemon::event::type::gen;
+                    public:     constexpr static int rel        = pokemon::event::type::rel;
+                    public:     constexpr static int add        = pokemon::event::type::add;
+                    public:     constexpr static int del        = pokemon::event::type::del;
+                    public:     constexpr static int exception  = pokemon::event::type::max;
+                    public:     constexpr static int execute    = pokemon::event::type::max + 1;
                     };
         public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;

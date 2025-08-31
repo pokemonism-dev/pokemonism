@@ -14,6 +14,7 @@
 #include <pokemonism/pokemon/exception.hh>
 
 #include <pokemonism/wattrel/node.hh>
+#include <pokemonism/wattrel/event.hh>
 #include <pokemonism/wattrel/generator.hh>
 #include <pokemonism/wattrel/subscription.hh>
 
@@ -47,7 +48,7 @@ namespace pokemonism {
             };
 
             class subscription : public wattrel::subscription {
-            public:     subscription(void) {}
+            public:     explicit subscription(uint32 properties) : wattrel::subscription(properties) {}
             public:     ~subscription(void) override {}
             public:     subscription(const subscription & o) = delete;
             public:     subscription(subscription && o) noexcept = delete;
@@ -55,12 +56,12 @@ namespace pokemonism {
             public:     subscription & operator=(subscription && o) noexcept = delete;
             };
 
-            class node : protected wattrel::node, public virtual command::envelope {
+            class node : public wattrel::node, public virtual command::envelope {
             public:     typedef command::envelope::message  message;
             public:     message * pop(void) const override = 0;
             public:     const message * peak(void) const override = 0;
             public:     virtual const exception * exceptionGet(void) const = 0;
-            public:     node(void) {}
+            public:     explicit node(wattrel::command::subscription * subscription) : wattrel::node(static_cast<wattrel::subscription *>(subscription)) {}
             public:     ~node(void) override {}
             public:     node(const node & o) = delete;
             public:     node(node && o) noexcept = delete;
@@ -68,15 +69,17 @@ namespace pokemonism {
             public:     node & operator=(node && o) noexcept = delete;
             };
 
-
+            class event: public wattrel::event {
+            public:     typedef wattrel::event::type    type;
+            public:     event(uint32 id, wattrel::command::node * node) : wattrel::event(id, static_cast<wattrel::node *>(node)) {}
+            public:     ~event(void) override {}
+            public:     event(const event & o) = delete;
+            public:     event(event && o) noexcept = delete;
+            public:     event & operator=(const event & o) = delete;
+            public:     event & operator=(event && o) noexcept = delete;
+            };
 
         }
-
-
-
-        // namespace command {
-
-        // }
     }
 }
 
