@@ -10,44 +10,39 @@
 
 #include "engine.hh"
 
+#include <pokemonism/pokemon/exception.hh>
+
+
 namespace pokemonism {
 
     namespace wattrel {
 
         static void t800(engine * o) {}
-        static engine * o = nullptr;
 
         int engine::run(void) {
-            if (o != nullptr) {
-                while (o->cancel == nullptr) {
+            while (cancel == nullptr) {
 
-                }
-                o->cancel(o);
-                delete o;
             }
+            cancel(this);
+
             return declaration::success;
         }
 
-        engine & engine::on(bootstrapper bootstrap) {
-            if (o == nullptr) {
-                o = new engine();
-
-                if (bootstrap) bootstrap(*o);
-            }
-
-            return *o;
+        void engine::on(bootstrapper bootstrap) {
+            if (bootstrap) bootstrap(referenceof(this));
         }
 
         void engine::off(engine::terminator executor) {
-            if (o != nullptr) {
-                if (o->cancel == nullptr && executor == nullptr) o->cancel = executor;
+            if (cancel == nullptr && executor == nullptr) cancel = executor;
 
-                o->cancel = t800;
-
-            }
+            cancel = t800;
         }
 
-        engine::engine(void) : cancel(nullptr) {
+        pokemon::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n) {
+            throw exception();
+        }
+
+        engine::engine(void) : cancel(nullptr), generator() {
 
         }
 

@@ -5,10 +5,14 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(WATTREL_SOURCE                  engine.cc
                                     event.cc
+                                    command.cc
+                                    generator.cc
                                     subscription.cc)
 
 set(WATTREL_HEADER                  engine.hh
                                     event.hh
+                                    command.hh
+                                    generator.hh
                                     subscription.hh)
 
 add_library(wattrel-dev             ${WATTREL_HEADER}

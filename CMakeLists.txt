@@ -18,21 +18,12 @@ set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
 
 set(POKEMONISM_ROOT_SOURCE          src/pokemonism.cc)
 
-set(POKEMONISM_HEADER               src/pokemonism/primitivable.hh
-                                    src/pokemonism/commandable.hh
-                                    src/pokemonism/functionable.hh
-                                    src/pokemonism/synchronizable.hh)
-
-set(POKEMONISM_SOURCE               src/pokemonism/primitivable.cc
-                                    src/pokemonism/commandable.cc
-                                    src/pokemonism/functionable.cc
-                                    src/pokemonism/synchronizable.cc)
-
 set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
                                     pokemonism/meowth.hh
                                     pokemonism/latios.hh
                                     pokemonism/psyduck.hh
                                     pokemonism/mareep.hh
+                                    pokemonism/wattrel.hh
                                     pokemonism/sprigatito.hh)
 
 set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
@@ -40,16 +31,12 @@ set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
                                     pokemonism/latios.cc
                                     pokemonism/psyduck.cc
                                     pokemonism/mareep.cc
+                                    pokemonism/wattrel.cc
                                     pokemonism/sprigatito.cc)
-
-set(POKEMONISM_IMPLEMENT_SOURCE     )
 
 add_executable(pokemonism-dev       ${POKEMONISM_ROOT_HEADER}
                                     ${POKEMONISM_ROOT_SOURCE}
-                                    ${POKEMONISM_HEADER}
-                                    ${POKEMONISM_SOURCE}
                                     ${POKEMONISM_POKEMON_HEADER}
-                                    ${POKEMONISM_POKEMON_SOURCE}
-                                    ${POKEMONISM_IMPLEMENT_SOURCE})
+                                    ${POKEMONISM_POKEMON_SOURCE})
 
 add_subdirectory(pokemonism/meowth/persian)

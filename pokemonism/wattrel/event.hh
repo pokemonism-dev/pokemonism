@@ -8,8 +8,8 @@
  * @since           8월 31, 2025
  */
 
-#ifndef   __POKEMONISM_EVENT_HH__
-#define   __POKEMONISM_EVENT_HH__
+#ifndef   __POKEMONISM_WATTREL_EVENT_HH__
+#define   __POKEMONISM_WATTREL_EVENT_HH__
 
 #include <pokemonism.hh>
 
@@ -17,8 +17,6 @@ namespace pokemonism {
     namespace wattrel {
 
         class event {
-        public:     virtual uint32 get(void) const = 0;
-        protected:  virtual int on(void) = 0;
         public:     event(void) {}
         protected:  virtual ~event(void) {}
         public:     event(const event & o) = delete;
@@ -28,6 +26,10 @@ namespace pokemonism {
         };
 
     }
+
+    namespace pokemon {
+        using event = wattrel::event;
+    }
 }
 
-#endif // __POKEMONISM_EVENT_HH__
+#endif // __POKEMONISM_WATTREL_EVENT_HH__

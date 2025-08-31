@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/commandable.cc
+ * @file        pokemonism/pokemon/interface/commandable.cc
  * @brief
  * @details
  *

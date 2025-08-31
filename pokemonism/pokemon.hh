@@ -12,7 +12,6 @@
 
 #include <pokemonism.hh>
 
-namespace pokemonism {
-}
+#include <pokemonism/pokemon/command.hh>
 
 #endif // __POKEMONISM_POKEMON_HH__

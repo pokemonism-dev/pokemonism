@@ -7,8 +7,8 @@
  * @since           8월 31, 2025
  */
 
-#ifndef   __POKEMONISM_DESCRIPTOR_HH__
-#define   __POKEMONISM_DESCRIPTOR_HH__
+#ifndef   __POKEMONISM_POKEMON_DESCRIPTOR_HH__
+#define   __POKEMONISM_POKEMON_DESCRIPTOR_HH__
 
 #include <pokemonism.hh>
 
@@ -16,8 +16,7 @@ namespace pokemonism {
     namespace pokemon {
 
         class descriptor {
-        protected:  int value;
-        public:     descriptor(void) : value(declaration::invalid) {}
+        public:     descriptor(void) {}
         public:     virtual ~descriptor(void) {}
         public:     descriptor(const descriptor & o) = delete;
         public:     descriptor(descriptor && o) noexcept = delete;
@@ -26,6 +25,8 @@ namespace pokemonism {
         };
 
     }
+
+    using descriptor = pokemon::descriptor;
 }
 
-#endif // __POKEMONISM_DESCRIPTOR_HH__
+#endif // __POKEMONISM_POKEMON_DESCRIPTOR_HH__

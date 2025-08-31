@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/primitivable.cc
+ * @file        pokemonism/pokemon/interface/synchronizable.cc
  * @brief
  * @details
  *
@@ -7,4 +7,4 @@
  * @since       Aug 27, 2025
  */
 
-#include "primitivable.hh"
+#include "synchronizable.hh"

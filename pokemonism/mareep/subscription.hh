@@ -7,8 +7,8 @@
  * @since           8월 31, 2025
  */
 
-#ifndef   __POKEMONISM_SUBSCRIPTION_HH__
-#define   __POKEMONISM_SUBSCRIPTION_HH__
+#ifndef   __POKEMONISM_MAREEP_SUBSCRIPTION_HH__
+#define   __POKEMONISM_MAREEP_SUBSCRIPTION_HH__
 
 #include <pokemonism.hh>
 
@@ -24,6 +24,10 @@ namespace pokemonism {
         public:     subscription & operator=(subscription && o) = delete;
         };
     }
+
+    namespace pokemon {
+        using subscription = mareep::subscription;
+    }
 }
 
-#endif // __POKEMONISM_SUBSCRIPTION_HH__
+#endif // __POKEMONISM_MAREEP_SUBSCRIPTION_HH__

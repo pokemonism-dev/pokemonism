@@ -12,13 +12,14 @@
 
 #include <pokemonism.hh>
 
+#include <pokemonism/wattrel/engine.hh>
+
 namespace pokemonism {
     namespace latios {
 
-        class engine {
-        public:     virtual int run(void);
+        class engine : public wattrel::engine {
         protected:  engine(void);
-        protected:  virtual ~engine(void);
+        protected:  ~engine(void) override;
         public:     engine(const engine & o) = delete;
         public:     engine(engine && o) noexcept = delete;
         public:     engine & operator=(const engine & o) = delete;

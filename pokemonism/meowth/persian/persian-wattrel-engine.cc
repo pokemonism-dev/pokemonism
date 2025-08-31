@@ -15,7 +15,13 @@ namespace pokemonism {
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
-    wattrel::engine::on(nullptr);
+    wattrel::engine * engine = new wattrel::engine();
 
-    return wattrel::engine::run();
+    engine->on(nullptr);
+
+    const int ret = engine->run();
+
+    delete engine;
+
+    return ret;
 }

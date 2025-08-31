@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/functionable.cc
+ * @file        pokemonism/pokemon/interface/functionable.cc
  * @brief
  * @details
  *

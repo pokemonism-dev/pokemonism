@@ -10,11 +10,12 @@
 #ifndef   __POKEMONISM_POKEMON_OBJECT__HH__
 #define   __POKEMONISM_POKEMON_OBJECT__HH__
 
-#include <synchronizable.hh>
+#include <pokemonism/pokemon/interface/synchronizable.hh>
 
 namespace pokemonism {
     namespace pokemon {
-        class object : public virtual pokemonism::synchronizable {
+
+        class object : public pokemonism::synchronizable {
         public:     class meta {
                     public:     virtual const object::meta & self(void) const { return *this; }
                     public:     virtual object::meta * clone(void) const { return nullptr; }
@@ -44,6 +45,7 @@ namespace pokemonism {
     }
 
     using object = pokemon::object;
+
 }
 
 #endif // __POKEMONISM_POKEMON_OBJECT__HH__
