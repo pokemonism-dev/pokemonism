@@ -20,6 +20,7 @@ namespace pokemonism {
             template <class outputable = pokemon::command::output>
             class command : public virtual pokemon::command {
             public:     typedef outputable output;
+            public:     typedef command<outputable>::output * (*type)(void);
             public:     typedef pokemon::command::event event;
             public:     class envelope : public virtual pokemon::generic::envelope<outputable> {
                         public:     typedef pokemon::generic::envelope<outputable>::message  message;
@@ -31,9 +32,9 @@ namespace pokemonism {
                         public:     envelope & operator=(const envelope & o) = delete;
                         public:     envelope & operator=(envelope && o) noexcept = delete;
                         };
-                        public:     struct callback : public virtual pokemon::functionable {
-                                    public:     typedef int (*type)(command<outputable> &, uint32, command<outputable>::envelope *);
-                        };
+            public:     struct callback : public virtual pokemon::functionable {
+                        public:     typedef int (*type)(command<outputable> &, uint32, command<outputable>::envelope *);
+            };
             public:     command<outputable>::output * operator()(void) override = 0;
             public:     command(void) {}
             public:     ~command(void) override {}

@@ -14,10 +14,11 @@
 
 namespace pokemonism {
     namespace pokemon {
-        namespace interface {
+        namespace generic {
 
             template <typename returnable, typename... argumentable>
             class function {
+            public:     typedef returnable (*type)(argumentable...);
             public:     virtual returnable & operator()(argumentable...) const = 0;
             public:     function(void) {}
             public:     virtual ~function(void) {}

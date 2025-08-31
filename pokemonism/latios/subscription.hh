@@ -15,7 +15,7 @@
 namespace pokemonism {
     namespace latios {
         template <class objectable, class messageable = objectable::output, class tag = objectable::tag>
-        class subscription : public virtual wattrel::subscription {
+        class subscription : public wattrel::subscription {
         public:     constexpr static const char * name = "interface";   // ### 20250901 | REMOVE THIS FOR DEBUG
         public:     explicit subscription(uint32 properties) : wattrel::subscription(properties) {}
         public:     subscription(void) = delete;

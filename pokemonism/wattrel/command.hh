@@ -79,7 +79,7 @@ namespace pokemonism {
             public:     event & operator=(event && o) noexcept = delete;
             };
 
-            class subscription : public wattrel::subscription, public command::event::subscription {
+            class subscription : public virtual wattrel::subscription, public virtual command::event::subscription {
             public:     struct state : public wattrel::subscription::state {
                         public:     constexpr static uint32 none     = wattrel::subscription::state::none;
                         public:     constexpr static uint32 complete = wattrel::subscription::state::complete;

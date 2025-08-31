@@ -18,6 +18,7 @@ namespace pokemonism {
 
             template <typename returnable>
             class callable {
+            public:     typedef returnable (*type)(void);
             public:     virtual returnable operator()(void) = 0;
             public:     callable(void) {}
             public:     virtual ~callable(void) {}

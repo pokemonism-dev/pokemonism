@@ -15,7 +15,7 @@
 namespace pokemonism {
     namespace latios {
 
-        static latios::engine * singleton = nullptr;
+        latios::engine * latios::engine::singleton = nullptr;
 
         pokemon::interface::terminatable<1, latios::engine *> latios::engine::T;
 
@@ -55,6 +55,22 @@ namespace pokemonism {
             }
         }
 
+        void engine::off(pokemon::interface::terminator<latios::engine *> t1000, pokemon::interface::terminator<wattrel::engine *> t800) {
+            if (singleton == nullptr) throw exception();
+
+            if (latios::terminator == nullptr && t1000 == nullptr) {
+                latios::terminator = T-1000;
+            } else if (latios::terminator == nullptr) {
+                latios::terminator = t1000;
+            }
+
+            if (singleton->terminator == nullptr && t800 == nullptr) {
+                singleton->terminator = wattrel::engine::T-800;
+            } else if (singleton->terminator == nullptr) {
+                singleton->terminator = t800;
+            }
+        }
+
         int engine::run(int n) {
             if (singleton == nullptr) throw exception();
 
@@ -76,33 +92,5 @@ namespace pokemonism {
 
         }
 
-        //
-        // static wattrel::engine * internal = nullptr;
-        //
-        // void engine::on(bootstrapper bootstrap) {
-        //     if (internal == nullptr) {
-        //         internal = new wattrel::engine();
-        //
-        //         if (bootstrap != nullptr) bootstrap(*internal);
-        //     }
-        // }
-        //
-        // void engine::off(terminator executor) {
-        //     if (singleton == nullptr) throw exception();
-        //
-        //     singleton->wattrel::engine::off(reinterpret_cast<wattrel::engine::terminator>(executor));
-        // }
-        //
-        // int engine::run(void) {
-        //     if (singleton == nullptr) throw exception();
-        //
-        //     return singleton->wattrel::engine::run();
-        // }
-
-
-        // public:     static void off(terminator executor);
-        // public:     static int run(void);
-        // protected:  engine(void);
-        // protected:  ~engine(void) override;
     }
 }

@@ -23,12 +23,14 @@ namespace pokemonism {
         }
 
         class engine : protected wattrel::engine {
-        public:     static  pokemon::interface::terminatable<1, latios::engine *> T;
+        public:     static pokemon::interface::terminatable<1, latios::engine *> T;
+        protected:  static latios::engine * singleton;
         public:     typedef void (*bootstrapper)(latios::engine & o);
         public:     typedef void (*cancellation)(latios::engine * o);
         public:     static void t1000(latios::engine * o);
         public:     static void on(latios::engine::bootstrapper bootstrap, wattrel::engine::bootstrapper wattrel);
-        public:     static void off(latios::engine::cancellation terminator, wattrel::engine::cancellation wattrel);
+        public:     static void off(latios::engine::cancellation t1000, wattrel::engine::cancellation t800);
+        public:     static void off(pokemon::interface::terminator<latios::engine *> t1000, pokemon::interface::terminator<wattrel::engine *> t800);
         public:     static int run(int n);
         public:     template <class outputable, typename objectable = pokemon::generic::command<outputable>> static latios::command::subscription<objectable> * commandReg(objectable * target, uint32 properties, objectable::callback::type * callbacks, uint32 n);
         protected:  engine(void);
@@ -54,6 +56,8 @@ namespace pokemonism {
 
                 subscription->on(wattrel::command::event::type::gen);
 
+                printf("call\n");
+
                 if (add(subscription) != declaration::success) return allocator::del(subscription);
 
                 wattrel::command::event * event = new wattrel::command::event(wattrel::command::event::type::execute, new wattrel::command::node(subscription));
@@ -67,7 +71,11 @@ namespace pokemonism {
 
         template <class outputable, typename objectable>
         latios::command::subscription<objectable> * engine::commandReg(objectable * target, uint32 properties, typename objectable::callback::type * callbacks, uint32 n) {
-            return nullptr;
+            if (singleton == nullptr) throw pokemon::exception();
+
+            latios::command::generator * o = dynamic_cast<latios::command::generator *>(singleton->generator.command);
+
+            return o->reg<outputable, objectable>(target, properties, callbacks, n);
         }
     }
 }

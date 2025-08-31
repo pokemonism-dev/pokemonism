@@ -17,6 +17,7 @@ namespace pokemonism {
         namespace interface {
 
             class runnable {
+            public:     typedef void (*type)(void);
             public:     virtual void operator()(void) = 0;
             public:     runnable(void) {}
             public:     virtual ~runnable(void) {}

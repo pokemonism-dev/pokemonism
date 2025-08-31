@@ -19,11 +19,19 @@ set(POKEMON_INTERFACE_HEADER        interface/callable.cc
 
 set(POKEMON_GENERIC_SOURCE          generic/command.hh
                                     generic/envelope.hh
-                                    generic/function.hh)
+                                    generic/function.hh
+                                    generic/lambda/callable.hh
+                                    generic/lambda/command.hh
+                                    generic/lambda/function.hh
+                                    generic/lambda/runnable.hh)
 
 set(POKEMON_GENERIC_HEADER          generic/command.cc
                                     generic/envelope.cc
-                                    generic/function.cc)
+                                    generic/function.cc
+                                    generic/lambda/callable.cc
+                                    generic/lambda/command.cc
+                                    generic/lambda/function.cc
+                                    generic/lambda/runnable.cc)
 
 set(POKEMON_SOURCE                  allocator.cc
                                     event.cc
