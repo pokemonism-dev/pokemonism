@@ -17,11 +17,13 @@ namespace pokemonism {
 
     namespace wattrel {
 
-        static void t800(engine * o) {}
+        void engine::t800(engine * o) {}
 
         int engine::run(void) {
             while (cancel == nullptr) {
+                queue->on(declaration::infinite);
 
+                generator.command->on();
             }
             cancel(this);
 

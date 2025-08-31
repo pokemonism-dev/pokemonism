@@ -134,7 +134,7 @@ namespace pokemonism {
 
             template <class collection, class element>
             element * list<collection, element>::pop(collection * container) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 element * node = container->head;
                 if (node != nullptr) {
@@ -155,7 +155,7 @@ namespace pokemonism {
 
             template <class collection, class element>
             element * list<collection, element>::pop(collection * container, synchronizable & sync) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 sync.lock();
                 element * node = container->head;
@@ -178,14 +178,14 @@ namespace pokemonism {
 
             template <class collection, class element>
             void list<collection, element>::clear(collection * container) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 while (element * node = list<collection, element>::pop(container)) allocator::del(node);
             }
 
             template <class collection, class element>
             void list<collection, element>::clear(collection * container, synchronizable & sync) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 sync.lock();
                 while (element * node = list<collection, element>::pop(container)) {
@@ -198,14 +198,14 @@ namespace pokemonism {
 
             template <class collection, class element>
             void list<collection, element>::clear(collection * container, element * (*rel)(element *)) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 while (element * node = list<collection, element>::pop(container)) allocator::del(rel(node));
             }
 
             template <class collection, class element>
             void list<collection, element>::clear(collection * container, element * (*rel)(element *), synchronizable & sync) {
-                if (container != nullptr) throw pokemonism::exception();
+                if (container == nullptr) throw pokemonism::exception();
 
                 sync.lock();
                 while (element * node = list<collection, element>::pop(container)) {

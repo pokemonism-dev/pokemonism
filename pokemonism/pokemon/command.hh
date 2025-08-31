@@ -14,7 +14,8 @@
 #include <pokemon/interface/functionable.hh>
 
 #include <pokemonism/pokemon/event.hh>
-#include <pokemonism/pokemon/generic/envelope.hh>
+#include <pokemonism/pokemon/exception.hh>
+#include <pokemonism/pokemon/envelope.hh>
 
 namespace pokemonism {
     namespace pokemon {
@@ -36,6 +37,7 @@ namespace pokemonism {
         public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;
                     public:     message * pop(void) override = 0;
+                    public:     virtual pokemon::exception * exceptionPop(void) = 0;
                     public:     envelope(void) {}
                     public:     ~envelope(void) override {}
                     public:     envelope(const envelope & o) = delete;

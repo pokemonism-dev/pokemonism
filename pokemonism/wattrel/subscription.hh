@@ -15,6 +15,8 @@
 #include <pokemonism/pokemon/exception.hh>
 #include <pokemonism/psyduck/linked/list.hh>
 #include <pokemonism/mareep/subscription.hh>
+#include <pokemonism/pokemon/runnable/queue.hh>
+
 
 namespace pokemonism {
     namespace wattrel {
@@ -25,7 +27,18 @@ namespace pokemonism {
         class subscription : public virtual pokemon::event::subscription, public virtual pokemon::object {
         public:     struct state {
                     public:     constexpr static uint32 none     = (0x00000000U <<  0U);
-                    public:     constexpr static uint32 complete = (0x00000000U << 31U);
+                    public:     constexpr static uint32 complete = (0x00000001U << 31U);
+                    };
+        public:     class releasor : public pokemon::runnable::queue::func {
+                    protected:  wattrel::subscription * subscription;
+                    public:     void operator()(void) override { subscription = allocator::del(subscription); }
+                    public:     explicit releasor(wattrel::subscription * subscription) : subscription(subscription) {}
+                    public:     releasor(void) = delete;
+                    public:     ~releasor(void) override { subscription = allocator::del(subscription); }
+                    public:     releasor(const releasor & o) = delete;
+                    public:     releasor(releasor && o) noexcept = delete;
+                    public:     releasor & operator=(const releasor & o) = delete;
+                    public:     releasor & operator=(releasor && o) noexcept = delete;
                     };
         public:     typedef psyduck::linked::list<subscription, node> collection;
         protected:  wattrel::generator * container;

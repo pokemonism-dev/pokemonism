@@ -28,9 +28,13 @@ namespace pokemonism {
 
         int generator::del(wattrel::subscription * o) {
             if (o != nullptr && o->container == this) {
-                collection::add(this, o);
+                collection::del(this, o);
 
-                return o->on(wattrel::event::type::del);
+                const int ret = o->on(wattrel::event::type::del);
+
+                if (o->properties & wattrel::subscription::property::release_on_del) queue.add(new subscription::releasor(o));
+
+                return ret;
             }
 
             return declaration::fail;

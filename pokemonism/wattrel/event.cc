@@ -62,5 +62,9 @@ namespace pokemonism {
             if (node != nullptr) node->complete();
         }
 
+        event::event(uint32 id, wattrel::node * node) : container(nullptr), prev(nullptr), next(nullptr), node(node), id(id), exception(nullptr) {
+            node->event = this;
+        }
+
     }
 }

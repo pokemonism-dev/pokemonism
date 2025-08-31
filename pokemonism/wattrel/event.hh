@@ -41,7 +41,7 @@ namespace pokemonism {
         public:     virtual void complete(void);
         public:     inline uint32 eventGet(void) const override { return id; }
         public:     inline const pokemon::exception * exceptionGet(void) const { return exception; }
-        public:     event(uint32 id, wattrel::node * node) : container(nullptr), prev(nullptr), next(nullptr), node(node), id(id), exception(nullptr) {}
+        public:     event(uint32 id, wattrel::node * node);
         public:     event(void) = delete;
         public:     ~event(void) override { event::rel(this);  }
         public:     event(const event & o) = delete;

@@ -22,6 +22,7 @@ namespace pokemonism {
     namespace wattrel {
 
         class engine {
+        public:     static void t800(engine * o);
         public:     typedef void (*terminator)(engine * o);
         public:     typedef void (*bootstrapper)(engine & o);
         public:     struct generator {

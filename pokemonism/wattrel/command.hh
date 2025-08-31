@@ -34,7 +34,7 @@ namespace pokemonism {
             protected:  int ret;
             protected:  wattrel::command::envelope::message * output;
             public:     inline wattrel::command::envelope::message * pop(void) override;
-            public:     inline virtual pokemon::exception * exceptionPop(void);
+            public:     inline pokemon::exception * exceptionPop(void) override;
             public:     inline int returnGet(void) const;
             public:     inline envelope(void);
             public:     inline explicit envelope(pokemon::exception * e);
@@ -86,6 +86,7 @@ namespace pokemonism {
                         };
             protected:  pokemon::command * object;
             protected:  wattrel::command::callback callbacks[wattrel::command::event::type::max];
+            public:     inline virtual void del(void);
             public:     inline virtual pokemon::command * objectGet(void) const;
             public:     inline int dispatch(wattrel::node * o) override;
             public:     inline virtual int on(uint32 type, wattrel::command::node & node);
@@ -156,11 +157,13 @@ namespace pokemonism {
             inline void processor::on(wattrel::command::subscription & subscription, uint32 type, wattrel::command::node * node) {
                 if (type != wattrel::command::event::type::execute) throw pokemon::exception();
 
-                subscription.execute(node);
+                executeOn(subscription, node);
             }
 
             inline void processor::executeOn(wattrel::command::subscription & subscription, wattrel::command::node * node) {
                 subscription.execute(node);
+
+                if (subscription.completedGet()) subscription.del();
             }
 
             inline processor::processor(void) {
@@ -180,11 +183,15 @@ namespace pokemonism {
             }
 
             inline event::event(uint32 id, wattrel::command::node * node) : wattrel::event(id, static_cast<wattrel::node *>(node)) {
-
             }
 
             inline event::~event(void) {
 
+            }
+
+            inline void subscription::del(void) {
+                clear();
+                if (container != nullptr) container->del(this);
             }
 
             inline pokemon::command * subscription::objectGet(void) const {
@@ -201,11 +208,17 @@ namespace pokemonism {
 
                 if (wattrel::command::event::type::max <= type) throw pokemon::exception();
 
-                wattrel::command::processor::on(*this, type, node);
+                try {
+                    wattrel::command::processor::on(*this, type, node);
+                } catch (const pokemon::exception & e) {
+                    node->raise(e.clone());
+                } catch (...) {
+                    node->raise(new pokemon::exception());
+                }
 
                 const command::callback::type func = reinterpret_cast<wattrel::command::callback::type>(callbacks[type].func);
 
-                return func != nullptr ? func(*object, type, nullptr) : declaration::fail;
+                return func != nullptr ? func(*object, type, node) : declaration::fail;
 
             }
 
@@ -252,6 +265,7 @@ namespace pokemonism {
             }
 
             inline bool subscription::cancel(void) {
+                clear();
                 if (container != nullptr) {
                     if (properties & wattrel::command::subscription::property::release_on_del) {
                         properties = (properties & (~wattrel::command::subscription::property::release_on_del));
@@ -275,6 +289,7 @@ namespace pokemonism {
             }
 
             inline subscription::~subscription(void) {
+                on(wattrel::command::event::type::rel);
                 object = (properties & property::release_object_on_rel ? allocator::del(object) : nullptr);
                 memset(this->callbacks, 0, sizeof(command::callback::type) * command::event::type::max);
             }

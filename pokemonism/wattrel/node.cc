@@ -20,25 +20,27 @@ namespace pokemonism {
         node * node::rel(node * o) {
             if (o == nullptr) throw pokemon::exception();
 
-            if (wattrel::event * event = o->event; event->container != nullptr) {
-                event->container->del(event);
+            if (wattrel::event * event = o->event; event != nullptr) {
+                if (event->container != nullptr) {
+                    event->container->del(event);
 
-                if (o->dispatch() > declaration::success) {
-                    o->raise(new pokemon::exception());
+                    if (o->dispatch() > declaration::success) {
+                        o->raise(new pokemon::exception());
 
-                    o->event->node = nullptr;
-                    o->event = allocator::del(o->event);
+                        o->event->node = nullptr;
+                        o->event = allocator::del(o->event);
 
-                    if (o->container != nullptr) o->container->del(o);
+                        if (o->container != nullptr) o->container->del(o);
 
-                    return o;
+                        return o;
+                    }
                 }
+
+                o->event->node = nullptr;
+                o->event = allocator::del(o->event);
             }
 
             o->complete();
-
-            o->event->node = nullptr;
-            o->event = allocator::del(o->event);
 
             if (o->container != nullptr) o->container->del(o);
 

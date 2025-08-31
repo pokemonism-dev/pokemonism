@@ -70,7 +70,7 @@ namespace pokemonism {
         }
 
         exception * exception::dup(const exception * o) {
-            return o->clone();
+            return o != nullptr ? o->clone() : nullptr;
         }
 
         char * exception::rel(char * s) {

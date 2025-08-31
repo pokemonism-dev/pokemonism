@@ -10,6 +10,7 @@
 
 #include "subscription.hh"
 
+#include "event.hh"
 #include "generator.hh"
 #include "node.hh"
 

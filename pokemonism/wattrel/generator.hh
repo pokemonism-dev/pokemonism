@@ -13,6 +13,7 @@
 #include <pokemonism.hh>
 
 #include <pokemonism/psyduck/linked/list.hh>
+#include <pokemonism/pokemon/runnable/queue.hh>
 
 namespace pokemonism {
     namespace wattrel {
@@ -25,13 +26,17 @@ namespace pokemonism {
         protected:  uint64 size;
         protected:  wattrel::subscription * head;
         protected:  wattrel::subscription * tail;
+        protected:  pokemon::runnable::queue queue;
         protected:  virtual int add(wattrel::subscription * o);
         public:     virtual int del(wattrel::subscription * o);
         public:     virtual void clear(void);
-        public:     virtual int64 on(void) { return declaration::success; }
+        public:     virtual int64 on(void) { return queue(); }
         public:     explicit generator(wattrel::engine * engine) : engine(engine), size(0), head(nullptr), tail(nullptr) {}
         public:     generator(void) = delete;
-        public:     virtual ~generator(void) { clear(); }
+        public:     virtual ~generator(void) {
+                        clear();
+                        queue.on(declaration::infinite);
+                    }
         public:     generator(const generator & o) = delete;
         public:     generator(generator && o) noexcept = delete;
         public:     generator & operator=(const generator & o) = delete;

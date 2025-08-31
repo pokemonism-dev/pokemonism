@@ -20,6 +20,8 @@ namespace pokemonism {
 
                 wattrel::command::subscription * subscription = new wattrel::command::subscription(target, properties, callbacks, n);
 
+                subscription->on(wattrel::command::event::type::gen);
+
                 if (add(subscription) != declaration::success) return allocator::del(subscription);
 
                 wattrel::command::event * event = new wattrel::command::event(wattrel::command::event::type::execute, new wattrel::command::node(subscription));
