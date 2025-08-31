@@ -15,14 +15,16 @@ set(POKEMON_INTERFACE_HEADER        interface/commandable.cc
                                     interface/synchronizable.cc
                                     interface/throwable.cc)
 
-set(POKEMON_SOURCE                  object.cc
+set(POKEMON_SOURCE                  allocator.cc
+                                    object.cc
                                     command.cc
                                     message.cc
                                     envelope.cc
                                     exception.cc
                                     descriptor.cc)
 
-set(POKEMON_HEADER                  object.hh
+set(POKEMON_HEADER                  allocator.hh
+                                    object.hh
                                     command.hh
                                     message.hh
                                     envelope.hh

@@ -13,6 +13,7 @@
 #include <pokemonism.hh>
 
 #include <pokemonism/pokemon.hh>
+#include <pokemonism/pokemon/allocator.hh>
 
 #include <pokemonism/wattrel/subscription.hh>
 #include <pokemonism/wattrel/command.hh>
@@ -46,8 +47,7 @@ namespace pokemonism {
         };
 
         engine::generator::set::~set(void) {
-            // TODO: COPY ALLOCATOR
-            if (command != nullptr) delete command;
+            command = pokemon::allocator::del(command);
         }
     }
 }
