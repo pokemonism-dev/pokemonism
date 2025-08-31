@@ -13,10 +13,16 @@
 #include <pokemonism.hh>
 
 namespace pokemonism {
-    namespace latios {
+
+    namespace wattrel {
 
         class engine {
-        public:     virtual int run(void);
+        protected:  typedef void (*terminator)(engine * o);
+        protected:  typedef void (*bootstrapper)(engine & o);
+        public:     static int run(void);
+        public:     static engine & on(bootstrapper bootstrap);
+        public:     static void off(engine::terminator execute);
+        protected:  engine::terminator cancel;
         protected:  engine(void);
         protected:  virtual ~engine(void);
         public:     engine(const engine & o) = delete;
@@ -24,8 +30,8 @@ namespace pokemonism {
         public:     engine & operator=(const engine & o) = delete;
         public:     engine & operator=(engine && o) noexcept = delete;
         };
-
     }
+
 }
 
 #endif // __POKEMONISM_ENGINE_HH__

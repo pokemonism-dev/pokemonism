@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.28.3)
 project(latios CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-set(POKEMON_SOURCE              engine.cc)
+set(LATIOS_SOURCE               engine.cc)
 
-set(POKEMON_HEADER              engine.hh)
+set(LATIOS_HEADER               engine.hh)
 
-add_library(latios-dev          ${POKEMON_HEADER}
-                                ${POKEMON_SOURCE})
+add_library(latios-dev          ${LATIOS_HEADER}
+                                ${LATIOS_SOURCE})
