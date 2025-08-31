@@ -11,6 +11,7 @@ add_subdirectory(pokemonism/pokemon)
 add_subdirectory(pokemonism/latios)
 add_subdirectory(pokemonism/wattrel)
 add_subdirectory(pokemonism/psyduck)
+add_subdirectory(pokemonism/mareep)
 add_subdirectory(pokemonism/sprigatito)
 
 set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
@@ -31,12 +32,14 @@ set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
                                     pokemonism/meowth.hh
                                     pokemonism/latios.hh
                                     pokemonism/psyduck.hh
+                                    pokemonism/mareep.hh
                                     pokemonism/sprigatito.hh)
 
 set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
                                     pokemonism/meowth.cc
                                     pokemonism/latios.cc
                                     pokemonism/psyduck.cc
+                                    pokemonism/mareep.cc
                                     pokemonism/sprigatito.cc)
 
 set(POKEMONISM_IMPLEMENT_SOURCE     )
