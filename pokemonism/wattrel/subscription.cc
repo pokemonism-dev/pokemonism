@@ -10,5 +10,41 @@
 
 #include "subscription.hh"
 
+#include "generator.hh"
+#include "node.hh"
+
 namespace pokemonism {
+    namespace wattrel {
+        // public:     wattrel::generator * container;
+        // public:     wattrel::subscription * prev;
+        // public:     wattrel::subscription * next;
+        // public:     uint32 size;
+        // public:     wattrel::node * head;
+        // public:     wattrel::node * tail;
+        subscription::subscription(void) : container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr) {
+
+        }
+
+        subscription::~subscription(void) {
+            clear();
+
+            if (container != nullptr) container->del(this);
+        }
+
+        void subscription::add(wattrel::node * node) {
+            if (node == nullptr || node->container != nullptr) throw pokemon::exception();
+
+            collection::add(this, node);
+        }
+
+        void subscription::del(wattrel::node * node) {
+            if (node == nullptr || node->container != this) throw pokemon::exception();
+
+            collection::del(this, node);
+        }
+
+        void subscription::clear(void) {
+            while (head != nullptr) del(head);
+        }
+    }
 }

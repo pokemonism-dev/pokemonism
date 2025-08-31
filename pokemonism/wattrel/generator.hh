@@ -14,7 +14,12 @@
 
 namespace pokemonism {
     namespace wattrel {
+        class subscription;
+
         class generator {
+        public:     virtual int reg(wattrel::subscription * o);
+        public:     virtual int del(wattrel::subscription * o);
+        public:     virtual void clear(void);
         public:     generator(void) {}
         public:     virtual ~generator(void) {}
         public:     generator(const generator & o) = delete;

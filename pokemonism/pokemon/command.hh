@@ -21,11 +21,12 @@ namespace pokemonism {
         class command {
         public:     typedef primitivable::object output;
         public:     struct type {
-                    public:     constexpr static int execute    = 0;
+                    public:     constexpr static int exception  = 0;
+                    public:     constexpr static int execute    = 1;
                     };
         public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;
-                    public:     command::output * pop(void) const override = 0;
+                    public:     message * pop(void) const override = 0;
                     public:     envelope(void) {}
                     public:     ~envelope(void) override {}
                     public:     envelope(const envelope & o) = delete;
