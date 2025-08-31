@@ -60,6 +60,8 @@ namespace pokemonism {
 
             const int ret = singleton->wattrel::engine::run();
 
+            if (latios::terminator != nullptr) latios::terminator.terminate(singleton);
+
             delete singleton;
             singleton = nullptr;
 
