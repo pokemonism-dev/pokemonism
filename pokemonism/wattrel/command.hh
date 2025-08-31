@@ -20,11 +20,12 @@
 
 namespace pokemonism {
     namespace wattrel {
-
         namespace command {
 
             typedef pokemon::command::output    output;
-            typedef pokemon::command::type      type;
+            typedef pokemon::command::callback  callback;
+
+            class node;
 
             class envelope : public pokemon::command::envelope {
             public:     typedef command::output     message;
@@ -47,9 +48,31 @@ namespace pokemonism {
             public:     generator & operator=(generator && o) noexcept = delete;
             };
 
+            class event: public wattrel::event {
+            public:     typedef wattrel::event::type    type;
+            public:     inline event(uint32 id, wattrel::command::node * node);
+            public:     ~event(void) override {}
+            public:     event(const event & o) = delete;
+            public:     event(event && o) noexcept = delete;
+            public:     event & operator=(const event & o) = delete;
+            public:     event & operator=(event && o) noexcept = delete;
+            };
+
             class subscription : public wattrel::subscription {
-            public:     explicit subscription(uint32 properties) : wattrel::subscription(properties) {}
-            public:     ~subscription(void) override {}
+            protected:  pokemon::command * object;
+            protected:  command::callback callbacks[command::event::type::max];
+            public:     inline explicit subscription(pokemon::command * object, uint32 properties, const command::callback * callbacks, uint32 n) : wattrel::subscription(properties), object(object), callbacks() {
+                            if (callbacks == nullptr || n == 0 || n > command::event::type::max) throw pokemon::exception();
+
+                            memcpy(this->callbacks, callbacks, sizeof(command::callback) * n);
+                            if (n < command::event::type::max) memset(this->callbacks + n, 0, (command::event::type::max - n) * sizeof(command::callback));
+                        }
+            public:     ~subscription(void) override {
+                            // TODO: IMPLEMENT THIS
+                            // if (properties & command::event:property::release_object_on_rel);
+                            // object
+                            memset(this->callbacks, 0, sizeof(command::callback) * command::event::type::max);
+                        }
             public:     subscription(const subscription & o) = delete;
             public:     subscription(subscription && o) noexcept = delete;
             public:     subscription & operator=(const subscription & o) = delete;
@@ -69,15 +92,9 @@ namespace pokemonism {
             public:     node & operator=(node && o) noexcept = delete;
             };
 
-            class event: public wattrel::event {
-            public:     typedef wattrel::event::type    type;
-            public:     event(uint32 id, wattrel::command::node * node) : wattrel::event(id, static_cast<wattrel::node *>(node)) {}
-            public:     ~event(void) override {}
-            public:     event(const event & o) = delete;
-            public:     event(event && o) noexcept = delete;
-            public:     event & operator=(const event & o) = delete;
-            public:     event & operator=(event && o) noexcept = delete;
-            };
+
+            inline event::event(uint32 id, wattrel::command::node * node) : wattrel::event(id, static_cast<wattrel::node *>(node)) {
+            }
 
         }
     }

@@ -21,13 +21,15 @@ namespace pokemonism {
 
         class command {
         public:     typedef primitivable::object output;
-        public:     struct type : public pokemon::event::type {
-                    public:     constexpr static int gen        = pokemon::event::type::gen;
-                    public:     constexpr static int rel        = pokemon::event::type::rel;
-                    public:     constexpr static int add        = pokemon::event::type::add;
-                    public:     constexpr static int del        = pokemon::event::type::del;
-                    public:     constexpr static int exception  = pokemon::event::type::max;
-                    public:     constexpr static int execute    = pokemon::event::type::max + 1;
+        public:     struct event : public pokemon::event {
+                    public:     struct type : public pokemon::event::type {
+                                public:     constexpr static int gen        = pokemon::event::type::gen;
+                                public:     constexpr static int rel        = pokemon::event::type::rel;
+                                public:     constexpr static int add        = pokemon::event::type::add;
+                                public:     constexpr static int del        = pokemon::event::type::del;
+                                public:     constexpr static int exception  = pokemon::event::type::max;
+                                public:     constexpr static int execute    = pokemon::event::type::max + 1;
+                                };
                     };
         public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;
@@ -39,7 +41,7 @@ namespace pokemonism {
                     public:     envelope & operator=(const envelope & o) = delete;
                     public:     envelope & operator=(envelope && o) noexcept = delete;
                     };
-        public:     struct callback : public virtual pokemon::functionable {
+        public:     struct callback : public pokemon::functionable {
                     public:     typedef int (*type)(command &, uint32, command::envelope *);
                     };
         public:     virtual command::output * operator()(void) = 0;

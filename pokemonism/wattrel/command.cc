@@ -11,4 +11,9 @@
 #include "command.hh"
 
 namespace pokemonism {
+    namespace wattrel {
+        namespace command {
+
+        }
+    }
 }

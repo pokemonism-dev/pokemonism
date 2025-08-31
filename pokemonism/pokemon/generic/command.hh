@@ -20,7 +20,7 @@ namespace pokemonism {
             template <class outputable = pokemon::command::output>
             class command : public virtual pokemon::command {
             public:     typedef outputable output;
-            public:     typedef pokemon::command::type type;
+            public:     typedef pokemon::command::event event;
             public:     class envelope : public virtual pokemon::generic::envelope<outputable> {
                         public:     typedef pokemon::generic::envelope<outputable>::message  message;
                         public:     pokemon::generic::envelope<output>::message * pop(void) const override = 0;
