@@ -30,6 +30,9 @@ namespace pokemonism {
 
         void engine::on(bootstrapper bootstrap) {
             if (bootstrap) bootstrap(referenceof(this));
+
+            if (queue == nullptr) queue = new wattrel::queue();
+            if (generator.command == nullptr) generator.command = new wattrel::command::generator(this);
         }
 
         void engine::off(engine::terminator executor) {
@@ -39,10 +42,10 @@ namespace pokemonism {
         }
 
         pokemon::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n) {
-            throw exception();
+            return generator.command->reg(target, properties, callbacks, n);
         }
 
-        engine::engine(void) : cancel(nullptr), generator() {
+        engine::engine(void) : queue(nullptr), cancel(nullptr), generator() {
 
         }
 

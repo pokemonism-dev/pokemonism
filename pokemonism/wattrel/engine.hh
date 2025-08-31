@@ -15,6 +15,7 @@
 #include <pokemonism/pokemon/allocator.hh>
 
 #include <pokemonism/wattrel/command.hh>
+#include <pokemonism/wattrel/queue.hh>
 
 namespace pokemonism {
 
@@ -33,10 +34,11 @@ namespace pokemonism {
         public:     virtual int run(void);
         public:     virtual void on(engine::bootstrapper bootstrap);
         public:     virtual void off(engine::terminator executor);
-        // public:     virtual pokemon::subscription * reg(pokemonism::)
+        public:     inline virtual void push(wattrel::event * event) { queue->add(event); }
         public:     virtual pokemon::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
-        protected:  engine::terminator cancel;
-        protected:  engine::generator::set generator;
+        protected:  wattrel::queue * queue;
+        protected:  wattrel::engine::terminator cancel;
+        protected:  wattrel::engine::generator::set generator;
         public:     engine(void);
         public:     virtual ~engine(void);
         public:     engine(const engine & o) = delete;

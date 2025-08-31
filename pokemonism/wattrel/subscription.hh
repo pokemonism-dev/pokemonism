@@ -44,6 +44,7 @@ namespace pokemonism {
         public:     virtual void complete(wattrel::node * node) = 0;
         public:     virtual int on(uint32 type) = 0;
         public:     explicit subscription(uint32 properties) : container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(declaration::none) {}
+        public:     subscription(void) = delete;
         public:     ~subscription(void) override;
         public:     subscription(const subscription & o) = delete;
         public:     subscription(subscription && o) noexcept = delete;

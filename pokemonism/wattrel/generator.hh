@@ -25,12 +25,12 @@ namespace pokemonism {
         protected:  uint64 size;
         protected:  wattrel::subscription * head;
         protected:  wattrel::subscription * tail;
-        protected:  int add(wattrel::subscription * o);
-        protected:  int del(wattrel::subscription * o);
+        protected:  virtual int add(wattrel::subscription * o);
+        public:     virtual int del(wattrel::subscription * o);
         public:     virtual void clear(void);
         public:     virtual int64 on(void) { return declaration::success; }
         public:     explicit generator(wattrel::engine * engine) : engine(engine), size(0), head(nullptr), tail(nullptr) {}
-        public:     generator(void) : engine(nullptr), size(0), head(nullptr), tail(nullptr) {}
+        public:     generator(void) = delete;
         public:     virtual ~generator(void) { clear(); }
         public:     generator(const generator & o) = delete;
         public:     generator(generator && o) noexcept = delete;

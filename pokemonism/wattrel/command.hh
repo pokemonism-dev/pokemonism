@@ -57,8 +57,10 @@ namespace pokemonism {
             };
 
             class generator : public wattrel::generator {
-            public:     generator(void) {}
-            public:     ~generator(void) override {}
+            public:     virtual wattrel::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
+            public:     inline explicit generator(wattrel::engine * engine);
+            public:     generator(void) = delete;
+            public:     inline ~generator(void) override;
             public:     generator(const generator & o) = delete;
             public:     generator(generator && o) noexcept = delete;
             public:     generator & operator=(const generator & o) = delete;
@@ -69,6 +71,7 @@ namespace pokemonism {
             public:     typedef pokemon::command::event::type   type;
             public:     typedef wattrel::event::subscription    subscription;
             public:     inline event(uint32 id, wattrel::command::node * node);
+            public:     event(void) = delete;
             public:     inline ~event(void) override;
             public:     event(const event & o) = delete;
             public:     event(event && o) noexcept = delete;
@@ -89,9 +92,11 @@ namespace pokemonism {
             public:     inline int on(uint32 type) override;
             public:     inline void raise(pokemon::exception * e) override;
             public:     inline void complete(wattrel::node * node) override;
+            public:     inline bool cancel(void) override;
             public:     inline virtual bool completedGet(void) const;
             public:     inline virtual void execute(wattrel::command::node * node);
-            public:     inline explicit subscription(pokemon::command * object, uint32 properties, const wattrel::command::callback * callbacks, uint32 n);
+            public:     inline explicit subscription(pokemon::command * object, uint32 properties, const wattrel::command::callback::type * callbacks, uint32 n);
+            public:     subscription(void) = delete;
             public:     inline ~subscription(void) override;
             public:     subscription(const subscription & o) = delete;
             public:     subscription(subscription && o) noexcept = delete;
@@ -103,6 +108,7 @@ namespace pokemonism {
             public:     typedef command::envelope::message  message;
             public:     inline wattrel::command::event * eventGet(void) const override;
             public:     inline explicit node(wattrel::command::subscription * subscription);
+            public:     node(void) = delete;
             public:     inline ~node(void) override;
             public:     node(const node & o) = delete;
             public:     node(node && o) noexcept = delete;
@@ -162,6 +168,14 @@ namespace pokemonism {
             }
 
             inline processor::~processor(void) {
+
+            }
+
+            inline generator::generator(wattrel::engine * engine) : wattrel::generator(engine) {
+
+            }
+
+            inline generator::~generator(void) {
 
             }
 
@@ -237,17 +251,32 @@ namespace pokemonism {
                 status = status | wattrel::command::subscription::state::complete;
             }
 
-            inline subscription::subscription(pokemon::command * object, uint32 properties, const command::callback * callbacks, uint32 n)
+            inline bool subscription::cancel(void) {
+                if (container != nullptr) {
+                    if (properties & wattrel::command::subscription::property::release_on_del) {
+                        properties = (properties & (~wattrel::command::subscription::property::release_on_del));
+                        // ### 20250831 | 사용자가 설정한 값인데, 사용자가 CANCEL 을 해주면, 삭제가 되면서, 객체가 남아 있기 때문에, 삭제 시 제거 속성을 없애주어야 한다.
+                        //              | 대신 로그로 사용자에게 알려주자.
+                    }
+
+                    container->del(this);
+
+                    return true;
+                }
+                return false;
+            }
+
+            inline subscription::subscription(pokemon::command * object, uint32 properties, const command::callback::type * callbacks, uint32 n)
             : wattrel::subscription(properties), object(object), callbacks() {
                 if (callbacks == nullptr || n == 0 || n > command::event::type::max) throw pokemon::exception();
 
-                memcpy(this->callbacks, callbacks, sizeof(command::callback) * n);
-                if (n < command::event::type::max) memset(this->callbacks + n, 0, (command::event::type::max - n) * sizeof(command::callback));
+                memcpy(this->callbacks, callbacks, sizeof(command::callback::type) * n);
+                if (n < command::event::type::max) memset(this->callbacks + n, 0, (command::event::type::max - n) * sizeof(command::callback::type));
             }
 
             inline subscription::~subscription(void) {
                 object = (properties & property::release_object_on_rel ? allocator::del(object) : nullptr);
-                memset(this->callbacks, 0, sizeof(command::callback) * command::event::type::max);
+                memset(this->callbacks, 0, sizeof(command::callback::type) * command::event::type::max);
             }
 
             inline wattrel::command::event * node::eventGet(void) const {

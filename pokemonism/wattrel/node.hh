@@ -31,6 +31,7 @@ namespace pokemonism {
         public:     virtual void raise(pokemon::exception * e);
         public:     virtual void complete(void);
         public:     explicit node(wattrel::subscription * subscription);
+        public:     node(void) = delete;
         public:     virtual ~node(void) { node::rel(this); }
         public:     node(const node & o) = delete;
         public:     node(node && o) noexcept = delete;
