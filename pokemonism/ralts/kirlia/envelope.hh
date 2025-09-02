@@ -11,12 +11,15 @@
 #define   __POKEMONISM_KIRLIA_ENVELOPE_HH__
 
 #include <pokemonism/pokemon/envelope.hh>
+#include <pokemonism/pokemon/exception.hh>
 
 namespace pokemonism {
     namespace kirlia {
 
         class envelope : public pokemon::envelope {
         public:     typedef pokemon::envelope::message  message;
+        public:     virtual int returnGet(void) const = 0;
+        public:     virtual const pokemon::exception * exceptionGet(void) const = 0;
         public:     inline envelope(void) {}
         public:     inline ~envelope(void) override {}
         public:     envelope(const kirlia::envelope & o) = delete;

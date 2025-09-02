@@ -10,6 +10,9 @@
 #ifndef   __POKEMONISM_KIRLIA_COMMAND_HH__
 #define   __POKEMONISM_KIRLIA_COMMAND_HH__
 
+
+#include <pokemonism/ralts/kirlia/event.hh>
+
 #include <pokemonism/ralts/kirlia/envelope.hh>
 #include <pokemonism/ralts/kirlia/subscription.hh>
 #include <pokemonism/pokemon/command.hh>
@@ -18,8 +21,24 @@ namespace pokemonism {
     namespace kirlia {
         namespace command {
 
-            class envelope : public kirlia::envelope {
-            public:     typedef kirlia::envelope::message  message;
+            class subscription;
+
+            class event : public kirlia::event {
+            public:     struct type {
+                        public:     constexpr static uint32 execute     = kirlia::event::type::max;
+                        public:     constexpr static uint32 max         = kirlia::event::type::max + 1;
+                        };
+            public:     typedef kirlia::command::subscription           subscription;
+            public:     event(void) {}
+            public:     ~event(void) override {}
+            public:     event(const kirlia::command::event & o) = delete;
+            public:     event(kirlia::command::event && o) noexcept = delete;
+            public:     kirlia::command::event & operator=(const kirlia::command::event & o) = delete;
+            public:     kirlia::command::event & operator=(kirlia::command::event && o) noexcept = delete;
+            };
+
+            class envelope : public virtual kirlia::envelope {
+            public:     typedef kirlia::envelope::message   message;
             public:     inline envelope(void) {}
             public:     inline ~envelope(void) override {}
             public:     envelope(const kirlia::command::envelope & o) = delete;

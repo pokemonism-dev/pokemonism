@@ -7,13 +7,19 @@ set(KIRLIA_SOURCE               gardevoir.cc
                                 gallade.cc
                                 subscription.cc
                                 observable.cc
-                                engine.cc)
+                                event.cc
+                                engine.cc
+                                envelope.cc
+                                command.cc)
 
 set(KIRLIA_HEADER               gardevoir.hh
                                 gallade.hh
                                 subscription.hh
                                 observable.hh
-                                engine.hh)
+                                event.hh
+                                engine.hh
+                                envelope.hh
+                                command.hh)
 
 add_library(kirlia-dev          ${KIRLIA_HEADER}
                                 ${KIRLIA_SOURCE})
