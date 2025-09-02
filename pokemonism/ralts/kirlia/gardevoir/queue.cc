@@ -38,21 +38,7 @@ namespace pokemonism {
             return total;
         }
 
-        void queue::clear(void) {
-            collection::clear(this, gardevoir::event::rel);
-        }
 
-        void queue::add(gardevoir::event * event) {
-            if (event != nullptr) collection::add(this, event, *this);
-        }
-
-        void queue::del(gardevoir::event * event) {
-            if (event != nullptr) collection::del(this, event, *this);
-        }
-
-        queue::~queue(void) {
-            collection::clear(this, gardevoir::event::rel);
-        }
 
     }
 }
