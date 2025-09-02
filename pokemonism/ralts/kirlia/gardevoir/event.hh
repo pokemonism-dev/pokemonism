@@ -15,7 +15,7 @@
 namespace pokemonism {
     namespace gardevoir {
 
-        class event : public kirlia::event {
+        class event : public virtual kirlia::event {
         public:     event(void) {}
         public:     ~event(void) override {}
         public:     event(const gardevoir::event & o) = delete;
