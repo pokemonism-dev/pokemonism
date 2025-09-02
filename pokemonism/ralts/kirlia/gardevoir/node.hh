@@ -47,6 +47,7 @@ namespace pokemonism {
         public:     node(gardevoir::node && o) noexcept = delete;
         public:     gardevoir::node & operator=(const gardevoir::node & o) = delete;
         public:     gardevoir::node & operator=(gardevoir::node && o) noexcept = delete;
+        public:     friend psyduck::linked::list<gardevoir::subscription, gardevoir::node>;
         public:     friend gardevoir::event;
         public:     friend gardevoir::subscription;
         };
