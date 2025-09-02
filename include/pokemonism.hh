@@ -70,8 +70,6 @@ namespace pokemonism {
             using                                   ostream = std::ostream;
         }
     }
-
-    //using                                           exception = std::exception;
 }
 
 #define pointof(o)                                  (&(o))

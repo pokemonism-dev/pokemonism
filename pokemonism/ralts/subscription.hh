@@ -1,6 +1,6 @@
 /**
  * @file            pokemonism/ralts/subscription.hh
- * @brief
+ * @brief           [pokemonism's reactive lib] subscription
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>

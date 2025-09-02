@@ -17,25 +17,36 @@
 #include <pokemonism/pokemon/exception.hh>
 #include <pokemonism/pokemon/envelope.hh>
 
+#include <pokemonism/ralts.hh>
+
 namespace pokemonism {
     namespace pokemon {
 
         class command {
         public:     typedef primitivable::object output;
         public:     struct tag {};
-        public:     struct event : public virtual pokemon::event {
+        public:     class envelope;
+
+
+
+
+
+        public:     struct event : public virtual ralts::event {
                     public:     struct type : public pokemon::event::type {
-                                public:     constexpr static int gen        = pokemon::event::type::gen;
-                                public:     constexpr static int rel        = pokemon::event::type::rel;
-                                public:     constexpr static int add        = pokemon::event::type::add;
-                                public:     constexpr static int del        = pokemon::event::type::del;
-                                public:     constexpr static int exception  = pokemon::event::type::max;
-                                public:     constexpr static int execute    = pokemon::event::type::max + 1;
-                                public:     constexpr static int max        = pokemon::event::type::max + 2;
+                                public:     constexpr static int execute    = 0;
+                                public:     constexpr static int max        = 1;
                                 };
-                    public:     typedef pokemon::event::subscription subscription;
+                    public:     struct handler : public pokemon::functionable {
+                                public:     typedef void (*type)(pokemon::command &, uint32, pokemon::command::envelope *);
+                                public:     typedef pokemon::command::event::handler set[pokemon::command::event::type::max];
+                                };
                     };
-        public:     class envelope : public virtual pokemon::envelope {
+
+
+
+
+
+        public:     class envelope : public pokemon::envelope {
                     public:     typedef command::output     message;
                     public:     message * pop(void) override = 0;
                     public:     virtual pokemon::exception * exceptionPop(void) = 0;
@@ -45,9 +56,6 @@ namespace pokemonism {
                     public:     envelope(envelope && o) noexcept = delete;
                     public:     envelope & operator=(const envelope & o) = delete;
                     public:     envelope & operator=(envelope && o) noexcept = delete;
-                    };
-        public:     struct callback : public pokemon::functionable {
-                    public:     typedef int (*type)(command &, uint32, command::envelope *);
                     };
         public:     virtual command::output * operator()(void) = 0;
         public:     command(void) {}

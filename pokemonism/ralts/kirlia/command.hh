@@ -23,14 +23,14 @@ namespace pokemonism {
 
             class subscription;
 
-            class event : public kirlia::event {
-            public:     struct type {
+            class event : public virtual kirlia::event {
+            public:     struct type : public kirlia::event::type {
                         public:     constexpr static uint32 execute     = kirlia::event::type::max;
                         public:     constexpr static uint32 max         = kirlia::event::type::max + 1;
                         };
             public:     typedef kirlia::command::subscription           subscription;
-            public:     event(void) {}
-            public:     ~event(void) override {}
+            public:     inline event(void) {}
+            public:     inline ~event(void) override {}
             public:     event(const kirlia::command::event & o) = delete;
             public:     event(kirlia::command::event && o) noexcept = delete;
             public:     kirlia::command::event & operator=(const kirlia::command::event & o) = delete;
@@ -39,6 +39,7 @@ namespace pokemonism {
 
             class envelope : public virtual kirlia::envelope {
             public:     typedef kirlia::envelope::message   message;
+            public:     kirlia::command::envelope::message * messagePop(void) override = 0;
             public:     inline envelope(void) {}
             public:     inline ~envelope(void) override {}
             public:     envelope(const kirlia::command::envelope & o) = delete;

@@ -41,7 +41,9 @@ set(POKEMON_SOURCE                  allocator.cc
                                     envelope.cc
                                     exception.cc
                                     descriptor.cc
+                                    sync.cc
                                     log.cc
+                                    cast.cc
                                     runnable/queue.hh)
 
 set(POKEMON_HEADER                  allocator.hh
@@ -52,7 +54,9 @@ set(POKEMON_HEADER                  allocator.hh
                                     envelope.hh
                                     exception.hh
                                     descriptor.hh
+                                    sync.hh
                                     log.hh
+                                    cast.hh
                                     runnable/queue.cc)
 
 add_library(pokemon-dev             ${POKEMON_INTERFACE_HEADER}

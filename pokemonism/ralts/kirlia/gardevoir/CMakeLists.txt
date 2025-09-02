@@ -4,10 +4,16 @@ project(gardevoir CXX)
 set(CMAKE_CXX_STANDARD 23)
 
 set(GARDEVOIR_SOURCE                subscription.cc
-                                    observable.cc)
+                                    observable.cc
+                                    envelope.cc
+                                    event.cc
+                                    command.cc)
 
 set(GARDEVOIR_HEADER                subscription.hh
-                                    observable.hh)
+                                    observable.hh
+                                    envelope.hh
+                                    event.hh
+                                    command.hh)
 
 add_library(gardevoir-dev           ${GARDEVOIR_HEADER}
                                     ${GARDEVOIR_SOURCE})
