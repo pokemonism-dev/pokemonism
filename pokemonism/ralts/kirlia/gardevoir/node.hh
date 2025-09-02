@@ -19,7 +19,7 @@ namespace pokemonism {
         class event;
 
         class node : public gardevoir::envelope {
-        protected:  static gardevoir::node * rel(gardevoir::node * o);
+        protected:  static gardevoir::node * rem(gardevoir::node * o);
         protected:  gardevoir::subscription *   container;
         protected:  gardevoir::node *           prev;
         protected:  gardevoir::node *           next;
@@ -42,7 +42,7 @@ namespace pokemonism {
                         container->add(this);
                     }
         protected:  inline node(void) : container(nullptr), prev(nullptr), next(nullptr), event(nullptr) {}
-        public:     inline ~node(void) override { gardevoir::node::rel(this); }
+        public:     inline ~node(void) override { gardevoir::node::rem(this); }
         public:     node(const gardevoir::node & o) = delete;
         public:     node(gardevoir::node && o) noexcept = delete;
         public:     gardevoir::node & operator=(const gardevoir::node & o) = delete;
