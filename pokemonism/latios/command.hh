@@ -55,29 +55,8 @@ namespace pokemonism {
 
             template <typename objectable> class subscription;
 
-            // // typedef pokemon::command::output    output;
-            // // typedef pokemon::command::callback  callback;
-            //
-
-
-            // template <class ...>
-            // class processor {
-            // // public:     inline static void on(wattrel::command::subscription & subscription, uint32 type, wattrel::command::node * node);
-            // // public:     inline static void executeOn(wattrel::command::subscription & subscription, wattrel::command::node * node);
-            // // public:     inline processor(void);
-            // // public:     inline virtual ~processor(void);
-            // // public:     processor(const processor & o) = delete;
-            // // public:     processor(processor && o) noexcept = delete;
-            // // public:     processor & operator=(const processor & o) = delete;
-            // // public:     processor & operator=(processor && o) noexcept = delete;
-            // };
-            //
-
             class generator : public wattrel::command::generator {
-            // public:      template <...> wattrel::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
-            // public:     virtual wattrel::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
-            public:     template <class outputable, class objectable = pokemon::generic::command<outputable>>
-                        latios::command::subscription<objectable> * reg(objectable * target, uint32 properties, objectable::callback::type * callbacks, uint32 n);
+            public:     template <class outputable, class objectable = pokemon::generic::command<outputable>> latios::command::subscription<objectable> * reg(objectable * target, uint32 properties, objectable::callback::type * callbacks, uint32 n);
             public:     inline explicit generator(wattrel::engine * engine) : wattrel::command::generator(engine) {}
             public:     generator(void) = delete;
             public:     inline ~generator(void) override {}
@@ -88,13 +67,13 @@ namespace pokemonism {
             };
 
             template <typename objectable>
-            class subscription : public wattrel::command::subscription, public latios::subscription<objectable> {
+            class subscription : public latios::subscription<objectable>, public wattrel::command::subscription {
             public:     constexpr static const char * name = "generic subscription";
             public:     typedef objectable      command;
             public:     inline command * objectGet(void) const override { return dynamic_cast<command *>(object); }
             public:     inline explicit subscription(command * object, uint32 properties, const command::callback::type * callbacks, uint32 n) :
-                        wattrel::command::subscription(object, properties, reinterpret_cast<const wattrel::command::callback::type *>(callbacks), n),
                         latios::subscription<objectable>(properties),
+                        wattrel::command::subscription(object, reinterpret_cast<const wattrel::command::callback::type *>(callbacks), n),
                         wattrel::subscription(properties) {
 
                         }

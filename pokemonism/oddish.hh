@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/starly/subscription.cc
+ * @file
  * @brief
  * @details
  * 
@@ -7,10 +7,12 @@
  * @since           9월 02, 2025
  */
 
-#include "subscription.hh"
+#ifndef   __POKEMONISM_ODDISH_HH__
+#define   __POKEMONISM_ODDISH_HH__
+
+#include <pokemonism.hh>
 
 namespace pokemonism {
-    namespace starly {
-
-    }
 }
+
+#endif // __POKEMONISM_ODDISH_HH__

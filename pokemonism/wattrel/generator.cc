@@ -43,14 +43,5 @@ namespace pokemonism {
         void generator::clear(void) {
             while (head != nullptr) del(head);
         }
-
-
-
-
-        // public:     virtual int reg(wattrel::subscription * o);
-        // public:     virtual int del(wattrel::subscription * o);
-        // public:     virtual void clear(void);
-        // public:     generator(void);
-        // public:     virtual ~generator(void);
     }
 }

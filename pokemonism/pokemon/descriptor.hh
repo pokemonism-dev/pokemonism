@@ -16,6 +16,10 @@ namespace pokemonism {
     namespace pokemon {
 
         class descriptor {
+        public:     virtual int32 open(void) = 0;
+        public:     virtual int64 read(void) = 0;
+        public:     virtual int64 write(void) = 0;
+        public:     virtual int32 close(void) = 0;
         public:     descriptor(void) {}
         public:     virtual ~descriptor(void) {}
         public:     descriptor(const descriptor & o) = delete;

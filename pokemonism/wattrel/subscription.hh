@@ -24,7 +24,7 @@ namespace pokemonism {
         class event;
         class generator;
 
-        class subscription : public virtual pokemon::event::subscription, public virtual pokemon::object {
+        class subscription : public virtual pokemon::event::subscription, public pokemon::object {
         public:     struct state {
                     public:     constexpr static uint32 none     = (0x00000000U <<  0U);
                     public:     constexpr static uint32 complete = (0x00000001U << 31U);
@@ -57,7 +57,7 @@ namespace pokemonism {
         public:     virtual void complete(wattrel::node * node) = 0;
         public:     virtual int on(uint32 type) = 0;
         public:     explicit subscription(uint32 properties) : container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(properties), status(declaration::none) {}
-        public:     subscription(void) = delete;
+        protected:  subscription(void) : container(nullptr), prev(nullptr), next(nullptr), size(0), head(nullptr), tail(nullptr), properties(declaration::none), status(declaration::none) {}
         public:     ~subscription(void) override;
         public:     subscription(const subscription & o) = delete;
         public:     subscription(subscription && o) noexcept = delete;

@@ -10,9 +10,14 @@ add_subdirectory(pokemonism/meowth)
 add_subdirectory(pokemonism/pokemon)
 add_subdirectory(pokemonism/latios)
 add_subdirectory(pokemonism/wattrel)
+add_subdirectory(pokemonism/wattrel/kilowattrel)
 add_subdirectory(pokemonism/psyduck)
 add_subdirectory(pokemonism/mareep)
 add_subdirectory(pokemonism/sprigatito)
+add_subdirectory(pokemonism/oddish)
+add_subdirectory(pokemonism/oddish/gloom)
+add_subdirectory(pokemonism/oddish/gloom/vileplume)
+add_subdirectory(pokemonism/oddish/gloom/bellossom)
 
 set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
 
@@ -24,7 +29,11 @@ set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
                                     pokemonism/psyduck.hh
                                     pokemonism/mareep.hh
                                     pokemonism/wattrel.hh
-                                    pokemonism/sprigatito.hh)
+                                    pokemonism/sprigatito.hh
+                                    pokemonism/oddish.hh
+                                    pokemonism/oddish/gloom.hh
+                                    pokemonism/oddish/gloom/vileplume.hh
+                                    pokemonism/oddish/gloom/bellossom.hh)
 
 set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
                                     pokemonism/meowth.cc
@@ -32,7 +41,11 @@ set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
                                     pokemonism/psyduck.cc
                                     pokemonism/mareep.cc
                                     pokemonism/wattrel.cc
-                                    pokemonism/sprigatito.cc)
+                                    pokemonism/sprigatito.cc
+                                    pokemonism/oddish.cc
+                                    pokemonism/oddish/gloom.cc
+                                    pokemonism/oddish/gloom/vileplume.cc
+                                    pokemonism/oddish/gloom/bellossom.cc)
 
 add_executable(pokemonism-dev       ${POKEMONISM_ROOT_HEADER}
                                     ${POKEMONISM_ROOT_SOURCE}

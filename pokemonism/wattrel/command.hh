@@ -79,7 +79,7 @@ namespace pokemonism {
             public:     event & operator=(event && o) noexcept = delete;
             };
 
-            class subscription : public virtual wattrel::subscription, public virtual command::event::subscription {
+            class subscription : public virtual wattrel::subscription, public command::event::subscription {
             public:     struct state : public wattrel::subscription::state {
                         public:     constexpr static uint32 none     = wattrel::subscription::state::none;
                         public:     constexpr static uint32 complete = wattrel::subscription::state::complete;
@@ -96,7 +96,8 @@ namespace pokemonism {
             public:     inline bool cancel(void) override;
             public:     inline virtual bool completedGet(void) const;
             public:     inline virtual void execute(wattrel::command::node * node);
-            public:     inline explicit subscription(pokemon::command * object, uint32 properties, const wattrel::command::callback::type * callbacks, uint32 n);
+            public:     inline subscription(pokemon::command * object, uint32 properties, const wattrel::command::callback::type * callbacks, uint32 n);
+            public:     inline subscription(pokemon::command * object, const wattrel::command::callback::type * callbacks, uint32 n);
             public:     subscription(void) = delete;
             public:     inline ~subscription(void) override;
             public:     subscription(const subscription & o) = delete;
@@ -264,6 +265,10 @@ namespace pokemonism {
                 status = status | wattrel::command::subscription::state::complete;
             }
 
+            /**
+             * 사용자 입장에서는 CANCEL 을 사용할 수 있지만,... 내부에서는 사용하지 말아야 한다.
+             * @return
+             */
             inline bool subscription::cancel(void) {
                 clear();
                 if (container != nullptr) {
@@ -282,6 +287,14 @@ namespace pokemonism {
 
             inline subscription::subscription(pokemon::command * object, uint32 properties, const command::callback::type * callbacks, uint32 n)
             : wattrel::subscription(properties), object(object), callbacks() {
+                if (callbacks == nullptr || n == 0 || n > command::event::type::max) throw pokemon::exception();
+
+                memcpy(this->callbacks, callbacks, sizeof(command::callback::type) * n);
+                if (n < command::event::type::max) memset(this->callbacks + n, 0, (command::event::type::max - n) * sizeof(command::callback::type));
+            }
+
+            inline subscription::subscription(pokemon::command * object, const command::callback::type * callbacks, uint32 n)
+            : object(object), callbacks() {
                 if (callbacks == nullptr || n == 0 || n > command::event::type::max) throw pokemon::exception();
 
                 memcpy(this->callbacks, callbacks, sizeof(command::callback::type) * n);

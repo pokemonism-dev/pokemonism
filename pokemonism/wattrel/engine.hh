@@ -35,11 +35,13 @@ namespace pokemonism {
                                 public:     inline ~set(void);
                                 };
                     };
+        public:     static pokemon::event::subscription * del(pokemon::event::subscription * subscription);
+        public:     static pokemon::event::subscription * rel(pokemon::event::subscription * subscription);
         public:     virtual int run(void);
         public:     virtual void on(wattrel::engine::bootstrapper bootstrap);
         public:     virtual void off(wattrel::engine::cancellation executor);
         public:     inline virtual void push(wattrel::event * event) { queue->add(event); }
-        public:     virtual pokemon::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
+        public:     virtual pokemon::event::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n);
         protected:  wattrel::queue * queue;
         protected:  pokemon::interface::terminator<wattrel::engine *> terminator;
         protected:  wattrel::engine::generator::set generator;

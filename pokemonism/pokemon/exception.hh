@@ -12,6 +12,8 @@
 
 #include <pokemonism.hh>
 
+#include <pokemonism/pokemon/log.hh>
+
 namespace pokemonism {
     namespace pokemon {
         class exception : public declaration::type::exception {
@@ -32,7 +34,7 @@ namespace pokemonism {
         protected:  static inline exception * dup(const exception * o);
         protected:  static inline char * rel(char * s);
         protected:  static inline exception * rel(exception * o);
-        protected:  static inline const char * to(int level);
+        public:     static inline const char * to(int level);
         protected:  exception * source;
         protected:  char * message;
         protected:  char * subject;
@@ -42,10 +44,10 @@ namespace pokemonism {
         public:     inline virtual const char * reason(void) const noexcept;
         public:     inline virtual const exception * origin(void) const noexcept;
         public:     inline virtual exception * clone(void) const { return new exception(*this); }
-        public:     inline explicit exception(const char * subject, int level);
-        public:     inline exception(const char * subject, int level, const exception & source);
-        public:     inline exception(const char * subject, int level, const char * path, int line, const char * func);
-        public:     inline exception(const char * subject, int level, const exception & source, const char * path, int line, const char * func);
+        public:     inline explicit exception(const char * subject, uint32 level);
+        public:     inline exception(const char * subject, uint32 level, const exception & source);
+        public:     inline exception(const char * subject, uint32 level, const char * path, int line, const char * func);
+        public:     inline exception(const char * subject, uint32 level, const exception & source, const char * path, int line, const char * func);
         public:     inline exception(void) : source(nullptr), message(dup(tag)), subject(nullptr), level(level::warning) {}
         public:     inline ~exception(void) override;
         public:     inline exception(const exception & o);
@@ -149,7 +151,7 @@ namespace pokemonism {
             return *this;
         }
 
-        exception::exception(const char * subject, const int level) : source(nullptr), message(nullptr), subject(dup(subject)), level(level) {
+        exception::exception(const char * subject, const uint32 level) : source(nullptr), message(nullptr), subject(dup(subject)), level(level) {
             if (subject != nullptr) {
                 asprintf(pointof(message), "[%s/%s] %s", tag, to(level), subject);
             } else {
@@ -157,7 +159,7 @@ namespace pokemonism {
             }
         }
 
-        exception::exception(const char * subject, const int level, const exception & source) : source(dup(pointof(source))), message(nullptr), subject(dup(subject)), level(level) {
+        exception::exception(const char * subject, const uint32 level, const exception & source) : source(dup(pointof(source))), message(nullptr), subject(dup(subject)), level(level) {
             if (subject != nullptr) {
                 asprintf(pointof(message), "[%s/%s] %s", tag, to(level), subject);
             } else {
@@ -165,7 +167,7 @@ namespace pokemonism {
             }
         }
 
-        exception::exception(const char * subject, const int level, const char * path, const int line, const char * func) : source(nullptr), message(nullptr), subject(dup(subject)), level(level) {
+        exception::exception(const char * subject, const uint32 level, const char * path, const int line, const char * func) : source(nullptr), message(nullptr), subject(dup(subject)), level(level) {
             if (subject != nullptr) {
                 asprintf(pointof(message), "[%s/%s] [%s:%d] %s(...) => %s", tag, to(level), path, line, func, subject);
             } else {
@@ -173,7 +175,7 @@ namespace pokemonism {
             }
         }
 
-        exception::exception(const char * subject, const int level, const exception & source, const char * path, const int line, const char * func) : source(dup(pointof(source))), message(nullptr), subject(dup(subject)), level(level) {
+        exception::exception(const char * subject, const uint32 level, const exception & source, const char * path, const int line, const char * func) : source(dup(pointof(source))), message(nullptr), subject(dup(subject)), level(level) {
             if (subject != nullptr) {
                 asprintf(pointof(message), "[%s/%s] [%s:%d] %s(...) => %s", tag, to(level), path, line, func, subject);
             } else {
@@ -190,6 +192,80 @@ namespace pokemonism {
 
 }
 
+#ifndef   pokemon_exception_minimum_level
+#define   pokemon_exception_minimum_level       1
+#endif // pokemon_exception_minimum_level
 
+
+#define pokemon_exception_throw(subject, level, code) do {                                                                              \
+    if(pokemon_exception_minimum_level <= level) {                                                                                      \
+        throw pokemonism::pokemon::exception(subject, level, __FILE__, __LINE__, __func__);                                             \
+    }                                                                                                                                   \
+    pokemonLog("[%s:%d/%s] %s(...) => %s\n", __FILE__, __LINE__, level, __func__, subject);                                             \
+    code;                                                                                                                               \
+} while (0)
+
+#define pokemon_exception_check(condition, level, code) do {                                                                            \
+    if(condition) {                                                                                                                     \
+        if(pokemon_exception_minimum_level <= level) {                                                                                  \
+            throw pokemonism::pokemon::exception(#condition, level, __FILE__, __LINE__, __func__);                                      \
+        }                                                                                                                               \
+        pokemonLog("[%s:%d/%s] %s(...) => %s\n", __FILE__, __LINE__, pokemonism::pokemon::exception::to(level), __func__, #condition);  \
+        code;                                                                                                                           \
+    }                                                                                                                                   \
+} while (0)
+
+#define pokemon_exit_check(condition, level, code) do {                                                                                 \
+    if(condition) {                                                                                                                     \
+        pokemonLog("[%s:%d/%s] %s(...) => %s\n", __FILE__, __LINE__, pokemonism::pokemon::exception::to(level), __func__, #condition);  \
+        if(pokemon_exception_minimum_level <= level) exit(0);                                                                           \
+        code;                                                                                                                           \
+    }                                                                                                                                   \
+} while (0)
+
+#define pokemon_critical_check(condition, code)             pokemon_exception_check(condition, pokemonism::pokemon::exception::level::critical, code)
+#define pokemon_warning_check(condition, code)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::warning, code)
+#define pokemon_caution_check(condition, code)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::caution, code)
+#define pokemon_notice_check(condition, code)               pokemon_exception_check(condition, pokemonism::pokemon::exception::level::notice, code)
+#define pokemon_information_check(condition, code)          pokemon_exception_check(condition, pokemonism::pokemon::exception::level::information, code)
+#define pokemon_debug_check(condition, code)                pokemon_exception_check(condition, pokemonism::pokemon::exception::level::debug, code)
+#define pokemon_verbose_check(condition, code)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::verbose, code)
+#define pokemon_develop_check(condition, code)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::develop, code)
+
+#define pokemon_critical_quick_check(condition)             pokemon_exception_check(condition, pokemonism::pokemon::exception::level::critical, (void)(0))
+#define pokemon_warning_quick_check(condition)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::warning, (void)(0))
+#define pokemon_caution_quick_check(condition)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::caution, (void)(0))
+#define pokemon_notice_quick_check(condition)               pokemon_exception_check(condition, pokemonism::pokemon::exception::level::notice, (void)(0))
+#define pokemon_information_quick_check(condition)          pokemon_exception_check(condition, pokemonism::pokemon::exception::level::information, (void)(0))
+#define pokemon_debug_quick_check(condition)                pokemon_exception_check(condition, pokemonism::pokemon::exception::level::debug, (void)(0))
+#define pokemon_verbose_quick_check(condition)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::verbose, (void)(0))
+#define pokemon_develop_quick_check(condition)              pokemon_exception_check(condition, pokemonism::pokemon::exception::level::develop, (void)(0))
+
+#define pokemon_critical_throw(condition, code)             pokemon_exception_throw("critical", pokemonism::pokemon::exception::level::critical, code)
+#define pokemon_warning_throw(condition, code)              pokemon_exception_throw("warning", pokemonism::pokemon::exception::level::warning, code)
+#define pokemon_caution_throw(condition, code)              pokemon_exception_throw("caution", pokemonism::pokemon::exception::level::caution, code)
+#define pokemon_notice_throw(condition, code)               pokemon_exception_throw("notice", pokemonism::pokemon::exception::level::notice, code)
+#define pokemon_information_throw(condition, code)          pokemon_exception_throw("information", pokemonism::pokemon::exception::level::information, code)
+#define pokemon_debug_throw(condition, code)                pokemon_exception_throw("debug", pokemonism::pokemon::exception::level::debug, code)
+#define pokemon_verbose_throw(condition, code)              pokemon_exception_throw("verbose", pokemonism::pokemon::exception::level::verbose, code)
+#define pokemon_develop_throw(condition, code)              pokemon_exception_throw("develop", pokemonism::pokemon::exception::level::develop, code)
+
+#define pokemon_critical_quick_throw(condition)             pokemon_exception_throw("critical", pokemonism::pokemon::exception::level::critical, (void)(0))
+#define pokemon_warning_quick_throw(condition)              pokemon_exception_throw("warning", pokemonism::pokemon::exception::level::warning, (void)(0))
+#define pokemon_caution_quick_throw(condition)              pokemon_exception_throw("caution", pokemonism::pokemon::exception::level::caution, (void)(0))
+#define pokemon_notice_quick_throw(condition)               pokemon_exception_throw("notice", pokemonism::pokemon::exception::level::notice, (void)(0))
+#define pokemon_information_quick_throw(condition)          pokemon_exception_throw("information", pokemonism::pokemon::exception::level::information, (void)(0))
+#define pokemon_debug_quick_throw(condition)                pokemon_exception_throw("debug", pokemonism::pokemon::exception::level::debug, (void)(0))
+#define pokemon_verbose_quick_throw(condition)              pokemon_exception_throw("verbose", pokemonism::pokemon::exception::level::verbose, (void)(0))
+#define pokemon_develop_quick_throw(condition)              pokemon_exception_throw("develop", pokemonism::pokemon::exception::level::develop, (void)(0))
+
+#define pokemon_critical_exit_check(condition, code)        pokemon_exit_check(condition, pokemonism::pokemon::exception::level::critical, code)
+#define pokemon_warning_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::exception::level::warning, code)
+#define pokemon_caution_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::exception::level::caution, code)
+#define pokemon_notice_exit_check(condition, code)          pokemon_exit_check(condition, pokemonism::pokemon::exception::level::notice, code)
+#define pokemon_information_exit_check(condition, code)     pokemon_exit_check(condition, pokemonism::pokemon::exception::level::information, code)
+#define pokemon_debug_exit_check(condition, code)           pokemon_exit_check(condition, pokemonism::pokemon::exception::level::debug, code)
+#define pokemon_verbose_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::exception::level::verbose, code)
+#define pokemon_develop_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::exception::level::develop, code)
 
 #endif // __POKEMONISM_POKEMON_EXCEPTION__HH__

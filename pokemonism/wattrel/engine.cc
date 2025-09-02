@@ -17,7 +17,6 @@ namespace pokemonism {
     namespace wattrel {
 
         pokemon::interface::terminatable<1, wattrel::engine *> engine::T;
-
         int engine::run(void) {
             while (terminator == nullptr) {
                 queue->on(declaration::infinite);
@@ -46,7 +45,7 @@ namespace pokemonism {
             }
         }
 
-        pokemon::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n) {
+        pokemon::event::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::type * callbacks, uint32 n) {
             return generator.command->reg(target, properties, callbacks, n);
         }
 

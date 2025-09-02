@@ -29,6 +29,12 @@ namespace pokemonism {
                                 public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 30U);
                                 public:     constexpr static uint32 release_on_del          = (0x00000001U << 31U);
                                 };
+                    public:     subscription(void) {}
+                    public:     ~subscription(void) override {}
+                    public:     subscription(const subscription & o) = delete;
+                    public:     subscription(subscription && o) noexcept = delete;
+                    public:     subscription & operator=(const subscription & o) = delete;
+                    public:     subscription & operator=(subscription && o) noexcept = delete;
                     };
         public:     virtual uint32 eventGet(void) const = 0;
         public:     event(void) {}
