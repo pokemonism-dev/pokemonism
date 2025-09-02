@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file            pokemonism/ralts/kirlia/gardevoir/event.cc
  * @brief
  * @details
  * 
@@ -16,7 +16,7 @@
 namespace pokemonism {
     namespace gardevoir {
 
-        gardevoir::event * event::rel(gardevoir::event * event) {
+        gardevoir::event * event::rem(gardevoir::event * event) {
             pokemon_develop_check(event == nullptr, return nullptr);
 
             if (event->container != nullptr) {
@@ -40,15 +40,6 @@ namespace pokemonism {
             return event;
         }
 
-        gardevoir::event * event::dispatch(gardevoir::event * event) {
-            pokemon_develop_check(event == nullptr || event->container != nullptr || event->node == nullptr, return nullptr);
 
-            if (event->on() > declaration::success) return event;
-
-            event->node->event = nullptr;
-            event->node = allocator::del(event->node);
-
-            return allocator::del(event);
-        }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/ralts/kirlia/gardevoir.hh
+ * @file            pokemonism/ralts/kirlia/gardevoir/event.hh
  * @brief
  * @details
  * 
@@ -22,9 +22,9 @@ namespace pokemonism {
         class queue;
 
         class event : public virtual kirlia::event {
-        public:     typedef psyduck::linked::list<gardevoir::queue, gardevoir::event> collection;
-        public:     static gardevoir::event * rel(gardevoir::event * event);
-        public:     static gardevoir::event * dispatch(gardevoir::event * event);
+        protected:  typedef psyduck::linked::list<gardevoir::queue, gardevoir::event> collection;
+        protected:  static gardevoir::event * rem(gardevoir::event * event);
+        protected:  inline static gardevoir::event * dispatch(gardevoir::event * event);
         protected:  gardevoir::queue *  container;
         protected:  gardevoir::event *  prev;
         protected:  gardevoir::event *  next;
@@ -46,13 +46,26 @@ namespace pokemonism {
                     }
         public:     explicit event(uint32 id, gardevoir::node * node) : container(nullptr), prev(nullptr), next(nullptr), node(node), id(id) { pokemon_develop_quick_check(node == nullptr); }
         protected:  event(void) : container(nullptr), prev(nullptr), next(nullptr), node(nullptr), id(declaration::invalid) {}
-        public:     ~event(void) override { gardevoir::event::rel(this); }
+        public:     ~event(void) override { gardevoir::event::rem(this); }
         public:     event(const gardevoir::event & o) = delete;
         public:     event(gardevoir::event && o) noexcept = delete;
         public:     gardevoir::event & operator=(const gardevoir::event & o) = delete;
         public:     gardevoir::event & operator=(gardevoir::event && o) noexcept = delete;
         public:     friend collection;
+        public:     friend gardevoir::node;
+        public:     friend gardevoir::queue;
         };
+
+        inline gardevoir::event * event::dispatch(gardevoir::event * event) {
+            pokemon_develop_check(event == nullptr || event->container != nullptr || event->node == nullptr, return nullptr);
+
+            if (event->on() > declaration::success) return event;
+
+            event->node->event = nullptr;
+            event->node = allocator::del(event->node);
+
+            return allocator::del(event);
+        }
 
     }
 }
