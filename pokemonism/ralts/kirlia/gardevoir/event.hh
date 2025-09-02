@@ -22,7 +22,6 @@ namespace pokemonism {
         class queue;
 
         class event : public virtual kirlia::event {
-        protected:  typedef psyduck::linked::list<gardevoir::queue, gardevoir::event> collection;
         protected:  static gardevoir::event * rem(gardevoir::event * event);
         protected:  inline static gardevoir::event * dispatch(gardevoir::event * event);
         protected:  gardevoir::queue *  container;
@@ -51,7 +50,7 @@ namespace pokemonism {
         public:     event(gardevoir::event && o) noexcept = delete;
         public:     gardevoir::event & operator=(const gardevoir::event & o) = delete;
         public:     gardevoir::event & operator=(gardevoir::event && o) noexcept = delete;
-        public:     friend collection;
+        public:     friend psyduck::linked::list<gardevoir::queue, gardevoir::event>;
         public:     friend gardevoir::node;
         public:     friend gardevoir::queue;
         };
