@@ -27,8 +27,8 @@ namespace pokemonism {
         protected:  gardevoir::event *  tail;
         public:     uint64 on(uint64 total = declaration::infinite);
         public:     inline void clear(void);
-        public:     inline void add(gardevoir::event * event);
-        public:     inline void del(gardevoir::event * event);
+        public:     inline gardevoir::event * add(gardevoir::event * event);
+        public:     inline gardevoir::event * del(gardevoir::event * event);
         public:     inline queue(void) : size(declaration::zero), head(nullptr), tail(nullptr) {}
         public:     inline ~queue(void) override;
         public:     queue(const gardevoir::queue & o) = delete;
@@ -40,19 +40,28 @@ namespace pokemonism {
         };
 
         inline void queue::clear(void) {
-            collection::clear(this, gardevoir::event::rel);
+            collection::clear(this, gardevoir::event::rem);
         }
 
-        inline void queue::add(gardevoir::event * event) {
-            if (event != nullptr) collection::add(this, event, *this);
+        // ReSharper disable once CppDFAConstantFunctionResult
+        inline gardevoir::event * queue::add(gardevoir::event * event) {
+            pokemon_develop_check(event == nullptr || event->container != nullptr, return event);
+
+            collection::add(this, event, *this);
+
+            return nullptr;
         }
 
-        inline void queue::del(gardevoir::event * event) {
-            if (event != nullptr) collection::del(this, event, *this);
+        inline gardevoir::event * queue::del(gardevoir::event * event) {
+            pokemon_develop_check(event == nullptr || event->container != this, return event);
+
+            collection::del(this, event, *this);
+
+            return event;
         }
 
         inline queue::~queue(void) {
-            collection::clear(this, gardevoir::event::rel);
+            collection::clear(this, gardevoir::event::rem);
         }
 
     }

@@ -38,7 +38,5 @@ namespace pokemonism {
             return total;
         }
 
-
-
     }
 }
