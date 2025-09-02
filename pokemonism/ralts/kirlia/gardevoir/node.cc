@@ -29,8 +29,11 @@ namespace pokemonism {
                             o->exception = new pokemon::exception();
                             o->container->raise(o);
                         }
+
+                        o->container->del(o);
                     }
                 }
+
                 event->node =  nullptr;
                 o->event = allocator::del(o->event);
             }
