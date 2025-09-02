@@ -19,13 +19,19 @@ namespace pokemonism {
 
         class event {
         public:     struct type {
-                    public:     constexpr static uint32 gen = 0;
-                    public:     constexpr static uint32 rel = 1;
-                    public:     constexpr static uint32 reg = 2;
-                    public:     constexpr static uint32 del = 3;
-                    public:     constexpr static uint32 max = 4;
+                    public:     constexpr static uint32 max = 0;
                     };
         public:     class subscription : public ralts::subscription {
+                    public:     struct event {
+                                public:     struct type {
+                                            public:     constexpr static uint32 gen         = 0;
+                                            public:     constexpr static uint32 reg         = 1;
+                                            public:     constexpr static uint32 exception   = 2;
+                                            public:     constexpr static uint32 del         = 0;
+                                            public:     constexpr static uint32 rel         = 0;
+                                            public:     constexpr static uint32 max         = 0;
+                                            };
+                                };
                     public:     struct property {
                                 public:     constexpr static uint32 release_object_on_rel   = (0x00000001U << 30U);
                                 public:     constexpr static uint32 release_on_del          = (0x00000001U << 31U);
