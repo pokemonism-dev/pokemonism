@@ -68,7 +68,7 @@ namespace pokemonism {
                         memcpy(subscriptionSet, pointof(subscriptionHandlerSet), sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max);
                     }
         public:     subscription(void) = delete;
-        protected:  inline ~subscription(void) override { gardevoir::subscription::rem(this); }
+        public:     inline ~subscription(void) override { gardevoir::subscription::rem(this); }
         public:     subscription(const gardevoir::subscription & o) = delete;
         public:     subscription(gardevoir::subscription && o) noexcept = delete;
         public:     gardevoir::subscription & operator=(const gardevoir::subscription & o) = delete;
