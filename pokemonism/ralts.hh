@@ -7,12 +7,12 @@
  * @since           9월 02, 2025
  */
 
-#ifndef   __POKEMONISM_VILEPLUME_HH__
-#define   __POKEMONISM_VILEPLUME_HH__
+#ifndef   __POKEMONISM_RALTS_HH__
+#define   __POKEMONISM_RALTS_HH__
 
 #include <pokemonism.hh>
 
 namespace pokemonism {
 }
 
-#endif // __POKEMONISM_VILEPLUME_HH__
+#endif // __POKEMONISM_RALTS_HH__

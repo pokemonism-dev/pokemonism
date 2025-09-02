@@ -7,12 +7,12 @@
  * @since           9월 02, 2025
  */
 
-#ifndef   __POKEMONISM_GLOOM_HH__
-#define   __POKEMONISM_GLOOM_HH__
+#ifndef   __POKEMONISM_GALLADE_HH__
+#define   __POKEMONISM_GALLADE_HH__
 
 #include <pokemonism.hh>
 
 namespace pokemonism {
 }
 
-#endif // __POKEMONISM_GLOOM_HH__
+#endif // __POKEMONISM_GALLADE_HH__
