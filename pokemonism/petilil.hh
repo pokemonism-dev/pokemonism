@@ -10,26 +10,17 @@
 #ifndef   __POKEMONISM_PETILIL_HH__
 #define   __POKEMONISM_PETILIL_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/pokemon.hh>
 
 namespace pokemonism {
-    namespace petilil {
-
-        class engine {
-        public:     virtual petilil::engine * run(void) { return this; }
-        public:     engine(void) {}
-        public:     virtual ~engine(void) {}
-        public:     engine(const petilil::engine & o) = delete;
-        public:     engine(petilil::engine && o) noexcept = delete;
-        public:     petilil::engine & operator=(const petilil::engine & o) = delete;
-        public:     petilil::engine & operator=(petilil::engine && o) noexcept = delete;
-        };
-
-        template <itemname item = void>
-        petilil::engine * evolve(void) {
-            return new petilil::engine();
-        }
-    }
+    class petilil : public pokemon {
+    public:     petilil(void) {}
+    public:     ~petilil(void) override {}
+    public:     petilil(const petilil & o) = delete;
+    public:     petilil(petilil && o) noexcept = delete;
+    public:     petilil & operator=(const petilil & o) = delete;
+    public:     petilil & operator=(petilil && o) noexcept = delete;
+    };
 }
 
 #endif // __POKEMONISM_PETILIL_HH__
