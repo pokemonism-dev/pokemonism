@@ -32,6 +32,10 @@ namespace pokemonism {
             return gardevoir::engine::run();
         }
 
+        void engine::off(kirlia::engine::terminator terminator) {
+            gardevoir::engine::off(terminator);
+        }
+
         engine::engine(void) {
 
         }

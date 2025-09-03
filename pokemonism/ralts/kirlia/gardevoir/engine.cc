@@ -56,6 +56,8 @@ namespace pokemonism {
                 cancel();
 
                 singleton = allocator::del(singleton);
+                queue = allocator::del(queue);
+                generator.command = allocator::del(generator.command);
 
                 return declaration::success;
             }

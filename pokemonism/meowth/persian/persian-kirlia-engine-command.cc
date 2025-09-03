@@ -11,9 +11,17 @@
 
 using namespace pokemonism;
 
+namespace pokemonism {
+    namespace persian {
+        inline void terminator(void) {}
+    }
+}
+
 int main(int argc, char ** argv) {
     kirlia::engine::on();
     // kirlia::engine::
+
+    kirlia::engine::off(persian::terminator);
 
     return kirlia::engine::run();
 }

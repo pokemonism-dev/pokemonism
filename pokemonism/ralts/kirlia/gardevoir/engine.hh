@@ -35,6 +35,7 @@ namespace pokemonism {
         public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
         public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet);
         public:     static int on(void);
+        public:     static void off(terminator f) { cancel = f; }
         public:     static int run(void);
         public:     engine(void) {}
         public:     virtual ~engine(void) {}
