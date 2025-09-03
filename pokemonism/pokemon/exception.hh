@@ -10,6 +10,8 @@
 #ifndef   __POKEMONISM_POKEMON_EXCEPTION__HH__
 #define   __POKEMONISM_POKEMON_EXCEPTION__HH__
 
+#include <cstdarg>
+
 #include <pokemonism.hh>
 
 #include <pokemonism/pokemon/log.hh>
