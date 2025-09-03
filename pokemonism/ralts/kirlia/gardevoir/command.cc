@@ -47,8 +47,6 @@ namespace pokemonism {
 
                 gardevoir::subscription::on(gardevoir::subscription::event::type::rel);
 
-                printf("object => %p\n", object);
-
                 object = ((properties & gardevoir::command::subscription::property::release_object_on_rel) ? allocator::del(object) : nullptr);
 
                 if (subscriptionSet != nullptr) subscriptionSet = static_cast<kirlia::subscription::event::handler::set *>(allocator::rel(subscriptionSet));
@@ -75,6 +73,34 @@ namespace pokemonism {
                 pokemon_develop_check(target == nullptr, return nullptr);
 
                 gardevoir::command::subscription * subscription = new gardevoir::command::subscription(target, properties, eventSet, subscriptionSet);
+
+                subscription->on(gardevoir::command::subscription::event::type::gen);
+
+                gardevoir::generator::reg(subscription);
+
+                gardevoir::engine::dispatch(new gardevoir::command::event(gardevoir::command::event::type::execute, new gardevoir::command::node(subscription)));
+
+                return subscription;
+            }
+
+            gardevoir::command::subscription * generator::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+                pokemon_develop_check(target == nullptr || repeat <= 0, return nullptr);
+
+                gardevoir::command::subscription * subscription = new gardevoir::command::repeat::subscription(target, repeat, properties, eventSet);
+
+                subscription->on(gardevoir::command::subscription::event::type::gen);
+
+                gardevoir::generator::reg(subscription);
+
+                gardevoir::engine::dispatch(new gardevoir::command::event(gardevoir::command::event::type::execute, new gardevoir::command::node(subscription)));
+
+                return subscription;
+            }
+
+            gardevoir::command::subscription * generator::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) {
+                pokemon_develop_check(target == nullptr || repeat <= 0, return nullptr);
+
+                gardevoir::command::subscription * subscription = new gardevoir::command::repeat::subscription(target, repeat, properties, eventSet, subscriptionSet);
 
                 subscription->on(gardevoir::command::subscription::event::type::gen);
 

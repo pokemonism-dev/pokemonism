@@ -109,6 +109,7 @@ namespace pokemonism {
             public:     inline void on(uint32 type, pokemon::exception * e = nullptr) override;
             public:     inline void raise(gardevoir::node * node) override;
             public:     inline gardevoir::command::generator * containerGet(void) const;
+            public:     inline bool cancel(void) override { return gardevoir::subscription::cancel(); }
             public:     inline virtual void eventOn(gardevoir::command::node * node);
             public:     inline virtual void eventOn(uint32 type, gardevoir::command::envelope * envelope);
             public:     inline pokemon::command * commandGet(void) const override;
@@ -128,6 +129,8 @@ namespace pokemonism {
             class generator : public gardevoir::generator {
             public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
             public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet);
+            public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet);
+            public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet);
             public:     inline uint64 on(void) override;
             public:     inline explicit generator(gardevoir::engine * engine);
             public:     inline ~generator(void) override;

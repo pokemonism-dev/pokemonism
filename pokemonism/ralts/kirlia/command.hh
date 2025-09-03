@@ -80,6 +80,7 @@ namespace pokemonism {
                                     };
                         };
             public:     virtual const pokemon::command * commandGet(void) const = 0;
+            protected:  bool cancel(void) override = 0;
             public:     subscription(void) {}
             public:     ~subscription(void) override {}
             public:     subscription(const kirlia::command::subscription & o) = delete;

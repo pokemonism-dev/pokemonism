@@ -33,8 +33,10 @@ namespace pokemonism {
         protected:  static gardevoir::engine::terminator cancel;
         protected:  static gardevoir::engine::generator::set generator;
         protected:  static gardevoir::engine * singleton;
-        public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
-        public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet);
+        public:     static gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
+        public:     static gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet);
+        public:     static gardevoir::command::subscription * reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet);
+        public:     static gardevoir::command::subscription * reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet);
         public:     static gardevoir::event * dispatch(gardevoir::event * event) { return queue->add(event); }
         public:     static int on(void);
         public:     static void off(terminator f) { cancel = f; }

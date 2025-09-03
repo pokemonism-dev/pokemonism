@@ -21,7 +21,7 @@ namespace pokemonism {
         gardevoir::engine *                 gardevoir::engine::singleton = nullptr;
         gardevoir::engine::terminator       gardevoir::engine::cancel;
 
-        gardevoir::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+        gardevoir::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
             pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
 
             if (cancel != nullptr) {
@@ -33,7 +33,7 @@ namespace pokemonism {
             return gardevoir::engine::generator.command->reg(target, properties, eventSet);
         }
 
-        gardevoir::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
+        gardevoir::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
             pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
 
             if (cancel != nullptr) {
@@ -43,6 +43,30 @@ namespace pokemonism {
             }
 
             return gardevoir::engine::generator.command->reg(target, properties, eventSet, reinterpret_cast<const gardevoir::command::subscription::event::handler::set &>(subscriptionSet));
+        }
+
+        gardevoir::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+            pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
+
+            if (cancel != nullptr) {
+                if (properties & gardevoir::command::subscription::property::release_object_on_rel) delete target;
+
+                return nullptr;
+            }
+
+            return gardevoir::engine::generator.command->reg(target, repeat, properties, eventSet);
+        }
+
+        gardevoir::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
+            pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
+
+            if (cancel != nullptr) {
+                if (properties & gardevoir::command::subscription::property::release_object_on_rel) delete target;
+
+                return nullptr;
+            }
+
+            return gardevoir::engine::generator.command->reg(target, repeat, properties, eventSet, reinterpret_cast<const gardevoir::command::subscription::event::handler::set &>(subscriptionSet));
         }
 
         int engine::on(void) {
