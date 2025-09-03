@@ -24,7 +24,7 @@ namespace pokemonism {
         protected:  gardevoir::node *           prev;
         protected:  gardevoir::node *           next;
         protected:  gardevoir::event *          event;
-        public:     inline virtual gardevoir::subscription * subscriptionGet(void) const { return container; }
+        public:     inline virtual gardevoir::subscription * containerGet(void) const { return container; }
         public:     inline virtual gardevoir::event * eventGet(void) const { return event; }
         protected:  inline void raise(pokemon::exception * e) {
                         pokemon_critical_check(e == nullptr || container == nullptr, do {

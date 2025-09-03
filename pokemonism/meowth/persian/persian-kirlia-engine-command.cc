@@ -7,6 +7,7 @@
  * @since           9월 03, 2025
  */
 
+#include <pokemonism/pokemon/allocator.hh>
 #include <pokemonism/meowth/persian.hh>
 
 #include <pokemonism/ralts/kirlia/engine.hh>
@@ -40,25 +41,28 @@ int main(int argc, char ** argv) {
             printf("rel\n");
             pokemon::command * command = subscription.commandPop();
             delete command;
-            kirlia::engine::off([](){});
+            // kirlia::engine::off([](){});
         },
     };
 
     constexpr persian::command::event::handler::set eventSet = {
         [](pokemon::command & command, uint32 type, pokemon::command::envelope * envelope) -> void {
-
+            pokemon::exception * exception = envelope->exceptionPop();
+            printf("%p => complete => %s\n", pointof(command), envelope->completeChk() ? "true" : "false");
+            printf("%p => execute => %d\n", pointof(command), envelope->executeCnt());
+            printf("%p => exception => %p\n", pointof(command), exception);
+            printf("%p => subscription\n", envelope->subscriptionGet());
             printf("%ld\n", primitivable::object::to::integer64(envelope->messagePop()));
+
+            allocator::del(exception);
         }
     };
 
     kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-
     kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-
     kirlia::engine::reg(new persian::command(), 3, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
     kirlia::engine::reg(new persian::command(1004), 4, kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
     kirlia::engine::reg(new persian::command(), 5, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-
     kirlia::engine::reg(new persian::command(1004), kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
 
     return kirlia::engine::run();

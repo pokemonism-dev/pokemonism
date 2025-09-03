@@ -54,15 +54,32 @@ namespace pokemonism {
             class envelope : public virtual gardevoir::envelope, public kirlia::command::envelope {
             public:     typedef kirlia::command::envelope::message  message;
             protected:  message * output;
+            public:     inline int executeCnt(void) const override = 0;
+            protected:  inline bool completeChk(void) const override = 0;
+            public:     inline gardevoir::subscription * subscriptionGet(void) const override = 0;
             public:     inline pokemon::exception * exceptionPop(void) override;
             public:     inline kirlia::command::envelope::message * messagePop() override;
-            public:     inline void messageSet(kirlia::command::envelope::message * o);
+            public:     inline virtual void messageSet(kirlia::command::envelope::message * o);
             public:     inline envelope(void);
             public:     inline ~envelope(void) override;
             public:     envelope(const gardevoir::command::envelope & o) = delete;
             public:     envelope(gardevoir::command::envelope & o) noexcept = delete;
             public:     gardevoir::command::envelope & operator=(const gardevoir::command::envelope & o) = delete;
             public:     gardevoir::command::envelope & operator=(gardevoir::command::envelope & o) noexcept = delete;
+            };
+
+            class postcard : public gardevoir::command::envelope {
+            protected:  gardevoir::command::subscription * subscription;
+            public:     inline int executeCnt(void) const override;
+            protected:  inline bool completeChk(void) const override;
+            public:     inline gardevoir::subscription * subscriptionGet(void) const override;
+            public:     inline explicit postcard(gardevoir::command::subscription * subscription);
+            public:     inline postcard(void);
+            public:     inline ~postcard(void) override;
+            public:     postcard(const gardevoir::command::postcard & o) = delete;
+            public:     postcard(gardevoir::command::postcard & o) noexcept = delete;
+            public:     gardevoir::command::postcard & operator=(const gardevoir::command::postcard & o) = delete;
+            public:     gardevoir::command::postcard & operator=(gardevoir::command::postcard & o) noexcept = delete;
             };
 
             class processor {
@@ -75,18 +92,6 @@ namespace pokemonism {
             public:     gardevoir::command::processor & operator=(const gardevoir::command::processor & o) = delete;
             public:     gardevoir::command::processor & operator=(gardevoir::command::processor && o) noexcept = delete;
             public:     friend gardevoir::command::envelope;
-            };
-
-            class node : public gardevoir::node, public gardevoir::command::envelope {
-            public:     inline void exceptionSet(pokemon::exception * e);
-            public:     inline gardevoir::command::event * eventGet(void) const override;
-            public:     inline explicit node(gardevoir::command::subscription * subscription);
-            public:     inline node(void) = delete;
-            public:     inline node(const gardevoir::command::node & o) = delete;
-            public:     inline node(gardevoir::command::node && o) noexcept = delete;
-            public:     gardevoir::command::node & operator=(const gardevoir::command::node & o) = delete;
-            public:     gardevoir::command::node & operator=(gardevoir::command::node && o) noexcept = delete;
-            public:     friend gardevoir::command::subscription;
             };
 
             class subscription : public kirlia::command::poppable::subscription, public gardevoir::subscription {
@@ -105,6 +110,7 @@ namespace pokemonism {
                         };
             protected:  gardevoir::command::event::handler::set eventSet;
             protected:  pokemon::command * object;
+            protected:  int32 count;
             public:     int on(gardevoir::node * node) override;
             public:     inline void on(uint32 type, pokemon::exception * e = nullptr) override;
             public:     inline void raise(gardevoir::node * node) override;
@@ -114,6 +120,7 @@ namespace pokemonism {
             public:     inline virtual void eventOn(uint32 type, gardevoir::command::envelope * envelope);
             public:     inline pokemon::command * commandGet(void) const override;
             public:     inline pokemon::command * commandPop(void) override;
+            public:     inline virtual int32 executeCnt(void) const { return count; }
             public:     inline virtual void executeSet(void);
             public:     inline explicit subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet);
             public:     inline subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet);
@@ -124,6 +131,22 @@ namespace pokemonism {
             public:     gardevoir::command::subscription & operator=(const gardevoir::command::subscription & o) = delete;
             public:     gardevoir::command::subscription & operator=(gardevoir::command::subscription && o) noexcept = delete;
             public:     friend gardevoir::command::node;
+            };
+
+            class node : public gardevoir::node, public gardevoir::command::envelope {
+            public:     inline gardevoir::command::subscription * containerGet(void) const override;
+            public:     inline bool completeChk(void) const override { return container != nullptr ? container->completeChk() : false; }
+            public:     inline int32 executeCnt(void) const override;
+            public:     inline void exceptionSet(pokemon::exception * e);
+            public:     inline gardevoir::command::subscription * subscriptionGet(void) const override;
+            public:     inline gardevoir::command::event * eventGet(void) const override;
+            public:     inline explicit node(gardevoir::command::subscription * subscription);
+            public:     inline node(void) = delete;
+            public:     inline node(const gardevoir::command::node & o) = delete;
+            public:     inline node(gardevoir::command::node && o) noexcept = delete;
+            public:     gardevoir::command::node & operator=(const gardevoir::command::node & o) = delete;
+            public:     gardevoir::command::node & operator=(gardevoir::command::node && o) noexcept = delete;
+            public:     friend gardevoir::command::subscription;
             };
 
             class generator : public gardevoir::generator {
@@ -142,7 +165,6 @@ namespace pokemonism {
 
             namespace repeat {
                 class subscription : public gardevoir::command::subscription {
-                public:     int32 count;
                 public:     int32 total;
                 public:     inline void executeSet(void) override {
                                 if (total >= 0) {
@@ -154,8 +176,8 @@ namespace pokemonism {
                             }
                 public:     subscription(void);
                 public:     ~subscription(void) override {}
-                public:     inline explicit subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet) : gardevoir::command::subscription(target, properties, handlerSet), count(0), total(total) {}
-                public:     inline subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) : gardevoir::command::subscription(target, properties, handlerSet, subscriptionSet), count(0), total(total) {}
+                public:     inline explicit subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet) : gardevoir::command::subscription(target, properties, handlerSet), total(total) {}
+                public:     inline subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) : gardevoir::command::subscription(target, properties, handlerSet, subscriptionSet), total(total) {}
                 public:     subscription(const gardevoir::command::repeat::subscription & o) = delete;
                 public:     subscription(gardevoir::command::repeat::subscription && o) noexcept = delete;
                 public:     gardevoir::command::repeat::subscription & operator=(const gardevoir::command::repeat::subscription & o) = delete;
@@ -193,7 +215,7 @@ namespace pokemonism {
             inline int processor::on(gardevoir::command::subscription & subscription, uint32 type) {
                 pokemon_develop_check(gardevoir::command::event::type::max <= type || subscription.commandGet() == nullptr || subscription.finishChk(), return declaration::fail);
 
-                gardevoir::command::envelope envelope;
+                gardevoir::command::postcard envelope(pointof(subscription));
 
                 return processor::on(subscription, type, envelope);
             }
@@ -218,6 +240,11 @@ namespace pokemonism {
                 container->exceptionSet();
             }
 
+            inline int32 node::executeCnt(void) const {
+                const gardevoir::command::subscription * subscription = containerGet();
+                return subscription != nullptr ? subscription->executeCnt() : declaration::zero;
+            }
+
             inline gardevoir::command::event * node::eventGet(void) const {
                 pokemon_develop_check(event == nullptr || gardevoir::command::event::type::max <= event->eventGet(), return nullptr);
 
@@ -226,6 +253,16 @@ namespace pokemonism {
 
             inline node::node(gardevoir::command::subscription * subscription) : gardevoir::node(subscription) {
 
+            }
+
+            inline gardevoir::command::subscription * node::containerGet(void) const {
+                pokemon_debug_check(container != nullptr && dynamic_cast<gardevoir::command::subscription *>(container) == nullptr, return nullptr);
+                return static_cast<gardevoir::command::subscription *>(container);
+            }
+
+            inline gardevoir::command::subscription * node::subscriptionGet(void) const {
+                pokemon_debug_check(container != nullptr && dynamic_cast<gardevoir::command::subscription *>(container) == nullptr, return nullptr);
+                return static_cast<gardevoir::command::subscription *>(container);
             }
 
             inline void subscription::on(uint32 type, pokemon::exception * e) {
@@ -247,7 +284,7 @@ namespace pokemonism {
             }
 
             inline void subscription::eventOn(gardevoir::command::node * node) {
-                pokemon_develop_check(node == nullptr || node->subscriptionGet() != this || node->eventGet() == nullptr, return);
+                pokemon_develop_check(node == nullptr || node->containerGet() != this || node->eventGet() == nullptr, return);
 
                 const gardevoir::command::event * event = node->eventGet();
 
@@ -273,18 +310,19 @@ namespace pokemonism {
             }
 
             void subscription::executeSet(void) {
+                count = count + 1;
                 status = status | gardevoir::command::subscription::state::complete;
             }
 
             inline subscription::subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet)
-            : gardevoir::subscription(properties), object(target) {
+            : gardevoir::subscription(properties), object(target), count(0) {
                 memcpy(eventSet, handlerSet, sizeof(pokemon::command::event::handler::set));
 
                 pokemon_develop_check(object == nullptr, exit(0));
             }
 
             inline subscription::subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet)
-            : gardevoir::subscription(properties, reinterpret_cast<const gardevoir::subscription::event::handler::set &>(subscriptionSet)), object(target) {
+            : gardevoir::subscription(properties, reinterpret_cast<const gardevoir::subscription::event::handler::set &>(subscriptionSet)), object(target), count(0) {
                 memcpy(eventSet, handlerSet, sizeof(pokemon::command::event::handler::set));
 
                 pokemon_develop_check(object == nullptr, exit(0));
@@ -301,6 +339,36 @@ namespace pokemonism {
             generator::~generator(void) {
 
             }
+
+            inline int postcard::executeCnt(void) const {
+                pokemon_develop_check(subscription == nullptr, return declaration::zero);
+
+                return subscription->executeCnt();
+            }
+
+            inline bool postcard::completeChk(void) const {
+                pokemon_develop_check(subscription == nullptr, return false);
+
+                return subscription->completeChk();
+            }
+
+            gardevoir::subscription * postcard::subscriptionGet(void) const {
+                return subscription;
+            }
+
+            inline postcard::postcard(gardevoir::command::subscription * subscription) : subscription(subscription) {
+                pokemon_develop_check(subscription == nullptr, return);
+            }
+
+            inline postcard::postcard(void) : subscription(nullptr) {
+            }
+
+            inline postcard::~postcard(void) {
+                subscription = nullptr;
+
+            }
+
+
 
         }
     }

@@ -42,7 +42,7 @@ namespace pokemonism {
                                 public:     constexpr static uint32 release_on_del          = (0x00000001U << 31U);
                                 };
                     public:     subscription(void) {}
-                    public:     ~subscription(void) override {}
+                    protected:  ~subscription(void) override {}
                     public:     subscription(const kirlia::event::subscription & o) = delete;
                     public:     subscription(kirlia::event::subscription && o) noexcept = delete;
                     public:     kirlia::event::subscription & operator=(const kirlia::event::subscription & o) = delete;

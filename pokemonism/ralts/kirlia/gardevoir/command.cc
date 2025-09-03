@@ -17,7 +17,7 @@ namespace pokemonism {
         namespace command {
 
             int subscription::on(gardevoir::node * node) {
-                pokemon_develop_check(node == nullptr || dynamic_cast<gardevoir::command::node *>(node) == nullptr || node->subscriptionGet() != this, return declaration::fail);
+                pokemon_develop_check(node == nullptr || dynamic_cast<gardevoir::command::node *>(node) == nullptr || node->containerGet() != this, return declaration::fail);
 
                 gardevoir::command::node * o = reinterpret_cast<gardevoir::command::node *>(node);
                 const gardevoir::command::event * event = o->eventGet();

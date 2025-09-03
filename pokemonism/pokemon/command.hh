@@ -39,6 +39,9 @@ namespace pokemonism {
         public:     class envelope : public virtual pokemon::envelope {
                     public:     typedef command::output     message;
                     public:     virtual pokemon::exception * exceptionPop(void) = 0;
+                    public:     virtual bool completeChk(void) const = 0;
+                    public:     virtual int executeCnt(void) const = 0;
+                    public:     virtual kirlia::event::subscription * subscriptionGet(void) const = 0;
                     public:     envelope(void) {}
                     public:     ~envelope(void) override {}
                     public:     envelope(const envelope & o) = delete;
