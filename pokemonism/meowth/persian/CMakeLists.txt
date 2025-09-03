@@ -13,5 +13,6 @@ add_library(persian-dev                                 ${PERSIAN_ROOT_SOURCE}
 add_executable(persian-pokemon-terminator               persian-pokemon-terminator.cc)
 
 add_executable(persian-kirlia-engine-command            persian-kirlia-engine-command.cc)
-target_link_libraries(persian-kirlia-engine-command     gardevoir-dev kirlia-dev ralts-dev persian-dev)
+#target_link_libraries(persian-kirlia-engine-command     gardevoir-dev kirlia-dev ralts-dev persian-dev)
+target_link_libraries(persian-kirlia-engine-command      ralts-dev kirlia-dev gardevoir-dev persian-dev)
 
