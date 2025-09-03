@@ -11,6 +11,7 @@
 #include <pokemonism/meowth/persian.hh>
 
 #include <pokemonism/ralts/kirlia/engine.hh>
+#include <pokemonism/ralts/kirlia/gardevoir/engine.hh>
 #include <pokemonism/ralts/kirlia/command.hh>
 
 using namespace pokemonism;
@@ -22,9 +23,10 @@ namespace pokemonism {
 }
 
 int main(int argc, char ** argv) {
-    kirlia::engine::on();
+    kirlia::engine<gardevoir::engine>::on();
 
-    constexpr kirlia::command::subscription::event::handler::set subscriptionSet = {
+
+    constexpr kirlia::engine<gardevoir::engine>::command::subscription::event::handler::set subscriptionSet = {
         [](const kirlia::command::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {
             printf("gen\n");
         },
@@ -39,9 +41,9 @@ int main(int argc, char ** argv) {
         },
         [](kirlia::command::poppable::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {
             printf("rel\n");
-            pokemon::command * command = subscription.commandPop();
+            const pokemon::command * command = subscription.commandPop();
             delete command;
-            kirlia::engine::off([](){});
+            kirlia::engine<gardevoir::engine>::off([](){});
         },
     };
 
@@ -58,12 +60,12 @@ int main(int argc, char ** argv) {
         }
     };
 
-    kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(), 3, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(1004), 4, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(), 5, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(1004), kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(), 3, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(1004), 4, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(), 5, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
+    kirlia::engine<gardevoir::engine>::reg(new persian::command(1004), kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
 
-    return kirlia::engine::run();
+    return kirlia::engine<gardevoir::engine>::run();
 }

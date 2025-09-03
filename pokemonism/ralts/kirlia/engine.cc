@@ -16,41 +16,41 @@ namespace pokemonism {
 
 
 
-        kirlia::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
-            return gardevoir::engine::reg(target, properties, eventSet);
-        }
-
-        kirlia::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
-            return gardevoir::engine::reg(target, properties, eventSet, subscriptionSet);
-        }
-
-        kirlia::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
-            return gardevoir::engine::reg(target, repeat, properties, eventSet);
-        }
-
-        kirlia::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
-            return gardevoir::engine::reg(target, repeat, properties, eventSet, subscriptionSet);
-        }
-
-        int engine::on(void) {
-            return gardevoir::engine::on();
-        }
-
-        int engine::run(void) {
-            return gardevoir::engine::run();
-        }
-
-        void engine::off(kirlia::engine::terminator terminator) {
-            gardevoir::engine::off(terminator);
-        }
-
-        engine::engine(void) {
-
-        }
-
-        engine::~engine(void) {
-
-        }
+        // kirlia::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+        //     return gardevoir::engine::reg(target, properties, eventSet);
+        // }
+        //
+        // kirlia::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
+        //     return gardevoir::engine::reg(target, properties, eventSet, subscriptionSet);
+        // }
+        //
+        // kirlia::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+        //     return gardevoir::engine::reg(target, repeat, properties, eventSet);
+        // }
+        //
+        // kirlia::command::subscription * engine::reg(pokemon::command * target, int32 repeat, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet) {
+        //     return gardevoir::engine::reg(target, repeat, properties, eventSet, subscriptionSet);
+        // }
+        //
+        // int engine::on(void) {
+        //     return gardevoir::engine::on();
+        // }
+        //
+        // int engine::run(void) {
+        //     return gardevoir::engine::run();
+        // }
+        //
+        // void engine::off(kirlia::engine::terminator terminator) {
+        //     gardevoir::engine::off(terminator);
+        // }
+        //
+        // engine::engine(void) {
+        //
+        // }
+        //
+        // engine::~engine(void) {
+        //
+        // }
 
     }
 }

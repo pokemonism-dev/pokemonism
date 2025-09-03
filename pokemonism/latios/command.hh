@@ -10,14 +10,21 @@
 #ifndef   __POKEMONISM_LATIOS_COMMAND_HH__
 #define   __POKEMONISM_LATIOS_COMMAND_HH__
 
-#include <pokemonism.hh>
-
-#include "pokemon/event.hh"
+#include <pokemonism/latios/subscription.hh>
 
 namespace pokemonism {
     namespace latios {
         namespace command {
 
+            template <typename objectable>
+            class subscription {
+            public:     subscription(void) {}
+            public:     virtual ~subscription(void) {}
+            public:     subscription(const latios::command::subscription<objectable> & o) = delete;
+            public:     subscription(latios::command::subscription<objectable> && o) noexcept = delete;
+            public:     latios::command::subscription<objectable> & operator=(const latios::command::subscription<objectable> & o) = delete;
+            public:     latios::command::subscription<objectable> & operator=(latios::command::subscription<objectable> && o) noexcept = delete;
+            };
         }
     }
 }

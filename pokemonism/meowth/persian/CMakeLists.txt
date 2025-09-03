@@ -15,3 +15,5 @@ add_executable(persian-pokemon-terminator               persian-pokemon-terminat
 add_executable(persian-kirlia-engine-command            persian-kirlia-engine-command.cc)
 target_link_libraries(persian-kirlia-engine-command     ralts-dev kirlia-dev gardevoir-dev persian-dev)
 
+add_executable(persian-latios-engine-command            persian-latios-engine-command.cc)
+target_link_libraries(persian-latios-engine-command     ralts-dev kirlia-dev gardevoir-dev latios-dev persian-dev)

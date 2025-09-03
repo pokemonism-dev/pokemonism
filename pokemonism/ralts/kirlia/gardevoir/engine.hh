@@ -28,6 +28,10 @@ namespace pokemonism {
                                 public:     set(void) : command(nullptr) {}
                                 };
                     };
+        public:     struct command {
+                    public:     using object = pokemon::command;
+                    public:     using subscription = kirlia::command::subscription;
+                    };
         protected:  static pokemon::sync sync;
         protected:  static gardevoir::queue * queue;
         protected:  static gardevoir::engine::terminator cancel;

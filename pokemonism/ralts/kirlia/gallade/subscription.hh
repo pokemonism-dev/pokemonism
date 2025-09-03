@@ -12,7 +12,7 @@
 
 #include <pokemonism.hh>
 
-#include <pokemonism/ralts/kirlia/subscription.hh>
+#include <pokemonism/ralts/kirlia/gardevoir/subscription.hh>
 
 namespace pokemonism {
     namespace gardevoir {
@@ -24,8 +24,7 @@ namespace pokemonism {
         class subscription : public virtual kirlia::subscription {
         protected:  gardevoir::subscription * internal;
         public:     bool cancel(void) override;
-        public:     explicit subscription(gardevoir::subscription * internal) : internal(internal) {}
-        public:     subscription(void) = delete;
+        public:     subscription(void) : internal(nullptr) {}
         public:     ~subscription(void) override;
         public:     subscription(const gallade::subscription & o) = delete;
         public:     subscription(gallade::subscription && o) noexcept = delete;
