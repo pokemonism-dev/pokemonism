@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 23)
 include_directories(src ./)
 
 set(POKEMONISM_HEADER                       src/pokemonism.hh
+                                            src/pokemonism/runnable.hh
                                             src/pokemonism/cloneable.hh
                                             src/pokemonism/primitivable.hh
                                             src/pokemonism/synchronizable.hh)
 
 set(POKEMONISM_SOURCE                       src/pokemonism.cc
+                                            src/pokemonism/runnable.cc
                                             src/pokemonism/cloneable.cc
                                             src/pokemonism/primitivable.cc
                                             src/pokemonism/synchronizable.cc)
