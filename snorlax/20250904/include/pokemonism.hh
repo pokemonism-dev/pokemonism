@@ -78,5 +78,6 @@ namespace pokemonism {
 
 #define equipof(name)                               name
 #define itemname                                    typename
+#define pokemonname                                 typename
 
 #endif // __POKEMONISM__HH__

@@ -8,7 +8,7 @@
  */
 
 
-#include "pokemon.hh"
+#include "sync.hh"
 
 namespace pokemonism {
 }
