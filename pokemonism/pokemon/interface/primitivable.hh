@@ -18,14 +18,14 @@ namespace pokemonism {
         class primitivable {
         public:     struct object {
                     public:     class to {
-                                public:     inline static int8      int8(const object * o) { return static_cast<pokemonism::int8>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static int16    int16(const object * o) { return static_cast<pokemonism::int16>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static int32    int32(const object * o) { return static_cast<pokemonism::int32>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static int64    int64(const object * o) { return static_cast<pokemonism::int64>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static uint8    uint8(const object * o) { return static_cast<pokemonism::uint8>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static uint16  uint16(const object * o) { return static_cast<pokemonism::uint16>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static uint32  uint32(const object * o) { return static_cast<pokemonism::uint32>(reinterpret_cast<pokemonism::uint64>(o)); }
-                                public:     inline static uint64  uint64(const object * o) { return reinterpret_cast<pokemonism::uint64>(o); }
+                                public:     inline static int8     integer8(const object * o) { return static_cast<pokemonism::int8>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static int16    integer16(const object * o) { return static_cast<pokemonism::int16>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static int32    integer32(const object * o) { return static_cast<pokemonism::int32>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static int64    integer64(const object * o) { return static_cast<pokemonism::int64>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static uint8    uinteger8(const object * o) { return static_cast<pokemonism::uint8>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static uint16  uinteger16(const object * o) { return static_cast<pokemonism::uint16>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static uint32  uinteger32(const object * o) { return static_cast<pokemonism::uint32>(reinterpret_cast<pokemonism::uint64>(o)); }
+                                public:     inline static uint64  uinteger64(const object * o) { return reinterpret_cast<pokemonism::uint64>(o); }
                                 public:     inline to(void) {}
                                 public:     inline virtual ~to(void) {}
                                 public:     to(const to & o) = delete;

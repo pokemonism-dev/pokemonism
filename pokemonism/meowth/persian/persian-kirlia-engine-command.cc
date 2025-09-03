@@ -36,7 +36,7 @@ int main(int argc, char ** argv) {
     };
 
     constexpr persian::command::event::handler::set eventSet = {
-        [](pokemon::command & command, uint32 type, pokemon::command::envelope * envelope) -> void { printf("%ld\n", primitivable::object::to::int64(envelope->messagePop())); }
+        [](pokemon::command & command, uint32 type, pokemon::command::envelope * envelope) -> void { printf("%ld\n", primitivable::object::to::integer64(envelope->messagePop())); }
     };
 
     kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
