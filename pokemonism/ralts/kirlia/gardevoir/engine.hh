@@ -12,6 +12,7 @@
 
 #include <pokemonism/pokemon/sync.hh>
 #include <pokemonism/pokemon/command.hh>
+#include <pokemonism/ralts/kirlia/gardevoir/queue.hh>
 #include <pokemonism/ralts/kirlia/gardevoir/command.hh>
 
 namespace pokemonism {
@@ -33,7 +34,8 @@ namespace pokemonism {
         protected:  static gardevoir::engine::generator::set generator;
         protected:  static gardevoir::engine * singleton;
         public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
-        public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet);
+        public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet);
+        public:     static gardevoir::event * dispatch(gardevoir::event * event) { return queue->add(event); }
         public:     static int on(void);
         public:     static void off(terminator f) { cancel = f; }
         public:     static int run(void);

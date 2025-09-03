@@ -79,7 +79,7 @@ namespace pokemonism {
                         if (e != nullptr) exceptionSet();
 
                         if (subscriptionSet != nullptr) {
-                            if (const kirlia::subscription::event::handler::type func = reinterpret_cast<kirlia::subscription::event::handler::type>(subscriptionSet[type]); func != nullptr) {
+                            if (const kirlia::subscription::event::handler::type func = reinterpret_cast<kirlia::subscription::event::handler::type>((*subscriptionSet)[type]); func != nullptr) {
                                 func(*this, type, e);
                             }
                         }
@@ -92,18 +92,14 @@ namespace pokemonism {
         protected:  gardevoir::node * del(gardevoir::node * node);
         protected:  void clear(void);
         protected:  inline explicit subscription(uint32 properties) : container(nullptr), prev(nullptr), next(nullptr), size(declaration::zero), head(nullptr), tail(nullptr), properties(properties), status(declaration::none), subscriptionSet(nullptr) {
-                        memset(subscriptionSet, 0, sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max);
                     }
         protected:  inline subscription(uint32 properties, const kirlia::subscription::event::handler::set & handlerSet) : container(nullptr), prev(nullptr), next(nullptr), size(declaration::zero), head(nullptr), tail(nullptr), properties(properties), status(declaration::none), subscriptionSet(nullptr) {
-                        subscriptionSet = static_cast<kirlia::subscription::event::handler::set *>(allocator::gen(sizeof(kirlia::subscription::event::handler::set)));
-                        memcpy(subscriptionSet, pointof(handlerSet), sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max);
+                        subscriptionSet = static_cast<kirlia::subscription::event::handler::set *>(allocator::gen(sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max));
+                        memcpy(subscriptionSet, handlerSet, sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max);
                     }
         public:     subscription(void) = delete;
         public:     inline ~subscription(void) override {
-                        memset(subscriptionSet, 0, sizeof(kirlia::subscription::event::handler::set) * kirlia::subscription::event::type::max);
 
-                        status = declaration::none;
-                        properties = declaration::none;
                     }
         public:     subscription(const gardevoir::subscription & o) = delete;
         public:     subscription(gardevoir::subscription && o) noexcept = delete;

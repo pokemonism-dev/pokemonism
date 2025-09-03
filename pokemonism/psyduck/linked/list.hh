@@ -92,11 +92,12 @@ namespace pokemonism {
                 }
 
                 if (next) {
-                    next->prev = next;
+                    next->prev = prev;
                     node->next = nullptr;
                 } else {
                     container->tail = prev;
                 }
+
                 container->size = container->size - 1;
                 node->container = nullptr;
 
@@ -120,7 +121,7 @@ namespace pokemonism {
                 }
 
                 if (next) {
-                    next->prev = next;
+                    next->prev = prev;
                     node->next = nullptr;
                 } else {
                     container->tail = prev;

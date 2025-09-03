@@ -46,7 +46,11 @@ namespace pokemonism {
 
                         return node->on();
                     }
-        public:     explicit event(uint32 id, gardevoir::node * node) : container(nullptr), prev(nullptr), next(nullptr), node(node), id(id) { pokemon_develop_quick_check(node == nullptr); }
+        public:     explicit event(uint32 id, gardevoir::node * node) : container(nullptr), prev(nullptr), next(nullptr), node(node), id(id) {
+                        pokemon_develop_quick_check(node == nullptr);
+
+                        node->event = this;
+                    }
         protected:  event(void) : container(nullptr), prev(nullptr), next(nullptr), node(nullptr), id(declaration::invalid) {}
         public:     ~event(void) override { gardevoir::event::rem(this); }
         public:     event(const gardevoir::event & o) = delete;

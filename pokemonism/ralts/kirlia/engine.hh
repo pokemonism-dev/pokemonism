@@ -11,6 +11,7 @@
 #define   __POKEMONISM_KIRLIA_ENGINE_HH__
 
 #include <pokemonism/pokemon/command.hh>
+#include <pokemonism/ralts/kirlia/command.hh>
 #include <pokemonism/ralts/kirlia/subscription.hh>
 
 namespace pokemonism {
@@ -19,7 +20,7 @@ namespace pokemonism {
         class engine {
         public:     typedef void (*terminator)(void);
         public:     static kirlia::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
-        public:     static kirlia::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet);
+        public:     static kirlia::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::command::subscription::event::handler::set & subscriptionSet);
         public:     static int on(void);
         public:     static void off(kirlia::engine::terminator terminator);
         public:     static int run(void);

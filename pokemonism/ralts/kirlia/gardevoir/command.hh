@@ -40,7 +40,8 @@ namespace pokemonism {
                         public:     gardevoir::command::event::subscription & operator=(const gardevoir::command::event::subscription & o) = delete;
                         public:     gardevoir::command::event::subscription & operator=(gardevoir::command::event::subscription && o) noexcept = delete;
                         };
-            public:     event(void) {}
+            public:     event(uint32 id, gardevoir::command::node * node);
+            public:     event(void) = delete;
             public:     ~event(void) override {}
             public:     event(const gardevoir::command::event & o) = delete;
             public:     event(gardevoir::command::event && o) noexcept = delete;
@@ -88,7 +89,7 @@ namespace pokemonism {
 
 
 
-            class subscription : public gardevoir::subscription, public kirlia::command::poppable::subscription {
+            class subscription : public gardevoir::subscription, public kirlia::command::poppable::subscription, public kirlia::command::subscription {
             public:     struct event : public kirlia::command::subscription::event {
                         public:     struct handler : public pokemon::functionable {
                                     public:     typedef void (*type)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
@@ -125,8 +126,8 @@ namespace pokemonism {
             };
 
             class generator : public gardevoir::generator {
-            public:     inline virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
-            public:     inline virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet);
+            public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
+            public:     virtual gardevoir::command::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet);
             public:     inline uint64 on(void) override;
             public:     inline explicit generator(gardevoir::engine * engine);
             public:     inline ~generator(void) override;
@@ -136,12 +137,18 @@ namespace pokemonism {
             public:     gardevoir::command::generator & operator=(gardevoir::command::generator && o) noexcept = delete;
             };
 
+            inline event::event(uint32 id, gardevoir::command::node * node) : gardevoir::event(id, node) {
+
+            }
+
             inline pokemon::exception * envelope::exceptionPop(void) {
                 return gardevoir::envelope::exceptionPop();
             }
 
             inline kirlia::command::envelope::message * envelope::messagePop() {
-                return output;
+                kirlia::command::envelope::message * o = output;
+                output = nullptr;
+                return o;
             }
 
             inline void envelope::messageSet(kirlia::command::envelope::message * o) {
@@ -245,41 +252,16 @@ namespace pokemonism {
 
             inline subscription::subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet)
             : gardevoir::subscription(properties), object(target) {
-                pokemon_develop_check(object == nullptr, exit(0));
-
                 memcpy(eventSet, handlerSet, sizeof(pokemon::command::event::handler::set));
-                // TODO: CHECK THIS
-            }
 
-            inline subscription::subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) : gardevoir::subscription(properties, reinterpret_cast<const gardevoir::subscription::event::handler::set &>(subscriptionSet)), object(target) {
                 pokemon_develop_check(object == nullptr, exit(0));
+            }
 
+            inline subscription::subscription(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet)
+            : gardevoir::subscription(properties, reinterpret_cast<const gardevoir::subscription::event::handler::set &>(subscriptionSet)), object(target) {
                 memcpy(eventSet, handlerSet, sizeof(pokemon::command::event::handler::set));
-                // TODO: CHECK THIS
-            }
 
-            inline gardevoir::command::subscription * generator::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
-                pokemon_develop_check(target == nullptr, return nullptr);
-
-                gardevoir::command::subscription * subscription = new gardevoir::command::subscription(target, properties, eventSet);
-
-                subscription->on(gardevoir::command::subscription::event::type::gen);
-
-                gardevoir::generator::reg(subscription);
-
-                return subscription;
-            }
-
-            inline gardevoir::command::subscription * generator::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) {
-                pokemon_develop_check(target == nullptr, return nullptr);
-
-                gardevoir::command::subscription * subscription = new gardevoir::command::subscription(target, properties, eventSet, subscriptionSet);
-
-                subscription->on(gardevoir::command::subscription::event::type::gen);
-
-                gardevoir::generator::reg(subscription);
-
-                return subscription;
+                pokemon_develop_check(object == nullptr, exit(0));
             }
 
             inline uint64 generator::on(void) {

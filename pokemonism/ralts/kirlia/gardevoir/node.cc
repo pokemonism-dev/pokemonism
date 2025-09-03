@@ -36,7 +36,11 @@ namespace pokemonism {
 
                 event->node =  nullptr;
                 o->event = allocator::del(o->event);
+
+                return o;
             }
+
+            if (o->container != nullptr) o->container->del(o);
 
             return o;
         }
