@@ -17,7 +17,7 @@
 #include <pokemonism/pokemon/exception.hh>
 #include <pokemonism/pokemon/envelope.hh>
 
-#include <pokemonism/ralts.hh>
+#include <pokemonism/ralts/kirlia/event.hh>
 
 namespace pokemonism {
     namespace pokemon {
@@ -26,29 +26,18 @@ namespace pokemonism {
         public:     typedef primitivable::object output;
         public:     struct tag {};
         public:     class envelope;
-
-
-
-
-
-        public:     struct event : public virtual ralts::event {
+        public:     struct event : public virtual kirlia::event {
                     public:     struct type : public pokemon::event::type {
-                                public:     constexpr static int execute    = 0;
-                                public:     constexpr static int max        = 1;
+                                public:     constexpr static int execute    = pokemon::event::type::max;
+                                public:     constexpr static int max        = pokemon::event::type::max + 1;
                                 };
                     public:     struct handler : public pokemon::functionable {
                                 public:     typedef void (*type)(pokemon::command &, uint32, pokemon::command::envelope *);
-                                public:     typedef pokemon::command::event::handler set[pokemon::command::event::type::max];
+                                public:     typedef pokemon::command::event::handler::type set[pokemon::command::event::type::max];
                                 };
                     };
-
-
-
-
-
-        public:     class envelope : public pokemon::envelope {
+        public:     class envelope : public virtual pokemon::envelope {
                     public:     typedef command::output     message;
-                    public:     message * pop(void) override = 0;
                     public:     virtual pokemon::exception * exceptionPop(void) = 0;
                     public:     envelope(void) {}
                     public:     ~envelope(void) override {}

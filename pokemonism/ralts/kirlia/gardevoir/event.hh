@@ -22,6 +22,9 @@ namespace pokemonism {
         class queue;
 
         class event : public virtual kirlia::event {
+        public:     constexpr static int fail = declaration::fail;
+        public:     constexpr static int success = declaration::success;
+        public:     constexpr static int again = declaration::success + 1;
         protected:  static gardevoir::event * rem(gardevoir::event * event);
         protected:  inline static gardevoir::event * dispatch(gardevoir::event * event);
         protected:  gardevoir::queue *  container;

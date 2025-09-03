@@ -10,7 +10,8 @@
 #ifndef   __POKEMONISM_RALTS_KIRLIA_EVENT_HH__
 #define   __POKEMONISM_RALTS_KIRLIA_EVENT_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/pokemon/exception.hh>
+#include <pokemonism/pokemon/interface/functionable.hh>
 
 #include <pokemonism/ralts/subscription.hh>
 
@@ -27,9 +28,13 @@ namespace pokemonism {
                                             public:     constexpr static uint32 gen         = 0;
                                             public:     constexpr static uint32 reg         = 1;
                                             public:     constexpr static uint32 exception   = 2;
-                                            public:     constexpr static uint32 del         = 0;
-                                            public:     constexpr static uint32 rel         = 0;
-                                            public:     constexpr static uint32 max         = 0;
+                                            public:     constexpr static uint32 del         = 3;
+                                            public:     constexpr static uint32 rel         = 4;
+                                            public:     constexpr static uint32 max         = 5;
+                                            };
+                                public:     struct handler : public pokemon::functionable {
+                                            public:     typedef void (*type)(const kirlia::event::subscription &, uint32, const pokemon::exception *);
+                                            public:     typedef kirlia::event::subscription::event::handler::type   set[kirlia::event::subscription::event::type::max];
                                             };
                                 };
                     public:     struct property {

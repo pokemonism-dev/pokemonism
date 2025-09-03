@@ -13,14 +13,6 @@
 namespace pokemonism {
     namespace gardevoir {
 
-        gardevoir::subscription * subscription::rem(gardevoir::subscription * o) {
-            pokemon_develop_check(o == nullptr, return nullptr);
-
-            if (o->container != nullptr) o->container->del(o);
-
-            return o;
-        }
-
         // ReSharper disable once CppDFAConstantFunctionResult
         gardevoir::node * subscription::add(gardevoir::node * node) {
             pokemon_develop_check(node == nullptr || node->container != nullptr, return node);

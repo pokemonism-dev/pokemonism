@@ -7,6 +7,7 @@
  * @since           9월 02, 2025
  */
 
+#include <pokemonism/ralts/kirlia/gardevoir/engine.hh>
 
 #include "engine.hh"
 
@@ -15,8 +16,12 @@ namespace pokemonism {
 
 
 
-        kirlia::command::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::callback::set & callback) {
+        kirlia::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+            return gardevoir::engine::reg(target, properties, eventSet);
+        }
 
+        kirlia::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet) {
+            return gardevoir::engine::reg(target, properties, eventSet, subscriptionSet);
         }
 
         engine::engine(void) {

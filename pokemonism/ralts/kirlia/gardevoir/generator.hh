@@ -13,6 +13,7 @@
 #include <pokemonism/psyduck/linked/list.hh>
 
 #include <pokemonism/pokemon/object.hh>
+#include <pokemonism/pokemon/runnable/queue.hh>
 
 namespace pokemonism {
     namespace gardevoir {
@@ -21,14 +22,20 @@ namespace pokemonism {
 
         class generator : public pokemon::object {
         public:     typedef psyduck::linked::list<gardevoir::generator, gardevoir::subscription> collection;
-        protected:  gardevoir::engine * engine;
-        protected:  uint64 size;
-        protected:  gardevoir::subscription * head;
-        protected:  gardevoir::subscription * tail;
-        protected:  virtual gardevoir::subscription * reg(gardevoir::subscription * o);
-        protected:  virtual gardevoir::subscription * del(gardevoir::subscription * o);
+        protected:  gardevoir::engine *         engine;
+        protected:  pokemon::runnable::queue    queue;
+        protected:  uint64                      size;
+        protected:  gardevoir::subscription *   head;
+        protected:  gardevoir::subscription *   tail;
+        public:     inline virtual pokemon::runnable::queue::func * add(pokemon::runnable::queue::func * f) { return queue.add(f); }
+        public:     inline virtual pokemon::runnable::queue::func * del(pokemon::runnable::queue::func * f) { return queue.del(f); }
+        public:     virtual gardevoir::subscription * reg(gardevoir::subscription * o);
+        public:     virtual gardevoir::subscription * del(gardevoir::subscription * o);
+        public:     virtual uint64 on(void) = 0;
         public:     inline void clear(void) {
                         while (head) del(head);
+
+                        queue.clear();
                     }
         protected:  inline explicit generator(gardevoir::engine * engine) : engine(engine), size(declaration::zero), head(nullptr), tail(nullptr) {
                         pokemon_develop_exit_check(engine == nullptr, (void)(0));

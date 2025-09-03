@@ -16,9 +16,10 @@
 namespace pokemonism {
     namespace kirlia {
 
-        class envelope : public pokemon::envelope {
+        class envelope : public virtual pokemon::envelope {
         public:     typedef pokemon::envelope::message  message;
         public:     virtual int returnGet(void) const = 0;
+        public:     virtual pokemon::exception * exceptionPop(void) = 0;
         public:     virtual const pokemon::exception * exceptionGet(void) const = 0;
         public:     inline envelope(void) {}
         public:     inline ~envelope(void) override {}

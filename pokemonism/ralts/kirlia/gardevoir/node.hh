@@ -18,13 +18,14 @@ namespace pokemonism {
 
         class event;
 
-        class node : public gardevoir::envelope {
+        class node : public virtual gardevoir::envelope {
         protected:  static gardevoir::node * rem(gardevoir::node * o);
         protected:  gardevoir::subscription *   container;
         protected:  gardevoir::node *           prev;
         protected:  gardevoir::node *           next;
         protected:  gardevoir::event *          event;
-        protected:  inline virtual gardevoir::event * eventGet(void) const { return event; }
+        public:     inline virtual gardevoir::subscription * subscriptionGet(void) const { return container; }
+        public:     inline virtual gardevoir::event * eventGet(void) const { return event; }
         protected:  inline void raise(pokemon::exception * e) {
                         pokemon_critical_check(e == nullptr || container == nullptr, do {
                             e = allocator::del(e);

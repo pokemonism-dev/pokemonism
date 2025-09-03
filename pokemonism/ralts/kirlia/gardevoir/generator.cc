@@ -16,19 +16,29 @@ namespace pokemonism {
     namespace gardevoir {
 
         gardevoir::subscription * generator::reg(gardevoir::subscription * o) {
-            pokemon_develop_check(o == nullptr || o->container != nullptr, return o);
+            pokemon_develop_check(o == nullptr || o->container != nullptr, do {
+                if (o != nullptr) o->on(gardevoir::subscription::event::type::reg, new pokemon::exception());
+                return o;
+            } while (0));
 
             collection::add(this, o);
+
+            o->on(gardevoir::subscription::event::type::reg);
 
             return nullptr;
         }
 
         gardevoir::subscription * generator::del(gardevoir::subscription * o) {
-            pokemon_develop_check(o == nullptr || o->container != this, return o);
+            pokemon_develop_check(o == nullptr || o->container != this, do {
+                if (o != nullptr) o->on(gardevoir::subscription::event::type::del, new pokemon::exception());
+                return o;
+            } while (0));
+
+            o->on(gardevoir::subscription::event::type::del);
 
             collection::del(this, o);
 
-            if (o->properties & kirlia::subscription::property::release_on_del) allocator::del(o);
+            if (o->properties & kirlia::subscription::property::release_on_del) queue.add(new gardevoir::subscription::function::rel(o));
 
             return o;
         }

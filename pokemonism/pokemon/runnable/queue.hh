@@ -46,9 +46,16 @@ namespace pokemonism {
             protected:  uint64 size;
             protected:  func * head;
             protected:  func * tail;
-            public:     inline virtual void add(queue::func * o) { if (o != nullptr) collection::add(this, o);  }
-            public:     inline virtual void del(queue::func * o) { if (o != nullptr && o->container == this) collection::del(this, o); }
+            public:     inline virtual queue::func * add(queue::func * o) {
+                            pokemon_develop_check(o == nullptr || o->container != nullptr, return o);
+
+                            collection::add(this, o);
+
+                            return nullptr;
+                        }
+            public:     inline virtual queue::func * del(queue::func * o) { return collection::del(this, o); }
             public:     inline virtual void trash(void) { collection::clear(this); }
+            public:     inline virtual void clear(void) { collection::clear(this); }
             public:     inline virtual uint64 on(uint64 n = declaration::infinite) {
                             const uint64 limit = n;
 

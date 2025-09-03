@@ -1,14 +1,14 @@
-/**
- * @file
- * @brief
- * @details
- * 
- * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 02, 2025
- */
-
-
-#include "command.hh"
-
-namespace pokemonism {
-}
+// /**
+//  * @file
+//  * @brief
+//  * @details
+//  *
+//  * @author          snorlax <snorlax@pokemonism.dev>
+//  * @since           9월 02, 2025
+//  */
+//
+//
+// #include "command.hh"
+//
+// namespace pokemonism {
+// }

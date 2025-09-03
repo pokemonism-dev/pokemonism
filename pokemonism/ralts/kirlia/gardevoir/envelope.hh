@@ -24,6 +24,7 @@ namespace pokemonism {
         protected:  int ret;
         protected:  pokemon::exception * exception;
         public:     inline int returnGet(void) const override;
+        public:     inline pokemon::exception * exceptionPop(void) override;
         public:     inline const pokemon::exception * exceptionGet(void) const override;
         public:     inline envelope(void);
         public:     inline ~envelope(void) override;
@@ -35,6 +36,12 @@ namespace pokemonism {
 
         inline int envelope::returnGet(void) const {
             return ret;
+        }
+
+        inline pokemon::exception * envelope::exceptionPop(void) {
+            pokemon::exception * o = exception;
+            exception = nullptr;
+            return o;
         }
 
         inline const pokemon::exception * envelope::exceptionGet(void) const {

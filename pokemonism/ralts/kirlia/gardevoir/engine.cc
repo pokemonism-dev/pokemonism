@@ -1,0 +1,31 @@
+/**
+ * @file
+ * @brief
+ * @details
+ * 
+ * @author          snorlax <snorlax@pokemonism.dev>
+ * @since           9월 02, 2025
+ */
+
+
+#include "engine.hh"
+
+namespace pokemonism {
+    namespace gardevoir {
+
+        pokemon::sync                       gardevoir::engine::sync;
+        gardevoir::engine::generator::set   gardevoir::engine::generator;
+
+        gardevoir::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet) {
+            pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
+
+            return gardevoir::engine::generator.command->reg(target, properties, eventSet);
+        }
+
+        gardevoir::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet) {
+            pokemon_develop_check(target == nullptr || gardevoir::engine::generator.command == nullptr, return nullptr);
+
+            return gardevoir::engine::generator.command->reg(target, properties, eventSet, reinterpret_cast<const gardevoir::command::subscription::event::handler::set &>(subscriptionSet));
+        }
+    }
+}
