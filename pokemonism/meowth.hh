@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file            pokemonism/meowth.hh
  * @brief
  * @details
  * 
@@ -7,16 +7,12 @@
  * @since           9월 03, 2025
  */
 
-#ifndef   __POKEMONISM_LOG_HH__
-#define   __POKEMONISM_LOG_HH__
-
-#include <cstdio>
+#ifndef   __POKEMONISM_MEOWTH_HH__
+#define   __POKEMONISM_MEOWTH_HH__
 
 #include <pokemonism.hh>
 
 namespace pokemonism {
 }
 
-#define pokemonLog              printf
-
-#endif // __POKEMONISM_LOG_HH__
+#endif // __POKEMONISM_MEOWTH_HH__

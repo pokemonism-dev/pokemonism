@@ -15,7 +15,7 @@
 namespace pokemonism {
 
     template <typename messageable = primitivable>
-    class envelope : public envelopeable<messageable> {
+    class envelope : public envelopeable<primitivable> {
     public:     envelope(void) {}
     public:     ~envelope(void) override {}
     public:     envelope(const envelope<messageable> & o) = delete;

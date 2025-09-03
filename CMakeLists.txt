@@ -11,7 +11,8 @@ set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/interface/synchroniza
                                             src/pokemonism/interface/envelopeable.hh
                                             src/pokemonism/interface/callable.hh
                                             src/pokemonism/interface/functionable.hh
-                                            src/pokemonism/interface/primitivable.hh)
+                                            src/pokemonism/interface/primitivable.hh
+                                            src/pokemonism/interface/observable.hh)
 
 set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/interface/synchronizable.cc
                                             src/pokemonism/interface/cloneable.cc
@@ -19,7 +20,8 @@ set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/interface/synchroniza
                                             src/pokemonism/interface/envelopeable.cc
                                             src/pokemonism/interface/callable.cc
                                             src/pokemonism/interface/functionable.cc
-                                            src/pokemonism/interface/primitivable.cc)
+                                            src/pokemonism/interface/primitivable.cc
+                                            src/pokemonism/interface/observable.cc)
 
 set(POKEMONISM_HEADER                       src/pokemonism/log.hh
                                             src/pokemonism/event.hh

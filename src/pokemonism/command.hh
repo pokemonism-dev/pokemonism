@@ -20,7 +20,12 @@
 
 namespace pokemonism {
 
-    class command : public callable<primitivable> {
+    template <typename outputable>
+    class command : public callable<outputable> {
+    public:     typedef outputable      output;
+    public:     class envelope : public pokemonism::envelope<output> {
+
+                };
     public:     command(void) {}
     public:     ~command(void) override {}
     public:     command(const command & o) = delete;
