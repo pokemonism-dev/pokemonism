@@ -15,6 +15,7 @@
 namespace pokemonism {
 
     class event {
+    public:     constexpr static uint32 max = 0;
     public:     virtual uint32 identifierGet(void) const = 0;
     public:     event(void) {}
     public:     virtual ~event(void) {}

@@ -8,6 +8,7 @@ include_directories(include src ./)
 set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/interface/synchronizable.hh
                                             src/pokemonism/interface/cloneable.hh
                                             src/pokemonism/interface/runnable.hh
+                                            src/pokemonism/interface/envelopeable.hh
                                             src/pokemonism/interface/callable.hh
                                             src/pokemonism/interface/functionable.hh
                                             src/pokemonism/interface/primitivable.hh)
@@ -15,16 +16,23 @@ set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/interface/synchroniza
 set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/interface/synchronizable.cc
                                             src/pokemonism/interface/cloneable.cc
                                             src/pokemonism/interface/runnable.cc
+                                            src/pokemonism/interface/envelopeable.cc
                                             src/pokemonism/interface/callable.cc
                                             src/pokemonism/interface/functionable.cc
                                             src/pokemonism/interface/primitivable.cc)
 
-set(POKEMONISM_HEADER                       src/pokemonism/event.hh
+set(POKEMONISM_HEADER                       src/pokemonism/log.hh
+                                            src/pokemonism/event.hh
                                             src/pokemonism/command.hh
+                                            src/pokemonism/envelope.hh
+                                            src/pokemonism/exception.hh
                                             src/pokemonism/subscription.hh)
 
-set(POKEMONISM_SOURCE                       src/pokemonism/event.cc
+set(POKEMONISM_SOURCE                       src/pokemonism/log.cc
+                                            src/pokemonism/event.cc
                                             src/pokemonism/command.cc
+                                            src/pokemonism/envelope.cc
+                                            src/pokemonism/exception.cc
                                             src/pokemonism/subscription.cc)
 
 add_library(pokemonism-dev                  ${POKEMONISM_INTERFACE_HEADER}

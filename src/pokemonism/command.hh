@@ -13,6 +13,11 @@
 #include <pokemonism/interface/primitivable.hh>
 #include <pokemonism/interface/callable.hh>
 
+#include <pokemonism/event.hh>
+#include <pokemonism/envelope.hh>
+#include <pokemonism/exception.hh>
+#include <pokemonism/subscription.hh>
+
 namespace pokemonism {
 
     class command : public callable<primitivable> {
