@@ -19,8 +19,13 @@ set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/interface/synchroniza
                                             src/pokemonism/interface/functionable.cc
                                             src/pokemonism/interface/primitivable.cc)
 
-set(POKEMONISM_HEADER                       )
-set(POKEMONISM_SOURCE)
+set(POKEMONISM_HEADER                       src/pokemonism/event.hh
+                                            src/pokemonism/command.hh
+                                            src/pokemonism/subscription.hh)
+
+set(POKEMONISM_SOURCE                       src/pokemonism/event.cc
+                                            src/pokemonism/command.cc
+                                            src/pokemonism/subscription.cc)
 
 add_library(pokemonism-dev                  ${POKEMONISM_INTERFACE_HEADER}
                                             ${POKEMONISM_INTERFACE_SOURCE}

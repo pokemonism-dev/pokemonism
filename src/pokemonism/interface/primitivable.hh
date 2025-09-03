@@ -24,7 +24,10 @@ namespace pokemonism {
         public:     primitivable & operator=(primitivable && o) noexcept = delete;
         };
 
-    };
+    }
+
+    using primitivable = interface::primitivable;
+
 }
 
 #endif // __POKEMONISM_INTERFACE_PRIMITIVABLE_HH__
