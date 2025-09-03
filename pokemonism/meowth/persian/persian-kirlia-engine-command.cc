@@ -41,7 +41,7 @@ int main(int argc, char ** argv) {
             printf("rel\n");
             pokemon::command * command = subscription.commandPop();
             delete command;
-            // kirlia::engine::off([](){});
+            kirlia::engine::off([](){});
         },
     };
 
@@ -61,7 +61,7 @@ int main(int argc, char ** argv) {
     kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
     kirlia::engine::reg(new persian::command(), kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
     kirlia::engine::reg(new persian::command(), 3, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
-    kirlia::engine::reg(new persian::command(1004), 4, kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
+    kirlia::engine::reg(new persian::command(1004), 4, kirlia::subscription::property::release_on_del, eventSet);
     kirlia::engine::reg(new persian::command(), 5, kirlia::subscription::property::release_object_on_rel | kirlia::subscription::property::release_on_del, eventSet);
     kirlia::engine::reg(new persian::command(1004), kirlia::subscription::property::release_on_del, eventSet, subscriptionSet);
 
