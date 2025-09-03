@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file            pokemonism/ralts/kirlia/engine.cc
  * @brief
  * @details
  * 
@@ -22,6 +22,14 @@ namespace pokemonism {
 
         kirlia::subscription * engine::reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet) {
             return gardevoir::engine::reg(target, properties, eventSet, subscriptionSet);
+        }
+
+        int engine::on(void) {
+            return gardevoir::engine::on();
+        }
+
+        int engine::run(void) {
+            return gardevoir::engine::run();
         }
 
         engine::engine(void) {

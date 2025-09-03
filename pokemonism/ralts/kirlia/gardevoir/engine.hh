@@ -20,6 +20,7 @@ namespace pokemonism {
         class subscription;
 
         class engine {
+        public:     typedef void (*terminator)(void);
         public:     struct generator {
                     public:     struct set {
                                 public:     gardevoir::command::generator * command;
@@ -27,9 +28,14 @@ namespace pokemonism {
                                 };
                     };
         protected:  static pokemon::sync sync;
+        protected:  static gardevoir::queue * queue;
+        protected:  static gardevoir::engine::terminator cancel;
         protected:  static gardevoir::engine::generator::set generator;
+        protected:  static gardevoir::engine * singleton;
         public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
         public:     static gardevoir::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet);
+        public:     static int on(void);
+        public:     static int run(void);
         public:     engine(void) {}
         public:     virtual ~engine(void) {}
         public:     engine(const gardevoir::engine & o) = delete;

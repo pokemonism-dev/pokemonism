@@ -19,6 +19,8 @@ namespace pokemonism {
         class engine {
         public:     static kirlia::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet);
         public:     static kirlia::subscription * reg(pokemon::command * target, uint32 properties, const pokemon::command::event::handler::set & eventSet, const kirlia::subscription::event::handler::set & subscriptionSet);
+        public:     static int on(void);
+        public:     static int run(void);
         protected:  engine(void);
         protected:  virtual ~engine(void);
         public:     engine(const kirlia::engine & o) = delete;
