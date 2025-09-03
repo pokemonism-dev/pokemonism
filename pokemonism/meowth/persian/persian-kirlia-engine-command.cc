@@ -30,7 +30,7 @@ int main(int argc, char ** argv) {
         [](const kirlia::command::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {},
         [](kirlia::command::poppable::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {
             printf("rel\n");
-            // delete subscription.commandPop();
+            delete subscription.commandPop();
             kirlia::engine::off([](){});
         },
     };
