@@ -17,3 +17,5 @@ target_link_libraries(persian-kirlia-engine-command     ralts-dev kirlia-dev gar
 
 add_executable(persian-latios-engine-command            persian-latios-engine-command.cc)
 target_link_libraries(persian-latios-engine-command     ralts-dev kirlia-dev gardevoir-dev latios-dev persian-dev)
+
+add_executable(persian-petilil                          persian-petilil.cc)

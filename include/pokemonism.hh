@@ -76,4 +76,7 @@ namespace pokemonism {
 #define referenceof(o)                              (*(o))
 #define valueof(o)                                  (*(o))
 
+#define equipof(name)                               name
+#define itemname                                    typename
+
 #endif // __POKEMONISM__HH__

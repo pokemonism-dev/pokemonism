@@ -59,9 +59,17 @@ set(POKEMON_HEADER                  allocator.hh
                                     cast.hh
                                     runnable/queue.cc)
 
+set(POKEMON_ITEM_SOURCE             item/stone.cc
+                                    item/hisui/stone.cc)
+
+set(POKEMON_ITEM_HEADER             item/stone.hh
+                                    item/hisui/stone.hh)
+
 add_library(pokemon-dev             ${POKEMON_INTERFACE_HEADER}
                                     ${POKEMON_INTERFACE_SOURCE}
                                     ${POKEMON_GENERIC_HEADER}
                                     ${POKEMON_GENERIC_SOURCE}
                                     ${POKEMON_HEADER}
-                                    ${POKEMON_SOURCE})
+                                    ${POKEMON_SOURCE}
+                                    ${POKEMON_ITEM_SOURCE}
+                                    ${POKEMON_ITEM_HEADER})
