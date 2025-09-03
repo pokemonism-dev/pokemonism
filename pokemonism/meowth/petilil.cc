@@ -21,18 +21,17 @@ int main(int argc, char ** argv) {
         printf("randomized number => %ld\n", primitivable::to<int64>(randomize()));
     }
 
-    event::callback<meowth::randomizer> callback([](const meowth::randomizer & o, uint32 type, meowth::randomizer::envelope & envelope) {
+    // ### 20250903 | SHORTEN NAME
+    command<primitivable>::subscription::event::callback<meowth::randomizer>::set subscriptionSet = {
+        [](const command<primitivable>::subscription & o, uint32 type, const exception * exception){},
+        [](const command<primitivable>::subscription & o, uint32 type, const exception * exception){},
+        [](const command<primitivable>::subscription & o, uint32 type, const exception * exception){},
+        [](const command<primitivable>::subscription & o, uint32 type, const exception * exception){},
+        [](command<primitivable>::modifiable::subscription & o, uint32 type, const exception * exception){},
+    };
 
-    });
-
-    // petilil::command::event::callback::set<meowth::randomizer, primitivable>::gen();
-
-
-
-
-
-
-
+    // ### 20250903 | SHORTEN NAME
+    command<primitivable>::callback<meowth::randomizer> callback([](const meowth::randomizer & o, uint32 type, meowth::randomizer::envelope & envelope){});
 
     {
         meowth::randomizer randomize(1004);
