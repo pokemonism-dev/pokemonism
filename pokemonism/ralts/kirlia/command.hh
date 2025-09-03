@@ -55,35 +55,7 @@ namespace pokemonism {
             };
 
             namespace poppable {
-                class subscription : public virtual kirlia::subscription {
-                public:     struct event {
-                            public:     struct type {
-                                        public:     constexpr static uint32 gen         = kirlia::subscription::event::type::gen;
-                                        public:     constexpr static uint32 reg         = kirlia::subscription::event::type::reg;
-                                        public:     constexpr static uint32 exception   = kirlia::subscription::event::type::exception;
-                                        public:     constexpr static uint32 del         = kirlia::subscription::event::type::del;
-                                        public:     constexpr static uint32 rel         = kirlia::subscription::event::type::rel;
-                                        public:     constexpr static uint32 max         = kirlia::subscription::event::type::max;
-                                        };
-                            public:     struct handler : public pokemon::functionable {
-                                        public:     typedef void (*type)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
-                                        public:     struct set {
-                                                    public:     void (*gen)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
-                                                    public:     void (*reg)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
-                                                    public:     void (*exception)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
-                                                    public:     void (*del)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
-                                                    public:     void (*rel)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *);
-                                                    };
-                                        };
-                            };
-                public:     virtual pokemon::command * commandPop(void) = 0;
-                public:     subscription(void) {}
-                public:     ~subscription(void) override {}
-                public:     subscription(const kirlia::command::poppable::subscription & o) = delete;
-                public:     subscription(kirlia::command::poppable::subscription && o) noexcept = delete;
-                public:     kirlia::command::poppable::subscription & operator=(const kirlia::command::poppable::subscription & o) = delete;
-                public:     kirlia::command::poppable::subscription & operator=(kirlia::command::poppable::subscription && o) noexcept = delete;
-                };
+                class subscription;
             }
 
             class subscription : public virtual kirlia::subscription {
@@ -115,6 +87,38 @@ namespace pokemonism {
             public:     kirlia::command::subscription & operator=(const kirlia::command::subscription & o) = delete;
             public:     kirlia::command::subscription & operator=(kirlia::command::subscription && o) noexcept = delete;
             };
+
+            namespace poppable {
+                class subscription : public virtual kirlia::command::subscription {
+                public:     struct event {
+                            public:     struct type {
+                                        public:     constexpr static uint32 gen         = kirlia::subscription::event::type::gen;
+                                        public:     constexpr static uint32 reg         = kirlia::subscription::event::type::reg;
+                                        public:     constexpr static uint32 exception   = kirlia::subscription::event::type::exception;
+                                        public:     constexpr static uint32 del         = kirlia::subscription::event::type::del;
+                                        public:     constexpr static uint32 rel         = kirlia::subscription::event::type::rel;
+                                        public:     constexpr static uint32 max         = kirlia::subscription::event::type::max;
+                                        };
+                            public:     struct handler : public pokemon::functionable {
+                                        public:     typedef void (*type)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
+                                        public:     struct set {
+                                                    public:     void (*gen)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
+                                                    public:     void (*reg)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
+                                                    public:     void (*exception)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
+                                                    public:     void (*del)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
+                                                    public:     void (*rel)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *);
+                                                    };
+                                        };
+                            };
+                public:     virtual pokemon::command * commandPop(void) = 0;
+                public:     subscription(void) {}
+                public:     ~subscription(void) override {}
+                public:     subscription(const kirlia::command::poppable::subscription & o) = delete;
+                public:     subscription(kirlia::command::poppable::subscription && o) noexcept = delete;
+                public:     kirlia::command::poppable::subscription & operator=(const kirlia::command::poppable::subscription & o) = delete;
+                public:     kirlia::command::poppable::subscription & operator=(kirlia::command::poppable::subscription && o) noexcept = delete;
+                };
+            }
         }
     }
 }

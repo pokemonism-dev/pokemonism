@@ -87,9 +87,7 @@ namespace pokemonism {
             public:     friend gardevoir::command::subscription;
             };
 
-
-
-            class subscription : public gardevoir::subscription, public kirlia::command::poppable::subscription, public kirlia::command::subscription {
+            class subscription : public kirlia::command::poppable::subscription, public gardevoir::subscription {
             public:     struct event : public kirlia::command::subscription::event {
                         public:     struct handler : public pokemon::functionable {
                                     public:     typedef void (*type)(const kirlia::command::subscription &, uint32, const pokemon::exception *);
@@ -204,6 +202,25 @@ namespace pokemonism {
 
             inline void subscription::on(uint32 type, pokemon::exception * e) {
                 gardevoir::subscription::on(type, e);
+
+                // pokemon_develop_check(kirlia::subscription::event::type::max <= type, do {
+                //     allocator::del(e);
+                //     return;
+                // } while (0));
+                //
+                // if (e != nullptr) exceptionSet();
+                //
+                // if (subscriptionSet != nullptr) {
+                //     if (const kirlia::subscription::event::handler::type func = reinterpret_cast<kirlia::subscription::event::handler::type>((*subscriptionSet)[type]); func != nullptr) {
+                //         if (type == kirlia::subscription::event::type::rel) {
+                //             void (*rel)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *) = reinterpret_cast<void (*)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *)>(func);
+                //             rel(*this, type, e);
+                //         } else {
+                //             func(*this, type, e);
+                //         }
+                //     }
+                // }
+                // allocator::del(e);
             }
 
             inline void subscription::raise(gardevoir::node * node) {

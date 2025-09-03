@@ -47,6 +47,8 @@ namespace pokemonism {
 
                 gardevoir::subscription::on(gardevoir::subscription::event::type::rel);
 
+                printf("object => %p\n", object);
+
                 object = ((properties & gardevoir::command::subscription::property::release_object_on_rel) ? allocator::del(object) : nullptr);
 
                 if (subscriptionSet != nullptr) subscriptionSet = static_cast<kirlia::subscription::event::handler::set *>(allocator::rel(subscriptionSet));

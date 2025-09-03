@@ -29,8 +29,9 @@ int main(int argc, char ** argv) {
         [](const kirlia::command::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {},
         [](const kirlia::command::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {},
         [](kirlia::command::poppable::subscription & subscription, uint32 type, const pokemon::exception * exception) -> void {
-            printf("rel\n");
-            delete subscription.commandPop();
+            // subscription.
+            pokemon::command * command = subscription.commandPop();
+            delete command;
             kirlia::engine::off([](){});
         },
     };
