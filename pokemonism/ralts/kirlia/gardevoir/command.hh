@@ -18,10 +18,6 @@
 #include <pokemonism/ralts/kirlia/gardevoir/generator.hh>
 #include <pokemonism/ralts/kirlia/gardevoir/subscription.hh>
 
-#include <pokemonism/ralts/kirlia/gallade/command.hh>
-
-#include "command.hh"
-
 namespace pokemonism {
     namespace gardevoir {
         namespace command {
