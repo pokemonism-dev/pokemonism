@@ -7,8 +7,8 @@
  * @since           9월 03, 2025
  */
 
-#ifndef   __POKEMONISM_FUNCTIONABLE_HH__
-#define   __POKEMONISM_FUNCTIONABLE_HH__
+#ifndef   __POKEMONISM_INTERFACE_FUNCTIONABLE_HH__
+#define   __POKEMONISM_INTERFACE_FUNCTIONABLE_HH__
 
 #include <pokemonism.hh>
 
@@ -23,4 +23,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_FUNCTIONABLE_HH__
+#endif // __POKEMONISM_INTERFACE_FUNCTIONABLE_HH__
