@@ -7,13 +7,12 @@
  * @since           9월 03, 2025
  */
 
-#include <pokemonism/petilil.hh>
+#ifndef   __POKEMONISM_LILILGANT_HH__
+#define   __POKEMONISM_LILILGANT_HH__
+
+#include <pokemonism.hh>
 
 namespace pokemonism {
 }
 
-using namespace pokemonism;
-
-int main(int argc, char ** argv) {
-    return 0;
-}
+#endif // __POKEMONISM_LILILGANT_HH__

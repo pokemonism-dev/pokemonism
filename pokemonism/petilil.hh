@@ -13,31 +13,22 @@
 #include <pokemonism.hh>
 
 namespace pokemonism {
-    /**
-     *
-     * petilil::evolve
-     *
-     * petilil::evolve
-     * petilil * o = petilil::evolve<stone::sun>();
-     * o->run()
-     * stone::sun
-     *
-     * @tparam evolvable
-     */
-    class petilil {
-    public:     template <typename item = void> static petilil * evolve(void);
-    public:     virtual int run(void);
-    public:     petilil(void) {}
-    public:     virtual ~petilil(void) {}
-    public:     petilil(const petilil & o) = delete;
-    public:     petilil(petilil && o) noexcept = delete;
-    public:     petilil & operator=(const petilil & o) = delete;
-    public:     petilil & operator=(petilil && o) noexcept = delete;
-    };
+    namespace petilil {
 
-    template <itemname item>
-    petilil * petilil::evolve(void) {
-        return nullptr;
+        class engine {
+        public:     virtual petilil::engine * run(void) { return this; }
+        public:     engine(void) {}
+        public:     virtual ~engine(void) {}
+        public:     engine(const petilil::engine & o) = delete;
+        public:     engine(petilil::engine && o) noexcept = delete;
+        public:     petilil::engine & operator=(const petilil::engine & o) = delete;
+        public:     petilil::engine & operator=(petilil::engine && o) noexcept = delete;
+        };
+
+        template <itemname item = void>
+        petilil::engine * evolve(void) {
+            return new petilil::engine();
+        }
     }
 }
 

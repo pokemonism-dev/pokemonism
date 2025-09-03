@@ -43,7 +43,8 @@ namespace pokemonism {
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
-    latios::engine::on();
+    // latios::engine::on();
 
-    return latios::engine::run();
+    // return latios::engine::run();
+    return 0;
 }

@@ -44,6 +44,7 @@ set(POKEMON_SOURCE                  allocator.cc
                                     sync.cc
                                     log.cc
                                     cast.cc
+                                    ball.cc
                                     runnable/queue.hh)
 
 set(POKEMON_HEADER                  allocator.hh
@@ -57,6 +58,7 @@ set(POKEMON_HEADER                  allocator.hh
                                     sync.hh
                                     log.hh
                                     cast.hh
+                                    ball.hh
                                     runnable/queue.cc)
 
 set(POKEMON_ITEM_SOURCE             item/stone.cc
