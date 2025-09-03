@@ -7,10 +7,12 @@ include_directories(src ./)
 
 set(POKEMONISM_HEADER                       src/pokemonism.hh
                                             src/pokemonism/cloneable.hh
+                                            src/pokemonism/primitivable.hh
                                             src/pokemonism/synchronizable.hh)
 
 set(POKEMONISM_SOURCE                       src/pokemonism.cc
                                             src/pokemonism/cloneable.cc
+                                            src/pokemonism/primitivable.cc
                                             src/pokemonism/synchronizable.cc)
 
 add_library(pokemonism-dev                  ${POKEMONISM_HEADER}
