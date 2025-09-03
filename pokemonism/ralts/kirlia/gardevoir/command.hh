@@ -20,6 +20,8 @@
 
 #include <pokemonism/ralts/kirlia/gallade/command.hh>
 
+#include "command.hh"
+
 namespace pokemonism {
     namespace gardevoir {
         namespace command {
@@ -135,6 +137,29 @@ namespace pokemonism {
             public:     gardevoir::command::generator & operator=(gardevoir::command::generator && o) noexcept = delete;
             };
 
+            namespace repeat {
+                class subscription : public gardevoir::command::subscription {
+                public:     int32 count;
+                public:     int32 total;
+                public:     inline void executeSet(void) override {
+                                if (total >= 0) {
+                                    count = count + 1;
+                                    if (total <= count) {
+                                        status = status | gardevoir::command::subscription::state::complete;
+                                    }
+                                }
+                            }
+                public:     subscription(void);
+                public:     ~subscription(void) override {}
+                public:     inline explicit subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet) : gardevoir::command::subscription(target, properties, handlerSet), count(0), total(total) {}
+                public:     inline subscription(pokemon::command * target, int32 total, uint32 properties, const pokemon::command::event::handler::set & handlerSet, const gardevoir::command::subscription::event::handler::set & subscriptionSet) : gardevoir::command::subscription(target, properties, handlerSet, subscriptionSet), count(0), total(total) {}
+                public:     subscription(const gardevoir::command::repeat::subscription & o) = delete;
+                public:     subscription(gardevoir::command::repeat::subscription && o) noexcept = delete;
+                public:     gardevoir::command::repeat::subscription & operator=(const gardevoir::command::repeat::subscription & o) = delete;
+                public:     gardevoir::command::repeat::subscription & operator=(gardevoir::command::repeat::subscription && o) noexcept = delete;
+                };
+            }
+
             inline event::event(uint32 id, gardevoir::command::node * node) : gardevoir::event(id, node) {
 
             }
@@ -202,25 +227,6 @@ namespace pokemonism {
 
             inline void subscription::on(uint32 type, pokemon::exception * e) {
                 gardevoir::subscription::on(type, e);
-
-                // pokemon_develop_check(kirlia::subscription::event::type::max <= type, do {
-                //     allocator::del(e);
-                //     return;
-                // } while (0));
-                //
-                // if (e != nullptr) exceptionSet();
-                //
-                // if (subscriptionSet != nullptr) {
-                //     if (const kirlia::subscription::event::handler::type func = reinterpret_cast<kirlia::subscription::event::handler::type>((*subscriptionSet)[type]); func != nullptr) {
-                //         if (type == kirlia::subscription::event::type::rel) {
-                //             void (*rel)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *) = reinterpret_cast<void (*)(kirlia::command::poppable::subscription &, uint32, const pokemon::exception *)>(func);
-                //             rel(*this, type, e);
-                //         } else {
-                //             func(*this, type, e);
-                //         }
-                //     }
-                // }
-                // allocator::del(e);
             }
 
             inline void subscription::raise(gardevoir::node * node) {

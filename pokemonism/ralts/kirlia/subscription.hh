@@ -16,6 +16,9 @@ namespace pokemonism {
     namespace kirlia {
 
         class subscription : public kirlia::event::subscription {
+        public:     virtual bool completeChk(void) const = 0;
+        public:     virtual bool cancelChk(void) const = 0;
+        public:     virtual bool exceptionChk(void) const = 0;
         public:     subscription(void) {}
         public:     ~subscription(void) override {}
         public:     subscription(const kirlia::subscription & o) = delete;

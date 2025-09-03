@@ -55,9 +55,9 @@ namespace pokemonism {
         public:     inline virtual void completeSet(void) { status = status | gardevoir::subscription::state::complete; }
         public:     inline virtual void cancelSet(void) { status = status | gardevoir::subscription::state::cancel; }
         public:     inline virtual void exceptionSet(void) { status = status | gardevoir::subscription::state::exception; }
-        public:     inline virtual bool completeChk(void) const { return (status & gardevoir::subscription::state::complete) != declaration::none; }
-        public:     inline virtual bool cancelChk(void) const { return (status & gardevoir::subscription::state::cancel) != declaration::none; }
-        public:     inline virtual bool exceptionChk(void) const  { return (status & gardevoir::subscription::state::exception) != declaration::none; }
+        public:     inline bool completeChk(void) const override { return (status & gardevoir::subscription::state::complete) != declaration::none; }
+        public:     inline bool cancelChk(void) const override { return (status & gardevoir::subscription::state::cancel) != declaration::none; }
+        public:     inline bool exceptionChk(void) const override { return (status & gardevoir::subscription::state::exception) != declaration::none; }
         public:     inline virtual bool finishChk(void) const { return (status & (gardevoir::subscription::state::complete | gardevoir::subscription::state::cancel | gardevoir::subscription::state::exception)) != declaration::none; }
         public:     bool cancel(void) override {
                         if (finishChk()) return false;
