@@ -11,6 +11,7 @@ add_subdirectory(pokemonism/pokemon)
 add_subdirectory(pokemonism/psyduck)
 add_subdirectory(pokemonism/sprigatito)
 add_subdirectory(pokemonism/ralts)
+add_subdirectory(pokemonism/latios)
 
 set(POKEMONISM_ROOT_HEADER          include/pokemonism.hh)
 
@@ -20,13 +21,15 @@ set(POKEMONISM_POKEMON_HEADER       pokemonism/pokemon.hh
                                     pokemonism/meowth.hh
                                     pokemonism/psyduck.hh
                                     pokemonism/sprigatito.hh
-                                    pokemonism/ralts.hh)
+                                    pokemonism/ralts.hh
+                                    pokemonism/latios.hh)
 
 set(POKEMONISM_POKEMON_SOURCE       pokemonism/pokemon.cc
                                     pokemonism/meowth.cc
                                     pokemonism/psyduck.cc
                                     pokemonism/sprigatito.cc
-                                    pokemonism/ralts.cc)
+                                    pokemonism/ralts.cc
+                                    pokemonism/latios.cc)
 
 add_executable(pokemonism-dev       ${POKEMONISM_ROOT_HEADER}
                                     ${POKEMONISM_ROOT_SOURCE}
