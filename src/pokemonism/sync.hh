@@ -1,0 +1,34 @@
+/**
+ * @file
+ * @brief
+ * @details
+ * 
+ * @author          snorlax <snorlax@pokemonism.dev>
+ * @since           Sep 04, 2025
+ */
+
+#ifndef   __POKEMONISM_POKEMON_SYNC_HH__
+#define   __POKEMONISM_POKEMON_SYNC_HH__
+
+#include <pokemonism/synchronizable.hh>
+
+namespace pokemonism {
+
+    class sync : public synchronizable {
+    public:     int lock(void) override { return declaration::fail; }
+    public:     int unlock(void) override { return declaration::fail; }
+    public:     int wait(void) override { return declaration::fail; }
+    public:     int wakeup(void) override { return declaration::fail; }
+    public:     int wait(long second, long nano) override { return declaration::fail; }
+    public:     int wakeup(bool all) override { return declaration::fail; }
+    public:     sync(void) {}
+    public:     ~sync(void) override {}
+    public:     sync(const sync & o) = delete;
+    public:     sync(sync && o) noexcept = delete;
+    public:     sync & operator=(const sync & o) = delete;
+    public:     sync & operator=(sync && o) noexcept = delete;
+    };
+
+}
+
+#endif // __POKEMONISM_POKEMON_SYNC_HH__

@@ -10,6 +10,8 @@
 #ifndef   __POKEMONISM__HH__
 #define   __POKEMONISM__HH__
 
+#include <exception>
+
 namespace pokemonism {
     namespace declaration {
         typedef char                int8;
@@ -25,9 +27,15 @@ namespace pokemonism {
         constexpr int               success = 0;
         constexpr int               invalid = -1;
         constexpr int               infinite = -1;
+
+        using                       exception = std::exception;
     }
 
     const char * version(void);
 }
+
+#define pointof(o)                  (&(o))
+#define pokemonname                 typename
+
 
 #endif // __POKEMONISM__HH__
