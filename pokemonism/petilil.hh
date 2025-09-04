@@ -11,16 +11,15 @@
 #define   __POKEMONISM_PETILIL_HH__
 
 #include <pokemonism/event.hh>
-#include <pokemonism/envelope.hh>
 #include <pokemonism/subscription.hh>
+#include <pokemonism/generic/envelope.hh>
 
 #include <pokemonism/runnable.hh>
+#include <pokemonism/commandable.hh>
 #include <pokemonism/callbackable.hh>
 
 #include <pokemonism/pokemon.hh>
 #include <pokemonism/psyduck.hh>
-
-#include "petilil.hh"
 
 namespace pokemonism {
 
@@ -29,6 +28,8 @@ namespace pokemonism {
     public:     constexpr static const char * tag = "petilil";
     public:     typedef void (*cleaner)(petilil *);
     public:     class event;
+    public:     struct commandable;
+    public:     struct command;
     public:     static petilil * go(void);
     protected:  petilil::cleaner clean;
     public:     inline const char * name(void) const noexcept override;
@@ -47,7 +48,8 @@ namespace pokemonism {
     public:     class queue;
     public:     class engine;           // ### TODO | DEFINE THIS
     public:     class envelope;
-    public:     class generator;        // ### TODO | DEFINE THIS
+    public:     struct callback;
+    public:     class generator;
     public:     class processor;
     public:     class subscription;
     public:     struct modifiable;
@@ -97,13 +99,20 @@ namespace pokemonism {
     public:     friend collection;
     };
 
-    class petilil::event::envelope : public pokemonism::envelopeable {
+    struct petilil::event::callback : public callbackable {
+    public:     callback() {}
+    public:     explicit callback(callbackable::function f) : callbackable(f) {}
+    };
+
+    class petilil::event::envelope : public virtual pokemonism::envelopeable {
     protected:  petilil::event::subscription *  container;
     protected:  pokemon::faint *                exception;
+    protected:  int                             ret;
     public:     inline virtual petilil::event::subscription * subscriptionGet(void) const;
     public:     inline virtual const pokemon::faint * exceptionGet(void) const;
-    public:     inline explicit envelope(petilil::event::subscription * subscription);
-    public:     inline envelope(petilil::event::subscription * subscription, pokemon::faint * exception);
+    public:     inline int returnGet(void) const;
+    public:     inline explicit envelope(petilil::event::subscription * subscription, int ret);
+    public:     inline envelope(petilil::event::subscription * subscription, int ret, pokemon::faint * exception);
     public:     inline envelope(void);
     public:     inline ~envelope(void) override;
     public:     envelope(const petilil::event::envelope & o) = delete;
@@ -114,10 +123,12 @@ namespace pokemonism {
 
     class petilil::event::link : public petilil::event::envelope {
     public:     static petilil::event::link * rem(petilil::event::link * o);
-    protected:  petilil::event::link *          prev;
-    protected:  petilil::event::link *          next;
-    protected:  petilil::event *                event;
+    protected:  petilil::event::link *  prev;
+    protected:  petilil::event::link *  next;
+    protected:  petilil::event *        event;
     public:     virtual void raise(pokemon::faint * e);
+    public:     inline unsigned int identifierGet(void) const;
+    public:     inline void returnSet(int v);
     public:     inline virtual int on(void);
     public:     inline explicit link(petilil::event::subscription * subscription);
     public:     inline link(void);
@@ -135,6 +146,11 @@ namespace pokemonism {
     };
 
     class petilil::event::subscription : public pokemonism::subscription {
+    public:     struct property {
+                public:     constexpr static unsigned int mask                  = (0x00000FFFU <<  0U);
+                public:     constexpr static unsigned int release_object_on_rel = (0x00000001U << 30U);
+                public:     constexpr static unsigned int release_on_del        = (0x00000001U << 31U);
+                };
     public:     struct state {
                 public:     struct type {
                             public:     constexpr static unsigned int gen = 0U;
@@ -144,6 +160,7 @@ namespace pokemonism {
                             public:     constexpr static unsigned int rel = 4U;
                             public:     constexpr static unsigned int max = 5U;
                             };
+                public:     constexpr static unsigned int min       = (0x00000001U <<  0U);
                 public:     constexpr static unsigned int gen       = (0x00000001U <<  0U);
                 public:     constexpr static unsigned int add       = (0x00000001U <<  1U);
                 public:     constexpr static unsigned int chk       = (0x00000001U <<  2U);
@@ -152,7 +169,7 @@ namespace pokemonism {
                 public:     constexpr static unsigned int cancel    = (0x00000001U <<  5U);
                 public:     constexpr static unsigned int complete  = (0x00000001U <<  6U);
                 public:     constexpr static unsigned int faint     = (0x00000001U <<  7U);
-                public:     constexpr static unsigned int max       = (0x00000001U <<  8U);
+                public:     constexpr static unsigned int max       = (0x00000001U << 31U);
                 };
     public:     struct callback : public callbackable {
                 public:     typedef void (*function)(const petilil::event::subscription &, unsigned int, const pokemon::faint * e);
@@ -167,6 +184,27 @@ namespace pokemonism {
                             public:     inline ~set(void);
                             };
                 };
+    public:     class releaser : public runnable::queue::node {
+                protected:  petilil::event::subscription * subscription;
+                public:     inline void operator()(void) override {
+                                if (subscription != nullptr) {
+                                    delete subscription;
+                                    subscription = nullptr;
+                                }
+                            }
+                public:     inline explicit releaser(petilil::event::subscription * subscription) : subscription(subscription) {}
+                public:     releaser(void) = delete;
+                public:     inline ~releaser(void) override {
+                                if (subscription != nullptr) {
+                                    delete subscription;
+                                    subscription = nullptr;
+                                }
+                            }
+                public:     releaser(const petilil::event::subscription::releaser & o) = delete;
+                public:     releaser(petilil::event::subscription::releaser && o) noexcept = delete;
+                public:     petilil::event::subscription::releaser & operator=(const petilil::event::subscription::releaser & o) = delete;
+                public:     petilil::event::subscription::releaser & operator=(petilil::event::subscription::releaser && o) noexcept = delete;
+                };
     public:     using                                           collection = psyduck::linked::list<petilil::event::subscription, petilil::event::link>;
     protected:  petilil::event::generator *                     container;
     protected:  petilil::event::subscription *                  prev;
@@ -179,7 +217,7 @@ namespace pokemonism {
     protected:  unsigned int                                    status;
     protected:  petilil::event::subscription::callback::set     subscriptionSet;
     public:     inline bool cancel(void) override;
-    protected:  virtual pokemon::faint * raise(petilil::event::link * o, pokemon::faint * e) = 0;
+    protected:  virtual void raise(petilil::event::link * o, pokemon::faint * e) = 0;
     protected:  virtual void subscriptionOn(unsigned int type, pokemon::faint * e = nullptr) = 0;
     protected:  virtual int processOn(petilil::event::link * o) noexcept = 0;
     public:     inline const pokemon::faint * faintGet(void) const;
@@ -208,7 +246,7 @@ namespace pokemonism {
     public:     friend petilil::event::generator;
     };
 
-    class petilil::event::modifiable::subscription : public petilil::event::subscription {
+    class petilil::event::modifiable::subscription : public virtual petilil::event::subscription {
     protected:  void subscriptionOn(unsigned int type, pokemon::faint * e = nullptr) override;
     protected:  inline explicit subscription(unsigned int properties);
     protected:  inline subscription(unsigned int properties, petilil::event::subscription::callback::function on);
@@ -244,6 +282,348 @@ namespace pokemonism {
     public:     friend petilil::event::generator::collection;
     };
 
+    struct petilil::commandable {
+    public:     class link;
+    public:     class event;
+    public:     class envelope;
+    public:     struct callback;
+    public:     class subscription;
+    public:     class generator;
+    public:     class processor;
+    public:     struct modifiable;
+    };
+
+    class petilil::commandable::event : public petilil::event {
+    public:     constexpr static unsigned int execute   = 0;
+    public:     constexpr static unsigned int max       = 1;
+    public:     using link          = petilil::commandable::link;
+    public:     using queue         = petilil::event::queue;
+    public:     using engine        = petilil::event::engine;
+    public:     using envelope      = petilil::commandable::envelope;
+    public:     using callback      = petilil::commandable::callback;
+    public:     using generator     = petilil::commandable::generator;
+    public:     using processor     = petilil::commandable::processor;
+    public:     using subscription  = petilil::commandable::subscription;
+    public:     using modifiable    = petilil::commandable::modifiable;
+    public:     inline event(unsigned int identifier, petilil::commandable::link * node);
+    public:     inline event(void);
+    public:     inline ~event(void) override;
+    public:     event(const petilil::commandable::event & o) = delete;
+    public:     event(petilil::commandable::event && o) noexcept = delete;
+    public:     petilil::commandable::event & operator=(const petilil::commandable::event & o) = delete;
+    public:     petilil::commandable::event & operator=(petilil::commandable::event && o) noexcept = delete;
+    };
+
+    struct petilil::commandable::callback : public petilil::event::callback {
+    public:     struct set;
+    public:     typedef void (*function)(pokemonism::commandable &, unsigned int, petilil::commandable::envelope &, const pokemon::faint *);
+    public:     inline petilil::commandable::callback::function get(void) const { return reinterpret_cast<petilil::commandable::callback::function>(func); }
+    public:     callback(void) {}
+    public:     explicit callback(petilil::commandable::callback::function f) : petilil::event::callback(reinterpret_cast<petilil::event::callback::function>(f)) {}
+    };
+
+    struct petilil::commandable::callback::set {
+    public:     petilil::commandable::callback::function functions[petilil::commandable::event::max];
+    public:     set(void) { functions[petilil::commandable::event::execute] = nullptr; }
+    public:     explicit set(petilil::commandable::callback::function execute) { functions[petilil::commandable::event::execute] = execute; }
+    };
+
+    struct petilil::commandable::modifiable {
+    public:     class subscription;
+    };
+
+    class petilil::commandable::subscription : public virtual petilil::event::subscription {
+    public:     using property = petilil::event::subscription::property;
+    public:     using state = petilil::event::subscription::state;
+    public:     struct callback : public petilil::event::subscription::callback {
+                public:     typedef void (*function)(const petilil::commandable::subscription &, unsigned int, const pokemon::faint * e);
+                public:     typedef void (*modifier)(const petilil::commandable::modifiable::subscription &, unsigned int, const pokemon::faint * e);
+                public:     struct set {
+                            public:     petilil::commandable::subscription::callback::function on;
+                            public:     petilil::commandable::subscription::callback::modifier rel;
+                            public:     inline set(void) : on(nullptr), rel(nullptr) {}
+                            public:     inline explicit set(petilil::commandable::subscription::callback::function on) : on(on), rel(nullptr) {}
+                            public:     inline explicit set(petilil::commandable::subscription::callback::modifier rel) : on(nullptr), rel(rel) {}
+                            public:     inline set(petilil::commandable::subscription::callback::function on, petilil::commandable::subscription::callback::modifier rel) : on(on), rel(rel) {}
+                            public:     inline ~set(void) {
+                                            on = nullptr;
+                                            rel = nullptr;
+                                        }
+                            };
+                };
+    public:     using releaser = petilil::event::subscription::releaser;
+    public:     using command = commandable;
+    protected:  int count;
+    protected:  pokemonism::commandable * object;
+    protected:  petilil::commandable::callback::set callbackSet;
+    public:     inline virtual void callbackOn(petilil::commandable::link * o, unsigned int type, pokemon::faint * e = nullptr);
+    public:     inline virtual const pokemonism::commandable * objectGet(void) const;
+    protected:  inline virtual pokemonism::commandable * objectGet(void);
+    public:     inline int executeCnt(void) const;
+    public:     inline virtual void executeSet(void);
+    protected:  inline void raise(petilil::event::link * o, pokemon::faint * e) override;
+    protected:  int processOn(petilil::event::link * o) noexcept override;
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::subscription::callback::function on);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::subscription::callback::modifier modifiableOn);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::subscription::callback::function on, petilil::commandable::subscription::callback::modifier modifiableOn);
+    protected:  inline subscription(void);
+    protected:  inline ~subscription(void) override;
+    public:     subscription(const petilil::commandable::subscription & o) = delete;
+    public:     subscription(petilil::commandable::subscription && o) noexcept = delete;
+    public:     petilil::commandable::subscription & operator=(const petilil::commandable::subscription & o) = delete;
+    public:     petilil::commandable::subscription & operator=(petilil::commandable::subscription && o) noexcept = delete;
+    public:     friend petilil::commandable::processor;
+    };
+
+    class petilil::commandable::modifiable::subscription : public petilil::commandable::subscription, public petilil::event::modifiable::subscription {
+    public:     using property = petilil::commandable::subscription::property;
+    public:     using state = petilil::commandable::subscription::state;
+    public:     using callback = petilil::commandable::subscription::callback;
+    public:     using releaser = petilil::event::subscription::releaser;
+    public:     using command = commandable;
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::function on);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::modifier modifiableOn);
+    protected:  inline subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::function on, petilil::commandable::modifiable::subscription::callback::modifier modifiableOn);
+    protected:  inline subscription(void);
+    protected:  inline ~subscription(void) override;
+    public:     subscription(const petilil::commandable::modifiable::subscription & o) = delete;
+    public:     subscription(petilil::commandable::modifiable::subscription && o) noexcept = delete;
+    public:     petilil::commandable::modifiable::subscription & operator=(const petilil::commandable::modifiable::subscription & o) = delete;
+    public:     petilil::commandable::modifiable::subscription & operator=(petilil::commandable::modifiable::subscription && o) noexcept = delete;
+    public:     friend petilil::commandable::generator;
+    };
+
+    class petilil::commandable::envelope : public virtual petilil::event::envelope {
+    protected:  primitivable * output;
+    public:     inline petilil::commandable::subscription * subscriptionGet(void) const override {
+                    return pokemon::cast<petilil::commandable::subscription *>(container);
+                }
+    public:     inline explicit envelope(petilil::commandable::subscription * subscription, int ret) : petilil::event::envelope(subscription, ret), output(nullptr) {}
+    public:     inline envelope(petilil::commandable::subscription * subscription, int ret, pokemon::faint * exception) : petilil::event::envelope(subscription, ret, exception), output(nullptr) {}
+    public:     inline envelope(void) : output(nullptr) {}
+    public:     inline ~envelope(void) override {
+                    pokemon_training_exit_check(output != nullptr, return);
+                }
+    public:     envelope(const petilil::commandable::envelope & o) = delete;
+    public:     envelope(petilil::commandable::envelope && o) noexcept = delete;
+    public:     petilil::commandable::envelope & operator=(const petilil::commandable::envelope & o) = delete;
+    public:     petilil::commandable::envelope & operator=(petilil::commandable::envelope && o) noexcept = delete;
+    };
+
+    class petilil::commandable::link : public petilil::event::link, public virtual commandable::envelope {
+    public:     inline void outputSet(primitivable * o) { output = o; }
+    public:     inline explicit link(petilil::commandable::subscription * subscription) : petilil::event::link(subscription) {}
+    public:     inline link(void) {}
+    public:     inline ~link(void) override {}
+    public:     link(const petilil::commandable::link & o) = delete;
+    public:     link(petilil::commandable::link && o) noexcept = delete;
+    public:     petilil::commandable::link & operator=(const petilil::commandable::link & o) = delete;
+    public:     petilil::commandable::link & operator=(petilil::commandable::link && o) noexcept = delete;
+    };
+
+    class petilil::commandable::generator : public petilil::event::generator {
+    public:     inline petilil::commandable::subscription * reg(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet);
+    public:     inline petilil::commandable::subscription * reg(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::function on);
+    public:     inline petilil::commandable::subscription * reg(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::modifier modifiableOn);
+    public:     inline petilil::commandable::subscription * reg(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet, petilil::commandable::modifiable::subscription::callback::function on, petilil::commandable::modifiable::subscription::callback::modifier modifiableOn);
+    protected:  inline explicit generator(petilil::event::engine * engine);
+    protected:  inline generator(void);
+    protected:  inline ~generator(void) override;
+    public:     generator(const petilil::commandable::generator & o) = delete;
+    public:     generator(petilil::commandable::generator && o) noexcept = delete;
+    public:     petilil::commandable::generator & operator=(const petilil::commandable::generator & o) = delete;
+    public:     petilil::commandable::generator & operator=(petilil::commandable::generator && o) noexcept = delete;
+    public:     friend petilil::commandable::generator::collection;
+    };
+
+    class petilil::commandable::processor : public petilil::event::processor {
+    public:     static int on(petilil::commandable::subscription & o, unsigned int type, petilil::commandable::link & node);
+    public:     processor(void) {}
+    public:     ~processor(void) override {}
+    public:     processor(const petilil::commandable::processor & o) = delete;
+    public:     processor(petilil::commandable::processor && o) noexcept = delete;
+    public:     petilil::commandable::processor & operator=(const petilil::commandable::processor & o) = delete;
+    public:     petilil::commandable::processor & operator=(petilil::commandable::processor && o) noexcept = delete;
+    };
+
+    // struct petilil::command {
+    // public:     template <class objectable = commandable, typename outputable = primitivable> class link;
+    // public:     template <class objectable = commandable, typename outputable = primitivable> class event;
+    // public:     template <class objectable = commandable, typename outputable = primitivable> class envelope;
+    // public:     template <class objectable = commandable, typename outputable = primitivable> struct callback;
+    // public:     template <class objectable = commandable, typename outputable = primitivable> class subscription;
+    //
+    // public:     class generator;
+    // public:     class processor;
+    // public:     struct modifiable;
+    // };
+    //
+    // class petilil::event::engine : public sync {
+    // public:     struct generator {
+    //             public:     struct set {
+    //                         public:     petilil::command::generator * generator;
+    //                         };
+    //             };
+    // protected:  petilil::event::queue * queue;
+    // public:     engine(void);
+    // public:     ~engine(void) override;
+    // public:     engine(const petilil::event::engine & o) = delete;
+    // public:     engine(petilil::event::engine && o) noexcept = delete;
+    // public:     petilil::event::engine & operator=(const petilil::event::engine & o) = delete;
+    // public:     petilil::event::engine & operator=(petilil::event::engine && o) noexcept = delete;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // class petilil::command::event : public petilil::event {
+    // public:     constexpr static unsigned int execute   = 0;
+    // public:     constexpr static unsigned int max       = 1;
+    // public:     using link          = petilil::command::link<objectable, outputable>;
+    // public:     using queue         = petilil::event::queue;
+    // public:     using engine        = petilil::event::engine;
+    // public:     using envelope      = petilil::command::envelope<objectable, outputable>;
+    // public:     using callback      = petilil::command::callback<objectable, outputable>;
+    // public:     using generator     = petilil::command::generator;
+    // public:     using processor     = petilil::command::processor;
+    // public:     using subscription  = petilil::command::subscription<objectable, outputable>;
+    // public:     using modifiable    = petilil::command::modifiable;
+    // public:     inline event(unsigned int identifier, petilil::command::link<objectable, outputable> * node) : petilil::event(identifier, node) {}
+    // public:     inline event(void) {}
+    // public:     inline ~event(void) override {}
+    // public:     event(const petilil::command::event<objectable, outputable> & o) = delete;
+    // public:     event(petilil::command::event<objectable, outputable> && o) noexcept = delete;
+    // public:     petilil::command::event<objectable, outputable> & operator=(const petilil::command::event<objectable, outputable> & o) = delete;
+    // public:     petilil::command::event<objectable, outputable> & operator=(petilil::command::event<objectable, outputable> && o) noexcept = delete;
+    // };
+    //
+    // struct petilil::command::modifiable {
+    // public:     template <class objectable = commandable, typename outputable = primitivable> class subscription;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // class petilil::command::subscription : public petilil::event::subscription {
+    // public:     using property = petilil::event::subscription::property;
+    // public:     using state = petilil::event::subscription::state;
+    // public:     struct callback : public petilil::event::subscription::callback {
+    //             public:     typedef void (*function)(const petilil::command::subscription<objectable, outputable> &, unsigned int, const pokemon::faint * e);
+    //             public:     typedef void (*modifier)(const petilil::command::modifiable::subscription<objectable, outputable> &, unsigned int, const pokemon::faint * e);
+    //             public:     struct set {
+    //                         public:     petilil::command::subscription<objectable, outputable>::callback::function on;
+    //                         public:     petilil::command::subscription<objectable, outputable>::callback::modifier rel;
+    //                         public:     inline set(void) : on(nullptr), rel(nullptr) {}
+    //                         public:     inline explicit set(petilil::command::subscription<objectable, outputable>::callback::function on) : on(on), rel(nullptr) {}
+    //                         public:     inline explicit set(petilil::command::subscription<objectable, outputable>::callback::modifier rel) : on(nullptr), rel(rel) {}
+    //                         public:     inline set(petilil::command::subscription<objectable, outputable>::callback::function on, petilil::command::subscription<objectable, outputable>::callback::modifier rel) : on(on), rel(rel) {}
+    //                         public:     inline ~set(void) {
+    //                                         on = nullptr;
+    //                                         rel = nullptr;
+    //                                     }
+    //                         };
+    //             };
+    // public:     using releaser = petilil::event::subscription::releaser;
+    // public:     using command = objectable;
+    // protected:  int count;
+    // protected:  objectable * object;
+    // protected:  petilil::command::callback<objectable, outputable>::set callbackSet;
+    // public:     inline virtual void callbackOn(petilil::command::link<objectable, outputable> * o, unsigned int type, pokemon::faint * e = nullptr);
+    // public:     inline virtual const objectable * objectGet(void) const;
+    // public:     inline int executeCnt(void) const;
+    // protected:  inline void raise(petilil::event::link * o, pokemon::faint * e) override;
+    // protected:  inline int processOn(petilil::event::link * o) noexcept override;
+    // protected:  inline explicit subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::subscription<objectable, outputable>::callback::function on);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::subscription<objectable, outputable>::callback::modifier modifiableOn);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::subscription<objectable, outputable>::callback::function on, petilil::command::subscription<objectable, outputable>::callback::modifier modifiableOn);
+    // protected:  inline subscription(void);
+    // protected:  inline ~subscription(void) override;
+    // public:     subscription(const petilil::command::subscription<objectable, outputable> & o) = delete;
+    // public:     subscription(petilil::command::subscription<objectable, outputable> && o) noexcept = delete;
+    // public:     petilil::command::subscription<objectable, outputable> & operator=(const petilil::command::subscription<objectable, outputable> & o) = delete;
+    // public:     petilil::command::subscription<objectable, outputable> & operator=(petilil::command::subscription<objectable, outputable> && o) noexcept = delete;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // class petilil::command::modifiable::subscription : public petilil::command::subscription<objectable, outputable> {
+    // public:     using property = petilil::command::subscription<objectable, outputable>::property;
+    // public:     using state = petilil::command::subscription<objectable, outputable>::state;
+    // public:     using callback = petilil::command::subscription<objectable, outputable>::callback;
+    // public:     using releaser = petilil::command::subscription<objectable, outputable>::releaser;
+    // public:     using command = objectable;
+    // public:     inline virtual command * objectPop(void) const;
+    // protected:  inline explicit subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::modifiable::subscription<objectable, outputable>::callback::function on);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::modifiable::subscription<objectable, outputable>::callback::modifier modifiableOn);
+    // protected:  inline subscription(unsigned int properties, const petilil::command::callback<objectable, outputable>::set & callbackSet, petilil::command::modifiable::subscription<objectable, outputable>::callback::function on, petilil::command::modifiable::subscription<objectable, outputable>::callback::modifier modifiableOn);
+    // protected:  inline subscription(void);
+    // protected:  inline ~subscription(void) override;
+    // public:     subscription(const petilil::command::modifiable::subscription<objectable, outputable> & o) = delete;
+    // public:     subscription(petilil::command::modifiable::subscription<objectable, outputable> && o) noexcept = delete;
+    // public:     petilil::command::modifiable::subscription<objectable, outputable> & operator=(const petilil::command::modifiable::subscription<objectable, outputable> & o) = delete;
+    // public:     petilil::command::modifiable::subscription<objectable, outputable> & operator=(petilil::command::modifiable::subscription<objectable, outputable> && o) noexcept = delete;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // class petilil::command::envelope : public pokemonism::generic::envelope<outputable>, public virtual petilil::event::envelope {
+    // public:     inline petilil::command::subscription<objectable, outputable> * subscriptionGet(void) const override { return pokemon::cast<petilil::command::subscription<objectable, outputable> *>(container); }
+    // public:     inline explicit envelope(petilil::command::subscription<objectable, outputable> * subscription) : petilil::event::envelope(subscription) {}
+    // public:     inline envelope(petilil::command::subscription<objectable, outputable> * subscription, pokemon::faint * exception) : petilil::event::envelope(subscription, exception) {}
+    // public:     inline envelope(void) {}
+    // public:     inline ~envelope(void) override {}
+    // public:     envelope(const petilil::command::envelope<objectable, outputable> & o) = delete;
+    // public:     envelope(petilil::command::envelope<objectable, outputable> && o) noexcept = delete;
+    // public:     petilil::command::envelope<objectable, outputable> & operator=(const petilil::command::envelope<objectable, outputable> & o) = delete;
+    // public:     petilil::command::envelope<objectable, outputable> & operator=(petilil::command::envelope<objectable, outputable> && o) noexcept = delete;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // class petilil::command::link : public petilil::event::link, public command::envelope<objectable, outputable> {
+    // public:     inline explicit link(petilil::command::subscription<objectable, outputable> * subscription) : petilil::event::link(subscription) {}
+    // public:     inline link(void) {}
+    // public:     inline ~link(void) override {}
+    // public:     link(const petilil::command::link<objectable, outputable> & o) = delete;
+    // public:     link(petilil::command::link<objectable, outputable> && o) noexcept = delete;
+    // public:     petilil::command::link<objectable, outputable> & operator=(const petilil::command::link<objectable, outputable> & o) = delete;
+    // public:     petilil::command::link<objectable, outputable> & operator=(petilil::command::link<objectable, outputable> && o) noexcept = delete;
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // struct petilil::command::callback : public petilil::event::callback {
+    // public:     struct set;
+    // public:     typedef void (*function)(objectable &, unsigned int, petilil::command::envelope<outputable> &, pokemon::faint *);
+    // public:     inline petilil::command::callback<objectable, outputable>::function get(void) { return reinterpret_cast<petilil::command::callback<objectable, outputable>::function>(func); }
+    // public:     callback(void) {}
+    // public:     explicit callback(petilil::command::callback<objectable, outputable>::function f) : petilil::event::callback(reinterpret_cast<petilil::event::callback::function>(f)) {}
+    // };
+    //
+    // template <class objectable, typename outputable>
+    // struct petilil::command::callback<objectable, outputable>::set {
+    // public:     petilil::command::callback<objectable, outputable>::function functions[petilil::command::event<objectable, outputable>::max];
+    // public:     set(void) { functions[petilil::command::event<objectable, outputable>::execute] = nullptr; }
+    // public:     explicit set(petilil::command::callback<objectable, outputable>::function execute) { functions[petilil::command::event<objectable, outputable>::execute] = execute; }
+    // };
+    //
+    // // ### IMPLEMENT THIS
+    // class petilil::command::generator : public petilil::event::generator {
+    // // protected:  inline static petilil::event::subscription * subscriptionRel(petilil::event::subscription * o);
+    // // public:     using                           collection = psyduck::linked::list<petilil::event::generator, petilil::event::subscription>;
+    // // protected:  unsigned long                   size;
+    // // protected:  petilil::event::subscription *  head;
+    // // protected:  petilil::event::subscription *  tail;
+    // // protected:  petilil::event::engine *        engine;
+    // // protected:  runnable::queue                 queue;
+    // // public:     inline petilil::command::subscription * add(petilil::event::subscription * o) override;
+    // // public:     inline petilil::command::subscription * del(petilil::event::subscription * o) override;
+    // // public:     virtual petilil::command::subscription * reg(commandable * command, unsigned int properties, ...);
+    // // protected:  inline explicit generator(petilil::event::engine * engine);
+    // // protected:  inline generator(void);
+    // // protected:  inline ~generator(void) override;
+    // // public:     generator(const petilil::command::generator & o) = delete;
+    // // public:     generator(petilil::command::generator && o) noexcept = delete;
+    // // public:     petilil::command::generator & operator=(const petilil::command::generator & o) = delete;
+    // // public:     petilil::command::generator & operator=(petilil::command::generator && o) noexcept = delete;
+    // };
+
     inline const char * petilil::name(void) const noexcept {
         return petilil::tag;
     }
@@ -268,9 +648,16 @@ namespace pokemonism {
 #include <pokemonism/petilil/event/link.hh>
 #include <pokemonism/petilil/event/queue.hh>
 #include <pokemonism/petilil/event/envelope.hh>
+#include <pokemonism/petilil/event/generator.hh>
 #include <pokemonism/petilil/event/subscription.hh>
 #include <pokemonism/petilil/event/subscription/callback/set.hh>
 #include <pokemonism/petilil/event/modifiable/subscription.hh>
+
+#include <pokemonism/petilil/commandable/event.hh>
+#include <pokemonism/petilil/commandable/generator.hh>
+#include <pokemonism/petilil/commandable/processor.hh>
+#include <pokemonism/petilil/commandable/subscription.hh>
+#include <pokemonism/petilil/commandable/modifiable/subscription.hh>
 // ReSharper restore CppUnusedIncludeDirective
 
 #endif // __POKEMONISM_PETILIL_HH__

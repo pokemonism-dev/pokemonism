@@ -18,6 +18,8 @@ namespace pokemonism {
             type = petilil::event::subscription::state::type::chk;
         } while (0));
 
+        status = status | (petilil::event::subscription::state::min << type);
+
         if (exception != nullptr) {
             if (type == petilil::event::subscription::state::type::rel) {
                 subscriptionSet.rel(*this, type, e);

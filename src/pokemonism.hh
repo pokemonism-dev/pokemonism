@@ -25,6 +25,7 @@ namespace pokemonism {
 
         constexpr int               fail = -1;
         constexpr int               success = 0;
+        constexpr int               again = 1;
         constexpr int               invalid = -1;
         constexpr int               infinite = -1;
         constexpr int               zero = 0;
@@ -37,6 +38,7 @@ namespace pokemonism {
 }
 
 #define pointof(o)                  (&(o))
+#define referenceof(o)              (*(o))
 #define pokemonname                 typename
 
 

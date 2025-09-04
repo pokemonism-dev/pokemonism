@@ -45,6 +45,7 @@ namespace pokemonism {
     public:     inline const char * what(void) const noexcept override { return tag; }
     public:     inline virtual const char * msg(void) const noexcept;
     public:     inline virtual const char * reason(void) const noexcept;
+    public:     inline virtual int levelGet(void) const noexcept { return level; }
     public:     inline virtual const exception * origin(void) const noexcept;
     public:     inline exception * clone(void) const override { return new exception(*this); }
     public:     inline explicit exception(const char * subject, unsigned int level);
@@ -267,5 +268,13 @@ namespace pokemonism {
 #define pokemon_debug_exit_check(condition, code)           pokemon_exit_check(condition, pokemonism::exception::level::debug, code)
 #define pokemon_verbose_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::exception::level::verbose, code)
 #define pokemon_develop_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::exception::level::develop, code)
+
+namespace pokemonism {
+    template <typename convertable, typename original> convertable cast(original o) {
+        pokemon_develop_check(o != nullptr && dynamic_cast<convertable>(o) == nullptr, return nullptr);
+
+        return reinterpret_cast<convertable>(o);
+    }
+}
 
 #endif // __POKEMONISM_EXCEPTION_HH__

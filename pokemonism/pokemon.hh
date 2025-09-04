@@ -21,6 +21,7 @@ namespace pokemonism {
     public:     class faint;
     public:     class ball;
     public:     template <pokemonname name = pokemon> static void clean(name * monster);
+    public:     template <typename convertable, typename original> static convertable cast(original o);
     public:     virtual const char * name(void) const noexcept = 0;
     public:     pokemon * clone(void) const override { return nullptr; }
     public:     int lock(void) noexcept override { return declaration::fail; }
@@ -64,6 +65,7 @@ namespace pokemonism {
                         default:                                    return "faint";
                     }
                 }
+    public:     inline pokemon::faint * clone(void) const override { return new pokemon::faint(*this); }
     public:     inline const char * what(void) const noexcept override { return pokemon::faint::tag; }
     public:     inline faint(const char * subject, unsigned int level) : exception(subject, level) {}
     public:     inline faint(const char * subject, unsigned int level, const exception & source) : exception(subject, level, source) {}
@@ -71,10 +73,10 @@ namespace pokemonism {
     public:     inline faint(const char * subject, unsigned int level, const exception & source, const char * path, int line, const char * func) : exception(subject, level, source, path, line, func) {}
     public:     inline faint(void) {}
     public:     inline ~faint(void) override {}
-    public:     faint(const pokemon::faint & o) = delete;
-    public:     faint(pokemon::faint && o) noexcept = delete;
-    public:     pokemon::faint & operator=(const pokemon::faint & o) = delete;
-    public:     pokemon::faint & operator=(pokemon::faint && o) noexcept = delete;
+    public:     faint(const pokemon::faint & o) : exception(o) {}
+    public:     faint(pokemon::faint && o) noexcept : exception(std::move(o)) {}
+    public:     pokemon::faint & operator=(const pokemon::faint & o) { return reinterpret_cast<pokemon::faint &>(exception::operator=(o)); }
+    public:     pokemon::faint & operator=(pokemon::faint && o) noexcept  { return reinterpret_cast<pokemon::faint &>(exception::operator=(std::move(o))); }
     };
 
 }
@@ -137,14 +139,14 @@ namespace pokemonism {
 #define pokemon_confusion_throw(condition, code)            pokemon_exception_throw("confusion", pokemonism::pokemon::faint::level::confusion, code)
 #define pokemon_training_throw(condition, code)             pokemon_exception_throw("training", pokemonism::pokemon::faint::level::training, code)
 
-#define pokemon_retreat_quick_throw(condition)              pokemon_exception_throw("retreat", pokemonism::pokemon::faint::level::retreat, (void)(0))
-#define pokemon_poison_quick_throw(condition)               pokemon_exception_throw("poison", pokemonism::pokemon::faint::level::v, (void)(0))
-#define pokemon_burn_quick_throw(condition)                 pokemon_exception_throw("burn", pokemonism::pokemon::faint::level::burn, (void)(0))
-#define pokemon_paralysis_quick_throw(condition)            pokemon_exception_throw("paralysis", pokemonism::pokemon::faint::level::paralysis, (void)(0))
-#define pokemon_sleep_quick_throw(condition)                pokemon_exception_throw("sleep", pokemonism::pokemon::faint::level::sleep, (void)(0))
-#define pokemon_freeze_quick_throw(condition)               pokemon_exception_throw("freeze", pokemonism::pokemon::faint::level::freeze, (void)(0))
-#define pokemon_confusion_quick_throw(condition)            pokemon_exception_throw("confusion", pokemonism::pokemon::faint::level::confusion, (void)(0))
-#define pokemon_training_quick_throw(condition)             pokemon_exception_throw("training", pokemonism::pokemon::faint::level::training, (void)(0))
+#define pokemon_retreat_quick_throw(code)                   pokemon_exception_throw("retreat", pokemonism::pokemon::faint::level::retreat, code)
+#define pokemon_poison_quick_throw(code)                    pokemon_exception_throw("poison", pokemonism::pokemon::faint::level::v, code)
+#define pokemon_burn_quick_throw(code)                      pokemon_exception_throw("burn", pokemonism::pokemon::faint::level::burn, code)
+#define pokemon_paralysis_quick_throw(code)                 pokemon_exception_throw("paralysis", pokemonism::pokemon::faint::level::paralysis, code)
+#define pokemon_sleep_quick_throw(code)                     pokemon_exception_throw("sleep", pokemonism::pokemon::faint::level::sleep, code)
+#define pokemon_freeze_quick_throw(code)                    pokemon_exception_throw("freeze", pokemonism::pokemon::faint::level::freeze, code)
+#define pokemon_confusion_quick_throw(code)                 pokemon_exception_throw("confusion", pokemonism::pokemon::faint::level::confusion, code)
+#define pokemon_training_quick_throw(code)                  pokemon_exception_throw("training", pokemonism::pokemon::faint::level::training, code)
 
 #define pokemon_retreat_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::faint::level::retreat, code)
 #define pokemon_poison_exit_check(condition, code)          pokemon_exit_check(condition, pokemonism::pokemon::faint::level::poison, code)
@@ -170,6 +172,14 @@ namespace pokemonism {
 }
 
 namespace pokemonism {
+
+    template <typename convertable, typename original>
+    inline convertable pokemon::cast(original o) {
+        pokemon_training_check(o != nullptr && dynamic_cast<convertable>(o) == nullptr, return nullptr);
+
+        return static_cast<convertable>(reinterpret_cast<void *>(o));
+    }
+
     template <pokemonname name>
     void pokemon::clean(name * monster) {
         pokemon_training_check(monster == nullptr, return);

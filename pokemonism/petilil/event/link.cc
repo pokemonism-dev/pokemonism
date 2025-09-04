@@ -15,12 +15,8 @@ namespace pokemonism {
     petilil::event::link * petilil::event::link::rem(petilil::event::link * o) {
         pokemon_training_check(o == nullptr, return o);
 
-        petilil::event * event = o->event;
-
-        if (event != nullptr) {
-            petilil::event::queue * container = event->container;
-
-            if (container != nullptr) {
+        if (petilil::event * event = o->event; event != nullptr) {
+            if (petilil::event::queue * container = event->container; container != nullptr) {
                 container->del(event);
 
                 if (event->on() > declaration::success) o->raise(new pokemon::faint());
@@ -39,7 +35,7 @@ namespace pokemonism {
         pokemon_training_check(e == nullptr || container == nullptr, return);
 
         if (exception != nullptr) {
-            e = container->raise(this, e);
+            container->raise(this, e);
 
             allocator::del(e);
 
@@ -47,8 +43,7 @@ namespace pokemonism {
         }
 
         exception = e;
-        e = container->raise(this, e);
-        allocator::del(e);
+        container->raise(this, e);
     }
 
 }

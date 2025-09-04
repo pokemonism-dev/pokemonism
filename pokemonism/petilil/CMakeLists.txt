@@ -13,7 +13,12 @@ set(PETILIL_HEADER                          ../petilil.hh
                                             event/generator.hh
                                             event/subscription.hh
                                             event/subscription/callback/set.hh
-                                            event/modifiable/subscription.hh)
+                                            event/modifiable/subscription.hh
+                                            commandable/event.hh
+                                            commandable/generator.hh
+                                            commandable/processor.hh
+                                            commandable/subscription.hh
+                                            commandable/modifiable/subscription.hh)
 
 set(PETILIL_SOURCE                          ../petilil.cc
                                             event.cc
@@ -23,7 +28,12 @@ set(PETILIL_SOURCE                          ../petilil.cc
                                             event/generator.cc
                                             event/subscription.cc
                                             event/subscription/callback/set.cc
-                                            event/modifiable/subscription.cc)
+                                            event/modifiable/subscription.cc
+                                            commandable/event.cc
+                                            commandable/generator.cc
+                                            commandable/processor.cc
+                                            commandable/subscription.cc
+                                            commandable/modifiable/subscription.cc)
 
 add_library(petilil-dev                     ${PETILIL_HEADER}
                                             ${PETILIL_SOURCE})

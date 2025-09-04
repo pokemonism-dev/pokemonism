@@ -78,6 +78,9 @@ namespace pokemonism {
     }
 
     inline petilil::event::subscription::~subscription(void) {
+        subscriptionSet.rel = nullptr;
+        subscriptionSet.on = nullptr;
+        exception = allocator::del(exception);
     }
 
 }

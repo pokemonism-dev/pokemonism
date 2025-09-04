@@ -14,6 +14,16 @@
 
 namespace pokemonism {
 
+    inline unsigned int petilil::event::link::identifierGet(void) const {
+        pokemon_training_check(event == nullptr, return declaration::fail);
+
+        return event->identifierGet();
+    }
+
+    inline void petilil::event::link::returnSet(int v) {
+        ret = v;
+    }
+
     inline int petilil::event::link::on(void) {
         pokemon_training_check(container == nullptr || event == nullptr, return declaration::fail);
 

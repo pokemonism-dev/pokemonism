@@ -16,7 +16,7 @@ namespace pokemonism {
 
     template <typename outputable = primitivable>
     class callable {
-    public:     virtual outputable operator()(void) = 0;
+    public:     virtual outputable * operator()(void) = 0;
     public:     callable(void) {}
     public:     virtual ~callable(void) {}
     public:     callable(const callable<outputable> & o) = delete;

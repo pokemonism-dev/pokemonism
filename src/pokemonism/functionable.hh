@@ -16,7 +16,7 @@ namespace pokemonism {
 
     template <typename outputable = primitivable, typename... argumentable>
     class functionable {
-    public:     virtual outputable operator()(argumentable... args) = 0;
+    public:     virtual outputable * operator()(argumentable... args) = 0;
     public:     functionable(void) {}
     public:     virtual ~functionable(void) {}
     public:     functionable(const functionable<outputable, argumentable...> & o) = delete;

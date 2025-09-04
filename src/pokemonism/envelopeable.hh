@@ -4,7 +4,7 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 04, 2025
+ * @since           Sep 4, 2025
  */
 
 #ifndef   __POKEMONISM_ENVELOPEABLE_HH__

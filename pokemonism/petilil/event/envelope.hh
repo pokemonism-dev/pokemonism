@@ -22,15 +22,19 @@ namespace pokemonism {
         return exception;
     }
 
-    inline petilil::event::envelope::envelope(petilil::event::subscription * subscription) : container(subscription), exception(nullptr) {
+    inline int petilil::event::envelope::returnGet(void) const {
+        return ret;
+    }
+
+    inline petilil::event::envelope::envelope(petilil::event::subscription * subscription, int ret) : container(subscription), exception(nullptr), ret(ret) {
 
     }
 
-    inline petilil::event::envelope::envelope(petilil::event::subscription * subscription, pokemon::faint * exception) : container(subscription), exception(exception) {
+    inline petilil::event::envelope::envelope(petilil::event::subscription * subscription, int ret, pokemon::faint * exception) : container(subscription), exception(exception), ret(ret) {
 
     }
 
-    inline petilil::event::envelope::envelope(void) : container(nullptr), exception(nullptr) {
+    inline petilil::event::envelope::envelope(void) : container(nullptr), exception(nullptr), ret(declaration::none) {
 
     }
 
