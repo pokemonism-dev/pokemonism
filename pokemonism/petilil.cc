@@ -27,7 +27,7 @@ namespace pokemonism {
         return this;
     }
 
-    petilil::petilil(void) : clean(nullptr) {
+    petilil::petilil(void) : clean(nullptr), engine(nullptr) {
 
     }
 

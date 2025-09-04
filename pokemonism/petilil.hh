@@ -27,11 +27,39 @@ namespace pokemonism {
     class petilil : public pokemon {
     public:     constexpr static const char * tag = "petilil";
     public:     typedef void (*cleaner)(petilil *);
-    public:     class event;
+    public:     class event : public pokemonism::event {
+                public:     class link;
+                public:     class queue;
+                public:     class engine;           // ### TODO | DEFINE THIS
+                public:     class envelope;
+                public:     struct callback;
+                public:     class generator;
+                public:     class processor;
+                public:     class subscription;
+                public:     struct modifiable;
+                public:     static petilil::event * rem(petilil::event * event);
+                public:     static inline petilil::event * dispatch(petilil::event * event);
+                protected:  petilil::event::queue *     container;
+                protected:  petilil::event *            prev;
+                protected:  petilil::event *            next;
+                protected:  petilil::event::link *      node;
+                protected:  unsigned int                identifier;
+                public:     inline unsigned int identifierGet(void) const override;
+                public:     inline virtual int on(void);
+                protected:  inline event(unsigned int identifier, petilil::event::link * node);
+                protected:  inline event(void);
+                public:     inline ~event(void) override;
+                public:     event(const petilil::event & o) = delete;
+                public:     event(petilil::event && o) noexcept = delete;
+                public:     petilil::event & operator=(const petilil::event & o) = delete;
+                public:     petilil::event & operator=(petilil::event && o) noexcept = delete;
+                public:     friend psyduck::linked::list<petilil::event::queue, petilil::event>;
+                };
     public:     struct commandable;
     public:     struct command;
     public:     static petilil * go(void);
     protected:  petilil::cleaner clean;
+    protected:  petilil::event::engine * engine;
     public:     inline const char * name(void) const noexcept override;
     public:     inline void recall(petilil::cleaner f);
     public:     virtual petilil * start(void);
@@ -41,35 +69,6 @@ namespace pokemonism {
     public:     petilil(petilil && o) noexcept = delete;
     public:     petilil & operator=(const petilil & o) = delete;
     public:     petilil & operator=(petilil && o) noexcept = delete;
-    };
-
-    class petilil::event : public pokemonism::event {
-    public:     class link;
-    public:     class queue;
-    public:     class engine;           // ### TODO | DEFINE THIS
-    public:     class envelope;
-    public:     struct callback;
-    public:     class generator;
-    public:     class processor;
-    public:     class subscription;
-    public:     struct modifiable;
-    public:     static petilil::event * rem(petilil::event * event);
-    public:     static inline petilil::event * dispatch(petilil::event * event);
-    protected:  petilil::event::queue *     container;
-    protected:  petilil::event *            prev;
-    protected:  petilil::event *            next;
-    protected:  petilil::event::link *      node;
-    protected:  unsigned int                identifier;
-    public:     inline unsigned int identifierGet(void) const override;
-    public:     inline virtual int on(void);
-    protected:  inline event(unsigned int identifier, petilil::event::link * node);
-    protected:  inline event(void);
-    public:     inline ~event(void) override;
-    public:     event(const petilil::event & o) = delete;
-    public:     event(petilil::event && o) noexcept = delete;
-    public:     petilil::event & operator=(const petilil::event & o) = delete;
-    public:     petilil::event & operator=(petilil::event && o) noexcept = delete;
-    public:     friend psyduck::linked::list<petilil::event::queue, petilil::event>;
     };
 
     class petilil::event::processor {
@@ -455,25 +454,8 @@ namespace pokemonism {
     public:     template <class objectable = commandable, typename outputable = primitivable> class envelope;
     public:     template <class objectable = commandable, typename outputable = primitivable> struct callback;
     public:     template <class objectable = commandable, typename outputable = primitivable> class subscription;
-    public:     class generator;
-    public:     class processor;
     public:     struct modifiable;
     };
-    //
-    // class petilil::event::engine : public sync {
-    // public:     struct generator {
-    //             public:     struct set {
-    //                         public:     petilil::command::generator * generator;
-    //                         };
-    //             };
-    // protected:  petilil::event::queue * queue;
-    // public:     engine(void);
-    // public:     ~engine(void) override;
-    // public:     engine(const petilil::event::engine & o) = delete;
-    // public:     engine(petilil::event::engine && o) noexcept = delete;
-    // public:     petilil::event::engine & operator=(const petilil::event::engine & o) = delete;
-    // public:     petilil::event::engine & operator=(petilil::event::engine && o) noexcept = delete;
-    // };
 
     template <class objectable, typename outputable>
     class petilil::command::event : public petilil::commandable::event {
@@ -484,8 +466,8 @@ namespace pokemonism {
     public:     using engine        = petilil::event::engine;
     public:     using envelope      = petilil::command::envelope<objectable, outputable>;
     public:     using callback      = petilil::command::callback<objectable, outputable>;
-    public:     using generator     = petilil::command::generator;
-    public:     using processor     = petilil::command::processor;
+    public:     using generator     = petilil::commandable::generator;
+    public:     using processor     = petilil::commandable::processor;
     public:     using subscription  = petilil::command::subscription<objectable, outputable>;
     public:     using modifiable    = petilil::command::modifiable;
     public:     inline event(unsigned int identifier, petilil::command::link<objectable, outputable> * node) : petilil::commandable::event(identifier, node) {}
@@ -534,7 +516,6 @@ namespace pokemonism {
     public:     petilil::command::subscription<objectable, outputable> & operator=(const petilil::command::subscription<objectable, outputable> & o) = delete;
     public:     petilil::command::subscription<objectable, outputable> & operator=(petilil::command::subscription<objectable, outputable> && o) noexcept = delete;
     };
-
 
     template <class objectable, typename outputable>
     class petilil::command::modifiable::subscription : public petilil::command::subscription<objectable, outputable>, public petilil::commandable::modifiable::subscription {
@@ -595,27 +576,21 @@ namespace pokemonism {
     public:     set(void) { functions[petilil::command::event<objectable, outputable>::execute] = nullptr; }
     public:     explicit set(petilil::command::callback<objectable, outputable>::function execute) { functions[petilil::command::event<objectable, outputable>::execute] = execute; }
     };
-    //
-    // // ### IMPLEMENT THIS
-    // class petilil::command::generator : public petilil::event::generator {
-    // // protected:  inline static petilil::event::subscription * subscriptionRel(petilil::event::subscription * o);
-    // // public:     using                           collection = psyduck::linked::list<petilil::event::generator, petilil::event::subscription>;
-    // // protected:  unsigned long                   size;
-    // // protected:  petilil::event::subscription *  head;
-    // // protected:  petilil::event::subscription *  tail;
-    // // protected:  petilil::event::engine *        engine;
-    // // protected:  runnable::queue                 queue;
-    // // public:     inline petilil::command::subscription * add(petilil::event::subscription * o) override;
-    // // public:     inline petilil::command::subscription * del(petilil::event::subscription * o) override;
-    // // public:     virtual petilil::command::subscription * reg(commandable * command, unsigned int properties, ...);
-    // // protected:  inline explicit generator(petilil::event::engine * engine);
-    // // protected:  inline generator(void);
-    // // protected:  inline ~generator(void) override;
-    // // public:     generator(const petilil::command::generator & o) = delete;
-    // // public:     generator(petilil::command::generator && o) noexcept = delete;
-    // // public:     petilil::command::generator & operator=(const petilil::command::generator & o) = delete;
-    // // public:     petilil::command::generator & operator=(petilil::command::generator && o) noexcept = delete;
-    // };
+
+    class petilil::event::engine : public sync {
+    public:     struct generator {
+                public:     struct set {
+                            public:     petilil::commandable::generator * generator;
+                            };
+                };
+    protected:  petilil::event::queue * queue;
+    public:     engine(void);
+    public:     ~engine(void) override;
+    public:     engine(const petilil::event::engine & o) = delete;
+    public:     engine(petilil::event::engine && o) noexcept = delete;
+    public:     petilil::event::engine & operator=(const petilil::event::engine & o) = delete;
+    public:     petilil::event::engine & operator=(petilil::event::engine && o) noexcept = delete;
+    };
 
     inline const char * petilil::name(void) const noexcept {
         return petilil::tag;
