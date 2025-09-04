@@ -11,6 +11,7 @@
 #define   __POKEMONISM_PETILIL_COMMANDABLE_HH__
 
 #include <pokemonism/petilil.hh>
+#include <pokemonism/commandable.hh>
 
 namespace pokemonism {
     class petilil::commandable::event : public petilil::event {

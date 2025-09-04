@@ -15,7 +15,6 @@
 #include <pokemonism/generic/envelope.hh>
 
 #include <pokemonism/runnable.hh>
-#include <pokemonism/commandable.hh>
 #include <pokemonism/callbackable.hh>
 
 #include <pokemonism/pokemon.hh>
