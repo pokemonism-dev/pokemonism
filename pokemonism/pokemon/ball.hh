@@ -7,27 +7,29 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_BALL_HH__
-#define   __POKEMONISM_BALL_HH__
+#ifndef   __POKEMONISM_POKEMON_BALL_HH__
+#define   __POKEMONISM_POKEMON_BALL_HH__
 
 #include <pokemonism/allocator.hh>
 
 #include <pokemonism/pokemon.hh>
+#include <pokemonism/pokemon/faint.hh>
 
 namespace pokemonism {
 
-    // ReSharper disable once CppDFAConstantFunctionResult
-    inline int pokemon::ball::recall(const pokemon * monster) {
-        pokemon_training_check(monster == nullptr, return declaration::fail);
+    class pokemon::ball : public sync {
+    public:     static int recall(const pokemon * monster);
+    public:     ball(void) {}
+    public:     ~ball(void) override {}
+    public:     ball(const pokemon::ball & o) = delete;
+    public:     ball(pokemon::ball && o) noexcept = delete;
+    public:     pokemon::ball & operator=(const pokemon::ball & o) = delete;
+    public:     pokemon::ball & operator=(pokemon::ball && o) noexcept = delete;
+    };
 
-        printf("bye, %s!\n", monster->name());
 
-        delete monster;
-
-        return declaration::success;
-    }
 
 
 }
 
-#endif // __POKEMONISM_BALL_HH__
+#endif // __POKEMONISM_POKEMON_BALL_HH__

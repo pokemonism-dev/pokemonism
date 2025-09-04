@@ -26,23 +26,11 @@ public:     randomizer & operator=(randomizer && o) noexcept = delete;
 using command = petilil::commandable;
 
 int main(int argc, char ** argv) {
-    petilil * petilil = petilil::go();
-
-    printf("Hi %s\n", petilil->name());
-
     randomizer func;
     printf("%ld", primitivable::to<unsigned long>(func()));
 
     command::callback callback([](pokemonism::commandable & command, unsigned int, petilil::commandable::envelope & envelope, const pokemon::faint * e){});
-    //
-    // {
-    //     command::callback<randomizer, primitivable>::set callbackSet;
-    //     callbackSet.execute = [](randomizer & command, unsigned int, petilil::command::envelope<primitivable> & envelope){};
-    // }
-    //
-    // {
-    //     command::callback<randomizer, primitivable>::set callbackSet([](randomizer & command, unsigned int, petilil::command::envelope<primitivable> & envelope){});
-    // }
 
-    return pokemon::ball::recall(petilil->start());
+
+    return pokemon::ball::recall(pokemon::battle::start(petilil::go()));
 }
