@@ -23,12 +23,12 @@ namespace pokemonism {
     public:     template <pokemonname name = pokemon> static void clean(name * monster);
     public:     virtual const char * name(void) const noexcept = 0;
     public:     pokemon * clone(void) const override { return nullptr; }
-    public:     int lock(void) override { return declaration::fail; }
-    public:     int unlock(void) override { return declaration::fail; }
-    public:     int wait(void) override { return declaration::fail; }
-    public:     int wakeup(void) override { return declaration::fail; }
-    public:     int wait(long second, long nano) override { return declaration::fail; }
-    public:     int wakeup(bool all) override { return declaration::fail; }
+    public:     int lock(void) noexcept override { return declaration::fail; }
+    public:     int unlock(void) noexcept override { return declaration::fail; }
+    public:     int wait(void) noexcept override { return declaration::fail; }
+    public:     int wakeup(void) noexcept override { return declaration::fail; }
+    public:     int wait(long second, long nano) noexcept override { return declaration::fail; }
+    public:     int wakeup(bool all) noexcept override { return declaration::fail; }
     protected:  pokemon(void) {}
     protected:  ~pokemon(void) override {}
     public:     pokemon(const pokemon & o) = delete;
@@ -47,7 +47,7 @@ namespace pokemonism {
                 public:     constexpr static unsigned int sleep         = exception::level::information;
                 public:     constexpr static unsigned int paralysis     = exception::level::notice;
                 public:     constexpr static unsigned int burn          = exception::level::caution;
-                public:     constexpr static unsigned int position      = exception::level::warning;
+                public:     constexpr static unsigned int poison        = exception::level::warning;
                 public:     constexpr static unsigned int retreat       = exception::level::critical;
                 };
     public:     static const char * to(unsigned int level) {
@@ -59,7 +59,7 @@ namespace pokemonism {
                         case pokemon::faint::level::sleep:          return "sleep";
                         case pokemon::faint::level::paralysis:      return "paralysis";
                         case pokemon::faint::level::burn:           return "burn";
-                        case pokemon::faint::level::position:       return "position";
+                        case pokemon::faint::level::poison:         return "poison";
                         case pokemon::faint::level::retreat:        return "retreat";
                         default:                                    return "faint";
                     }
@@ -111,7 +111,7 @@ namespace pokemonism {
 } while (0)
 
 #define pokemon_retreat_check(condition, code)              pokemon_faint_check(condition, pokemonism::pokemon::faint::level::retreat, code)
-#define pokemon_position_check(condition, code)             pokemon_faint_check(condition, pokemonism::pokemon::faint::level::position, code)
+#define pokemon_poison_check(condition, code)               pokemon_faint_check(condition, pokemonism::pokemon::faint::level::poison, code)
 #define pokemon_burn_check(condition, code)                 pokemon_faint_check(condition, pokemonism::pokemon::faint::level::burn, code)
 #define pokemon_paralysis_check(condition, code)            pokemon_faint_check(condition, pokemonism::pokemon::faint::level::paralysis, code)
 #define pokemon_sleep_check(condition, code)                pokemon_faint_check(condition, pokemonism::pokemon::faint::level::sleep, code)
@@ -120,7 +120,7 @@ namespace pokemonism {
 #define pokemon_training_check(condition, code)             pokemon_faint_check(condition, pokemonism::pokemon::faint::level::training, code)
 
 #define pokemon_retreat_quick_check(condition)              pokemon_faint_check(condition, pokemonism::pokemon::faint::level::retreat, (void)(0))
-#define pokemon_position_quick_check(condition)             pokemon_faint_check(condition, pokemonism::pokemon::faint::level::position, (void)(0))
+#define pokemon_poison_quick_check(condition)               pokemon_faint_check(condition, pokemonism::pokemon::faint::level::poison, (void)(0))
 #define pokemon_burn_quick_check(condition)                 pokemon_faint_check(condition, pokemonism::pokemon::faint::level::burn, (void)(0))
 #define pokemon_paralysis_quick_check(condition)            pokemon_faint_check(condition, pokemonism::pokemon::faint::level::paralysis, (void)(0))
 #define pokemon_sleep_quick_check(condition)                pokemon_faint_check(condition, pokemonism::pokemon::faint::level::sleep, (void)(0))
@@ -129,7 +129,7 @@ namespace pokemonism {
 #define pokemon_training_quick_check(condition)             pokemon_faint_check(condition, pokemonism::pokemon::faint::level::training, (void)(0))
 
 #define pokemon_retreat_throw(condition, code)              pokemon_exception_throw("retreat", pokemonism::pokemon::faint::level::retreat, code)
-#define pokemon_position_throw(condition, code)             pokemon_exception_throw("position", pokemonism::pokemon::faint::level::position, code)
+#define pokemon_poison_throw(condition, code)               pokemon_exception_throw("poison", pokemonism::pokemon::faint::level::poison, code)
 #define pokemon_burn_throw(condition, code)                 pokemon_exception_throw("burn", pokemonism::pokemon::faint::level::burn, code)
 #define pokemon_paralysis_throw(condition, code)            pokemon_exception_throw("paralysis", pokemonism::pokemon::faint::level::paralysis, code)
 #define pokemon_sleep_throw(condition, code)                pokemon_exception_throw("sleep", pokemonism::pokemon::faint::level::sleep, code)
@@ -138,7 +138,7 @@ namespace pokemonism {
 #define pokemon_training_throw(condition, code)             pokemon_exception_throw("training", pokemonism::pokemon::faint::level::training, code)
 
 #define pokemon_retreat_quick_throw(condition)              pokemon_exception_throw("retreat", pokemonism::pokemon::faint::level::retreat, (void)(0))
-#define pokemon_position_quick_throw(condition)             pokemon_exception_throw("position", pokemonism::pokemon::faint::level::position, (void)(0))
+#define pokemon_poison_quick_throw(condition)               pokemon_exception_throw("poison", pokemonism::pokemon::faint::level::v, (void)(0))
 #define pokemon_burn_quick_throw(condition)                 pokemon_exception_throw("burn", pokemonism::pokemon::faint::level::burn, (void)(0))
 #define pokemon_paralysis_quick_throw(condition)            pokemon_exception_throw("paralysis", pokemonism::pokemon::faint::level::paralysis, (void)(0))
 #define pokemon_sleep_quick_throw(condition)                pokemon_exception_throw("sleep", pokemonism::pokemon::faint::level::sleep, (void)(0))
@@ -147,7 +147,7 @@ namespace pokemonism {
 #define pokemon_training_quick_throw(condition)             pokemon_exception_throw("training", pokemonism::pokemon::faint::level::training, (void)(0))
 
 #define pokemon_retreat_exit_check(condition, code)         pokemon_exit_check(condition, pokemonism::pokemon::faint::level::retreat, code)
-#define pokemon_position_exit_check(condition, code)        pokemon_exit_check(condition, pokemonism::pokemon::faint::level::position, code)
+#define pokemon_poison_exit_check(condition, code)          pokemon_exit_check(condition, pokemonism::pokemon::faint::level::poison, code)
 #define pokemon_burn_exit_check(condition, code)            pokemon_exit_check(condition, pokemonism::pokemon::faint::level::burn, code)
 #define pokemon_paralysis_exit_check(condition, code)       pokemon_exit_check(condition, pokemonism::pokemon::faint::level::paralysis, code)
 #define pokemon_sleep_exit_check(condition, code)           pokemon_exit_check(condition, pokemonism::pokemon::faint::level::sleep, code)
@@ -158,6 +158,7 @@ namespace pokemonism {
 namespace pokemonism {
 
     class pokemon::ball : public sync {
+    public:     static int recall(const pokemon * monster);
     public:     ball(void) {}
     public:     ~ball(void) override {}
     public:     ball(const pokemon::ball & o) = delete;
@@ -176,5 +177,7 @@ namespace pokemonism {
         pokemonLog("%s: retreat\n", monster->name());
     }
 }
+
+#include <pokemonism/pokemon/ball.hh>
 
 #endif // __POKEMONISM_POKEMON_HH__

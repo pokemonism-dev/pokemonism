@@ -11,10 +11,14 @@ set(POKEMONISM_HEADER                       src/pokemonism.hh
                                             src/pokemonism/log.hh
                                             src/pokemonism/sync.hh
                                             src/pokemonism/event.hh
+                                            src/pokemonism/envelope.hh
                                             src/pokemonism/allocator.hh
+                                            src/pokemonism/subscription.hh
                                             src/pokemonism/callable.hh
                                             src/pokemonism/runnable.hh
                                             src/pokemonism/cloneable.hh
+                                            src/pokemonism/envelopeable.hh
+                                            src/pokemonism/callbackable.hh
                                             src/pokemonism/primitivable.hh
                                             src/pokemonism/functionable.hh
                                             src/pokemonism/synchronizable.hh)
@@ -23,10 +27,14 @@ set(POKEMONISM_SOURCE                       src/pokemonism.cc
                                             src/pokemonism/log.cc
                                             src/pokemonism/sync.cc
                                             src/pokemonism/event.cc
+                                            src/pokemonism/envelope.cc
                                             src/pokemonism/allocator.cc
+                                            src/pokemonism/subscription.cc
                                             src/pokemonism/callable.cc
                                             src/pokemonism/runnable.cc
                                             src/pokemonism/cloneable.cc
+                                            src/pokemonism/envelopeable.cc
+                                            src/pokemonism/callbackable.cc
                                             src/pokemonism/primitivable.cc
                                             src/pokemonism/functionable.cc
                                             src/pokemonism/synchronizable.cc)

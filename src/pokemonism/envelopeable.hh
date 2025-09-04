@@ -14,16 +14,15 @@
 
 namespace pokemonism {
 
-    template <typename messageable = primitivable>
     class envelopeable {
-    public:     typedef messageable message;
-    public:     virtual messageable * messageablePop(void) = 0;
+    public:     typedef primitivable message;
+    public:     virtual primitivable * messagePop(void) = 0;
     public:     envelopeable(void) {}
     public:     virtual ~envelopeable(void) {}
-    public:     envelopeable(const envelopeable<messageable> & o) = delete;
-    public:     envelopeable(envelopeable<messageable> && o) noexcept = delete;
-    public:     envelopeable<messageable> & operator=(const envelopeable<messageable> & o) = delete;
-    public:     envelopeable<messageable> & operator=(envelopeable<messageable> && o) noexcept = delete;
+    public:     envelopeable(const envelopeable & o) = delete;
+    public:     envelopeable(envelopeable && o) noexcept = delete;
+    public:     envelopeable & operator=(const envelopeable & o) = delete;
+    public:     envelopeable & operator=(envelopeable && o) noexcept = delete;
     };
 
 }

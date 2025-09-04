@@ -15,12 +15,12 @@
 namespace pokemonism {
 
     class sync : public synchronizable {
-    public:     int lock(void) override { return declaration::fail; }
-    public:     int unlock(void) override { return declaration::fail; }
-    public:     int wait(void) override { return declaration::fail; }
-    public:     int wakeup(void) override { return declaration::fail; }
-    public:     int wait(long second, long nano) override { return declaration::fail; }
-    public:     int wakeup(bool all) override { return declaration::fail; }
+    public:     int lock(void) noexcept override { return declaration::fail; }
+    public:     int unlock(void) noexcept override { return declaration::fail; }
+    public:     int wait(void) noexcept override { return declaration::fail; }
+    public:     int wakeup(void) noexcept override { return declaration::fail; }
+    public:     int wait(long second, long nano) noexcept override { return declaration::fail; }
+    public:     int wakeup(bool all) noexcept override { return declaration::fail; }
     public:     sync(void) {}
     public:     ~sync(void) override {}
     public:     sync(const sync & o) = delete;

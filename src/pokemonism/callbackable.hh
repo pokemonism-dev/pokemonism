@@ -13,11 +13,11 @@
 namespace pokemonism {
 
     struct callbackable {
-    public:     typedef void (*type)(void *);
-    protected:  type func;
-    public:     template <typename convertable> inline callbackable::type get(void) const { return reinterpret_cast<convertable>(func); }
+    public:     typedef void (*function)(void *);
+    protected:  function func;
+    public:     template <typename convertable> inline callbackable::function get(void) const { return reinterpret_cast<convertable>(func); }
     public:     inline callbackable(void) : func(nullptr) {}
-    public:     inline explicit callbackable(callbackable::type f) : func(f) {}
+    public:     inline explicit callbackable(callbackable::function f) : func(f) {}
     };
 
 }

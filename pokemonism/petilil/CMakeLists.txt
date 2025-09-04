@@ -5,9 +5,25 @@ set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src)
 
-set(PETILIL_HEADER                          ../petilil.hh)
+set(PETILIL_HEADER                          ../petilil.hh
+                                            event.hh
+                                            event/link.hh
+                                            event/queue.hh
+                                            event/envelope.hh
+                                            event/generator.hh
+                                            event/subscription.hh
+                                            event/subscription/callback/set.hh
+                                            event/modifiable/subscription.hh)
 
-set(PETILIL_SOURCE                          ../petilil.cc)
+set(PETILIL_SOURCE                          ../petilil.cc
+                                            event.cc
+                                            event/link.cc
+                                            event/queue.cc
+                                            event/envelope.cc
+                                            event/generator.cc
+                                            event/subscription.cc
+                                            event/subscription/callback/set.cc
+                                            event/modifiable/subscription.cc)
 
 add_library(petilil-dev                     ${PETILIL_HEADER}
                                             ${PETILIL_SOURCE})

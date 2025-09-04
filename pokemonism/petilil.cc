@@ -18,8 +18,9 @@ namespace pokemonism {
     }
 
     petilil * petilil::start(void) {
+        // TODO: IMPLEMENT THIS
         while (clean == nullptr) {
-            queue->on();
+            // queue->on();
         }
 
         clean(this);

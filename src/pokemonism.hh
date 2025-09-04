@@ -27,6 +27,8 @@ namespace pokemonism {
         constexpr int               success = 0;
         constexpr int               invalid = -1;
         constexpr int               infinite = -1;
+        constexpr int               zero = 0;
+        constexpr int               none = 0;
 
         using                       exception = std::exception;
     }
