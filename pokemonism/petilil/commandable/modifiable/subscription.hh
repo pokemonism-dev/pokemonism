@@ -14,6 +14,12 @@
 
 namespace pokemonism {
 
+    inline pokemonism::commandable * petilil::commandable::modifiable::subscription::objectPop(void) {
+        pokemonism::commandable * o = object;
+        object = nullptr;
+        return o;
+    }
+
     inline petilil::commandable::modifiable::subscription::subscription(pokemonism::commandable * object, unsigned int properties, const petilil::commandable::callback::set & callbackSet) : petilil::commandable::subscription(object, properties, callbackSet) {
 
     }
