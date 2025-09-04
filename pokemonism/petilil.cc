@@ -12,23 +12,28 @@
 
 namespace pokemonism {
 
+    static petilil * singleton = nullptr;
+
     petilil * petilil::go(void) {
-        // ### 20280904 | PETILIL | MORE CONCEPT
-        return new petilil();
+        if (singleton == nullptr) {
+            // ### 20250904 | TERMINATOR
+            return singleton = new petilil();
+        }
+        return singleton;
     }
 
     petilil * petilil::start(void) {
-        // TODO: IMPLEMENT THIS
-        while (clean == nullptr) {
-            // queue->on();
-        }
 
-        clean(this);
+        // while (clean == nullptr) {
+        //     // queue->on();
+        // }
+        //
+        // clean(this);
         return this;
     }
 
     petilil::petilil(void) : clean(nullptr), engine(nullptr) {
-
+        engine = new petilil::event::engine();
     }
 
 

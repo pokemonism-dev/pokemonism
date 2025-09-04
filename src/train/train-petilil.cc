@@ -28,6 +28,8 @@ using command = petilil::commandable;
 int main(int argc, char ** argv) {
     petilil * petilil = petilil::go();
 
+    printf("Hi %s\n", petilil->name());
+
     randomizer func;
     printf("%ld", primitivable::to<unsigned long>(func()));
 

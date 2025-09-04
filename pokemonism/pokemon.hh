@@ -20,6 +20,7 @@ namespace pokemonism {
     class pokemon : public cloneable, public synchronizable {
     public:     class faint;
     public:     class ball;
+    public:     class battle;
     public:     template <pokemonname name = pokemon> static void clean(name * monster);
     public:     template <typename convertable, typename original> static convertable cast(original o);
     public:     virtual const char * name(void) const noexcept = 0;

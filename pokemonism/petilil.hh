@@ -22,14 +22,13 @@
 
 namespace pokemonism {
 
-    // ### TODO: IMPLEMENT THIS
     class petilil : public pokemon {
     public:     constexpr static const char * tag = "petilil";
     public:     typedef void (*cleaner)(petilil *);
     public:     class event : public pokemonism::event {
                 public:     class link;
                 public:     class queue;
-                public:     class engine;           // ### TODO | DEFINE THIS
+                public:     class engine;
                 public:     class envelope;
                 public:     struct callback;
                 public:     class generator;
@@ -284,8 +283,6 @@ namespace pokemonism {
     public:     friend petilil::event::generator::collection;
     };
 
-
-
     struct petilil::commandable {
     public:     class link;
     public:     class event;
@@ -297,28 +294,13 @@ namespace pokemonism {
     public:     struct modifiable;
     };
 
-    class petilil::event::engine : public sync {
-    public:     struct generator {
-                public:     struct set {
-                            public:     petilil::commandable::generator * generator;
-                            };
-                };
-    protected:  petilil::event::queue * queue;
-    public:     engine(void);
-    public:     ~engine(void) override;
-    public:     engine(const petilil::event::engine & o) = delete;
-    public:     engine(petilil::event::engine && o) noexcept = delete;
-    public:     petilil::event::engine & operator=(const petilil::event::engine & o) = delete;
-    public:     petilil::event::engine & operator=(petilil::event::engine && o) noexcept = delete;
-    };
-
-
 }
 
 // ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/petilil/event.hh>
 #include <pokemonism/petilil/event/link.hh>
 #include <pokemonism/petilil/event/queue.hh>
+#include <pokemonism/petilil/event/engine.hh>
 #include <pokemonism/petilil/event/envelope.hh>
 #include <pokemonism/petilil/event/generator.hh>
 #include <pokemonism/petilil/event/subscription.hh>

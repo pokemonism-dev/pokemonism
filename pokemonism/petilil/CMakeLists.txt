@@ -9,6 +9,7 @@ set(PETILIL_HEADER                          ../petilil.hh
                                             event.hh
                                             event/link.hh
                                             event/queue.hh
+                                            event/engine.hh
                                             event/envelope.hh
                                             event/generator.hh
                                             event/subscription.hh
@@ -26,6 +27,7 @@ set(PETILIL_SOURCE                          ../petilil.cc
                                             event.cc
                                             event/link.cc
                                             event/queue.cc
+                                            event/engine.cc
                                             event/envelope.cc
                                             event/generator.cc
                                             event/subscription.cc

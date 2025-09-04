@@ -158,6 +158,7 @@ namespace pokemonism {
     public:     petilil::commandable::generator & operator=(const petilil::commandable::generator & o) = delete;
     public:     petilil::commandable::generator & operator=(petilil::commandable::generator && o) noexcept = delete;
     public:     friend petilil::commandable::generator::collection;
+    public:     friend petilil::event::engine;
     };
 
     class petilil::commandable::processor : public petilil::event::processor {
