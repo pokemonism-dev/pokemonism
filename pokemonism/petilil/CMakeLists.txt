@@ -14,6 +14,8 @@ set(PETILIL_HEADER                          ../petilil.hh
                                             event/subscription.hh
                                             event/subscription/callback/set.hh
                                             event/modifiable/subscription.hh
+                                            command.hh
+                                            commandable.hh
                                             commandable/event.hh
                                             commandable/generator.hh
                                             commandable/processor.hh
@@ -29,6 +31,8 @@ set(PETILIL_SOURCE                          ../petilil.cc
                                             event/subscription.cc
                                             event/subscription/callback/set.cc
                                             event/modifiable/subscription.cc
+                                            command.cc
+                                            commandable.cc
                                             commandable/event.cc
                                             commandable/generator.cc
                                             commandable/processor.cc
