@@ -11,6 +11,7 @@ set(POKEMONISM_HEADER                       src/pokemonism.hh
                                             src/pokemonism/log.hh
                                             src/pokemonism/sync.hh
                                             src/pokemonism/event.hh
+                                            src/pokemonism/allocator.hh
                                             src/pokemonism/callable.hh
                                             src/pokemonism/runnable.hh
                                             src/pokemonism/cloneable.hh
@@ -22,6 +23,7 @@ set(POKEMONISM_SOURCE                       src/pokemonism.cc
                                             src/pokemonism/log.cc
                                             src/pokemonism/sync.cc
                                             src/pokemonism/event.cc
+                                            src/pokemonism/allocator.cc
                                             src/pokemonism/callable.cc
                                             src/pokemonism/runnable.cc
                                             src/pokemonism/cloneable.cc
@@ -33,6 +35,7 @@ add_library(pokemonism-dev                  ${POKEMONISM_HEADER}
                                             ${POKEMONISM_SOURCE})
 
 add_subdirectory(pokemonism/pokemon)
+add_subdirectory(pokemonism/psyduck)
 add_subdirectory(pokemonism/petilil)
 
 add_executable(pokemonism-cli               pokemonism.cc)
