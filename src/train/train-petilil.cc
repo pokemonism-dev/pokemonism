@@ -27,10 +27,9 @@ using command = petilil::commandable;
 
 int main(int argc, char ** argv) {
     randomizer func;
-    printf("%ld", primitivable::to<unsigned long>(func()));
+    printf("%ld\n", primitivable::to<unsigned long>(func()));
 
     command::callback callback([](pokemonism::commandable & command, unsigned int, petilil::commandable::envelope & envelope, const pokemon::faint * e){});
-
 
     return pokemon::ball::recall(pokemon::battle::start(petilil::go()));
 }

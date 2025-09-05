@@ -11,11 +11,13 @@
 
 namespace pokemonism {
 
-    pokemon * pokemon::battle::start(pokemon * monster) {
-        pokemon_training_check(monster == nullptr, return monster);
+    void pokemon::battle::fight(pokemon * monster) {
+        pokemon_training_check(monster == nullptr, return);
 
         printf("Hi %s!\n", monster->name());
 
-        return monster->start();
+        monster->start();
+
+        monster->resultSet(monster->fight());
     }
 }

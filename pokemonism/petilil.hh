@@ -65,6 +65,7 @@ namespace pokemonism {
                     clean = f;
                 }
     public:     petilil * start(void) override;
+    public:     int fight(void) override;
     protected:  petilil(void);
     protected:  ~petilil(void) override { pokemon_training_exit_check(clean != nullptr, (void)(0)); }
     public:     petilil(const petilil & o) = delete;

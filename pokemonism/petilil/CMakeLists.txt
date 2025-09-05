@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 
-project(petilil LANGUAGES CXX)
+project(pokemonism-petilil LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src)
@@ -41,5 +41,5 @@ set(PETILIL_SOURCE                          ../petilil.cc
                                             commandable/subscription.cc
                                             commandable/modifiable/subscription.cc)
 
-add_library(petilil-dev                     ${PETILIL_HEADER}
+add_library(pokemonism-petilil-dev          ${PETILIL_HEADER}
                                             ${PETILIL_SOURCE})

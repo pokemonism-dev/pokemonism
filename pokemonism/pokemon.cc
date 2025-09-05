@@ -11,4 +11,9 @@
 #include "pokemon.hh"
 
 namespace pokemonism {
+
+    pokemon::pokemon(void) : result(pokemon::battle::result::win) {
+
+    }
+
 }

@@ -19,7 +19,7 @@ namespace pokemonism {
     }
 
     int petilil::event::engine::on(void) {
-        if (queue != nullptr) {
+        if (queue == nullptr) {
             queue = new petilil::event::queue();
             generator.command = new petilil::commandable::generator(this);
         }

@@ -23,17 +23,23 @@ namespace pokemonism {
     }
 
     petilil * petilil::start(void) {
+        if (engine == nullptr) {
+            engine = new petilil::event::engine();
 
-        // while (clean == nullptr) {
-        //     // queue->on();
-        // }
-        //
-        // clean(this);
-        return this;
+            engine->on();
+        }
+
+        return nullptr;
+    }
+
+    int petilil::fight(void) {
+        pokemon_training_check(engine == nullptr, return pokemon::battle::result::lose);
+
+        return engine->run();
     }
 
     petilil::petilil(void) : clean(nullptr), engine(nullptr) {
-        engine = new petilil::event::engine();
+
     }
 
 

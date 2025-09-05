@@ -15,7 +15,12 @@
 namespace pokemonism {
 
     class pokemon::battle {
-    public:     static pokemon * start(pokemon * monster);
+    public:     struct result {
+                public:     constexpr static int win = declaration::success;
+                public:     constexpr static int lose = declaration::fail;
+                };
+    protected:  static void fight(pokemon * monster);
+    public:     template <pokemonname name> static name * start(name * monster);
     public:     battle(void) {}
     public:     virtual ~battle(void) {}
     public:     battle(const pokemon::battle & o) = delete;
@@ -23,6 +28,11 @@ namespace pokemonism {
     public:     pokemon::battle & operator=(const pokemon::battle & o) = delete;
     public:     pokemon::battle & operator=(pokemon::battle && o) noexcept = delete;
     };
+
+    template <pokemonname name> name * pokemon::battle::start(name * monster) {
+        pokemon::battle::fight(monster);
+        return monster;
+    }
 
 }
 
