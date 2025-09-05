@@ -19,13 +19,15 @@ namespace pokemonism {
     class pokemon : public pokemonism::sdk::sync {
     public:     class center;
     protected:  static pokemon * singleton;
+    protected:  int result;
     public:     virtual const char * name(void) const noexcept = 0;
     public:     virtual const char * cry(void) const noexcept = 0;
     public:     virtual void heal(void) = 0;
     public:     virtual pokemon * fight(void) = 0;
     public:     virtual pokemon * go(void) = 0;
     public:     virtual int ready(void) = 0;
-    protected:  pokemon(void) {}
+    public:     virtual int resultGet(void) const { return result; }
+    protected:  pokemon(void) : result() {}
     protected:  ~pokemon(void) override {}
     public:     pokemon(const pokemon & o) = delete;
     public:     pokemon(pokemon && o) noexcept = delete;

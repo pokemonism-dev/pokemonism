@@ -16,9 +16,11 @@ namespace pokemonism {
 
     trainerizable * trainerizable::singleton = nullptr;
 
-    void trainerizable::recall(pokemon * monster) {
+    int trainerizable::recall(pokemon * monster) {
         pokemon::center::heal(monster);
         printf("%s: you did it, %s!\n", name(), monster->name());
+
+        return monster->resultGet();
     }
 
 }

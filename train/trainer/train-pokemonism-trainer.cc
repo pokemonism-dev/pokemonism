@@ -19,15 +19,6 @@ int main(int argc, char ** argv) {
 
     pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
 
-    // pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
-    //
-    // lana->recall(pokemonism::battle::start(lana->go<pokemonism::petilil<pokemonism::lana>>()));
+    return lana->recall(battle::finish(battle::start(petilil->go())));
 
-    lana->recall(battle::finish(battle::start(petilil->go())));
-
-    // battle::finish(battle::start(petilil->go()));
-
-    // lana->recall();
-
-    return declaration::success;
 }
