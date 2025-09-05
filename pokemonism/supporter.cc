@@ -1,0 +1,14 @@
+/**
+ * @file            pokemonism/supporter.cc
+ * @brief
+ * @details
+ * 
+ * @author          snorlax <snorlax@pokemonism.dev>
+ * @since           Sep 5, 2025
+ */
+
+
+#include "supporter.hh"
+
+namespace pokemonism {
+}
