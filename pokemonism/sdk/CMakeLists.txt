@@ -9,6 +9,7 @@ set(POKEMONISM_HEADER                       pokemonism.hh
                                             pokemonism/log.hh
                                             pokemonism/sync.hh
                                             pokemonism/event.hh
+                                            pokemonism/exception.hh
                                             pokemonism/generic/envelope.hh
                                             pokemonism/allocator.hh
                                             pokemonism/subscription.hh
@@ -27,6 +28,7 @@ set(POKEMONISM_SOURCE                       pokemonism.cc
                                             pokemonism/log.cc
                                             pokemonism/sync.cc
                                             pokemonism/event.cc
+                                            pokemonism/exception.cc
                                             pokemonism/generic/envelope.cc
                                             pokemonism/allocator.cc
                                             pokemonism/subscription.cc

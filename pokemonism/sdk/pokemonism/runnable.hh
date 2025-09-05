@@ -14,8 +14,6 @@
 #include <pokemonism/sync.hh>
 #include <pokemonism/linked/list.hh>
 
-// #include <pokemonism/psyduck/linked/list.hh>
-
 namespace pokemonism {
 
     class runnable {
