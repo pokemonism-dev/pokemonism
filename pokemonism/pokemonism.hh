@@ -33,8 +33,6 @@ namespace pokemonism {
 
         using                       exception = std::exception;
     }
-
-    const char * version(void);
 }
 
 #define pointof(o)                  (&(o))
