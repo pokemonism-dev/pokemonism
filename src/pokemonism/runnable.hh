@@ -12,8 +12,9 @@
 
 #include <pokemonism.hh>
 #include <pokemonism/sync.hh>
+#include <pokemonism/linked/list.hh>
 
-#include <pokemonism/psyduck/linked/list.hh>
+// #include <pokemonism/psyduck/linked/list.hh>
 
 namespace pokemonism {
 
@@ -41,22 +42,22 @@ namespace pokemonism {
                 public:     node(runnable::queue::node && o) noexcept = delete;
                 public:     runnable::queue::node & operator=(const runnable::queue::node & o) = delete;
                 public:     runnable::queue::node & operator=(runnable::queue::node && o) noexcept = delete;
-                public:     friend psyduck::linked::list<runnable::queue, runnable::queue::node>;
+                public:     friend linked::list<runnable::queue, runnable::queue::node>;
                 public:     friend runnable::queue;
                 };
-    public:     using                       collection = psyduck::linked::list<runnable::queue, runnable::queue::node>;
+    public:     using                       collection = linked::list<runnable::queue, runnable::queue::node>;
     protected:  unsigned long               size;
     protected:  runnable::queue::node *     head;
     protected:  runnable::queue::node *     tail;
     public:     inline virtual runnable::queue::node * add(runnable::queue::node * func) {
-                    pokemon_training_check(func == nullptr || func->container != nullptr, return func);
+                    pokemon_develop_check(func == nullptr || func->container != nullptr, return func);
 
                     collection::add(this, func, *this);
 
                     return nullptr;
                 }
     public:     inline virtual runnable::queue::node * del(runnable::queue::node * func) {
-                    pokemon_training_check(func == nullptr || func->container != this, return func);
+                    pokemon_develop_check(func == nullptr || func->container != this, return func);
 
                     collection::del(this, func, *this);
 
@@ -66,7 +67,7 @@ namespace pokemonism {
                     lock();
                     const unsigned long limit = size < n ? size : n;
                     for (n = 0; n < size && n < limit; n = n + 1) {
-                        runnable::queue::node * func = psyduck::linked::list<runnable::queue, runnable::queue::node>::pop(this);
+                        runnable::queue::node * func = collection::pop(this);
                         unlock();
                         if (func) {
                             (*func)();

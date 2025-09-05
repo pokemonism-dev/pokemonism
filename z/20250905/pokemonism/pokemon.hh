@@ -18,6 +18,7 @@
 namespace pokemonism {
 
     class pokemon : public cloneable, public synchronizable {
+    public:     class monster;
     public:     class faint;
     public:     class ball;
     public:     class battle;

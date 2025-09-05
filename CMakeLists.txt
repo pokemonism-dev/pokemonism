@@ -22,7 +22,8 @@ set(POKEMONISM_HEADER                       src/pokemonism.hh
                                             src/pokemonism/callbackable.hh
                                             src/pokemonism/primitivable.hh
                                             src/pokemonism/functionable.hh
-                                            src/pokemonism/synchronizable.hh)
+                                            src/pokemonism/synchronizable.hh
+                                            src/pokemonism/linked/list.hh)
 
 set(POKEMONISM_SOURCE                       src/pokemonism.cc
                                             src/pokemonism/log.cc
@@ -39,18 +40,19 @@ set(POKEMONISM_SOURCE                       src/pokemonism.cc
                                             src/pokemonism/callbackable.cc
                                             src/pokemonism/primitivable.cc
                                             src/pokemonism/functionable.cc
-                                            src/pokemonism/synchronizable.cc)
+                                            src/pokemonism/synchronizable.cc
+                                            src/pokemonism/linked/list.cc)
 
 add_library(pokemonism-dev                  ${POKEMONISM_HEADER}
                                             ${POKEMONISM_SOURCE})
 
-add_subdirectory(pokemonism/item)
-add_subdirectory(pokemonism/tool)
-add_subdirectory(pokemonism/supporter)
-add_subdirectory(pokemonism/stadium)
-add_subdirectory(pokemonism/pokemon)
-add_subdirectory(pokemonism/psyduck)
-add_subdirectory(pokemonism/petilil)
+#add_subdirectory(pokemonism/item)
+#add_subdirectory(pokemonism/tool)
+#add_subdirectory(pokemonism/supporter)
+#add_subdirectory(pokemonism/stadium)
+#add_subdirectory(pokemonism/pokemon)
+#add_subdirectory(pokemonism/psyduck)
+#add_subdirectory(pokemonism/petilil)
 
 add_executable(pokemonism-cli               pokemonism.cc)
 

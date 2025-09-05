@@ -15,16 +15,16 @@
 namespace pokemonism {
 
     class lana : public pokemon::trainer {
-    protected:  static lana & singleton;
-    public:     static lana & one(void);
-    public:     static const char * name(void) { return singleton.name_(); }
+    protected:  static lana * singleton;
+    public:     static const char * name(void) { return singleton->name_(); }
     public:     const char * name_(void) const noexcept override { return "lana"; }
-    protected:  lana(void);
-    protected:  ~lana(void) override;
+    protected:  lana(void) {}
+    protected:  ~lana(void) override {}
     public:     lana(const lana & o) = delete;
     public:     lana(lana && o) noexcept = delete;
     public:     lana & operator=(const lana & o) = delete;
     public:     lana & operator=(lana && o) noexcept = delete;
+    public:     friend pokemon::trainer;
     };
 
 }

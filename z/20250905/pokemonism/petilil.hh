@@ -24,6 +24,7 @@ namespace pokemonism {
 
     class petilil : public pokemon {
     public:     constexpr static const char * tag = "petilil";
+    public:     static petilil * singleton;
     public:     typedef void (*cleaner)(petilil *);
     public:     class event : public pokemonism::event {
                 public:     class link;
