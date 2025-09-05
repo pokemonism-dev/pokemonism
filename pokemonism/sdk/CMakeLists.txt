@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD 23)
 set(POKEMONISM_SDK_HEADER                   log.hh
                                             sync.hh
                                             event.hh
+                                            event/link.hh
+                                            event/queue.hh
+                                            event/engine.hh
+                                            event/envelope.hh
+                                            event/generator.hh
+                                            event/subscription.hh
                                             exception.hh
                                             generic/envelope.hh
                                             allocator.hh
@@ -19,11 +25,18 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             primitivable.hh
                                             functionable.hh
                                             synchronizable.hh
-                                            linked/list.hh)
+                                            linked/list.hh
+                                            )
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
                                             event.cc
+                                            event/link.cc
+                                            event/queue.cc
+                                            event/engine.cc
+                                            event/envelope.cc
+                                            event/generator.cc
+                                            event/subscription.cc
                                             exception.cc
                                             generic/envelope.cc
                                             allocator.cc

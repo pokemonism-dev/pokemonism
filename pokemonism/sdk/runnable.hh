@@ -63,7 +63,7 @@ namespace pokemonism::sdk {
                 }
     public:     inline virtual unsigned long operator()(unsigned long n = declaration::infinite) {
                     lock();
-                    const unsigned long limit = size < n ? size : n;
+                    const unsigned long limit = n;
                     for (n = 0; n < size && n < limit; n = n + 1) {
                         runnable::queue::node * func = collection::pop(this);
                         unlock();
