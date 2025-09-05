@@ -20,8 +20,11 @@ namespace pokemonism {
     public:     class center;
     protected:  static pokemon * singleton;
     public:     virtual const char * name(void) const noexcept = 0;
+    public:     virtual const char * cry(void) const noexcept = 0;
     public:     virtual void heal(void) = 0;
-    public:     virtual int fight(void) = 0;
+    public:     virtual pokemon * fight(void) = 0;
+    public:     virtual pokemon * go(void) = 0;
+    public:     virtual int ready(void) = 0;
     protected:  pokemon(void) {}
     protected:  ~pokemon(void) override {}
     public:     pokemon(const pokemon & o) = delete;

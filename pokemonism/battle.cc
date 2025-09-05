@@ -15,6 +15,14 @@
 namespace pokemonism {
 
     pokemon * battle::start(pokemon * monster) {
+        printf("%s: ready!\n", monster->name());
+        monster->ready();
+        printf("%s: fight!\n", monster->name());
+        return monster->fight();
+    }
+
+    pokemon * battle::finish(pokemon * monster) {
+        printf("%s: %s!\n", monster->name(), monster->cry());
         return monster;
     }
 }

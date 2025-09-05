@@ -10,8 +10,15 @@
 
 #include "trainerizable.hh"
 
+#include "pokemon.hh"
+
 namespace pokemonism {
 
     trainerizable * trainerizable::singleton = nullptr;
+
+    void trainerizable::recall(pokemon * monster) {
+        pokemon::center::heal(monster);
+        printf("%s: you did it, %s!\n", name(), monster->name());
+    }
 
 }

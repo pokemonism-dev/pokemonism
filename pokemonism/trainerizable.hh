@@ -14,9 +14,12 @@
 
 namespace pokemonism {
 
+    class pokemon;
+
     class trainerizable : public pokemonism::sdk::sync {
     protected:  static trainerizable * singleton;
     public:     virtual const char * name(void) const noexcept = 0;
+    public:     virtual void recall(pokemon * monster);
     protected:  trainerizable(void) {}
     protected:  ~trainerizable(void) override {}
     public:     trainerizable(const trainerizable & o) = delete;

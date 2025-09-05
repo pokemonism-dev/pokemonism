@@ -12,6 +12,8 @@
 
 #include <pokemonism/trainerizable.hh>
 
+#include <pokemonism/faint.hh>
+
 namespace pokemonism {
 
     class pokemon;
@@ -33,10 +35,13 @@ namespace pokemonism {
             static monster o;
 
             monster::singleton = pointof(o);
+
+            printf("%s: Hi, %s!\n", name(), monster::singleton->name());
         }
 
         return monster::singleton;
     }
+
 }
 
 #include <pokemonism/pokemon.hh>

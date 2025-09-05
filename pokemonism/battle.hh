@@ -10,9 +10,7 @@
 #ifndef   __POKEMONISM_BATTLE_HH__
 #define   __POKEMONISM_BATTLE_HH__
 
-#include <pokemonism.hh>
-
-#include "sdk/sync.hh"
+#include <pokemonism/sdk/sync.hh>
 
 namespace pokemonism {
 
@@ -20,6 +18,7 @@ namespace pokemonism {
 
     class battle : public pokemonism::sdk::sync {
     public:     static pokemon * start(pokemon * monster);
+    public:     static pokemon * finish(pokemon * monster);
     public:     battle(void) {}
     public:     ~battle(void) override {}
     public:     battle(const battle & o) = delete;
