@@ -44,8 +44,10 @@ set(POKEMONISM_SOURCE                       src/pokemonism.cc
 add_library(pokemonism-dev                  ${POKEMONISM_HEADER}
                                             ${POKEMONISM_SOURCE})
 
-add_subdirectory(pokemonism/supporter)
 add_subdirectory(pokemonism/item)
+add_subdirectory(pokemonism/tool)
+add_subdirectory(pokemonism/supporter)
+add_subdirectory(pokemonism/stadium)
 add_subdirectory(pokemonism/pokemon)
 add_subdirectory(pokemonism/psyduck)
 add_subdirectory(pokemonism/petilil)

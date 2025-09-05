@@ -10,14 +10,14 @@
 #ifndef   __POKEMONISM_POKEMON_BALL_HH__
 #define   __POKEMONISM_POKEMON_BALL_HH__
 
-#include <pokemonism/allocator.hh>
+#include <pokemonism/item.hh>
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/pokemon.hh>
-#include <pokemonism/pokemon/faint.hh>
 
 namespace pokemonism {
 
-    class pokemon::ball : public sync {
+    class pokemon::ball : public pokemonism::item {
     public:     static int recall(const pokemon * monster);
     public:     ball(void) {}
     public:     ~ball(void) override {}

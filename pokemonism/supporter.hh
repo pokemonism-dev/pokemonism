@@ -16,15 +16,7 @@
 namespace pokemonism {
 
     class supporter {
-    public:     virtual void capture(pokemon * mon) = 0;
-    public:     virtual pokemon * evolve(pokemon * mon) = 0;
-    public:     virtual pokemon * evolve(pokemon * mon, item * item) = 0;
-    public:     supporter(void) {}
-    public:     virtual ~supporter(void) {}
-    public:     supporter(const supporter & o) = delete;
-    public:     supporter(supporter && o) noexcept = delete;
-    public:     supporter & operator=(const supporter & o) = delete;
-    public:     supporter & operator=(supporter && o) noexcept = delete;
+
     };
 
 }

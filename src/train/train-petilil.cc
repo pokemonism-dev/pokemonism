@@ -26,6 +26,9 @@ public:     randomizer & operator=(randomizer && o) noexcept = delete;
 using command = petilil::commandable;
 
 int main(int argc, char ** argv) {
+    // 포켓몬 트레이너는 정적 객체이다. 모두 싱글톤...
+
+
     randomizer func;
     printf("%ld\n", primitivable::to<unsigned long>(func()));
 

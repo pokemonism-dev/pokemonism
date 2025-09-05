@@ -21,6 +21,7 @@ namespace pokemonism {
     public:     class faint;
     public:     class ball;
     public:     class battle;
+    public:     class trainer;
     public:     template <pokemonname name = pokemon> static void clean(name * monster);
     public:     template <typename convertable, typename original> static convertable cast(original o);
     protected:  int result;
@@ -44,21 +45,13 @@ namespace pokemonism {
     public:     pokemon & operator=(pokemon && o) noexcept = delete;
     };
 
-
-
-}
-
-
-namespace pokemonism {
-
-
-
 }
 
 // ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/pokemon/faint.hh>
 #include <pokemonism/pokemon/ball.hh>
 #include <pokemonism/pokemon/battle.hh>
+#include <pokemonism/pokemon/trainer.hh>
 // ReSharper restore CppUnusedIncludeDirective
 
 #endif // __POKEMONISM_POKEMON_HH__

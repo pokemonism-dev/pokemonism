@@ -7,6 +7,8 @@
  * @since           9월 04, 2025
  */
 
+#include <pokemonism/allocator.hh>
+#include <pokemonism/pokemon/faint.hh>
 
 #include "ball.hh"
 
