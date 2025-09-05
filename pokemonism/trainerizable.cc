@@ -8,8 +8,10 @@
  */
 
 
-#include "trainer.hh"
+#include "trainerizable.hh"
 
 namespace pokemonism {
+
+    trainerizable * trainerizable::singleton = nullptr;
 
 }

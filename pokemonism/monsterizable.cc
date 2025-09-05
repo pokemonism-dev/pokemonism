@@ -8,8 +8,7 @@
  */
 
 
-#include "trainer.hh"
+#include "monsterizable.hh"
 
 namespace pokemonism {
-
 }

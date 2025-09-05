@@ -10,6 +10,7 @@
 #include <pokemonism/trainer.hh>
 #include <pokemonism/trainer/lana.hh>
 #include <pokemonism/pokemon/petilil.hh>
+#include <pokemonism/battle.hh>
 
 using namespace pokemonism;
 
@@ -18,9 +19,9 @@ int main(int argc, char ** argv) {
 
     pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
 
-    lana->go<pokemonism::petilil<pokemonism::lana>>();
-
-    lana->recall(petilil);
+    // pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
+    //
+    // lana->recall(pokemonism::battle::start(lana->go<pokemonism::petilil<pokemonism::lana>>()));
 
     return declaration::success;
 }

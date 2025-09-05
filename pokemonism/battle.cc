@@ -8,8 +8,13 @@
  */
 
 
-#include "trainer.hh"
+#include "battle.hh"
+
+#include "pokemon.hh"
 
 namespace pokemonism {
 
+    pokemon * battle::start(pokemon * monster) {
+        return monster;
+    }
 }

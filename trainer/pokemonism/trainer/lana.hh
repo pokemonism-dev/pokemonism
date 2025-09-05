@@ -17,37 +17,27 @@
 namespace pokemonism {
 
     class lana final : public trainer {
-    private:    static lana * singleton;
+    protected:  static lana * character;
     public:     inline static lana * on(void);
-    public:     inline const char * name(void) const noexcept override;
-    private:    inline lana(void);
-    private:    inline ~lana(void) override;
+    public:     inline const char * name(void) const noexcept override { return "lana"; }
+    private:    inline lana(void) { }
+    private:    inline ~lana(void) override {}
     public:     lana(const lana & o) = delete;
     public:     lana(lana && o) noexcept = delete;
     public:     lana & operator=(const lana & o) = delete;
     public:     lana & operator=(lana && o) noexcept = delete;
     };
 
-    lana * lana::on(void) {
-        if (singleton == nullptr) {
+    inline lana * lana::on(void) {
+        if (character == nullptr) {
             static lana o;
-            singleton = pointof(o);
+            character = pointof(o);
 
-            printf("%s: Hi, friend!\n", singleton->name());
+            // ### IMPLEMENT | 20250905 | 개인 맞춤형 인사를 만들자. 수련(lana) 의 인사는 ?
+            printf("%s: Hi, friend!\n", character->name());
         }
-        return singleton;
+        return character;
     }
-
-    const char * lana::name(void) const noexcept { return "lana"; }
-
-    inline lana::lana(void) {
-
-    }
-
-    inline lana::~lana(void) {
-
-    }
-
 
 }
 

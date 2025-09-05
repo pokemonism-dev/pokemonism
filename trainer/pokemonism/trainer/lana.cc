@@ -12,6 +12,6 @@
 
 namespace pokemonism {
 
-    lana * lana::singleton = nullptr;
+    lana * lana::character = nullptr;
 
 }

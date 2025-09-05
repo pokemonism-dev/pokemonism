@@ -10,18 +10,16 @@
 #ifndef   __POKEMONISM_TRAINER_HH__
 #define   __POKEMONISM_TRAINER_HH__
 
-#include <pokemonism/sdk/sync.hh>
+#include <pokemonism/trainerizable.hh>
 
 namespace pokemonism {
 
     class pokemon;
 
-    class trainer : public pokemonism::sdk::sync {
-    public:     template <pokemonname monsterizable = pokemon> inline monsterizable * capture(void);
-    public:     template <pokemonname monsterizable = pokemon> inline monsterizable * go(void);
-    public:     virtual const char * name(void) const noexcept = 0;
-    public:     inline trainer(void);
-    public:     inline ~trainer(void) override;
+    class trainer : public trainerizable {
+    public:     template <pokemonname monster = pokemon> monster * capture(void);
+    protected:  inline trainer(void) {}
+    protected:  inline ~trainer(void) override {}
     public:     trainer(const trainer & o) = delete;
     public:     trainer(trainer && o) noexcept = delete;
     public:     trainer & operator=(const trainer & o) = delete;
@@ -29,14 +27,16 @@ namespace pokemonism {
     public:     friend pokemon;
     };
 
-    inline trainer::trainer(void) {
+    template <pokemonname monster>
+    monster * trainer::capture(void) {
+        if (monster::singleton == nullptr) {
+            static monster o;
 
+            monster::singleton = pointof(o);
+        }
+
+        return monster::singleton;
     }
-
-    inline trainer::~trainer(void) {
-
-    }
-
 }
 
 #include <pokemonism/pokemon.hh>
