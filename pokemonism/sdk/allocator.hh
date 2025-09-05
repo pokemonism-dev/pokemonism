@@ -1,5 +1,5 @@
 /**
- * @file        pokemonism/allocator.hh
+ * @file        pokemonism/sdk/allocator.hh
  * @brief
  * @details
  *
@@ -7,12 +7,12 @@
  * @since       Aug 25, 2025
  */
 
-#ifndef   __POKEMONISM_ALLOCATOR__HH__
-#define   __POKEMONISM_ALLOCATOR__HH__
+#ifndef   __POKEMONISM_SDK_ALLOCATOR__HH__
+#define   __POKEMONISM_SDK_ALLOCATOR__HH__
 
 #include <pokemonism.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class allocator {
     public:     static inline void * gen(unsigned long n);
@@ -64,4 +64,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_ALLOCATOR__HH__
+#endif // __POKEMONISM_SDK_ALLOCATOR__HH__

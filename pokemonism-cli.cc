@@ -4,11 +4,9 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           Sep 04, 2025
+ * @since           9월 05, 2025
  */
 
-#include "pokemonism.hh"
-
-namespace pokemonism {
+int main(int argc, char ** argv) {
+    return 0;
 }
-

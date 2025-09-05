@@ -7,12 +7,12 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_PRIMITIVABLE_HH__
-#define   __POKEMONISM_PRIMITIVABLE_HH__
+#ifndef   __POKEMONISM_SDK_PRIMITIVABLE_HH__
+#define   __POKEMONISM_SDK_PRIMITIVABLE_HH__
 
-#include <pokemonism/exception.hh>
+#include <pokemonism/sdk/exception.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     struct primitivable {
     public:     template <typename convertable> static primitivable * from(convertable v);
@@ -53,4 +53,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_PRIMITIVABLE_HH__
+#endif // __POKEMONISM_SDK_PRIMITIVABLE_HH__

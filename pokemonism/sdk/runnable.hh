@@ -7,14 +7,14 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_RUNNABLE_HH__
-#define   __POKEMONISM_RUNNABLE_HH__
+#ifndef   __POKEMONISM_SDK_RUNNABLE_HH__
+#define   __POKEMONISM_SDK_RUNNABLE_HH__
 
 #include <pokemonism.hh>
-#include <pokemonism/sync.hh>
-#include <pokemonism/linked/list.hh>
+#include <pokemonism/sdk/sync.hh>
+#include <pokemonism/sdk/linked/list.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class runnable {
     public:     class queue;
@@ -87,4 +87,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_RUNNABLE_HH__
+#endif // __POKEMONISM_SDK_RUNNABLE_HH__

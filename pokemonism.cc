@@ -1,12 +1,14 @@
 /**
- * @file        pokemonism.cc
+ * @file
  * @brief
  * @details
- *
- * @author      snorlax <developer@snorlax.dev>
- * @since       Aug 25, 2025
+ * 
+ * @author          snorlax <snorlax@pokemonism.dev>
+ * @since           Sep 04, 2025
  */
 
-int main(int argc, char ** argv) {
-    return 0;
+#include "pokemonism.hh"
+
+namespace pokemonism {
 }
+

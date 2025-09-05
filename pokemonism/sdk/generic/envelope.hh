@@ -7,12 +7,12 @@
  * @since           9월 05, 2025
  */
 
-#ifndef   __POKEMONISM_GENERIC_ENVELOPE_HH__
-#define   __POKEMONISM_GENERIC_ENVELOPE_HH__
+#ifndef   __POKEMONISM_SDK_GENERIC_ENVELOPE_HH__
+#define   __POKEMONISM_SDK_GENERIC_ENVELOPE_HH__
 
-#include <pokemonism/envelopeable.hh>
+#include <pokemonism/sdk/envelopeable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
     namespace generic {
 
         template <typename messageable = primitivable>
@@ -30,4 +30,4 @@ namespace pokemonism {
     }
 }
 
-#endif // __POKEMONISM_GENERIC_ENVELOPE_HH__
+#endif // __POKEMONISM_SDK_GENERIC_ENVELOPE_HH__

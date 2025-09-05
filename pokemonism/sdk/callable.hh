@@ -7,12 +7,12 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_CALLABLE_HH__
-#define   __POKEMONISM_CALLABLE_HH__
+#ifndef   __POKEMONISM_SDK_CALLABLE_HH__
+#define   __POKEMONISM_SDK_CALLABLE_HH__
 
-#include <pokemonism/primitivable.hh>
+#include <pokemonism/sdk/primitivable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     template <typename outputable = primitivable>
     class callable {
@@ -26,4 +26,4 @@ namespace pokemonism {
     };
 }
 
-#endif // __POKEMONISM_CALLABLE_HH__
+#endif // __POKEMONISM_SDK_CALLABLE_HH__

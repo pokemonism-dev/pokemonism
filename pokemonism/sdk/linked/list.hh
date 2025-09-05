@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/linked/list.hh
+ * @file            pokemonism/sdk/linked/list.hh
  * @brief
  * @details
  *
@@ -7,14 +7,14 @@
  * @since           Sep 4, 2025
  */
 
-#ifndef   __POKEMONISM_LINKED_LIST_HH__
-#define   __POKEMONISM_LINKED_LIST_HH__
+#ifndef   __POKEMONISM_SDK_LINKED_LIST_HH__
+#define   __POKEMONISM_SDK_LINKED_LIST_HH__
 
-#include <pokemonism/allocator.hh>
-#include <pokemonism/exception.hh>
-#include <pokemonism/synchronizable.hh>
+#include <pokemonism/sdk/allocator.hh>
+#include <pokemonism/sdk/exception.hh>
+#include <pokemonism/sdk/synchronizable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     namespace linked {
 
@@ -40,8 +40,8 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::add(collection * container, element * node) {
-            if (container == nullptr || node == nullptr) throw pokemonism::exception();
-            if (node->container != nullptr) throw pokemonism::exception();
+            if (container == nullptr || node == nullptr) throw pokemonism::sdk::exception();
+            if (node->container != nullptr) throw pokemonism::sdk::exception();
 
             node->prev = container->tail;
             if (node->prev) {
@@ -58,8 +58,8 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::add(collection * container, element * node, synchronizable & sync) {
-            if (container == nullptr || node == nullptr) throw pokemonism::exception();
-            if (node->container != nullptr) throw pokemonism::exception();
+            if (container == nullptr || node == nullptr) throw pokemonism::sdk::exception();
+            if (node->container != nullptr) throw pokemonism::sdk::exception();
 
             sync.lock();
             node->prev = container->tail;
@@ -78,8 +78,8 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::del(collection * container, element * node) {
-            if (container == nullptr || node == nullptr) throw pokemonism::exception();
-            if (node->container != container) throw pokemonism::exception();
+            if (container == nullptr || node == nullptr) throw pokemonism::sdk::exception();
+            if (node->container != container) throw pokemonism::sdk::exception();
 
             element * prev = node->prev;
             element * next = node->next;
@@ -106,8 +106,8 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::del(collection * container, element * node, synchronizable & sync) {
-            if (container == nullptr || node == nullptr) throw pokemonism::exception();
-            if (node->container != container) throw pokemonism::exception();
+            if (container == nullptr || node == nullptr) throw pokemonism::sdk::exception();
+            if (node->container != container) throw pokemonism::sdk::exception();
 
             sync.lock();
             element * prev = node->prev;
@@ -135,7 +135,7 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::pop(collection * container) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             element * node = container->head;
             if (node != nullptr) {
@@ -156,7 +156,7 @@ namespace pokemonism {
 
         template <class collection, class element>
         element * list<collection, element>::pop(collection * container, synchronizable & sync) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             sync.lock();
             element * node = container->head;
@@ -179,14 +179,14 @@ namespace pokemonism {
 
         template <class collection, class element>
         void list<collection, element>::clear(collection * container) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             while (element * node = list<collection, element>::pop(container)) allocator::del(node);
         }
 
         template <class collection, class element>
         void list<collection, element>::clear(collection * container, synchronizable & sync) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             sync.lock();
             while (element * node = list<collection, element>::pop(container)) {
@@ -199,14 +199,14 @@ namespace pokemonism {
 
         template <class collection, class element>
         void list<collection, element>::clear(collection * container, element * (*rel)(element *)) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             while (element * node = list<collection, element>::pop(container)) allocator::del(rel(node));
         }
 
         template <class collection, class element>
         void list<collection, element>::clear(collection * container, element * (*rel)(element *), synchronizable & sync) {
-            if (container == nullptr) throw pokemonism::exception();
+            if (container == nullptr) throw pokemonism::sdk::exception();
 
             sync.lock();
             while (element * node = list<collection, element>::pop(container)) {
@@ -230,4 +230,4 @@ namespace pokemonism {
     }
 }
 
-#endif // __POKEMONISM_LINKED_LIST_HH__
+#endif // __POKEMONISM_SDK_LINKED_LIST_HH__

@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/cloneable.cc
+ * @file            pokemonism/sdk/subscription.cc
  * @brief
  * @details
  * 
@@ -8,7 +8,7 @@
  */
 
 
-#include "cloneable.hh"
+#include "subscription.hh"
 
 namespace pokemonism {
 }

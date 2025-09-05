@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/callbackable.hh
+ * @file            pokemonism/sdk/callbackable.hh
  * @brief
  * @details
  * 
@@ -7,10 +7,10 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_CALLBACKABLE_HH__
-#define   __POKEMONISM_CALLBACKABLE_HH__
+#ifndef   __POKEMONISM_SDK_CALLBACKABLE_HH__
+#define   __POKEMONISM_SDK_CALLBACKABLE_HH__
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     struct callbackable {
     public:     typedef void (*function)(void *);
@@ -22,4 +22,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_CALLBACKABLE_HH__
+#endif // __POKEMONISM_SDK_CALLBACKABLE_HH__

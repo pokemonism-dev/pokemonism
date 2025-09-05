@@ -10,12 +10,12 @@
  * 상속하여 리턴 값을 변화시킬 수 있다.
  */
 
-#ifndef   __POKEMONISM_COMMANDABLE_HH__
-#define   __POKEMONISM_COMMANDABLE_HH__
+#ifndef   __POKEMONISM_SDK_COMMANDABLE_HH__
+#define   __POKEMONISM_SDK_COMMANDABLE_HH__
 
-#include <pokemonism/callable.hh>
+#include <pokemonism/sdk/callable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class commandable : public callable<primitivable> {
     public:     typedef primitivable    output;
@@ -30,4 +30,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_COMMANDABLE_HH__
+#endif // __POKEMONISM_SDK_COMMANDABLE_HH__

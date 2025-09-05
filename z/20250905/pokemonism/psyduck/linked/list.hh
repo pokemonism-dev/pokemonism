@@ -12,7 +12,7 @@
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/psyduck.hh>
-#include <pokemonism/allocator.hh>
+#include <../../../../../pokemonism/sdk/allocator.hh>
 
 namespace pokemonism {
 

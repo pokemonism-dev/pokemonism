@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/cloneable.hh
+ * @file            pokemonism/sdkcloneable.hh
  * @brief
  * @details
  * 
@@ -7,10 +7,10 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_CLONEABLE_HH__
-#define   __POKEMONISM_CLONEABLE_HH__
+#ifndef   __POKEMONISM_SDK_CLONEABLE_HH__
+#define   __POKEMONISM_SDK_CLONEABLE_HH__
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class cloneable {
     public:     virtual cloneable * clone(void) const = 0;
@@ -24,4 +24,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_CLONEABLE_HH__
+#endif // __POKEMONISM_SDK_CLONEABLE_HH__

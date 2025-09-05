@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/synchronizable.cc
+ * @file            pokemonism/sdk/envelopeable.cc
  * @brief
  * @details
  * 
@@ -8,7 +8,7 @@
  */
 
 
-#include "synchronizable.hh"
+#include "envelopeable.hh"
 
 namespace pokemonism {
 }

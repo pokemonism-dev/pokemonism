@@ -7,12 +7,13 @@
  * @since           Sep 04, 2025
  */
 
-#ifndef   __POKEMONISM_POKEMON_SYNC_HH__
-#define   __POKEMONISM_POKEMON_SYNC_HH__
+#ifndef   __POKEMONISM_SDK_SYNC_HH__
+#define   __POKEMONISM_SDK_SYNC_HH__
 
-#include <pokemonism/synchronizable.hh>
+#include <pokemonism.hh>
+#include <pokemonism/sdk/synchronizable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class sync : public synchronizable {
     public:     int lock(void) noexcept override { return declaration::fail; }
@@ -31,4 +32,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_POKEMON_SYNC_HH__
+#endif // __POKEMONISM_SDK_SYNC_HH__

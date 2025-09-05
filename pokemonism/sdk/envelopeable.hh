@@ -7,12 +7,12 @@
  * @since           Sep 4, 2025
  */
 
-#ifndef   __POKEMONISM_ENVELOPEABLE_HH__
-#define   __POKEMONISM_ENVELOPEABLE_HH__
+#ifndef   __POKEMONISM_SDK_ENVELOPEABLE_HH__
+#define   __POKEMONISM_SDK_ENVELOPEABLE_HH__
 
-#include <pokemonism/primitivable.hh>
+#include <pokemonism/sdk/primitivable.hh>
 
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class envelopeable {
     public:     typedef primitivable message;
@@ -27,4 +27,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_ENVELOPEABLE_HH__
+#endif // __POKEMONISM_SDK_ENVELOPEABLE_HH__

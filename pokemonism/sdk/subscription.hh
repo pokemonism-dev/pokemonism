@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/subscription.hh
+ * @file            pokemonism/sdk/subscription.hh
  * @brief
  * @details
  * 
@@ -7,12 +7,10 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_SUBSCRIPTION_HH__
-#define   __POKEMONISM_SUBSCRIPTION_HH__
+#ifndef   __POKEMONISM_SDK_SUBSCRIPTION_HH__
+#define   __POKEMONISM_SDK_SUBSCRIPTION_HH__
 
-#include <pokemonism.hh>
-
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class subscription {
     public:     virtual bool cancel(void) = 0;
@@ -26,4 +24,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_SUBSCRIPTION_HH__
+#endif // __POKEMONISM_SDK_SUBSCRIPTION_HH__

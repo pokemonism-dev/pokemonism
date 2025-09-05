@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/synchronizable.hh
+ * @file            pokemonism/sdk/synchronizable.hh
  * @brief
  * @details
  * 
@@ -7,12 +7,10 @@
  * @since           9월 04, 2025
  */
 
-#ifndef   __POKEMONISM_SYNCHRONIZABLE_HH__
-#define   __POKEMONISM_SYNCHRONIZABLE_HH__
+#ifndef   __POKEMONISM_SDK_SYNCHRONIZABLE_HH__
+#define   __POKEMONISM_SDK_SYNCHRONIZABLE_HH__
 
-#include <pokemonism.hh>
-
-namespace pokemonism {
+namespace pokemonism::sdk {
 
     class synchronizable {
     public:     virtual int lock(void) noexcept = 0;
@@ -31,4 +29,4 @@ namespace pokemonism {
 
 }
 
-#endif // __POKEMONISM_SYNCHRONIZABLE_HH__
+#endif // __POKEMONISM_SDK_SYNCHRONIZABLE_HH__

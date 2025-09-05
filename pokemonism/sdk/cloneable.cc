@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/envelopeable.cc
+ * @file            pokemonism/sdk/cloneable.cc
  * @brief
  * @details
  * 
@@ -8,7 +8,7 @@
  */
 
 
-#include "envelopeable.hh"
+#include "cloneable.hh"
 
 namespace pokemonism {
 }
