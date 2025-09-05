@@ -9,13 +9,18 @@
 
 #include <pokemonism/trainer.hh>
 #include <pokemonism/trainer/lana.hh>
+#include <pokemonism/pokemon/petilil.hh>
 
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
-    lana * lana = lana::on();
+    pokemonism::lana * lana = pokemonism::lana::on();
 
-    petilil * petilil = lana->capture<petilil>();
+    pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
 
-    return 0;
+    lana->go<pokemonism::petilil<pokemonism::lana>>();
+
+    lana->recall(petilil);
+
+    return declaration::success;
 }

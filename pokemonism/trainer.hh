@@ -14,7 +14,11 @@
 
 namespace pokemonism {
 
+    class pokemon;
+
     class trainer : public pokemonism::sdk::sync {
+    public:     template <pokemonname monsterizable = pokemon> inline monsterizable * capture(void);
+    public:     template <pokemonname monsterizable = pokemon> inline monsterizable * go(void);
     public:     virtual const char * name(void) const noexcept = 0;
     public:     inline trainer(void);
     public:     inline ~trainer(void) override;
@@ -22,6 +26,7 @@ namespace pokemonism {
     public:     trainer(trainer && o) noexcept = delete;
     public:     trainer & operator=(const trainer & o) = delete;
     public:     trainer & operator=(trainer && o) noexcept = delete;
+    public:     friend pokemon;
     };
 
     inline trainer::trainer(void) {
@@ -33,5 +38,7 @@ namespace pokemonism {
     }
 
 }
+
+#include <pokemonism/pokemon.hh>
 
 #endif // __POKEMONISM_TRAINER_HH__

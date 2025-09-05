@@ -33,7 +33,7 @@ namespace pokemonism {
             static lana o;
             singleton = pointof(o);
 
-            printf("%s: Hi, friend\n", singleton->name());
+            printf("%s: Hi, friend!\n", singleton->name());
         }
         return singleton;
     }

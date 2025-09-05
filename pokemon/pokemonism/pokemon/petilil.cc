@@ -8,10 +8,7 @@
  */
 
 
-#include "pokemon.hh"
+#include "petilil.hh"
 
 namespace pokemonism {
-
-    pokemon * pokemon::singleton = nullptr;
-
 }
