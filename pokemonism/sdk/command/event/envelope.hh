@@ -17,6 +17,7 @@ namespace pokemonism::sdk {
 
     inline primitivable * command::event::envelope::messagePop(void) {
         primitivable * message = output;
+
         output = nullptr;
         return message;
     }

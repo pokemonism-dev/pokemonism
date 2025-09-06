@@ -18,8 +18,8 @@ namespace pokemonism::sdk {
     public:     class event;
     public:     typedef primitivable output;
     public:     output * operator()(void) override = 0;
-    public:     command(void);
-    public:     ~command(void) override;
+    public:     command(void) {}
+    public:     ~command(void) override {}
     public:     command(const command & o) = delete;
     public:     command(command && o) noexcept = delete;
     public:     command & operator=(const command & o) = delete;

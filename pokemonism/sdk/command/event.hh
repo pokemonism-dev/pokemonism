@@ -68,7 +68,8 @@ namespace pokemonism::sdk {
     public:     friend command::event::processor;
     };
 
-    class command::event::link : public pokemonism::sdk::event::link, public virtual command::event::envelope {
+    class command::event::link : public command::event::envelope, public pokemonism::sdk::event::link {
+    public:     inline primitivable * messagePop(void) override;
     public:     inline explicit link(command::event::subscription * container);
     public:     link(void) = delete;
     public:     inline ~link(void) override;
@@ -156,7 +157,7 @@ namespace pokemonism::sdk {
     public:     command::event::releasable::subscription & operator=(command::event::releasable::subscription && o) noexcept = delete;
     };
 
-    class command::event::internal::subscription : public command::event::releasable::subscription, public virtual pokemonism::sdk::event::internal::subscription {
+    class command::event::internal::subscription : public command::event::releasable::subscription, public pokemonism::sdk::event::internal::subscription {
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}

@@ -7,7 +7,6 @@
  * @since           9월 06, 2025
  */
 
-
 #include "engine.hh"
 
 namespace pokemonism::sdk {

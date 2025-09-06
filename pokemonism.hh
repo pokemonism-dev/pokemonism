@@ -39,6 +39,7 @@ namespace pokemonism {
 #define referenceof(o)              (*(o))
 #define pokemonname                 typename
 #define trainername                 typename
+#define toolname                    typename
 
 
 #endif // __POKEMONISM__HH__

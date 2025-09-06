@@ -11,7 +11,9 @@
 #include "lana.hh"
 
 namespace pokemonism {
+    namespace trainers {
 
-    lana * lana::character = nullptr;
+        lana * lana::character = nullptr;
 
+    }
 }

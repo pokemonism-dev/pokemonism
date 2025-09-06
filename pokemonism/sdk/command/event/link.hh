@@ -14,6 +14,11 @@
 
 namespace pokemonism::sdk {
 
+
+    inline primitivable * command::event::link::messagePop(void) {
+        return command::event::envelope::messagePop();
+    }
+
     inline command::event::link::link(command::event::subscription * container) : pokemonism::sdk::event::link(container) {
 
     }

@@ -15,9 +15,9 @@
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
-    pokemonism::lana * lana = pokemonism::lana::on();
+    trainers::lana * lana = trainers::lana::on();
 
-    pokemonism::petilil<pokemonism::lana> * petilil = lana->capture<pokemonism::petilil<pokemonism::lana>>();
+    pokemons::petilil<trainers::lana> * petilil = lana->capture<pokemons::petilil<trainers::lana>>();
 
     return lana->recall(battle::finish(battle::start(petilil->go())));
 

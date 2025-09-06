@@ -13,7 +13,7 @@
 
 namespace pokemonism::sdk {
 
-    inline command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) {
+    command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
         command::event::internal::subscription * subscription = new command::event::internal::subscription(object, properties, eventSet);
@@ -25,7 +25,7 @@ namespace pokemonism::sdk {
         return subscription;
     }
 
-    inline command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) {
+    command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
         command::event::internal::subscription * subscription = new command::event::internal::subscription(object, properties, eventSet, subscriptionOn);
@@ -37,7 +37,7 @@ namespace pokemonism::sdk {
         return subscription;
     }
 
-    inline command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) {
+    command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
         command::event::internal::subscription * subscription = new command::event::internal::subscription(object, properties, eventSet, subscriptionReleaseOn);
@@ -49,7 +49,7 @@ namespace pokemonism::sdk {
         return subscription;
     }
 
-    inline command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) {
+    command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
         command::event::internal::subscription * subscription = new command::event::internal::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
