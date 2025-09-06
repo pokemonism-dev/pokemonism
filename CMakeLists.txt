@@ -33,6 +33,7 @@ add_subdirectory(trainer)
 
 add_subdirectory(pokemon/pokemonism/pokemon/petilil)
 
+add_subdirectory(train/sdk)
 add_subdirectory(train/trainer)
 
 add_executable(pokemonism-cli               pokemonism-cli.cc)
