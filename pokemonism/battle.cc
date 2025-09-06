@@ -4,15 +4,11 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 05, 2025
+ * @since           9월 06, 2025
  */
 
 
-#include "petilil.hh"
+#include "battle.hh"
 
 namespace pokemonism {
-
-
-
-
 }

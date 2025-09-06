@@ -23,6 +23,7 @@ namespace pokemonism {
         typedef unsigned int        uint32;
         typedef unsigned long       uint64;
 
+        constexpr int               unknown = -2;
         constexpr int               fail = -1;
         constexpr int               success = 0;
         constexpr int               again = 1;
