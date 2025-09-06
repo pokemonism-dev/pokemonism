@@ -237,17 +237,17 @@ namespace pokemonism::sdk {
     };
 
     class event::link : public event::envelope {
-    public:     static event::link * rem(event::link * o);
+    protected:  static event::link * rem(event::link * o);
     protected:  event::link * prev;
     protected:  event::link * next;
     protected:  event * e;
     public:     inline unsigned int identifierGet(void) const;
-    public:     inline event::exception * exceptionSet(event::exception * problem);
-    public:     inline int on(void);
-    public:     inline void raise(event::exception * exception);
+    protected:  inline event::exception * exceptionSet(event::exception * problem);
+    protected:  inline int on(void);
+    protected:  inline void raise(event::exception * exception);
     public:     inline explicit link(event::subscription * container);
     public:     inline explicit link(event::exception * exception);
-    public:     inline void containerReg(event::subscription * container);
+    protected:  inline void containerReg(event::subscription * container);
     public:     inline link(event::subscription * container, event::exception * exception);
     public:     inline link(void);
     public:     inline ~link(void) override;

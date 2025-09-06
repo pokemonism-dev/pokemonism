@@ -14,6 +14,17 @@
 
 namespace pokemonism::sdk {
 
+    inline command * command::event::releasable::subscription::objectPop(void) {
+        command * o = object;
+        object = nullptr;
+        return o;
+    }
+
+    inline command * command::event::internal::subscription::objectPop(void) {
+        command * o = object;
+        object = nullptr;
+        return o;
+    }
 
 }
 

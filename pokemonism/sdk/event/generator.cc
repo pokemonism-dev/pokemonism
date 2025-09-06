@@ -48,13 +48,9 @@ namespace pokemonism::sdk {
     }
 
     void event::generator::clear(void) {
-        while (head != nullptr) {
-            if (head->propertyChk(event::subscription::property::release_on_del)) delete del(head);
-        }
+        while (head != nullptr) del(head);
 
         queue(declaration::infinite);
     }
-
-
 
 }

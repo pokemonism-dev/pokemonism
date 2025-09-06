@@ -113,8 +113,8 @@ namespace pokemonism::sdk {
     protected:  command * object;
     protected:  command::event::callback::set eventSet;
     protected:  int count;
-    public:     virtual bool executeSet(void);
-    public:     int processOn(unsigned int type) override;
+    protected:  virtual bool executeSet(void);
+    protected:  int processOn(unsigned int type) override;
     protected:  int processOn(pokemonism::sdk::event::link * link) override;
     protected:  void callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem = nullptr) override;
     protected:  void callbackOn(unsigned int type, pokemonism::sdk::event::envelope & envelope, const pokemonism::sdk::event::exception * problem = nullptr) override;
@@ -146,6 +146,7 @@ namespace pokemonism::sdk {
 
 
     class command::event::releasable::subscription : public command::event::modifiable::subscription {
+    public:     inline virtual command * objectPop(void);
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::modifiable::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::modifiable::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::modifiable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}
@@ -159,6 +160,7 @@ namespace pokemonism::sdk {
     };
 
     class command::event::internal::subscription : public command::event::releasable::subscription {
+    protected:  inline command * objectPop(void) override;
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}

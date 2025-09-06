@@ -11,30 +11,44 @@
 #include <pokemonism/professor/oak.hh>
 
 using namespace pokemonism;
+using namespace pokemonism::sdk;
+
+static pokemonism::sdk::engine * singleton = nullptr;
+
+static void engineOff(void) {
+
+}
 
 int main(int argc, char ** argv) {
-    pokemonism::sdk::engine * engine = new pokemonism::sdk::engine();
+    singleton = new pokemonism::sdk::engine();
 
-    engine->on(nullptr);
+    singleton->on(nullptr);
 
-    professors::oak::tools::randomizer command = professors::oak::get<professors::oak::tools::randomizer>();
+    professors::oak::tools::randomizer func = professors::oak::get<professors::oak::tools::randomizer>();
 
-    printf("%ld\n", pokemonism::sdk::primitivable::to<long>(command()));
+    printf("%ld\n", primitivable::to<long>(func()));
 
-    command.valueSet(1004);
+    func.valueSet(1004);
 
-    printf("%ld\n", pokemonism::sdk::primitivable::to<long>(command()));
+    printf("%ld\n", primitivable::to<long>(func()));
 
-    // public:     typedef void (*function)(command &, unsigned int, command::event::envelope &, const command::event::exception *);
-    pokemonism::sdk::command::event::callback::set eventSet([](pokemonism::sdk::command & o, unsigned int type, pokemonism::sdk::command::event::envelope & envelope, const pokemonism::sdk::command::event::exception * e) {
-        printf("%ld\n", pokemonism::sdk::primitivable::to<long>(envelope.messagePop()));
+    command::event::callback::set eventSet([](command & o, unsigned int type, command::event::envelope & envelope, const command::event::exception * e) {
+        printf("%ld\n", primitivable::to<long>(envelope.messagePop()));
     });
 
-    engine->reg(pointof(command), pokemonism::sdk::command::event::subscription::property::release_on_del, eventSet);
+    const command::event::subscription::state::callback::function subscriptionOn = [](command::event::modifiable::subscription & subscription, unsigned int type, const command::event::exception * e) {
+    };
 
-    const int ret = engine->run();
+    const command::event::subscription::state::callback::modifier subscriptionReleaseOn = [](command::event::releasable::subscription & subscription, unsigned int type, const command::event::exception * e) {
+        singleton->off(nullptr);
+    };
 
-    delete engine;
+    singleton->reg(pointof(func), command::event::subscription::property::release_on_del, eventSet, subscriptionOn, subscriptionReleaseOn);
+
+    const int ret = singleton->run();
+
+    delete singleton;
+    singleton = nullptr;
 
     return ret;
 }

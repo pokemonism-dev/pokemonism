@@ -45,8 +45,6 @@ namespace pokemonism::sdk {
         pokemon_develop_check(link == nullptr || dynamic_cast<command::event::link *>(link) == nullptr || link->identifierGet() != command::event::type::execute, return declaration::fail);
 
         int ret;
-        printf("%p\n", dynamic_cast<command::event::link *>(link));
-        printf("%p\n", link);
         command::event::link * node = reinterpret_cast<command::event::link *>(link);
         const unsigned int type = link->identifierGet();
 
