@@ -247,7 +247,7 @@ namespace pokemonism::sdk {
     protected:  inline void raise(event::exception * exception);
     public:     inline explicit link(event::subscription * container);
     public:     inline explicit link(event::exception * exception);
-    protected:  inline void containerReg(event::subscription * container);
+    protected:  inline void containerReg(event::subscription * o);
     public:     inline link(event::subscription * container, event::exception * exception);
     public:     inline link(void);
     public:     inline ~link(void) override;
@@ -273,7 +273,7 @@ namespace pokemonism::sdk {
     protected:  unsigned long size;
     protected:  event::subscription * head;
     protected:  event::subscription * tail;
-    protected:  engine * engine;
+    protected:  pokemonism::sdk::engine * engine;
     protected:  runnable::queue queue;
     protected:  inline virtual unsigned long on(unsigned long n = declaration::infinite);
     protected:  event::subscription * add(event::subscription * subscription);
