@@ -19,8 +19,10 @@ namespace pokemonism::sdk {
         return command::event::envelope::messagePop();
     }
 
-    inline command::event::link::link(command::event::subscription * container) : pokemonism::sdk::event::link(container) {
 
+
+    inline command::event::link::link(command::event::subscription * container) {
+        containerReg(container);
     }
 
     inline command::event::link::~link(void) {

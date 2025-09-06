@@ -53,10 +53,11 @@ namespace pokemonism::sdk {
     public:     pokemonism::sdk::command::event & operator=(pokemonism::sdk::command::event && o) noexcept = delete;
     };
 
-    class command::event::envelope : public virtual pokemonism::sdk::event::envelope {
+    class command::event::envelope : public pokemonism::sdk::event::link {
     protected:  primitivable * output;
     public:     inline primitivable * messagePop(void) override;
     protected:  void reset(void) override;
+    public:     inline explicit envelope(pokemonism::sdk::event::exception * exception);
     public:     inline explicit envelope(command::event::subscription * container, pokemonism::sdk::event::exception * exception = nullptr);
     protected:  inline envelope(void);
     protected:  inline ~envelope(void) override;
@@ -68,7 +69,7 @@ namespace pokemonism::sdk {
     public:     friend command::event::processor;
     };
 
-    class command::event::link : public command::event::envelope, public pokemonism::sdk::event::link {
+    class command::event::link : public command::event::envelope {
     public:     inline primitivable * messagePop(void) override;
     public:     inline explicit link(command::event::subscription * container);
     public:     link(void) = delete;
@@ -91,7 +92,7 @@ namespace pokemonism::sdk {
     public:     class subscription;
     };
 
-    class command::event::subscription : public virtual pokemonism::sdk::event::subscription {
+    class command::event::subscription : public pokemonism::sdk::event::internal::subscription {
     public:     struct state : public pokemonism::sdk::event::subscription::state {
                 public:     struct callback : public pokemonism::sdk::event::subscription::state::callback {
                             public:     typedef void (*function)(command::event::modifiable::subscription &, unsigned int, const command::event::exception *);
@@ -121,7 +122,7 @@ namespace pokemonism::sdk {
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
-    protected:  inline subscription(void);
+    protected:  inline subscription(void) = delete;
     public:     inline ~subscription(void) override;
     public:     subscription(const command::event::subscription & o) = delete;
     public:     subscription(command::event::subscription && o) noexcept = delete;
@@ -130,12 +131,12 @@ namespace pokemonism::sdk {
     public:     friend command::event::processor;
     };
 
-    class command::event::modifiable::subscription : public command::event::subscription, public virtual pokemonism::sdk::event::modifiable::subscription {
+    class command::event::modifiable::subscription : public command::event::subscription {
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::subscription(object, properties, eventSet, subscriptionReleaseOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {}
-    protected:  inline subscription(void) {}
+    protected:  inline subscription(void) = delete;
     protected:  inline ~subscription(void) override {}
     public:     subscription(const command::event::modifiable::subscription & o) = delete;
     public:     subscription(command::event::modifiable::subscription && o) noexcept = delete;
@@ -144,12 +145,12 @@ namespace pokemonism::sdk {
     };
 
 
-    class command::event::releasable::subscription : public command::event::modifiable::subscription, public virtual pokemonism::sdk::event::releasable::subscription {
+    class command::event::releasable::subscription : public command::event::modifiable::subscription {
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::modifiable::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::modifiable::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::modifiable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::modifiable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {}
-    protected:  inline subscription(void) {}
+    protected:  inline subscription(void) = delete;
     protected:  inline ~subscription(void) override {}
     public:     subscription(const command::event::releasable::subscription & o) = delete;
     public:     subscription(command::event::releasable::subscription && o) noexcept = delete;
@@ -157,12 +158,12 @@ namespace pokemonism::sdk {
     public:     command::event::releasable::subscription & operator=(command::event::releasable::subscription && o) noexcept = delete;
     };
 
-    class command::event::internal::subscription : public command::event::releasable::subscription, public pokemonism::sdk::event::internal::subscription {
+    class command::event::internal::subscription : public command::event::releasable::subscription {
     protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}
     protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {}
-    protected:  inline subscription(void) {}
+    protected:  inline subscription(void) = delete;
     protected:  ~subscription(void) override;
     public:     subscription(const command::event::internal::subscription & o) = delete;
     public:     subscription(command::event::internal::subscription && o) noexcept = delete;

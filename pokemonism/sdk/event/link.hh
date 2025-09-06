@@ -49,10 +49,30 @@ namespace pokemonism::sdk {
         this->exception = exception;
     }
 
+    inline void event::link::containerReg(event::subscription * o) {
+        pokemon_develop_check(container != nullptr, return);
+
+        o->add(this);
+    }
+
+    inline event::link::link(event::exception * exception) : event::envelope(exception), prev(nullptr), next(nullptr), e(nullptr) {
+
+    }
+
+    inline event::link::link(event::subscription * container, event::exception * exception) : event::envelope(exception), prev(nullptr), next(nullptr), e(nullptr) {
+        pokemon_develop_check(container == nullptr, return);
+
+        container->add(this);
+    }
+
     inline event::link::link(event::subscription * container) : prev(nullptr), next(nullptr), e(nullptr) {
         pokemon_develop_check(container == nullptr, return);
 
         container->add(this);
+    }
+
+    inline event::link::link(void) : prev(nullptr), next(nullptr), e(nullptr) {
+
     }
 
     inline event::link::~link(void) {

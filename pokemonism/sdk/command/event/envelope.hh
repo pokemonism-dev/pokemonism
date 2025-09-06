@@ -22,8 +22,12 @@ namespace pokemonism::sdk {
         return message;
     }
 
-    inline command::event::envelope::envelope(command::event::subscription * container, pokemonism::sdk::event::exception * exception) : pokemonism::sdk::event::envelope(container, exception), output(nullptr) {
+    inline command::event::envelope::envelope(pokemonism::sdk::event::exception * exception) : pokemonism::sdk::event::link(exception), output(nullptr)  {
 
+    }
+
+    inline command::event::envelope::envelope(command::event::subscription * container, pokemonism::sdk::event::exception * exception) : pokemonism::sdk::event::link(exception), output(nullptr) {
+        this->container = container;
     }
 
     inline command::event::envelope::envelope(void) : output(nullptr) {

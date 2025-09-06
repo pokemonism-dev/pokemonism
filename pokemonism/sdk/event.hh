@@ -190,7 +190,8 @@ namespace pokemonism::sdk {
     public:     friend event::link;
     };
 
-    class event::modifiable::subscription : public virtual event::subscription {
+    class event::modifiable::subscription : public event::subscription {
+    protected:  inline explicit subscription(unsigned int properties) : event::subscription(properties) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::subscription(properties, subscriptionOn) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::subscription(properties, subscriptionReleaseOn) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
@@ -198,7 +199,8 @@ namespace pokemonism::sdk {
     protected:  inline ~subscription(void) override {}
     };
 
-    class event::releasable::subscription : public virtual event::modifiable::subscription {
+    class event::releasable::subscription : public event::modifiable::subscription {
+    protected:  inline explicit subscription(unsigned int properties) : event::modifiable::subscription(properties) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::modifiable::subscription(properties, subscriptionOn) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::modifiable::subscription(properties, subscriptionReleaseOn) {}
     protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::modifiable::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
@@ -207,8 +209,9 @@ namespace pokemonism::sdk {
     };
 
     struct event::internal {
-    public:     class subscription : public virtual event::releasable::subscription {
+    public:     class subscription : public event::releasable::subscription {
                 protected:  void stateOn(unsigned int type, const event::exception * problem = nullptr) override;
+                protected:  inline explicit subscription(unsigned int properties) : event::releasable::subscription(properties) {}
                 protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::releasable::subscription(properties, subscriptionOn) {}
                 protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::releasable::subscription(properties, subscriptionReleaseOn) {}
                 protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::releasable::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
@@ -224,6 +227,7 @@ namespace pokemonism::sdk {
     public:     inline virtual event::subscription * subscriptionGet(void) const;
     protected:  virtual void reset(void) = 0;
     public:     inline explicit envelope(event::subscription * container, event::exception * exception = nullptr);
+    protected:  inline explicit envelope(event::exception * exception);
     protected:  inline envelope(void);
     protected:  inline ~envelope(void) override;
     public:     envelope(const event::envelope & o) = delete;
@@ -232,7 +236,7 @@ namespace pokemonism::sdk {
     public:     event::envelope & operator=(event::envelope && o) noexcept = delete;
     };
 
-    class event::link : public virtual event::envelope {
+    class event::link : public event::envelope {
     public:     static event::link * rem(event::link * o);
     protected:  event::link * prev;
     protected:  event::link * next;
@@ -242,7 +246,10 @@ namespace pokemonism::sdk {
     public:     inline int on(void);
     public:     inline void raise(event::exception * exception);
     public:     inline explicit link(event::subscription * container);
-    public:     link(void) = delete;
+    public:     inline explicit link(event::exception * exception);
+    public:     inline void containerReg(event::subscription * container);
+    public:     inline link(event::subscription * container, event::exception * exception);
+    public:     inline link(void);
     public:     inline ~link(void) override;
     public:     link(const event::link & o) = delete;
     public:     link(event::link && o) noexcept = delete;

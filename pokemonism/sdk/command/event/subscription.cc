@@ -47,7 +47,7 @@ namespace pokemonism::sdk {
         int ret;
         printf("%p\n", dynamic_cast<command::event::link *>(link));
         printf("%p\n", link);
-        command::event::link * node = dynamic_cast<command::event::link *>(link);
+        command::event::link * node = reinterpret_cast<command::event::link *>(link);
         const unsigned int type = link->identifierGet();
 
         try {

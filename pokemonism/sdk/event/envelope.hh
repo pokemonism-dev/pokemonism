@@ -22,7 +22,11 @@ namespace pokemonism::sdk {
         return container;
     }
 
-    inline event::envelope::envelope(event::subscription * container, event::exception * exception) : exception(nullptr), container(container) {
+    inline event::envelope::envelope(event::exception * exception) : exception(exception), container(nullptr) {
+
+    }
+
+    inline event::envelope::envelope(event::subscription * container, event::exception * exception) : exception(exception), container(container) {
         pokemon_develop_check(container == nullptr, (void)(0));
     }
 
@@ -31,6 +35,7 @@ namespace pokemonism::sdk {
     }
 
     inline event::envelope::~envelope(void) {
+        container = nullptr;
         exception = allocator::del(exception);
     }
 
