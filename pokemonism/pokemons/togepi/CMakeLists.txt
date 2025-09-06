@@ -7,9 +7,9 @@ set(POKEMONISM_POKEMONS_TOGEPI_ROOT_HEADER      ../togepi.hh)
 
 set(POKEMONISM_POKEMONS_TOGEPI_ROOT_SOURCE      ../togepi.cc)
 
-set(POKEMONISM_POKEMONS_TOGEPI_HEADER           )
+set(POKEMONISM_POKEMONS_TOGEPI_HEADER           command.cc)
 
-set(POKEMONISM_POKEMONS_TOGEPI_SOURCE           )
+set(POKEMONISM_POKEMONS_TOGEPI_SOURCE           command.hh)
 
 add_library(pokemonism-pokemons-togepi          ${POKEMONISM_POKEMONS_TOGEPI_ROOT_HEADER}
                                                 ${POKEMONISM_POKEMONS_TOGEPI_ROOT_SOURCE}

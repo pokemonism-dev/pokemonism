@@ -54,9 +54,11 @@ int main(int argc, char ** argv) {
     });
 
     const command::event::subscription::state::callback::function subscriptionOn = [](command::event::modifiable::subscription & subscription, unsigned int type, const command::event::exception * e) {
+        printf("%d\n", type);
     };
 
     const command::event::subscription::state::callback::modifier subscriptionReleaseOn = [](command::event::releasable::subscription & subscription, unsigned int type, const command::event::exception * e) {
+        printf("%d\n", type);
         singleton->off(nullptr);
     };
 

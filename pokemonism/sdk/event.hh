@@ -44,7 +44,7 @@ namespace pokemonism::sdk {
     protected:  inline virtual void reset(void);
     public:     inline unsigned int identifierGet(void) const { return identifier; }
     public:     inline event(unsigned int identifier, event::link * node);
-    public:     event(void) = delete;
+    public:     event(void) : container(nullptr), prev(nullptr), next(nullptr), node(nullptr), identifier(declaration::invalid) {}
     public:     inline virtual ~event(void);
     public:     event(const event & o) = delete;
     public:     event(event && o) noexcept = delete;
@@ -117,7 +117,7 @@ namespace pokemonism::sdk {
                             };
                 };
     public:     struct property {
-                public:     constexpr static unsigned int release_on_del        = (0x00000001U << 31U);
+                public:     constexpr static unsigned int release_on_del        = (0x00000001U << 30U);
                 public:     constexpr static unsigned int release_object_on_rel = (0x00000001U << 31U);
                 };
     protected:  class releaser : public runnable::queue::node {
@@ -276,11 +276,11 @@ namespace pokemonism::sdk {
     protected:  pokemonism::sdk::engine * engine;
     protected:  runnable::queue queue;
     protected:  inline virtual unsigned long on(unsigned long n = declaration::infinite);
-    protected:  event::subscription * add(event::subscription * subscription);
-    protected:  event::subscription * del(event::subscription * subscription);
-    protected:  runnable::queue::node * add(runnable::queue::node * f);
-    protected:  runnable::queue::node * del(runnable::queue::node * f);
-    protected:  void clear(void);
+    public:     event::subscription * add(event::subscription * subscription);
+    public:     event::subscription * del(event::subscription * subscription);
+    public:     runnable::queue::node * add(runnable::queue::node * f);
+    public:     runnable::queue::node * del(runnable::queue::node * f);
+    public:     void clear(void);
     protected:  explicit generator(pokemonism::sdk::engine * engine);
     public:     generator(void) = delete;
     protected:  ~generator(void) override;

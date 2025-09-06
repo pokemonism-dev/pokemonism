@@ -13,6 +13,8 @@
 #include <pokemonism/sdk/event.hh>
 #include <pokemonism/sdk/command.hh>
 
+#include "event.hh"
+
 namespace pokemonism::sdk {
 
     class command::event : public pokemonism::sdk::event {
@@ -45,7 +47,7 @@ namespace pokemonism::sdk {
                             };
                 };
     public:     inline event(unsigned int identifier, command::event::link * node);
-    public:     event(void) = delete;
+    protected:  event(void) {}
     public:     inline ~event(void) override;
     public:     event(const pokemonism::sdk::command::event & o) = delete;
     public:     event(pokemonism::sdk::command::event && o) noexcept = delete;
@@ -161,10 +163,18 @@ namespace pokemonism::sdk {
 
     class command::event::internal::subscription : public command::event::releasable::subscription {
     protected:  inline command * objectPop(void) override;
-    protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {}
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {}
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {}
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {}
+    protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {
+                    stateOn(command::event::subscription::state::type::gen);
+                }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {
+                    stateOn(command::event::subscription::state::type::gen);
+                }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {
+                    stateOn(command::event::subscription::state::type::gen);
+                }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {
+                    stateOn(command::event::subscription::state::type::gen);
+                }
     protected:  inline subscription(void) = delete;
     protected:  ~subscription(void) override;
     public:     subscription(const command::event::internal::subscription & o) = delete;
@@ -186,7 +196,6 @@ namespace pokemonism::sdk {
     public:     generator(event::generator && o) noexcept = delete;
     public:     event::generator & operator=(const event::generator & o) = delete;
     public:     event::generator & operator=(event::generator && o) noexcept = delete;
-    public:     friend collection;
     };
 
     class command::event::processor : public pokemonism::sdk::event::processor {

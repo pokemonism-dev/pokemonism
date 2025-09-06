@@ -55,6 +55,8 @@ namespace pokemonism::sdk {
 
             callbackOn(type, *node, pointof(e));
 
+            container->del(this);
+
             return declaration::fail;
         } catch (...) {
             pokemonism::sdk::exception * e = new pokemonism::sdk::exception();
@@ -65,10 +67,14 @@ namespace pokemonism::sdk {
 
             if (e != nullptr) delete e;
 
+            container->del(this);
+
             return declaration::fail;
         }
 
         callbackOn(type, *node);
+
+        if (completeChk() || exceptionChk()) container->del(this);
 
         return ret;
     }

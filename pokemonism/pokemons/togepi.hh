@@ -22,11 +22,34 @@ namespace pokemonism {
 
         template <trainername trainerizable = trainer>
         class togepi : public pokemon {
+        public:     class command : public pokemonism::sdk::command {
+                    public:     typedef pokemonism::sdk::primitivable * (*internal)(void);
+                    protected:  internal func;
+                    public:     pokemonism::sdk::primitivable * operator()(void) override { return func(); }
+                    public:     explicit command(pokemonism::sdk::primitivable * (*f)(void)) : func(f) {
+                                    pokemon_training_check(func == nullptr, return);
+                                }
+                    public:     command(void) = delete;
+                    public:     ~command(void) override { func = nullptr; }
+                    public:     command(const togepi<trainerizable>::command & o) = delete;
+                    public:     command(togepi<trainerizable>::command && o) noexcept = delete;
+                    public:     togepi<trainerizable>::command & operator=(const togepi<trainerizable>::command & o) = delete;
+                    public:     togepi<trainerizable>::command & operator=(togepi<trainerizable>::command && o) noexcept = delete;
+                    };
         protected:  pokemonism::sdk::engine * engine;
         public:     const char * name(void) const noexcept override { return "togepi"; }
         public:     const char * cry(void) const noexcept override { return "togepriii"; }
         public:     togepi<trainerizable> * ready(void) override;
         public:     togepi<trainerizable> * go(void) override;
+        public:     togepi<trainerizable> * goodjob(void) override;
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn);
+        public:     togepi<trainerizable>::command::event::subscription * pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn);
         protected:  togepi(void);
         protected:  ~togepi(void) override;
         public:     togepi(const togepi & o) = delete;
@@ -56,6 +79,85 @@ namespace pokemonism {
             engine = pokemonism::sdk::allocator::del(engine);
 
             return this;
+        }
+
+        template <trainername trainerizable>
+        togepi<trainerizable> * togepi<trainerizable>::goodjob(void) {
+            pokemon_training_check(engine == nullptr, return this);
+
+            engine->off(nullptr);
+
+            return this;
+        }
+
+        /**
+         * 긴 꼬리나 손 등을 사용하여 상대를 때려서 공격한다.
+         *
+         */
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            return engine->reg(command, properties, eventSet);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            return engine->reg(command, properties, eventSet, subscriptionOn);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            return engine->reg(command, properties, eventSet, subscriptionReleaseOn);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, unsigned int properties, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            return engine->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
+
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            unsigned int properties = togepi<trainerizable>::command::event::subscription::property::release_on_del | togepi<trainerizable>::command::event::subscription::property::release_object_on_rel;
+
+            return engine->reg(command, properties, eventSet);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            unsigned int properties = togepi<trainerizable>::command::event::subscription::property::release_on_del | togepi<trainerizable>::command::event::subscription::property::release_object_on_rel;
+
+            return engine->reg(command, properties, eventSet, subscriptionOn);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            unsigned int properties = togepi<trainerizable>::command::event::subscription::property::release_on_del | togepi<trainerizable>::command::event::subscription::property::release_object_on_rel;
+
+            return engine->reg(command, properties, eventSet, subscriptionReleaseOn);
+        }
+
+        template <trainername trainerizable>
+        typename togepi<trainerizable>::command::event::subscription * togepi<trainerizable>::pound(togepi<trainerizable>::command * command, typename togepi<trainerizable>::command::event::callback::set & eventSet, typename togepi<trainerizable>::command::event::subscription::state::callback::function & subscriptionOn, typename togepi<trainerizable>::command::event::subscription::state::callback::modifier & subscriptionReleaseOn) {
+            pokemon_training_check(engine == nullptr, return nullptr);
+
+            unsigned int properties = togepi<trainerizable>::command::event::subscription::property::release_on_del |
+                                      togepi<trainerizable>::command::event::subscription::property::release_object_on_rel;
+
+            return engine->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
         }
 
         template<typename trainerizable>

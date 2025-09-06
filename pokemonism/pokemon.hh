@@ -20,6 +20,7 @@ namespace pokemonism {
     public:     virtual const char * cry(void) const noexcept = 0;
     public:     virtual pokemon * ready(void) = 0;
     public:     virtual pokemon * go(void) = 0;
+    public:     virtual pokemon * goodjob(void) = 0;
     public:     inline virtual int resultGet(void) { return result; }
     protected:  pokemon(void) : result(battle::result::unknown) {}
     protected:  virtual ~pokemon(void) {}
