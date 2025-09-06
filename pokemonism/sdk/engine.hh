@@ -18,7 +18,7 @@ namespace pokemonism::sdk {
     public:     typedef void (*terminator)(engine &);
     public:     typedef void (*bootstrapper)(engine &);
     protected:  struct set {
-                public:     command::event::generator * command;
+                public:     pokemonism::sdk::command::event::generator * command;
                 public:     inline set(void) : command(nullptr) {}
                 };
     protected:  terminator cancel;
