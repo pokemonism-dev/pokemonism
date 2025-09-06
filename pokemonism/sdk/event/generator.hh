@@ -14,6 +14,10 @@
 
 namespace pokemonism::sdk {
 
+    inline unsigned long event::generator::on(unsigned long n) {
+        return queue(n);
+    }
+
     inline event::generator::generator(pokemonism::sdk::engine * engine) : size(declaration::zero), head(nullptr), tail(nullptr), engine(engine) {
         pokemon_develop_check(engine == nullptr, (void)(0));
     }

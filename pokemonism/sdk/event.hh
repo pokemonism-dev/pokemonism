@@ -62,6 +62,7 @@ namespace pokemonism::sdk {
     protected:  unsigned long size;
     protected:  event * head;
     protected:  event * tail;
+    public:     inline unsigned long sizeGet(void) const;
     public:     unsigned long on(unsigned long n = declaration::infinite);
     public:     event * add(event * e);
     public:     event * del(event * e);
@@ -267,6 +268,7 @@ namespace pokemonism::sdk {
     protected:  event::subscription * tail;
     protected:  engine * engine;
     protected:  runnable::queue queue;
+    protected:  inline virtual unsigned long on(unsigned long n = declaration::infinite);
     protected:  event::subscription * add(event::subscription * subscription);
     protected:  event::subscription * del(event::subscription * subscription);
     protected:  runnable::queue::node * add(runnable::queue::node * f);
@@ -281,6 +283,7 @@ namespace pokemonism::sdk {
     public:     event::generator & operator=(event::generator && o) noexcept = delete;
     public:     friend collection;
     public:     friend event::subscription;
+    public:     friend pokemonism::sdk::engine;
     };
 
     inline event * event::dispatch(event * e) {
@@ -323,7 +326,6 @@ namespace pokemonism::sdk {
 // ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/sdk/event/link.hh>
 #include <pokemonism/sdk/event/queue.hh>
-#include <pokemonism/sdk/event/engine.hh>
 #include <pokemonism/sdk/event/envelope.hh>
 #include <pokemonism/sdk/event/generator.hh>
 #include <pokemonism/sdk/event/subscription.hh>

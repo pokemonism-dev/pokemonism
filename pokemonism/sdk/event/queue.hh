@@ -14,6 +14,10 @@
 
 namespace pokemonism::sdk {
 
+    inline unsigned long event::queue::sizeGet(void) const {
+        return size;
+    }
+
     inline event::queue::queue(void) : size(declaration::zero), head(nullptr), tail(nullptr) {
 
     }

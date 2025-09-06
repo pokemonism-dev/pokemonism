@@ -47,6 +47,7 @@ namespace pokemonism::sdk {
     protected:  unsigned long               size;
     protected:  runnable::queue::node *     head;
     protected:  runnable::queue::node *     tail;
+    public:     inline unsigned long sizeGet(void) const { return size; }
     public:     inline virtual runnable::queue::node * add(runnable::queue::node * func) {
                     pokemon_develop_check(func == nullptr || func->container != nullptr, return func);
 

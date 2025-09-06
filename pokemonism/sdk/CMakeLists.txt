@@ -8,7 +8,6 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             event.hh
                                             event/link.hh
                                             event/queue.hh
-                                            event/engine.hh
                                             event/envelope.hh
                                             event/generator.hh
                                             event/subscription.hh
@@ -28,7 +27,6 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             callable.hh
                                             runnable.hh
                                             cloneable.hh
-                                            commandable.hh
                                             envelopeable.hh
                                             callbackable.hh
                                             primitivable.hh
@@ -42,7 +40,6 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             event.cc
                                             event/link.cc
                                             event/queue.cc
-                                            event/engine.cc
                                             event/envelope.cc
                                             event/generator.cc
                                             event/subscription.cc
@@ -62,7 +59,6 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             callable.cc
                                             runnable.cc
                                             cloneable.cc
-                                            commandable.cc
                                             envelopeable.cc
                                             callbackable.cc
                                             primitivable.cc
