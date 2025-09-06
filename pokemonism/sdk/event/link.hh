@@ -14,10 +14,26 @@
 
 namespace pokemonism::sdk {
 
+    inline unsigned int event::link::identifierGet(void) const {
+        pokemon_develop_check(e == nullptr, return declaration::invalid);
+
+        return e->identifier;
+    }
+
+    inline event::exception * event::link::exceptionSet(event::exception * problem) {
+        if (exception == nullptr) {
+            exception = problem;
+
+            return nullptr;
+        }
+
+        return problem;
+    }
+
     inline int event::link::on(void) {
         pokemon_develop_check(container == nullptr, return declaration::fail);
 
-        return container->on(this);
+        return container->processOn(this);
     }
 
     inline void event::link::raise(event::exception * exception) {

@@ -10,6 +10,7 @@
 #ifndef   __POKEMONISM_SDK_EVENT_SUBSCRIPTION_HH__
 #define   __POKEMONISM_SDK_EVENT_SUBSCRIPTION_HH__
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/sdk/event.hh>
 
 namespace pokemonism::sdk {
@@ -38,18 +39,22 @@ namespace pokemonism::sdk {
         return (status & state) != declaration::none;
     }
 
+    inline void event::subscription::containerDel(void) {
+        if (container != nullptr) container->del(this);
+    }
+
     inline event::subscription::subscription(unsigned int properties) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(), exception(nullptr) {
         status = status | event::subscription::state::gen;
     }
 
-    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::function on) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(on), exception(nullptr) {
+    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(subscriptionOn), exception(nullptr) {
         status = status | event::subscription::state::gen;
     }
 
-    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::modifier rel) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(rel), exception(nullptr) {
+    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(subscriptionReleaseOn), exception(nullptr) {
         status = status | event::subscription::state::gen;
     }
-    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::function on, event::subscription::state::callback::modifier rel) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(on, rel), exception(nullptr) {
+    inline event::subscription::subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : size(declaration::zero), head(nullptr), tail(nullptr), container(nullptr), prev(nullptr), next(nullptr), properties(properties), status(declaration::none), stateSet(subscriptionOn, subscriptionReleaseOn), exception(nullptr) {
         status = status | event::subscription::state::gen;
     }
 

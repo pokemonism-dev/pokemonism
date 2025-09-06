@@ -18,7 +18,8 @@ namespace pokemonism::sdk {
 
         collection::add(this, subscription);
 
-        subscription->on(event::subscription::state::type::add);
+        subscription->status = subscription->status | event::subscription::state::add;
+        subscription->stateOn(event::subscription::state::type::add);
 
         return nullptr;
     }
@@ -26,7 +27,8 @@ namespace pokemonism::sdk {
     event::subscription * event::generator::del(event::subscription * subscription) {
         pokemon_develop_check(subscription == nullptr || subscription->container != this, return subscription);
 
-        subscription->on(event::subscription::state::type::del);
+        subscription->status = (subscription->status & (~event::subscription::state::add));
+        subscription->stateOn(event::subscription::state::type::del);
 
         collection::del(this, subscription);
 

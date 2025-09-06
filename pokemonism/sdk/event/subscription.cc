@@ -15,13 +15,13 @@ namespace pokemonism::sdk {
     void event::subscription::raise(event::link * link, event::exception * problem) {
         pokemon_develop_check(link == nullptr || problem == nullptr, return);
 
-        on(link, problem);
+        callbackOn(link->identifierGet(), *link, problem);
 
         if (exception == nullptr) {
             status = status | event::subscription::state::exception;
             exception = problem->clone();
 
-            on(event::subscription::state::type::chk, exception);
+            callbackOn(event::subscription::state::type::chk, exception);
         }
     }
 

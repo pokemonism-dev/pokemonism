@@ -12,6 +12,15 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             event/envelope.hh
                                             event/generator.hh
                                             event/subscription.hh
+                                            event/internal/subscription.hh
+                                            command.hh
+                                            command/event.hh
+                                            command/event/link.hh
+                                            command/event/envelope.hh
+                                            command/event/generator.hh
+                                            command/event/processor.hh
+                                            command/event/subscription.hh
+                                            command/event/internal/subscription.hh
                                             exception.hh
                                             generic/envelope.hh
                                             allocator.hh
@@ -26,7 +35,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             functionable.hh
                                             synchronizable.hh
                                             linked/list.hh
-                                            )
+                                            engine.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -37,6 +46,15 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             event/envelope.cc
                                             event/generator.cc
                                             event/subscription.cc
+                                            event/internal/subscription.cc
+                                            command.cc
+                                            command/event.cc
+                                            command/event/link.cc
+                                            command/event/envelope.cc
+                                            command/event/generator.cc
+                                            command/event/processor.cc
+                                            command/event/subscription.cc
+                                            command/event/internal/subscription.cc
                                             exception.cc
                                             generic/envelope.cc
                                             allocator.cc
@@ -50,7 +68,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             primitivable.cc
                                             functionable.cc
                                             synchronizable.cc
-                                            linked/list.cc)
+                                            linked/list.cc
+                                            engine.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

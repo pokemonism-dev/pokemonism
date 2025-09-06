@@ -19,10 +19,12 @@
 
 namespace pokemonism::sdk {
 
+    class engine;
+
     class event {
     public:     class link;
+    public:     struct type;
     public:     class queue;
-    public:     class engine;           // ### TODO: IMPLEMENT THIS
     public:     class envelope;
     public:     class generator;
     public:     class processor;
@@ -30,8 +32,6 @@ namespace pokemonism::sdk {
     public:     struct modifiable;
     public:     struct releasable;
     public:     struct internal;
-    public:     struct command;         // ### TODO: IMPLEMENT THIS
-    public:     struct descriptor;      // ### TODO: IMPLEMENT THIS
     public:     using exception = pokemonism::sdk::exception;
     protected:  inline static event * dispatch(event * e);
     protected:  static event * rem(event * e);
@@ -51,6 +51,10 @@ namespace pokemonism::sdk {
     public:     event & operator=(const event & o) = delete;
     public:     event & operator=(event && o) noexcept = delete;
     public:     friend linked::list<event::queue, event>;
+    };
+
+    struct event::type {
+    public:     constexpr static unsigned int max = 0;
     };
 
     class event::queue : public pokemonism::sdk::sync {
@@ -92,8 +96,6 @@ namespace pokemonism::sdk {
                             };
                 public:     constexpr static unsigned int gen       = (0x00000001U <<  0U);
                 public:     constexpr static unsigned int add       = (0x00000001U <<  1U);
-                public:     constexpr static unsigned int del       = (0x00000001U <<  2U);
-                public:     constexpr static unsigned int rel       = (0x00000001U <<  3U);
                 public:     constexpr static unsigned int exception = (0x00000001U <<  4U);
                 public:     constexpr static unsigned int complete  = (0x00000001U <<  5U);
                 public:     constexpr static unsigned int cancel    = (0x00000001U <<  6U);
@@ -160,17 +162,21 @@ namespace pokemonism::sdk {
     protected:  inline int wakeup(void) noexcept override { return sync::wakeup(); }
     protected:  inline int wait(long second, long nano) noexcept override { return sync::wait(second, nano); }
     protected:  inline int wakeup(bool all) noexcept override { return sync::wakeup(all); }
-    protected:  virtual void on(unsigned int type, event::exception * problem = nullptr) = 0;
-    protected:  virtual int on(event::link * link, event::exception * problem = nullptr) = 0;
+    protected:  virtual void stateOn(unsigned int type, const event::exception * problem = nullptr) = 0;
+    public:     virtual int processOn(unsigned int type) = 0;
+    protected:  virtual int processOn(event::link * link) = 0;
+    protected:  virtual void callbackOn(unsigned int type, const event::exception * problem = nullptr) = 0;
+    protected:  virtual void callbackOn(unsigned int type, event::envelope & envelope, const event::exception * problem = nullptr) = 0;
     protected:  virtual void raise(event::link * link, event::exception * problem);
+    protected:  inline void containerDel(void);
     public:     bool cancel(void) override;
     protected:  event::link * add(event::link * link);
     protected:  event::link * del(event::link * link);
     protected:  void clear(void);
     protected:  inline explicit subscription(unsigned int properties);
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on);
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier rel);
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on, event::subscription::state::callback::modifier rel);
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn);
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn);
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn);
     protected:  inline subscription(void);
     public:     inline ~subscription(void) override;
     public:     subscription(const subscription & o) = delete;
@@ -183,27 +189,28 @@ namespace pokemonism::sdk {
     public:     friend event::link;
     };
 
-    class event::modifiable::subscription : public event::subscription {
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on) : event::subscription(properties, on) {}
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier rel) : event::subscription(properties, rel) {}
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on, event::subscription::state::callback::modifier rel) : event::subscription(properties, on, rel) {}
+    class event::modifiable::subscription : public virtual event::subscription {
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::subscription(properties, subscriptionOn) {}
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::subscription(properties, subscriptionReleaseOn) {}
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
     protected:  inline subscription(void) {}
     protected:  inline ~subscription(void) override {}
     };
 
-    class event::releasable::subscription : public event::modifiable::subscription {
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on) : event::modifiable::subscription(properties, on) {}
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier rel) : event::modifiable::subscription(properties, rel) {}
-    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on, event::subscription::state::callback::modifier rel) : event::modifiable::subscription(properties, on, rel) {}
+    class event::releasable::subscription : public virtual event::modifiable::subscription {
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::modifiable::subscription(properties, subscriptionOn) {}
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::modifiable::subscription(properties, subscriptionReleaseOn) {}
+    protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::modifiable::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
     protected:  inline subscription(void) {}
     protected:  inline ~subscription(void) override {}
     };
 
-    struct internal {
-    public:     class subscription : public event::releasable::subscription {
-                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on) : event::releasable::subscription(properties, on) {}
-                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier rel) : event::releasable::subscription(properties, rel) {}
-                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function on, event::subscription::state::callback::modifier rel) : event::releasable::subscription(properties, on, rel) {}
+    struct event::internal {
+    public:     class subscription : public virtual event::releasable::subscription {
+                protected:  void stateOn(unsigned int type, const event::exception * problem = nullptr) override;
+                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn) : event::releasable::subscription(properties, subscriptionOn) {}
+                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::releasable::subscription(properties, subscriptionReleaseOn) {}
+                protected:  inline subscription(unsigned int properties, event::subscription::state::callback::function subscriptionOn, event::subscription::state::callback::modifier subscriptionReleaseOn) : event::releasable::subscription(properties, subscriptionOn, subscriptionReleaseOn) {}
                 protected:  inline subscription(void) {}
                 public:     inline ~subscription(void) override {}
                 };
@@ -229,6 +236,8 @@ namespace pokemonism::sdk {
     protected:  event::link * prev;
     protected:  event::link * next;
     protected:  event * e;
+    public:     inline unsigned int identifierGet(void) const;
+    public:     inline event::exception * exceptionSet(event::exception * problem);
     public:     inline int on(void);
     public:     inline void raise(event::exception * exception);
     public:     inline explicit link(event::subscription * container);
@@ -256,47 +265,22 @@ namespace pokemonism::sdk {
     protected:  unsigned long size;
     protected:  event::subscription * head;
     protected:  event::subscription * tail;
-    protected:  event::engine * engine;
+    protected:  engine * engine;
     protected:  runnable::queue queue;
-    public:     event::subscription * add(event::subscription * subscription);
-    public:     event::subscription * del(event::subscription * subscription);
-    public:     runnable::queue::node * add(runnable::queue::node * f);
-    public:     runnable::queue::node * del(runnable::queue::node * f);
-    public:     void clear(void);
-    public:     explicit generator(event::engine * engine);
+    protected:  event::subscription * add(event::subscription * subscription);
+    protected:  event::subscription * del(event::subscription * subscription);
+    protected:  runnable::queue::node * add(runnable::queue::node * f);
+    protected:  runnable::queue::node * del(runnable::queue::node * f);
+    protected:  void clear(void);
+    protected:  explicit generator(pokemonism::sdk::engine * engine);
     public:     generator(void) = delete;
-    public:     ~generator(void) override;
+    protected:  ~generator(void) override;
     public:     generator(const event::generator & o) = delete;
     public:     generator(event::generator && o) noexcept = delete;
     public:     event::generator & operator=(const event::generator & o) = delete;
     public:     event::generator & operator=(event::generator && o) noexcept = delete;
     public:     friend collection;
-    };
-
-    struct event::command {
-    public:     class link;
-    public:     class event;
-    public:     class envelope;
-    public:     class generator;
-    public:     class processor;
-    public:     class subscription;
-    public:     struct modifiable;
-    public:     struct releasable;
-    public:     struct internal;
-    };
-
-    // ### TODO: IMPLEMENT THIS
-    class event::engine : public sync {
-    protected:  event::queue * queue;
-    protected:  struct set {
-
-                };
-    public:     engine(void);
-    public:     ~engine(void) override;
-    public:     engine(const event::engine & o) = delete;
-    public:     engine(event::engine && o) noexcept = delete;
-    public:     event::engine & operator=(const event::engine & o) = delete;
-    public:     event::engine & operator=(event::engine && o) noexcept = delete;
+    public:     friend event::subscription;
     };
 
     inline event * event::dispatch(event * e) {
