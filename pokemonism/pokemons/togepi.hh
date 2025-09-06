@@ -24,12 +24,7 @@ namespace pokemonism {
         template <trainername trainerizable = trainer>
         class togepi : public pokemon {
         public:     using command = pokemonism::sdk::command;
-        public:     struct functional {
-                    };
-        public:     struct pound {
-                    public:     class command;
-                    };
-
+        public:     class engine;
         protected:  pokemonism::sdk::engine * internal;
         public:     const char * name(void) const noexcept override { return "togepi"; }
         public:     const char * cry(void) const noexcept override { return "togepriii"; }
@@ -63,10 +58,22 @@ namespace pokemonism {
         };
 
         template <trainername trainerizable>
+        class togepi<trainerizable>::engine : public pokemonism::sdk::engine {
+        protected:  engine(void) {}
+        protected:  ~engine(void) override {}
+        public:     engine(const engine & o) = delete;
+        public:     engine(engine && o) noexcept = delete;
+        public:     engine & operator=(const engine & o) = delete;
+        public:     engine & operator=(engine && o) noexcept = delete;
+        public:     friend pokemonism::sdk::command::event::generator;
+        public:     friend togepi<trainerizable>;
+        };
+
+        template <trainername trainerizable>
         togepi<trainerizable> * togepi<trainerizable>::ready(void) {
             pokemon_training_check(internal != nullptr, return this);
 
-            internal = new pokemonism::sdk::engine();
+            internal = new togepi<trainerizable>::engine();
 
             internal->on();
 
@@ -93,46 +100,37 @@ namespace pokemonism {
             return this;
         }
 
-        /**
-         * 긴 꼬리나 손 등을 사용하여 상대를 때려서 공격한다.
-         *
-         */
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet);
         }
 
         template <trainername trainerizable>
-        // ReSharper disable once CppRedundantTypenameKeyword
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet, subscriptionOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
 
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -140,9 +138,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -150,9 +147,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -160,9 +156,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del |
@@ -171,31 +166,27 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet, subscriptionOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
         pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
@@ -204,9 +195,8 @@ namespace pokemonism {
 
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -214,9 +204,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -224,9 +213,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
@@ -234,9 +222,8 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
         }
 
-        // ReSharper disable once CppRedundantTypenameKeyword
         template <trainername trainerizable>
-        typename pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
+        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
             pokemon_training_check(internal == nullptr, return nullptr);
 
             constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;

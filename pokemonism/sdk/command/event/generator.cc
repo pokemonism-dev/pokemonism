@@ -13,6 +13,16 @@
 
 namespace pokemonism::sdk {
 
+    command::event::subscription * command::event::generator::reg(command::event::subscription * subscription) {
+        pokemon_develop_check(subscription == nullptr, return nullptr);
+
+        add(subscription);
+
+        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+
+        return subscription;
+    }
+
     command::event::subscription * command::event::generator::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) {
         pokemon_develop_check(object == nullptr, return nullptr);
 

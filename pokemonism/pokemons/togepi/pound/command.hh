@@ -15,20 +15,20 @@
 namespace pokemonism {
     namespace pokemons {
 
-        template <trainername trainerizable>
-        class togepi<trainerizable>::pound::command : public pokemonism::sdk::command {
-        protected:  pokemonism::sdk::primitivable * (*func)(void);
-        public:     pokemonism::sdk::primitivable * operator()(void) override { return func(); }
-        public:     explicit command(pokemonism::sdk::primitivable * (*func)(void)) : func(func) {
-                        pokemon_training_check(func == nullptr, return);
-                    }
-        public:     command(void) = delete;
-        public:     ~command(void) override { func = nullptr; }
-        public:     command(const togepi<trainerizable>::pound::command & o) = delete;
-        public:     command(togepi<trainerizable>::pound::command && o) noexcept = delete;
-        public:     togepi<trainerizable>::pound::command & operator=(const togepi<trainerizable>::pound::command & o) = delete;
-        public:     togepi<trainerizable>::pound::command & operator=(togepi<trainerizable>::pound::command && o) noexcept = delete;
-        };
+        // template <trainername trainerizable>
+        // class togepi<trainerizable>::pound::command : public pokemonism::sdk::command {
+        // protected:  pokemonism::sdk::primitivable * (*func)(void);
+        // public:     pokemonism::sdk::primitivable * operator()(void) override { return func(); }
+        // public:     explicit command(pokemonism::sdk::primitivable * (*func)(void)) : func(func) {
+        //                 pokemon_training_check(func == nullptr, return);
+        //             }
+        // public:     command(void) = delete;
+        // public:     ~command(void) override { func = nullptr; }
+        // public:     command(const togepi<trainerizable>::pound::command & o) = delete;
+        // public:     command(togepi<trainerizable>::pound::command && o) noexcept = delete;
+        // public:     togepi<trainerizable>::pound::command & operator=(const togepi<trainerizable>::pound::command & o) = delete;
+        // public:     togepi<trainerizable>::pound::command & operator=(togepi<trainerizable>::pound::command && o) noexcept = delete;
+        // };
     }
 }
 

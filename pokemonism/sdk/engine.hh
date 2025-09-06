@@ -29,6 +29,7 @@ namespace pokemonism::sdk {
     public:     virtual int on(bootstrapper bootstrap = nullptr);
     public:     virtual void off(terminator f);
     public:     virtual int run(void);
+    protected:  inline command::event::subscription * reg(command::event::subscription * subscription) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
@@ -50,20 +51,46 @@ namespace pokemonism::sdk {
         return queue->del(e);
     }
 
+    inline command::event::subscription * engine::reg(command::event::subscription * subscription) const {
+        pokemon_develop_check(queue == nullptr || generator.command == nullptr || subscription == nullptr, do {
+            if (subscription != nullptr) delete subscription;
+            return nullptr;
+        } while (0));
+
+        return generator.command->reg(subscription);
+    }
+
     inline command::event::subscription * engine::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const {
-        return queue != nullptr ? generator.command->reg(object, properties, eventSet) : nullptr;
+        pokemon_develop_check(queue == nullptr || generator.command == nullptr, do {
+            if (properties & command::event::subscription::property::release_object_on_rel) delete object;
+            return nullptr;
+        } while (0));
+
+        return generator.command->reg(object, properties, eventSet);
     }
 
     inline command::event::subscription * engine::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) const {
-        return queue != nullptr ? generator.command->reg(object, properties, eventSet, subscriptionOn) : nullptr;
+        pokemon_develop_check(queue == nullptr || generator.command == nullptr, do {
+            if (properties & command::event::subscription::property::release_object_on_rel) delete object;
+            return nullptr;
+        } while (0));
+        return generator.command->reg(object, properties, eventSet, subscriptionOn);
     }
 
     inline command::event::subscription * engine::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-        return queue != nullptr ? generator.command->reg(object, properties, eventSet, subscriptionReleaseOn) : nullptr;
+        pokemon_develop_check(queue == nullptr || generator.command == nullptr, do {
+            if (properties & command::event::subscription::property::release_object_on_rel) delete object;
+            return nullptr;
+        } while (0));
+        return generator.command->reg(object, properties, eventSet, subscriptionReleaseOn);
     }
 
     inline command::event::subscription * engine::reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-        return queue != nullptr ? generator.command->reg(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) : nullptr;
+        pokemon_develop_check(queue == nullptr || generator.command == nullptr, do {
+            if (properties & command::event::subscription::property::release_object_on_rel) delete object;
+            return nullptr;
+        } while (0));
+        return generator.command->reg(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
     }
 
 }

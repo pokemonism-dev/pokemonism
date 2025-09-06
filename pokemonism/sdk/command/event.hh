@@ -189,6 +189,7 @@ namespace pokemonism::sdk {
     };
 
     class command::event::generator : public pokemonism::sdk::event::generator {
+    public:     virtual command::event::subscription * reg(command::event::subscription * subscription);
     public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet);
     public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
     public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
