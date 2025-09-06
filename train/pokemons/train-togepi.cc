@@ -27,7 +27,11 @@ int main(int argc, char ** argv) {
 
     subscriptionOn = [](pokemonism::sdk::command::event::modifiable::subscription & subscription, unsigned int type, const pokemonism::sdk::event::exception * problem) {
         printf("type => %d\n", type);
-        // togepi->goodjob();
+    };
+
+    subscriptionReleaseOn = [](pokemonism::sdk::command::event::releasable::subscription & subscription, unsigned int type, const pokemonism::sdk::event::exception * problem) {
+        printf("type => %d\n", type);
+        togepi->goodjob();
     };
 
     togepi->ready();
