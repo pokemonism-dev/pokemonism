@@ -13,6 +13,8 @@
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
+// ReSharper disable once CppUnusedIncludeDirective
+#include <cstdlib>
 
 #include <pokemonism.hh>
 #include <pokemonism/sdk/log.hh>
