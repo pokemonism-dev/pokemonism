@@ -23,7 +23,10 @@ namespace pokemonism {
 
         template <trainername trainerizable = trainer>
         class togepi : public pokemon {
-        public:     using command = pokemonism::sdk::command;
+        // public:     using command = pokemonism::sdk::command;
+        public:     class command : public pokemonism::sdk::command {
+
+                    };
         public:     class engine;
         protected:  pokemonism::sdk::engine * internal;
         public:     const char * name(void) const noexcept override { return "togepi"; }

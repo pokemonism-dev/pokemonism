@@ -18,7 +18,7 @@ pokemonism::pokemons::togepi<cynthia> * togepi = nullptr;
 
 template <trainername trainerizable> using Togepi = pokemonism::pokemons::togepi<trainerizable>;
 
-using command = pokemonism::pokemons::togepi<cynthia>::command;
+using command = pokemonism::sdk::command;
 using exception = pokemonism::sdk::event::exception;
 using primitivable = pokemonism::sdk::primitivable;
 
