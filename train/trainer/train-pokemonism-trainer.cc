@@ -15,10 +15,11 @@
 using namespace pokemonism;
 
 int main(int argc, char ** argv) {
-    trainers::lana * lana = trainers::lana::on();
-
-    pokemons::petilil<trainers::lana> * petilil = lana->capture<pokemons::petilil<trainers::lana>>();
-
-    return lana->recall(battle::finish(battle::start(petilil->go())));
+    // trainers::lana * lana = trainers::lana::on();
+    //
+    // pokemons::petilil<trainers::lana> * petilil = lana->capture<pokemons::petilil<trainers::lana>>();
+    //
+    // return lana->recall(battle::finish(battle::start(petilil->go())));
+    return 0;
 
 }

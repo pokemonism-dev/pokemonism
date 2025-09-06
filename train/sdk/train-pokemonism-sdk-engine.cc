@@ -8,23 +8,40 @@
  */
 
 #include <pokemonism/sdk/engine.hh>
-#include <pokemonism/professor/oak.hh>
 
 using namespace pokemonism;
 using namespace pokemonism::sdk;
 
 static pokemonism::sdk::engine * singleton = nullptr;
 
-static void engineOff(void) {
-
-}
+class randomizer : public pokemonism::sdk::command {
+protected:  long v;
+public:     pokemonism::sdk::primitivable * operator()(void) override { return pokemonism::sdk::primitivable::from(v == 0 ? random() : v); }
+public:     inline void valueSet(long value) { v = value; }
+public:     inline explicit randomizer(long v) : v(v) {}
+public:     inline randomizer(void) : v(declaration::zero) {}
+public:     inline ~randomizer(void) override {}
+public:     randomizer(const randomizer & o) : v(o.v) {}
+public:     randomizer(randomizer && o) noexcept : v(o.v) { o.v = declaration::zero; }
+public:     randomizer & operator=(const randomizer & o) {
+                if (pointof(o) != this) v = o.v;
+                return *this;
+            }
+public:     randomizer & operator=(randomizer && o) noexcept {
+                if (pointof(o) != this) {
+                    v = o.v;
+                    o.v = declaration::zero;
+                }
+                return *this;
+            }
+};
 
 int main(int argc, char ** argv) {
     singleton = new pokemonism::sdk::engine();
 
     singleton->on(nullptr);
 
-    professors::oak::tools::randomizer func = professors::oak::get<professors::oak::tools::randomizer>();
+    randomizer func;
 
     printf("%ld\n", primitivable::to<long>(func()));
 
@@ -32,7 +49,7 @@ int main(int argc, char ** argv) {
 
     printf("%ld\n", primitivable::to<long>(func()));
 
-    command::event::callback::set eventSet([](command & o, unsigned int type, command::event::envelope & envelope, const command::event::exception * e) {
+    const command::event::callback::set eventSet([](command & o, unsigned int type, command::event::envelope & envelope, const command::event::exception * e) {
         printf("%ld\n", primitivable::to<long>(envelope.messagePop()));
     });
 
