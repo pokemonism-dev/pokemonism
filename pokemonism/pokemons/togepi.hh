@@ -24,9 +24,7 @@ namespace pokemonism {
         template <trainername trainerizable = trainer>
         class togepi : public pokemon {
         // public:     using command = pokemonism::sdk::command;
-        public:     class command : public pokemonism::sdk::command {
-
-                    };
+        public:     class command;
         public:     class engine;
         protected:  pokemonism::sdk::engine * internal;
         public:     const char * name(void) const noexcept override { return "togepi"; }
@@ -68,9 +66,9 @@ namespace pokemonism {
         public:     engine(engine && o) noexcept = delete;
         public:     engine & operator=(const engine & o) = delete;
         public:     engine & operator=(engine && o) noexcept = delete;
-        public:     friend pokemonism::sdk::command::event::generator;
         public:     friend togepi<trainerizable>;
         };
+
 
         template <trainername trainerizable>
         togepi<trainerizable> * togepi<trainerizable>::ready(void) {
@@ -169,70 +167,7 @@ namespace pokemonism {
             return internal->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
         }
 
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
 
-            return internal->reg(command, properties, eventSet);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            return internal->reg(command, properties, eventSet, subscriptionOn);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            return internal->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
-
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
-
-            return internal->reg(command, properties, eventSet);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
-
-            return internal->reg(command, properties, eventSet, subscriptionOn);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
-
-            return internal->reg(command, properties, eventSet, subscriptionReleaseOn);
-        }
-
-        template <trainername trainerizable>
-        pokemonism::sdk::command::event::subscription * togepi<trainerizable>::reg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const {
-            pokemon_training_check(internal == nullptr, return nullptr);
-
-            constexpr unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
-
-            return internal->reg(command, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
-        }
 
         template<typename trainerizable>
         togepi<trainerizable>::togepi(void) : internal(nullptr) {
@@ -249,6 +184,6 @@ namespace pokemonism {
 }
 
 // ReSharper disable once CppUnusedIncludeDirective
-#include <pokemonism/pokemons/togepi/pound/command.hh>
+#include <pokemonism/pokemons/togepi/command.hh>
 
 #endif // __POKEMONISM_TOGEPI_HH__

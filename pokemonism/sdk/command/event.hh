@@ -115,7 +115,7 @@ namespace pokemonism::sdk {
     protected:  command * object;
     protected:  command::event::callback::set eventSet;
     protected:  int count;
-    protected:  virtual bool executeSet(void);
+    protected:  inline virtual bool executeSet(void);
     protected:  int processOn(unsigned int type) override;
     protected:  int processOn(pokemonism::sdk::event::link * link) override;
     protected:  void callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem = nullptr) override;

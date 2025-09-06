@@ -29,7 +29,8 @@ namespace pokemonism::sdk {
     public:     virtual int on(bootstrapper bootstrap = nullptr);
     public:     virtual void off(terminator f);
     public:     virtual int run(void);
-    protected:  inline command::event::subscription * reg(command::event::subscription * subscription) const;
+    protected:
+        virtual inline command::event::subscription * reg(command::event::subscription * subscription) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) const;
     public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
