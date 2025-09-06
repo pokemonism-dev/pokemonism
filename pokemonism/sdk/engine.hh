@@ -16,11 +16,11 @@ namespace pokemonism::sdk {
 
     class engine : public sync {
     public:     typedef void (*terminator)(engine &);
-    public:     typedef void (*bootstrapper)(engine &);
     protected:  struct set {
                 public:     pokemonism::sdk::command::event::generator * command;
                 public:     inline set(void) : command(nullptr) {}
                 };
+    public:     typedef void (*bootstrapper)(engine &, event::queue **, engine::set &);
     protected:  terminator cancel;
     protected:  event::queue * queue;
     protected:  engine::set generator;

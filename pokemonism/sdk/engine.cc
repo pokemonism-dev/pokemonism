@@ -27,7 +27,7 @@ namespace pokemonism::sdk {
 
     int engine::on(bootstrapper bootstrap) {
         if (queue == nullptr) {
-            if (bootstrap != nullptr) bootstrap(*this);
+            if (bootstrap != nullptr) bootstrap(*this, pointof(queue), generator);
 
             if (queue == nullptr) queue = new event::queue();
             if (generator.command == nullptr) generator.command = new command::event::generator(this);
