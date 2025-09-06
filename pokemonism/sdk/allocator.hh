@@ -10,6 +10,9 @@
 #ifndef   __POKEMONISM_SDK_ALLOCATOR__HH__
 #define   __POKEMONISM_SDK_ALLOCATOR__HH__
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include <cstdlib>
+
 #include <pokemonism.hh>
 
 namespace pokemonism::sdk {
