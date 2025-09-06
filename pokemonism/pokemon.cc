@@ -8,7 +8,7 @@
  */
 
 
-#include "randomizer.hh"
+#include "pokemon.hh"
 
 namespace pokemonism {
 }
