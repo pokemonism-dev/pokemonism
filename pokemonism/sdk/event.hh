@@ -17,9 +17,6 @@
 #include <pokemonism/sdk/subscription.hh>
 #include <pokemonism/sdk/linked/list.hh>
 
-#include "event.hh"
-#include "event.hh"
-
 namespace pokemonism::sdk {
 
     class event {
@@ -46,7 +43,7 @@ namespace pokemonism::sdk {
     protected:  inline int on(void) const;
     protected:  inline virtual void reset(void);
     public:     inline unsigned int identifierGet(void) const { return identifier; }
-    public:     event(unsigned int identifier, event::link * node);
+    public:     inline event(unsigned int identifier, event::link * node);
     public:     event(void) = delete;
     public:     inline virtual ~event(void);
     public:     event(const event & o) = delete;
@@ -276,6 +273,18 @@ namespace pokemonism::sdk {
     public:     friend collection;
     };
 
+    struct event::command {
+    public:     class link;
+    public:     class event;
+    public:     class envelope;
+    public:     class generator;
+    public:     class processor;
+    public:     class subscription;
+    public:     struct modifiable;
+    public:     struct releasable;
+    public:     struct internal;
+    };
+
     // ### TODO: IMPLEMENT THIS
     class event::engine : public sync {
     protected:  event::queue * queue;
@@ -334,6 +343,7 @@ namespace pokemonism::sdk {
 #include <pokemonism/sdk/event/envelope.hh>
 #include <pokemonism/sdk/event/generator.hh>
 #include <pokemonism/sdk/event/subscription.hh>
+
 // ReSharper restore CppUnusedIncludeDirective
 
 #endif // __POKEMONISM_SDK_EVENT_HH__

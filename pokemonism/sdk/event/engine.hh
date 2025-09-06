@@ -7,12 +7,12 @@
  * @since           9월 05, 2025
  */
 
-#ifndef   __POKEMONISM_EVENT_ENGINE_HH__
-#define   __POKEMONISM_EVENT_ENGINE_HH__
+#ifndef   __POKEMONISM_SDK_EVENT_ENGINE_HH__
+#define   __POKEMONISM_SDK_EVENT_ENGINE_HH__
 
 #include <pokemonism.hh>
 
 namespace pokemonism {
 }
 
-#endif // __POKEMONISM_EVENT_ENGINE_HH__
+#endif // __POKEMONISM_SDK_EVENT_ENGINE_HH__

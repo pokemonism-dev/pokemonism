@@ -7,8 +7,8 @@
  * @since           9월 05, 2025
  */
 
-#ifndef   __POKEMONISM_EVENT_ENVELOPE_HH__
-#define   __POKEMONISM_EVENT_ENVELOPE_HH__
+#ifndef   __POKEMONISM_SDK_EVENT_ENVELOPE_HH__
+#define   __POKEMONISM_SDK_EVENT_ENVELOPE_HH__
 
 #include <pokemonism/sdk/event.hh>
 
@@ -36,4 +36,4 @@ namespace pokemonism::sdk {
 
 }
 
-#endif // __POKEMONISM_EVENT_ENVELOPE_HH__
+#endif // __POKEMONISM_SDK_EVENT_ENVELOPE_HH__

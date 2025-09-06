@@ -1,5 +1,5 @@
 /**
- * @file            pokemonism/commandable.hh
+ * @file            pokemonism/sdk/commandable.hh
  * @brief
  * @details
  *
