@@ -33,7 +33,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             functionable.hh
                                             synchronizable.hh
                                             linked/list.hh
-                                            engine.hh)
+                                            engine.hh
+                                            functional/command.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -65,7 +66,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             functionable.cc
                                             synchronizable.cc
                                             linked/list.cc
-                                            engine.cc)
+                                            engine.cc
+                                            functional/command.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

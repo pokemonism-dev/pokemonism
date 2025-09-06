@@ -14,7 +14,7 @@
 
 namespace pokemonism::sdk {
 
-    class command : callable<primitivable> {
+    class command : public callable<primitivable> {
     public:     class event;
     public:     typedef primitivable output;
     public:     output * operator()(void) override = 0;
