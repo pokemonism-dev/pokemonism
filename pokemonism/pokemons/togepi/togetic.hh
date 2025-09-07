@@ -13,12 +13,17 @@
 // ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/pokemons/togepi.hh>
 
+#include <pokemonism/sdk/templateable/engine.hh>
+
 namespace pokemonism::pokemons {
 
     template <trainername trainerizable = trainer>
     class togetic : public togepi<trainerizable> {
+    public:     class command;
+    public:     class engine;
     public:     const char * name(void) const noexcept override { return "togetic"; }
     public:     const char * cry(void) const noexcept override { return "togetic, togee!"; }
+    public:     togetic<trainerizable> * ready(void) override;
     // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
     // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
     // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
@@ -45,6 +50,28 @@ namespace pokemonism::pokemons {
     public:     friend trainerizable;
     public:     friend class togepi<trainerizable>;
     };
+
+    template <trainername trainerizable>
+    class togetic<trainerizable>::engine : public pokemonism::sdk::templateable::engine {
+    protected:  engine(void) {}
+    protected:  ~engine(void) override {}
+    public:     engine(const engine & o) = delete;
+    public:     engine(engine && o) noexcept = delete;
+    public:     engine & operator=(const engine & o) = delete;
+    public:     engine & operator=(engine && o) noexcept = delete;
+    public:     friend togetic<trainerizable>;
+    };
+
+    template <trainername trainerizable>
+    togetic<trainerizable> * togetic<trainerizable>::ready(void) {
+        pokemon_training_check(this->internal != nullptr, return this);
+
+        this->internal = new togetic<trainerizable>::engine();
+
+        this->internal->on();
+
+        return this;
+    }
 
     template <trainername trainerizable>
     togetic<trainerizable> * togepi<trainerizable>::evolve(togepi<trainerizable>::pointer & monster) {

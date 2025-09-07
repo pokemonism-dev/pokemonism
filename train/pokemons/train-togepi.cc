@@ -15,7 +15,6 @@ using namespace pokemonism;
 using namespace pokemonism::trainers;
 
 pokemonism::pokemons::togepi<cynthia> * togepi = nullptr;
-pokemonism::pokemons::togetic<cynthia> * togetic = nullptr;
 
 using command = pokemonism::sdk::command;
 using exception = pokemonism::sdk::event::exception;
@@ -32,8 +31,6 @@ static command::event::subscription::state::callback::modifier subscriptionRelea
 int main(int argc, char ** argv) {
     togepi = cynthia::gotcha<pokemons::togepi<cynthia>>();
 
-    togetic = pokemons::togepi<cynthia>::evolve(togepi);
-
     eventSet.execute = [](command & o, unsigned int type, command::event::envelope & envelope, const exception * problem) {
         printf("%ld\n", primitivable::to<long>(envelope.messagePop()));
     };
@@ -44,16 +41,16 @@ int main(int argc, char ** argv) {
 
     subscriptionReleaseOn = [](command::event::releasable::subscription & subscription, unsigned int type, const exception * problem) {
         printf("type => %d\n", type);
-        togetic->goodjob();
+        togepi->goodjob();
     };
 
-    togetic->ready();
+    togepi->ready();
 
-    togetic->reg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), eventSet);
-    togetic->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet);
-    togetic->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet, subscriptionOn);
+    togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), eventSet);
+    togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet);
+    togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet, subscriptionOn);
 
-    togetic->reg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), 10, eventSet, subscriptionOn, subscriptionReleaseOn);
+    togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), 10, eventSet, subscriptionOn, subscriptionReleaseOn);
 
-    return cynthia::recall(togetic->go());
+    return cynthia::recall(togepi->go());
 }
