@@ -20,7 +20,7 @@ namespace pokemonism::pokemons {
     class togetic : public togepi<trainerizable> {
     // public:     template <typename commandable, typename >
         // subscription<command<message>, message>
-    public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
+    // public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
     public:     const char * name(void) const noexcept override { return "togetic"; }
     public:     const char * cry(void) const noexcept override { return "togetic, togee!"; }
     protected:  togetic(void) {}
