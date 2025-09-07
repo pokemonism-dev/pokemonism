@@ -25,22 +25,23 @@ namespace pokemonism::pokemons {
     public:     const char * name(void) const noexcept override { return "togetic"; }
     public:     const char * cry(void) const noexcept override { return "togetic, togee!"; }
     public:     togetic<trainerizable> * ready(void) override;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    public:     inline pokemonism::sdk::templateable::command::event::generator * genericCommandGet(void) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericRepeatReg(commandable * object, int total, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
     protected:  explicit togetic(togepi<trainerizable> * monster);
     protected:  togetic(void) {}
     protected:  ~togetic(void) override {}
@@ -67,6 +68,12 @@ namespace pokemonism::pokemons {
     public:     engine & operator=(engine && o) noexcept = delete;
     public:     friend togetic<trainerizable>;
     };
+
+    template <trainername trainerizable>
+    inline pokemonism::sdk::templateable::command::event::generator * togetic<trainerizable>::genericCommandGet(void) const {
+        pokemon_training_check(this->internal == nullptr, return nullptr);
+        return reinterpret_cast<togetic<trainerizable>::engine *>(this->internal)->genericCommandGet();
+    }
 
     template <trainername trainerizable>
     togetic<trainerizable> * togetic<trainerizable>::ready(void) {
@@ -106,6 +113,70 @@ namespace pokemonism::pokemons {
     template <trainername trainerizable>
     togetic<trainerizable>::togetic(togepi<trainerizable> * monster) {
         this->internal = monster->internal;
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, unsigned int properties, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, properties, eventSet);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, unsigned int properties, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, properties, eventSet, subscriptionOn);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, unsigned int properties, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, properties, eventSet, subscriptionReleaseOn);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, unsigned int properties, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, togetic<trainerizable>::declaration::properties, eventSet);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, togetic<trainerizable>::declaration::properties, eventSet, subscriptionOn);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, togetic<trainerizable>::declaration::properties, eventSet, subscriptionReleaseOn);
+    }
+
+    template <trainername trainerizable>
+    template <class commandable, typename outputable>
+    inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * togetic<trainerizable>::genericReg(commandable * object, const typename pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, typename pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const {
+        pokemon_develop_check(genericCommandGet() == nullptr, return nullptr);
+
+        return genericCommandGet()->genericReg(object, togetic<trainerizable>::declaration::properties, eventSet, subscriptionOn, subscriptionReleaseOn);
     }
 
 }

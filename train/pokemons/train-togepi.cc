@@ -50,7 +50,7 @@ int main(int argc, char ** argv) {
     togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet);
     togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(1004); }), eventSet, subscriptionOn);
 
-    togepi->reg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), 10, eventSet, subscriptionOn, subscriptionReleaseOn);
+    togepi->repeatReg(new functional::command([]() -> primitivable * { return primitivable::from(random()); }), 10, eventSet, subscriptionOn, subscriptionReleaseOn);
 
     return cynthia::recall(togepi->go());
 }
