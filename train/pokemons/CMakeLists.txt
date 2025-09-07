@@ -8,3 +8,6 @@ target_link_libraries(train-togepi              pokemonism-sdk pokemonism-dev)
 
 add_executable(train-togepi-evolve              train-togepi-evolve.cc)
 target_link_libraries(train-togepi-evolve       pokemonism-sdk pokemonism-dev)
+
+add_executable(train-togetic                    train-togetic.cc)
+target_link_libraries(train-togetic             pokemonism-sdk pokemonism-dev)

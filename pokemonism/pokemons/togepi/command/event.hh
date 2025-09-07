@@ -42,18 +42,10 @@ namespace pokemonism::pokemons {
 
                     return false;
                 }
-    protected:  inline explicit repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet), total(total) {
-                    pokemon_develop_check(total <= 0, total = 1);
-                }
-    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionOn), total(total) {
-                    pokemon_develop_check(total <= 0, total = 1);
-                }
-    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionReleaseOn), total(total) {
-                    pokemon_develop_check(total <= 0, total = 1);
-                }
-    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn), total(total) {
-                    pokemon_develop_check(total <= 0, total = 1);
-                }
+    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet), total(total) { pokemon_develop_check(total <= 0, total = 1); }
+    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionOn), total(total) { pokemon_develop_check(total <= 0, total = 1); }
+    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionReleaseOn), total(total) { pokemon_develop_check(total <= 0, total = 1); }
+    protected:  inline repeat(pokemonism::sdk::command * object, int total, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : pokemonism::sdk::command::event::internal::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn), total(total) { pokemon_develop_check(total <= 0, total = 1); }
     protected:  inline repeat(void) = delete;
     protected:  ~repeat(void) override {}
     public:     repeat(const togepi<trainerizable>::command::event::subscriptions::repeat & o) = delete;

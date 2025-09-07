@@ -32,6 +32,7 @@ namespace pokemonism {
         public:     class command;
         public:     class engine;
         public:     static togetic<trainerizable> * evolve(pointer & monster);
+        public:     template <itemname itemable> static togetic<trainerizable> * evolve(togepi<trainerizable> * monster, itemable * item = nullptr);
         protected:  pokemonism::sdk::engine * internal;
         public:     const char * name(void) const noexcept override { return "togepi"; }
         public:     const char * cry(void) const noexcept override { return "togepriii"; }

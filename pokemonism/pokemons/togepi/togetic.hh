@@ -19,7 +19,8 @@ namespace pokemonism::pokemons {
 
     template <trainername trainerizable = trainer>
     class togetic : public togepi<trainerizable> {
-    public:     class command;
+    public:     template <typename outputable = pokemonism::sdk::primitivable> class command;
+    public:     struct templateable;
     public:     class engine;
     public:     const char * name(void) const noexcept override { return "togetic"; }
     public:     const char * cry(void) const noexcept override { return "togetic, togee!"; }
@@ -52,7 +53,12 @@ namespace pokemonism::pokemons {
     };
 
     template <trainername trainerizable>
-    class togetic<trainerizable>::engine : public pokemonism::sdk::templateable::engine {
+    class togetic<trainerizable>::engine : public togepi<trainerizable>::engine {
+    public:     inline pokemonism::sdk::templateable::command::event::generator * genericCommandGet(void) const { return static_cast<pokemonism::sdk::templateable::command::event::generator *>(reinterpret_cast<void *>(this->generator.command)); }
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> inline pokemonism::sdk::templateable::command::subscription<commandable, outputable> * genericReg(commandable * object, unsigned int properties, const pokemonism::sdk::templateable::command::event::callback<commandable, outputable>::set & eventSet, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, pokemonism::sdk::templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) const;
     protected:  engine(void) {}
     protected:  ~engine(void) override {}
     public:     engine(const engine & o) = delete;
@@ -86,10 +92,25 @@ namespace pokemonism::pokemons {
     }
 
     template <trainername trainerizable>
+    template <itemname itemable>
+    togetic<trainerizable> * togepi<trainerizable>::evolve(togepi<trainerizable> * monster, itemable * item) {
+        pokemon_training_check(monster == nullptr, return nullptr);
+
+        togetic<trainerizable> * evolution = new togetic<trainerizable>(monster);
+
+        delete monster;
+
+        return evolution;
+    }
+
+    template <trainername trainerizable>
     togetic<trainerizable>::togetic(togepi<trainerizable> * monster) {
         this->internal = monster->internal;
     }
 
 }
+
+#include <pokemonism/pokemons/togepi/togetic/engine.hh>
+#include <pokemonism/pokemons/togepi/togetic/templateable.hh>
 
 #endif // __POKEMONISM_POKEMONS_TOGETIC_HH__

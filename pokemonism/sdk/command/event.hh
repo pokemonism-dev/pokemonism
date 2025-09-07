@@ -161,24 +161,13 @@ namespace pokemonism::sdk {
     public:     command::event::releasable::subscription & operator=(command::event::releasable::subscription && o) noexcept = delete;
     };
 
+    // ReSharper disable CppVirtualFunctionCallInsideCtor
     class command::event::internal::subscription : public command::event::releasable::subscription {
     protected:  inline command * objectPop(void) override;
-    protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) {
-                    // ReSharper disable once CppVirtualFunctionCallInsideCtor
-                    stateOn(command::event::subscription::state::type::gen);
-                }
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) {
-                    // ReSharper disable once CppVirtualFunctionCallInsideCtor
-                    stateOn(command::event::subscription::state::type::gen);
-                }
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) {
-                    // ReSharper disable once CppVirtualFunctionCallInsideCtor
-                    stateOn(command::event::subscription::state::type::gen);
-                }
-    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) {
-                    // ReSharper disable once CppVirtualFunctionCallInsideCtor
-                    stateOn(command::event::subscription::state::type::gen);
-                }
+    protected:  inline explicit subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet) : command::event::releasable::subscription(object, properties, eventSet) { stateOn(command::event::subscription::state::type::gen); }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn) { stateOn(command::event::subscription::state::type::gen); }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionReleaseOn) { stateOn(command::event::subscription::state::type::gen); }
+    protected:  inline subscription(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) : command::event::releasable::subscription(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn) { stateOn(command::event::subscription::state::type::gen); }
     protected:  inline subscription(void) = delete;
     protected:  ~subscription(void) override;
     public:     subscription(const command::event::internal::subscription & o) = delete;
@@ -187,6 +176,7 @@ namespace pokemonism::sdk {
     public:     command::event::internal::subscription & operator=(command::event::internal::subscription && o) noexcept = delete;
     public:     friend command::event::generator;
     };
+    // ReSharper restore CppVirtualFunctionCallInsideCtor
 
     class command::event::generator : public pokemonism::sdk::event::generator {
     public:     inline virtual command::event * eventGen(unsigned int type, command::event::subscription * subscription);

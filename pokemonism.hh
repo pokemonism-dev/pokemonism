@@ -41,6 +41,7 @@ namespace pokemonism {
 #define pokemonname                 typename
 #define trainername                 typename
 #define toolname                    typename
+#define itemname                    typename
 
 
 #endif // __POKEMONISM__HH__
