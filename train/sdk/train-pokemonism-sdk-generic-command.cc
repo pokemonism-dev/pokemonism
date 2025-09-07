@@ -16,28 +16,6 @@ using namespace pokemonism::sdk;
 
 templateable::engine * singleton = nullptr;
 
-// class randomizer : public pokemonism::sdk::command {
-// protected:  long v;
-// public:     pokemonism::sdk::primitivable * operator()(void) override { return pokemonism::sdk::primitivable::from(v == 0 ? random() : v); }
-// public:     inline void valueSet(long value) { v = value; }
-// public:     inline explicit randomizer(long v) : v(v) {}
-// public:     inline randomizer(void) : v(declaration::zero) {}
-// public:     inline ~randomizer(void) override {}
-// public:     randomizer(const randomizer & o) : v(o.v) {}
-// public:     randomizer(randomizer && o) noexcept : v(o.v) { o.v = declaration::zero; }
-// public:     randomizer & operator=(const randomizer & o) {
-//                 if (pointof(o) != this) v = o.v;
-//                 return *this;
-//             }
-// public:     randomizer & operator=(randomizer && o) noexcept {
-//                 if (pointof(o) != this) {
-//                     v = o.v;
-//                     o.v = declaration::zero;
-//                 }
-//                 return *this;
-//             }
-// };
-
 class primitive : public pokemonism::sdk::primitivable {
 protected:  int value;
 public:     int valueGet(void) const { return value; }
@@ -78,27 +56,17 @@ int main(int argc, char ** argv) {
     const templateable::command::subscription<lambdable::pure::command<primitive>, primitive>::state::callback::function subscriptionOn = [](templateable::command::modifiable::subscription<lambdable::pure::command<primitive>, primitive> & subscription, unsigned int type, const command::event::exception * e) {
         printf("%d\n", type);
     };
-    // templateable::command::subscription<primitive, lambdable::pure::command<primitive>>::state::callback::function
+
     const templateable::command::subscription<lambdable::pure::command<primitive>, primitive>::state::callback::modifier subscriptionReleaseOn = [](templateable::command::releasable::subscription<lambdable::pure::command<primitive>, primitive> & subscription, unsigned int type, const command::event::exception * e) {
         printf("%d\n", type);
+        singleton->off();
     };
-
-    // const command::event::subscription::state::callback::modifier subscriptionReleaseOn = [](command::event::releasable::subscription & subscription, unsigned int type, const command::event::exception * e) {
-    //     printf("%d\n", type);
-    //     singleton->off(nullptr);
-    // };
 
     templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet);
 
     templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
 
-    // singleton->reg<primitive, lambdable::pure::command<primitive>>(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
-
-    // templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
-
-
-    // singleton->reg(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, (templateable::command::subscription<primitive, lambdable::pure::command<primitive>>::state::callback::function) subscriptionOn);
-
+    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn, subscriptionReleaseOn);
 
     const int ret = singleton->run();
 

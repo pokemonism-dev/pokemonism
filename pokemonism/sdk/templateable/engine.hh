@@ -19,9 +19,8 @@ namespace pokemonism::sdk::templateable {
     class engine : public pokemonism::sdk::engine {
     public:     typedef void (*terminator)(engine &);
     public:     typedef void (*bootstrapper)(engine &, pokemonism::sdk::event::queue **, pokemonism::sdk::engine::set &);
-    public:     virtual int on(bootstrapper bootstrap = nullptr);
-    protected:  void off(pokemonism::sdk::engine::terminator f) override { pokemonism::sdk::engine::off(f); }
-    public:     virtual void off(terminator f) { off(reinterpret_cast<pokemonism::sdk::engine::terminator>(f)); }
+    public:     int on(bootstrapper bootstrap = nullptr);
+    public:     void off(terminator f = nullptr) { pokemonism::sdk::engine::off(reinterpret_cast<pokemonism::sdk::engine::terminator>(f)); }
     protected:  inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command::event::subscription * subscription) const override { return pokemonism::sdk::engine::reg(subscription); }
     public:     inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * object, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const override { return pokemonism::sdk::engine::reg(object, properties, eventSet); }
     public:     inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * object, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const override { return pokemonism::sdk::engine::reg(object, properties, eventSet, subscriptionOn); }

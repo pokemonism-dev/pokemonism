@@ -26,8 +26,8 @@ namespace pokemonism::sdk {
     protected:  engine::set generator;
     protected:  inline event * add(event * e) const;
     protected:  inline event * del(event * e) const;
-    public:     virtual int on(bootstrapper bootstrap = nullptr);
-    public:     virtual void off(terminator f);
+    public:     int on(bootstrapper bootstrap = nullptr);
+    public:     void off(terminator f = nullptr);
     public:     virtual int run(void);
     protected:  virtual inline command::event::subscription * reg(command::event::subscription * subscription) const;
     public:     virtual inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const;
