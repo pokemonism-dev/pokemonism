@@ -43,35 +43,28 @@ namespace pokemonism::sdk::templateable {
     inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet) {
         pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet);
-
-        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet);
+        return templateable::command::event::generator::genericReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet);
     }
 
     template <class commandable, typename outputable>
     inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) {
         pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<outputable, commandable>(object, properties, eventSet, subscriptionOn);
-
-        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn);
+        return templateable::command::event::generator::genericReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn);
     }
 
     template <class commandable, typename outputable>
     inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet, subscriptionReleaseOn);
-
-        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionReleaseOn);
+        return templateable::command::event::generator::genericReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionReleaseOn);
     }
 
     template <class commandable, typename outputable>
     inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, typename templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
-        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
+        return templateable::command::event::generator::genericReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
     }
 
 }
