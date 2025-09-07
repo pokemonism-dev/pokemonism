@@ -15,8 +15,8 @@
 namespace pokemonism::sdk {
 
     class envelopeable {
-    public:     typedef primitivable message;
-    public:     virtual primitivable * messagePop(void) = 0;
+    public:     using message = primitivable;
+    public:     virtual message * messagePop(void) = 0;
     public:     envelopeable(void) {}
     public:     virtual ~envelopeable(void) {}
     public:     envelopeable(const envelopeable & o) = delete;

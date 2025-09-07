@@ -14,9 +14,9 @@
 
 namespace pokemonism::sdk::templateable {
 
-    template <typename outputable, class commandable>
-    inline void command::subscription<outputable, commandable>::callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem) {
-        command::envelope<outputable, commandable> envelope(this);
+    template <class commandable, typename outputable>
+    inline void command::subscription<commandable, outputable>::callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem) {
+        command::envelope<commandable, outputable> envelope(this);
 
         callbackOn(type, envelope, problem);
     }

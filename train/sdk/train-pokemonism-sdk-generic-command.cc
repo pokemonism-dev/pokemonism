@@ -68,18 +68,18 @@ int main(int argc, char ** argv) {
         return new primitive(static_cast<int>(random()));
     });
 
-    const templateable::command::event::callback<primitive, lambdable::pure::command<primitive>>::set eventSet([](lambdable::pure::command<primitive> & o, unsigned int type, templateable::command::envelope<primitive, lambdable::pure::command<primitive> > & envelope, const templateable::command::exception * e) {
+    const templateable::command::event::callback<lambdable::pure::command<primitive>, primitive>::set eventSet([](lambdable::pure::command<primitive> & o, unsigned int type, templateable::command::envelope<lambdable::pure::command<primitive>, primitive> & envelope, const templateable::command::exception * e) {
         if (const primitive * output = envelope.messagePop(); output != nullptr) {
             printf("value: %d\n", output->valueGet());
             delete output;
         }
     });
 
-    const templateable::command::subscription<primitive, lambdable::pure::command<primitive>>::state::callback::function subscriptionOn = [](templateable::command::modifiable::subscription<primitive, lambdable::pure::command<primitive>> & subscription, unsigned int type, const command::event::exception * e) {
+    const templateable::command::subscription<lambdable::pure::command<primitive>, primitive>::state::callback::function subscriptionOn = [](templateable::command::modifiable::subscription<lambdable::pure::command<primitive>, primitive> & subscription, unsigned int type, const command::event::exception * e) {
         printf("%d\n", type);
     };
     // templateable::command::subscription<primitive, lambdable::pure::command<primitive>>::state::callback::function
-    const templateable::command::subscription<primitive, lambdable::pure::command<primitive>>::state::callback::modifier subscriptionReleaseOn = [](templateable::command::releasable::subscription<primitive, lambdable::pure::command<primitive>> & subscription, unsigned int type, const command::event::exception * e) {
+    const templateable::command::subscription<lambdable::pure::command<primitive>, primitive>::state::callback::modifier subscriptionReleaseOn = [](templateable::command::releasable::subscription<lambdable::pure::command<primitive>, primitive> & subscription, unsigned int type, const command::event::exception * e) {
         printf("%d\n", type);
     };
 
@@ -88,9 +88,11 @@ int main(int argc, char ** argv) {
     //     singleton->off(nullptr);
     // };
 
-    singleton->reg(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet);
+    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet);
 
-    singleton->reg<primitive, lambdable::pure::command<primitive>>(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
+    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
+
+    // singleton->reg<primitive, lambdable::pure::command<primitive>>(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
 
     // templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
 

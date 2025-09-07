@@ -14,39 +14,39 @@
 
 namespace pokemonism::sdk::templateable {
 
-    template <typename outputable, class commandable>
-    command::subscription<outputable, commandable> * command::event::generator::reg(command::subscription<outputable, commandable> * subscription) {
-        pokemonism::sdk::command::event::generator::reg(subscription);
+    template <class commandable, typename outputable>
+    command::subscription<commandable, outputable> * command::event::generator::commandReg(command::event::generator * o, command::subscription<commandable, outputable> * subscription) {
+        o->reg(subscription);
 
         return subscription;
     }
 
-    template <typename outputable, class commandable>
-    command::subscription<outputable, commandable> * command::event::generator::reg(commandable * object, unsigned int properties, const typename command::event::callback<outputable, commandable>::set & eventSet) {
+    template <class commandable, typename outputable>
+    command::subscription<commandable, outputable> * command::event::generator::commandReg(command::event::generator * o, commandable * object, unsigned int properties, const typename command::event::callback<commandable, outputable>::set & eventSet) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
-        return reg(new command::internal::subscription<outputable, commandable>(object, properties, eventSet));
+        return command::event::generator::commandReg(o, new command::internal::subscription<commandable, outputable>(object, properties, eventSet));
     }
 
-    template <typename outputable, class commandable>
-    command::subscription<outputable, commandable> * command::event::generator::reg(commandable * object, unsigned int properties, const typename command::event::callback<outputable, commandable>::set & eventSet, typename command::subscription<outputable, commandable>::state::callback::function subscriptionOn) {
+    template <class commandable, typename outputable>
+    command::subscription<commandable, outputable> * command::event::generator::commandReg(command::event::generator * o, commandable * object, unsigned int properties, const typename command::event::callback<commandable, outputable>::set & eventSet, typename command::subscription<commandable, outputable>::state::callback::function subscriptionOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
-        return reg(new command::internal::subscription<outputable, commandable>(object, properties, eventSet, subscriptionOn));
+        return command::event::generator::commandReg(o, new command::internal::subscription<commandable, outputable>(object, properties, eventSet, subscriptionOn));
     }
 
-    template <typename outputable, class commandable>
-    command::subscription<outputable, commandable> * command::event::generator::reg(commandable * object, unsigned int properties, const typename command::event::callback<outputable, commandable>::set & eventSet, typename command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) {
+    template <class commandable, typename outputable>
+    command::subscription<commandable, outputable> * command::event::generator::commandReg(command::event::generator * o, commandable * object, unsigned int properties, const typename command::event::callback<commandable, outputable>::set & eventSet, typename command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
-        return reg(new command::internal::subscription<outputable, commandable>(object, properties, eventSet, subscriptionReleaseOn));
+        return command::event::generator::commandReg(o, new command::internal::subscription<commandable, outputable>(object, properties, eventSet, subscriptionReleaseOn));
     }
 
-    template <typename outputable, class commandable>
-    command::subscription<outputable, commandable> * command::event::generator::reg(commandable * object, unsigned int properties, const typename command::event::callback<outputable, commandable>::set & eventSet, typename command::subscription<outputable, commandable>::state::callback::function subscriptionOn, typename command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) {
+    template <class commandable, typename outputable>
+    command::subscription<commandable, outputable> * command::event::generator::commandReg(command::event::generator * o, commandable * object, unsigned int properties, const typename command::event::callback<commandable, outputable>::set & eventSet, typename command::subscription<commandable, outputable>::state::callback::function subscriptionOn, typename command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
         pokemon_develop_check(object == nullptr, return nullptr);
 
-        return reg(new command::internal::subscription<outputable, commandable>(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn));
+        return command::event::generator::commandReg(o, new command::internal::subscription<commandable, outputable>(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn));
     }
 
     inline command::event::generator::generator(pokemonism::sdk::engine * engine) : pokemonism::sdk::command::event::generator(engine) {

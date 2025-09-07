@@ -16,7 +16,7 @@ namespace pokemonism::sdk {
 
     class command {
     public:     class event;
-    public:     typedef primitivable output;
+    public:     using output = primitivable;
     public:     virtual output * operator()(void) = 0;
     public:     command(void) {}
     public:     virtual ~command(void) {}

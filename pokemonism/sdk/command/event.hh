@@ -190,11 +190,11 @@ namespace pokemonism::sdk {
 
     class command::event::generator : public pokemonism::sdk::event::generator {
     public:     inline virtual command::event * eventGen(unsigned int type, command::event::subscription * subscription);
-    public:     command::event::subscription * reg(command::event::subscription * subscription);
-    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet);
-    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
-    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
-    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
+    public:     virtual command::event::subscription * reg(command::event::subscription * subscription);
+    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet);
+    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
+    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
+    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
     public:     inline explicit generator(pokemonism::sdk::engine * engine);
     public:     generator(void) = delete;
     public:     inline ~generator(void) override;

@@ -17,11 +17,6 @@
 namespace pokemonism::sdk::templateable {
 
     class engine : public pokemonism::sdk::engine {
-    public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> inline static templateable::command::subscription<outputable, commandable> * commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const templateable::command::event::callback<outputable, commandable>::set & eventSet, templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn);
-    protected:  struct set {
-                public:     pokemonism::sdk::command::event::generator * command;
-                public:     inline set(void) : command(nullptr) {}
-                };
     public:     typedef void (*terminator)(engine &);
     public:     typedef void (*bootstrapper)(engine &, pokemonism::sdk::event::queue **, pokemonism::sdk::engine::set &);
     public:     virtual int on(bootstrapper bootstrap = nullptr);
@@ -32,10 +27,10 @@ namespace pokemonism::sdk::templateable {
     public:     inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * object, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const override { return pokemonism::sdk::engine::reg(object, properties, eventSet, subscriptionOn); }
     public:     inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * object, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const override { return pokemonism::sdk::engine::reg(object, properties, eventSet, subscriptionReleaseOn); }
     public:     inline pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * object, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const override { return pokemonism::sdk::engine::reg(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn); }
-    public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> inline templateable::command::subscription<outputable, commandable> * reg(commandable * object, unsigned int properties, const templateable::command::event::callback<outputable, commandable>::set & eventSet) const;
-    public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> inline templateable::command::subscription<outputable, commandable> * reg(commandable * object, unsigned int properties, const templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn) const;
-    public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> inline templateable::command::subscription<outputable, commandable> * reg(commandable * object, unsigned int properties, const templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) const;
-    public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> inline templateable::command::subscription<outputable, commandable> * reg(commandable * object, unsigned int properties, const templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn, typename templateable::command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) const;
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> static inline templateable::command::subscription<commandable, outputable> * commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const templateable::command::event::callback<commandable, outputable>::set & eventSet);
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> static inline templateable::command::subscription<commandable, outputable> * commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const templateable::command::event::callback<commandable, outputable>::set & eventSet, templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn);
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> static inline templateable::command::subscription<commandable, outputable> * commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const templateable::command::event::callback<commandable, outputable>::set & eventSet, templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn);
+    public:     template <class commandable = pokemonism::sdk::command, typename outputable = commandable::output> static inline templateable::command::subscription<commandable, outputable> * commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const templateable::command::event::callback<commandable, outputable>::set & eventSet, templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn);
     public:     inline engine(void) {}
     public:     inline ~engine(void) override {}
     public:     engine(const engine & o) = delete;
@@ -45,37 +40,39 @@ namespace pokemonism::sdk::templateable {
     public:     friend command::event::generator;
     };
 
-    template <typename outputable, class commandable>
-    inline templateable::command::subscription<outputable, commandable> * engine::reg(commandable * object, unsigned int properties, const typename templateable::command::event::callback<outputable, commandable>::set & eventSet) const {
-        pokemon_develop_check(generator.command == nullptr, return nullptr);
+    template <class commandable, typename outputable>
+    inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet) {
+        pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(generator.command))->reg<outputable, commandable>(object, properties, eventSet);
+        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet);
+
+        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet);
     }
 
-    template <typename outputable, class commandable>
-    inline templateable::command::subscription<outputable, commandable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn) {
-        return engine->reg(object, properties, eventSet, subscriptionOn);
+    template <class commandable, typename outputable>
+    inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn) {
+        pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
+
+        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<outputable, commandable>(object, properties, eventSet, subscriptionOn);
+
+        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn);
     }
 
-    template <typename outputable, class commandable>
-    inline templateable::command::subscription<outputable, commandable> * engine::reg(commandable * object, unsigned int properties, const typename templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn) const {
-        pokemon_develop_check(generator.command == nullptr, return nullptr);
+    template <class commandable, typename outputable>
+    inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
+        pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(generator.command))->reg<outputable, commandable>(object, properties, eventSet, subscriptionOn);
+        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet, subscriptionReleaseOn);
+
+        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionReleaseOn);
     }
 
-    template <typename outputable, class commandable>
-    inline templateable::command::subscription<outputable, commandable> * engine::reg(commandable * object, unsigned int properties, const typename templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) const {
-        pokemon_develop_check(generator.command == nullptr, return nullptr);
+    template <class commandable, typename outputable>
+    inline templateable::command::subscription<commandable, outputable> * engine::commandReg(pokemonism::sdk::templateable::engine * engine, commandable * object, unsigned int properties, const typename templateable::command::event::callback<commandable, outputable>::set & eventSet, typename templateable::command::subscription<commandable, outputable>::state::callback::function subscriptionOn, typename templateable::command::subscription<commandable, outputable>::state::callback::modifier subscriptionReleaseOn) {
+        pokemon_develop_check(engine->generator.command == nullptr, return nullptr);
 
-        return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(generator.command))->reg<outputable, commandable>(object, properties, eventSet, subscriptionReleaseOn);
-    }
-
-    template <typename outputable, class commandable>
-    inline templateable::command::subscription<outputable, commandable> * engine::reg(commandable * object, unsigned int properties, const typename templateable::command::event::callback<outputable, commandable>::set & eventSet, typename templateable::command::subscription<outputable, commandable>::state::callback::function subscriptionOn, typename templateable::command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) const {
-        pokemon_develop_check(generator.command == nullptr, return nullptr);
-
-        return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(generator.command))->reg<outputable, commandable>(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
+        // return static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command))->reg<commandable, outputable>(object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
+        return templateable::command::event::generator::commandReg(static_cast<templateable::command::event::generator *>(reinterpret_cast<void *>(engine->generator.command)), object, properties, eventSet, subscriptionOn, subscriptionReleaseOn);
     }
 
 }
