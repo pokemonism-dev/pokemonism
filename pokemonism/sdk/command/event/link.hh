@@ -14,12 +14,13 @@
 
 namespace pokemonism::sdk {
 
+    inline command::event::link::link(void) {
 
-    inline primitivable * command::event::link::messagePop(void) {
-        return command::event::envelope::messagePop();
     }
 
+    inline command::event::link::link(pokemonism::sdk::event::exception * exception) : command::event::envelope(exception) {
 
+    }
 
     inline command::event::link::link(command::event::subscription * container) {
         containerReg(container);

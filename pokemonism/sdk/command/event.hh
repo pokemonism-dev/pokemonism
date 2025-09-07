@@ -72,9 +72,9 @@ namespace pokemonism::sdk {
     };
 
     class command::event::link : public command::event::envelope {
-    public:     inline primitivable * messagePop(void) override;
     public:     inline explicit link(command::event::subscription * container);
-    public:     link(void) = delete;
+    public:     inline explicit link(pokemonism::sdk::event::exception * exception);
+    public:     inline link(void);
     public:     inline ~link(void) override;
     public:     link(const command::event::link & o) = delete;
     public:     link(command::event::link && o) noexcept = delete;
@@ -189,18 +189,18 @@ namespace pokemonism::sdk {
     };
 
     class command::event::generator : public pokemonism::sdk::event::generator {
-    public:     virtual command::event::subscription * reg(command::event::subscription * subscription);
-    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet);
-    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
-    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
-    public:     virtual command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
+    public:     command::event::subscription * reg(command::event::subscription * subscription);
+    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet);
+    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn);
+    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
+    public:     command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn);
     public:     inline explicit generator(pokemonism::sdk::engine * engine);
     public:     generator(void) = delete;
     public:     inline ~generator(void) override;
-    public:     generator(const event::generator & o) = delete;
-    public:     generator(event::generator && o) noexcept = delete;
-    public:     event::generator & operator=(const event::generator & o) = delete;
-    public:     event::generator & operator=(event::generator && o) noexcept = delete;
+    public:     generator(const command::event::generator & o) = delete;
+    public:     generator(command::event::generator && o) noexcept = delete;
+    public:     command::event::generator & operator=(const command::event::generator & o) = delete;
+    public:     command::event::generator & operator=(command::event::generator && o) noexcept = delete;
     };
 
     class command::event::processor : public pokemonism::sdk::event::processor {

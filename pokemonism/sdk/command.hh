@@ -10,16 +10,16 @@
 #ifndef   __POKEMONISM_SDK_COMMAND_HH__
 #define   __POKEMONISM_SDK_COMMAND_HH__
 
-#include <pokemonism/sdk/callable.hh>
+#include <pokemonism/sdk/primitivable.hh>
 
 namespace pokemonism::sdk {
 
-    class command : public callable<primitivable> {
+    class command {
     public:     class event;
     public:     typedef primitivable output;
-    public:     output * operator()(void) override = 0;
+    public:     virtual output * operator()(void) = 0;
     public:     command(void) {}
-    public:     ~command(void) override {}
+    public:     virtual ~command(void) {}
     public:     command(const command & o) = delete;
     public:     command(command && o) noexcept = delete;
     public:     command & operator=(const command & o) = delete;
