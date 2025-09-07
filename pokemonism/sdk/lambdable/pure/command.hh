@@ -12,7 +12,7 @@
 
 #include <pokemonism/sdk/generic/command.hh>
 
-namespace pokemonism::sdk::pure::lambdable {
+namespace pokemonism::sdk::lambdable::pure {
 
     template <typename outputable = primitivable>
     class command : public generic::command<outputable> {

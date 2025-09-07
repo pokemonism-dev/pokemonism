@@ -18,7 +18,7 @@ namespace pokemonism::sdk {
 
         add(subscription);
 
-        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+        engine->add(eventGen(command::event::type::execute, subscription));
 
         return subscription;
     }
@@ -30,7 +30,7 @@ namespace pokemonism::sdk {
 
         add(subscription);
 
-        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+        engine->add(eventGen(command::event::type::execute, subscription));
 
         return subscription;
     }
@@ -42,7 +42,7 @@ namespace pokemonism::sdk {
 
         add(subscription);
 
-        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+        engine->add(eventGen(command::event::type::execute, subscription));
 
         return subscription;
     }
@@ -54,7 +54,7 @@ namespace pokemonism::sdk {
 
         add(subscription);
 
-        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+        engine->add(eventGen(command::event::type::execute, subscription));
 
         return subscription;
     }
@@ -66,7 +66,7 @@ namespace pokemonism::sdk {
 
         add(subscription);
 
-        engine->add(new command::event(command::event::type::execute, new command::event::link(subscription)));
+        engine->add(eventGen(command::event::type::execute, subscription));
 
         return subscription;
     }

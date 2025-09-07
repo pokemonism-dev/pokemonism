@@ -247,7 +247,7 @@ namespace pokemonism::sdk {
     protected:  inline void raise(event::exception * exception);
     public:     inline explicit link(event::subscription * container);
     public:     inline explicit link(event::exception * exception);
-    protected:  inline void containerReg(event::subscription * o);
+    protected:  inline void subscriptionReg(event::subscription * o);
     public:     inline link(event::subscription * container, event::exception * exception);
     public:     inline link(void);
     public:     inline ~link(void) override;

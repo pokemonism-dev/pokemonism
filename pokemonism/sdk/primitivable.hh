@@ -18,7 +18,7 @@ namespace pokemonism::sdk {
     public:     template <typename convertable> static primitivable * from(convertable v);
     public:     template <typename convertable> static convertable to(primitivable * o);
     public:     primitivable(void) {}
-    public:     ~primitivable(void) {}
+    public:     virtual ~primitivable(void) {}
     public:     primitivable(const primitivable & o) = delete;
     public:     primitivable(primitivable && o) noexcept = delete;
     public:     primitivable & operator=(const primitivable & o) = delete;

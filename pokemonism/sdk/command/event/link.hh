@@ -23,7 +23,7 @@ namespace pokemonism::sdk {
     }
 
     inline command::event::link::link(command::event::subscription * container) {
-        containerReg(container);
+        subscriptionReg(container);
     }
 
     inline command::event::link::~link(void) {

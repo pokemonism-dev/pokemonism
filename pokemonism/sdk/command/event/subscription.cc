@@ -29,16 +29,9 @@ namespace pokemonism::sdk {
     void command::event::subscription::callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem) {
         pokemon_develop_check(type != command::event::type::execute, return);
 
-        if (exception == nullptr && problem != nullptr) {
-            status = status | command::event::subscription::state::exception;
-            exception = problem->clone();
-        }
+        command::event::envelope envelope(this);
 
-        if (eventSet.execute) {
-            command::event::envelope envelope(this);
-
-            eventSet.execute(*object, type, envelope, problem);
-        }
+        callbackOn(type, envelope, problem);
     }
 
     int command::event::subscription::processOn(pokemonism::sdk::event::link * link) {

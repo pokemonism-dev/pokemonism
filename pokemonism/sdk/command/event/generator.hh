@@ -14,7 +14,9 @@
 
 namespace pokemonism::sdk {
 
-
+    inline command::event * command::event::generator::eventGen(unsigned int type, command::event::subscription * subscription) {
+        return new command::event(command::event::type::execute, new command::event::link(subscription));
+    }
 
     inline command::event::generator::generator(pokemonism::sdk::engine * engine) : pokemonism::sdk::event::generator(engine) {
 

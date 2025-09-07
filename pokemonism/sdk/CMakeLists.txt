@@ -23,8 +23,12 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             exception.hh
                                             generic/envelope.hh
                                             generic/command.hh
+                                            templateable/engine.hh
                                             templateable/command.hh
+                                            templateable/command/subscription.hh
                                             templateable/command/event/generator.hh
+                                            lambdable/command.hh
+                                            lambdable/pure/command.hh
                                             allocator.hh
                                             subscription.hh
                                             callable.hh
@@ -59,8 +63,12 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             exception.cc
                                             generic/envelope.cc
                                             generic/command.cc
+                                            templateable/engine.cc
                                             templateable/command.cc
+                                            templateable/command/subscription.cc
                                             templateable/command/event/generator.cc
+                                            lambdable/command.cc
+                                            lambdable/pure/command.cc
                                             allocator.cc
                                             subscription.cc
                                             callable.cc

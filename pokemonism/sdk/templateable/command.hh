@@ -55,7 +55,7 @@ namespace pokemonism::sdk::templateable {
     template <typename outputable, class commandable>
     struct command::event::callback<outputable, commandable>::set : public pokemonism::sdk::command::event::callback::set {
     public:     inline set(void) {}
-    public:     inline explicit set(command::event::callback<outputable, commandable>::function execute) : pokemonism::sdk::command::event::callback::set(execute) {}
+    public:     inline explicit set(command::event::callback<outputable, commandable>::function execute) : pokemonism::sdk::command::event::callback::set(reinterpret_cast<pokemonism::sdk::command::event::callback::function>(execute)) {}
     public:     inline ~set(void) {}
     public:     inline set(const command::event::callback<outputable, commandable>::set & o) : pokemonism::sdk::command::event::callback::set(o) {}
     public:     inline set(command::event::callback<outputable, commandable>::set && o) noexcept : pokemonism::sdk::command::event::callback::set(std::move(o)) {}
@@ -102,11 +102,12 @@ namespace pokemonism::sdk::templateable {
     public:     envelope(command::envelope<outputable, commandable> && o) noexcept = delete;
     public:     command::envelope<outputable, commandable> & operator=(const command::envelope<outputable, commandable> & o) = delete;
     public:     command::envelope<outputable, commandable> & operator=(command::envelope<outputable, commandable> && o) noexcept = delete;
+    public:     friend command::subscription<outputable, commandable>;
     };
 
     template <typename outputable, class commandable>
     class command::link : public command::envelope<outputable, commandable> {
-    public:     inline explicit link(command::subscription<outputable, commandable> * container) { containerReg(container); }
+    public:     inline explicit link(command::subscription<outputable, commandable> * container) { subscriptionReg(container); }
     public:     inline explicit link(command::exception * exception) : command::envelope<outputable, commandable>(exception) {}
     public:     inline link(void) {}
     public:     inline ~link(void) override {}
@@ -133,7 +134,8 @@ namespace pokemonism::sdk::templateable {
                                         };
                             };
                 };
-    protected:  inline commandable * objectPop(void) override { return reinterpret_cast<commandable *>(object); }
+    protected:  void callbackOn(unsigned int type, pokemonism::sdk::event::envelope & envelope, const pokemonism::sdk::event::exception * problem = nullptr) override { return pokemonism::sdk::command::event::subscription::callbackOn(type, envelope, problem); }
+    protected:  void callbackOn(unsigned int type, const pokemonism::sdk::event::exception * problem = nullptr) override;
     protected:  inline explicit subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet) : pokemonism::sdk::command::event::internal::subscription(reinterpret_cast<pokemonism::sdk::command *>(object), properties, reinterpret_cast<const pokemonism::sdk::command::event::callback::set &>(eventSet)) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::function subscriptionOn) : pokemonism::sdk::command::event::internal::subscription(reinterpret_cast<pokemonism::sdk::command *>(object), properties, reinterpret_cast<const pokemonism::sdk::command::event::callback::set &>(eventSet), reinterpret_cast<pokemonism::sdk::command::event::internal::subscription::state::callback::function>(subscriptionOn)) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) : pokemonism::sdk::command::event::internal::subscription(reinterpret_cast<pokemonism::sdk::command *>(object), properties, reinterpret_cast<const pokemonism::sdk::command::event::callback::set &>(eventSet), reinterpret_cast<pokemonism::sdk::command::event::internal::subscription::state::callback::modifier>(subscriptionReleaseOn)) {}
@@ -162,6 +164,11 @@ namespace pokemonism::sdk::templateable {
 
     template <typename outputable, class commandable>
     class command::releasable::subscription : public command::modifiable::subscription<outputable, commandable> {
+    public:     inline commandable * objectPop(void) override {
+                    commandable * o = reinterpret_cast<commandable *>(this->object);
+                    this->object = nullptr;
+                    return o;
+                }
     protected:  inline explicit subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet) : command::modifiable::subscription<outputable, commandable>(object, properties, eventSet) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::function subscriptionOn) : command::modifiable::subscription<outputable, commandable>(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) : command::modifiable::subscription<outputable, commandable>(object, properties, eventSet, subscriptionReleaseOn) {}
@@ -176,6 +183,11 @@ namespace pokemonism::sdk::templateable {
 
     template <typename outputable, class commandable>
     class command::internal::subscription : public command::releasable::subscription<outputable, commandable> {
+    protected:  inline commandable * objectPop(void) override {
+                    commandable * o = reinterpret_cast<commandable *>(this->object);
+                    this->object = nullptr;
+                    return o;
+                }
     protected:  inline explicit subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet) : command::releasable::subscription<outputable, commandable>(object, properties, eventSet) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::function subscriptionOn) : command::releasable::subscription<outputable, commandable>(object, properties, eventSet, subscriptionOn) {}
     protected:  inline subscription(commandable * object, unsigned int properties, const command::event::callback<outputable, commandable>::set & eventSet, command::subscription<outputable, commandable>::state::callback::modifier subscriptionReleaseOn) : command::releasable::subscription<outputable, commandable>(object, properties, eventSet, subscriptionReleaseOn) {}
@@ -186,8 +198,8 @@ namespace pokemonism::sdk::templateable {
     public:     subscription(command::internal::subscription<outputable, commandable> && o) noexcept = delete;
     public:     command::internal::subscription<outputable, commandable> & operator=(const command::internal::subscription<outputable, commandable> & o) = delete;
     public:     command::internal::subscription<outputable, commandable> & operator=(command::internal::subscription<outputable, commandable> && o) noexcept = delete;
+    public:     friend command::event::generator;
     };
-
 
     class command::event::generator : public pokemonism::sdk::command::event::generator {
     public:     template <typename outputable = primitivable, class commandable = generic::command<outputable>> command::subscription<outputable, commandable> * reg(command::subscription<outputable, commandable> * subscription);
@@ -206,6 +218,7 @@ namespace pokemonism::sdk::templateable {
 
 }
 
+#include <pokemonism/sdk/templateable/command/subscription.hh>
 #include <pokemonism/sdk/templateable/command/event/generator.hh>
 
 #endif // __POKEMONISM_SDK_TEMPLATEABLE_COMMAND_HH__

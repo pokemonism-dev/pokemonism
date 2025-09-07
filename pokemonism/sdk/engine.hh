@@ -15,11 +15,11 @@
 namespace pokemonism::sdk {
 
     class engine : public sync {
-    public:     typedef void (*terminator)(engine &);
     protected:  struct set {
                 public:     pokemonism::sdk::command::event::generator * command;
                 public:     inline set(void) : command(nullptr) {}
                 };
+    public:     typedef void (*terminator)(engine &);
     public:     typedef void (*bootstrapper)(engine &, event::queue **, engine::set &);
     protected:  terminator cancel;
     protected:  event::queue * queue;
@@ -29,12 +29,11 @@ namespace pokemonism::sdk {
     public:     virtual int on(bootstrapper bootstrap = nullptr);
     public:     virtual void off(terminator f);
     public:     virtual int run(void);
-    protected:
-        virtual inline command::event::subscription * reg(command::event::subscription * subscription) const;
-    public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const;
-    public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) const;
-    public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
-    public:     inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    protected:  virtual inline command::event::subscription * reg(command::event::subscription * subscription) const;
+    public:     virtual inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet) const;
+    public:     virtual inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn) const;
+    public:     virtual inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    public:     virtual inline command::event::subscription * reg(command * object, unsigned int properties, const command::event::callback::set & eventSet, command::event::subscription::state::callback::function subscriptionOn, command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
     public:     engine(void);
     public:     ~engine(void) override;
     public:     engine(const engine & o) = delete;
