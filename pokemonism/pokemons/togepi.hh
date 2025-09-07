@@ -21,13 +21,17 @@
 namespace pokemonism {
     namespace pokemons {
 
+        template <trainername trainerizable> class togetic;
+
         template <trainername trainerizable = trainer>
         class togepi : public pokemon {
+        public:     typedef togepi<trainerizable> * pointer;
         public:     struct declaration {
                     public:     constexpr static unsigned int properties = pokemonism::sdk::command::event::subscription::property::release_on_del | pokemonism::sdk::command::event::subscription::property::release_object_on_rel;
                     };
         public:     class command;
         public:     class engine;
+        public:     static togetic<trainerizable> * evolve(pointer & monster);
         protected:  pokemonism::sdk::engine * internal;
         public:     const char * name(void) const noexcept override { return "togepi"; }
         public:     const char * cry(void) const noexcept override { return "togepriii"; }
@@ -35,7 +39,7 @@ namespace pokemonism {
         public:     togepi<trainerizable> * go(void) override;
         public:     togepi<trainerizable> * goodjob(void) override;
         public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
-        public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, const pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
+        public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
         public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
         public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
         public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet) const;
@@ -57,6 +61,7 @@ namespace pokemonism {
         public:     togepi & operator=(const togepi & o) = delete;
         public:     togepi & operator=(togepi && o) noexcept = delete;
         public:     friend trainerizable;
+        public:     friend class togetic<trainerizable>;
         };
 
         template <trainername trainerizable>
@@ -175,5 +180,6 @@ namespace pokemonism {
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/pokemons/togepi/command.hh>
+#include <pokemonism/pokemons/togepi/togetic.hh>
 
 #endif // __POKEMONISM_TOGEPI_HH__

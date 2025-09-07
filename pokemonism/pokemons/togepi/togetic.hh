@@ -10,19 +10,32 @@
 #ifndef   __POKEMONISM_POKEMONS_TOGETIC_HH__
 #define   __POKEMONISM_POKEMONS_TOGETIC_HH__
 
-// #include <pokemonism/sdk/generic/>
-
+// ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/pokemons/togepi.hh>
 
 namespace pokemonism::pokemons {
 
-    template <trainername trainerizable>
+    template <trainername trainerizable = trainer>
     class togetic : public togepi<trainerizable> {
-    // public:     template <typename commandable, typename >
-        // subscription<command<message>, message>
-    // public:     pokemonism::sdk::command::event::subscription * reg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
     public:     const char * name(void) const noexcept override { return "togetic"; }
     public:     const char * cry(void) const noexcept override { return "togetic, togee!"; }
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, unsigned int properties, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    // public:     pokemonism::sdk::command::event::subscription * genericReg(pokemonism::sdk::command * command, int repeat, const pokemonism::sdk::command::event::callback::set & eventSet, pokemonism::sdk::command::event::subscription::state::callback::function subscriptionOn, pokemonism::sdk::command::event::subscription::state::callback::modifier subscriptionReleaseOn) const;
+    protected:  explicit togetic(togepi<trainerizable> * monster);
     protected:  togetic(void) {}
     protected:  ~togetic(void) override {}
     public:     togetic(const togetic<trainerizable> & o) = delete;
@@ -30,7 +43,25 @@ namespace pokemonism::pokemons {
     public:     togetic<trainerizable> & operator=(const togetic<trainerizable> & o) = delete;
     public:     togetic<trainerizable> & operator=(togetic<trainerizable> && o) noexcept = delete;
     public:     friend trainerizable;
+    public:     friend class togepi<trainerizable>;
     };
+
+    template <trainername trainerizable>
+    togetic<trainerizable> * togepi<trainerizable>::evolve(togepi<trainerizable>::pointer & monster) {
+        pokemon_training_check(monster == nullptr, return nullptr);
+
+        togetic<trainerizable> * evolution = new togetic<trainerizable>(monster);
+
+        delete monster;
+        monster = nullptr;
+
+        return evolution;
+    }
+
+    template <trainername trainerizable>
+    togetic<trainerizable>::togetic(togepi<trainerizable> * monster) {
+        this->internal = monster->internal;
+    }
 
 }
 

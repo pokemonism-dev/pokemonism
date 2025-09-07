@@ -62,11 +62,11 @@ int main(int argc, char ** argv) {
         singleton->off();
     };
 
-    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet);
+    singleton->genericReg(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet);
 
-    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
+    singleton->genericReg(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn);
 
-    templateable::engine::commandReg(singleton, pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn, subscriptionReleaseOn);
+    singleton->genericReg(pointof(randomizer), command::event::subscription::property::release_on_del, eventSet, subscriptionOn, subscriptionReleaseOn);
 
     const int ret = singleton->run();
 
