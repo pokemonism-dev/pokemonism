@@ -14,9 +14,9 @@
 
 namespace pokemonism::sdk::interface {
 
-    class pipe : public interface::descriptor {
+    class pipe {
     public:     pipe(void) {}
-    public:     ~pipe(void) override {}
+    public:     virtual ~pipe(void) {}
     public:     pipe(const interface::pipe & o) = delete;
     public:     pipe(interface::pipe && o) noexcept = delete;
     public:     interface::pipe & operator=(const interface::pipe & o) = delete;

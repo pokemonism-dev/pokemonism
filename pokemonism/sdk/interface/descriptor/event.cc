@@ -8,7 +8,7 @@
  */
 
 
-#include "communicator.hh"
+#include "event.hh"
 
 namespace pokemonism {
 }

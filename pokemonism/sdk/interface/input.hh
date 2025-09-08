@@ -15,6 +15,9 @@
 namespace pokemonism::sdk::interface {
 
     class input {
+    public:     virtual void clear(void) = 0;
+    public:     virtual void clean(void) = 0;
+    public:     virtual void reset(void) = 0;
     public:     input(void) {}
     public:     virtual ~input(void) {}
     public:     input(const interface::input & o) = delete;

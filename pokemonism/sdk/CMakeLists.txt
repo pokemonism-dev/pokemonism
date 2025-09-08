@@ -12,7 +12,17 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             event/generator.hh
                                             event/subscription.hh
                                             event/internal/subscription.hh
+                                            collection/interface.hh
+                                            collection/collectable.hh
+                                            collection/continuable.hh
+                                            collection/sequenceable.hh
+                                            collection/streamable.hh
+                                            collection/continuous.hh
+                                            collection/stream.hh
                                             protocol.hh
+                                            protocol/hypertext.hh
+                                            protocol/hypertext/transfer.hh
+                                            protocol/hypertext/transfer/client.hh
                                             protocol/transmission.hh
                                             protocol/transmission/control.hh
                                             protocol/transmission/control/socket.hh
@@ -24,10 +34,35 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             command/event/processor.hh
                                             command/event/subscription.hh
                                             command/event/internal/subscription.hh
+                                            descriptor.hh
+                                            socket.hh
+                                            client.hh
                                             exception.hh
-                                            generic/envelope.hh
+                                            interface/input.hh
+                                            interface/output.hh
+                                            interface/pipe.hh
+                                            interface/fifo.hh
+                                            interface/file.hh
+                                            interface/socket.hh
+                                            interface/directory.hh
+                                            interface/descriptor.hh
+                                            interface/descriptor/event.hh
+                                            interface/standard/input.hh
+                                            interface/standard/output.hh
+                                            interface/communicator.hh
+                                            interface/communication/server.hh
+                                            interface/communication/client.hh
+                                            interface/communication/session.hh
+                                            generic/socket.hh
                                             generic/command.hh
+                                            generic/envelope.hh
+                                            generic/descriptor.hh
                                             generic/functional/command.hh
+                                            stream.hh
+                                            input.hh
+                                            input/stream.hh
+                                            output.hh
+                                            output/stream.hh
                                             templateable/engine.hh
                                             templateable/command.hh
                                             templateable/command/subscription.hh
@@ -35,6 +70,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             lambdable/command.hh
                                             lambdable/pure/command.hh
                                             allocator.hh
+                                            memorizer.hh
+                                            typographer.hh
                                             subscription.hh
                                             callable.hh
                                             runnable.hh
@@ -57,7 +94,17 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             event/generator.cc
                                             event/subscription.cc
                                             event/internal/subscription.cc
+                                            collection/interface.cc
+                                            collection/collectable.cc
+                                            collection/continuable.cc
+                                            collection/sequenceable.cc
+                                            collection/streamable.cc
+                                            collection/stream.cc
+                                            collection/continuous.cc
                                             protocol.cc
+                                            protocol/hypertext.cc
+                                            protocol/hypertext/transfer.cc
+                                            protocol/hypertext/transfer/client.cc
                                             protocol/transmission.cc
                                             protocol/transmission/control.cc
                                             protocol/transmission/control/socket.cc
@@ -69,10 +116,35 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             command/event/processor.cc
                                             command/event/subscription.cc
                                             command/event/internal/subscription.cc
+                                            descriptor.cc
+                                            socket.cc
+                                            client.cc
                                             exception.cc
-                                            generic/envelope.cc
+                                            interface/input.cc
+                                            interface/output.cc
+                                            interface/pipe.cc
+                                            interface/fifo.cc
+                                            interface/file.cc
+                                            interface/socket.cc
+                                            interface/directory.cc
+                                            interface/descriptor.cc
+                                            interface/descriptor/event.cc
+                                            interface/standard/input.cc
+                                            interface/standard/output.cc
+                                            interface/communicator.cc
+                                            interface/communication/server.cc
+                                            interface/communication/client.cc
+                                            interface/communication/session.cc
+                                            generic/socket.cc
                                             generic/command.cc
+                                            generic/envelope.cc
+                                            generic/descriptor.cc
                                             generic/functional/command.cc
+                                            stream.cc
+                                            input.cc
+                                            input/stream.cc
+                                            output.cc
+                                            output/stream.cc
                                             templateable/engine.cc
                                             templateable/command.cc
                                             templateable/command/subscription.cc
@@ -80,6 +152,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             lambdable/command.cc
                                             lambdable/pure/command.cc
                                             allocator.cc
+                                            memorizer.cc
+                                            typographer.cc
                                             subscription.cc
                                             callable.cc
                                             runnable.cc

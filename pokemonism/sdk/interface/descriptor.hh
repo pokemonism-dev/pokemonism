@@ -11,11 +11,13 @@
 #define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 
 #include <pokemonism.hh>
+#include <pokemonism/sdk/exception.hh>
 #include <pokemonism/sdk/synchronizable.hh>
 
 namespace pokemonism::sdk::interface {
 
     class descriptor : public synchronizable {
+    public:     class event;
     protected:  int lock(void) noexcept override { return declaration::fail; }
     protected:  int unlock(void) noexcept override { return declaration::fail; }
     protected:  int wait(void) noexcept override { return declaration::fail; }
@@ -27,6 +29,10 @@ namespace pokemonism::sdk::interface {
     protected:  virtual long read(void) = 0;
     protected:  virtual long write(void) = 0;
     public:     virtual unsigned int check(unsigned int state) const = 0;
+    public:     virtual void clear(void) = 0;
+    public:     virtual void clean(void) = 0;
+    public:     virtual void reset(void) = 0;
+    public:     virtual void stateOn(unsigned int state, long result, exception * e = nullptr) = 0;
     public:     descriptor(void) {}
     public:     ~descriptor(void) override {}
     public:     descriptor(const interface::descriptor & o) = delete;
@@ -36,5 +42,7 @@ namespace pokemonism::sdk::interface {
     };
 
 }
+
+#include <pokemonism/sdk/interface/descriptor/event.hh>
 
 #endif // __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__

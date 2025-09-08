@@ -15,6 +15,9 @@
 namespace pokemonism::sdk::interface {
 
     class output {
+    public:     virtual void clear(void) = 0;
+    public:     virtual void clean(void) = 0;
+    public:     virtual void reset(void) = 0;
     public:     output(void) {}
     public:     virtual ~output(void) {}
     public:     output(const interface::output & o) = delete;

@@ -14,9 +14,9 @@
 
 namespace pokemonism::sdk::interface {
 
-    class fifo : public interface::descriptor {
+    class fifo {
     public:     fifo(void) {}
-    public:     ~fifo(void) override {}
+    public:     virtual ~fifo(void) {}
     public:     fifo(const interface::fifo & o) = delete;
     public:     fifo(interface::fifo && o) noexcept = delete;
     public:     interface::fifo & operator=(const interface::fifo & o) = delete;

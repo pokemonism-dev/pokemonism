@@ -14,9 +14,9 @@
 
 namespace pokemonism::sdk::interface {
 
-    class file : public interface::descriptor {
+    class file {
     public:     file(void) {}
-    public:     ~file(void) override {}
+    public:     virtual ~file(void) {}
     public:     file(const interface::file & o) = delete;
     public:     file(interface::file && o) noexcept = delete;
     public:     interface::file & operator=(const interface::file & o) = delete;

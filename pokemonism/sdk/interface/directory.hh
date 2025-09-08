@@ -14,9 +14,9 @@
 
 namespace pokemonism::sdk::interface {
 
-    class directory : public interface::descriptor {
+    class directory {
     public:     directory(void) {}
-    public:     ~directory(void) override {}
+    public:     virtual ~directory(void) {}
     public:     directory(const interface::directory & o) = delete;
     public:     directory(interface::directory && o) noexcept = delete;
     public:     interface::directory & operator=(const interface::directory & o) = delete;

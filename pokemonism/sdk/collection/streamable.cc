@@ -8,7 +8,7 @@
  */
 
 
-#include "communicator.hh"
+#include "streamable.hh"
 
 namespace pokemonism {
 }

@@ -19,6 +19,7 @@ namespace pokemonism::sdk::collection {
     public:     typedef elementable     element;
     public:     typedef elementable &   reference;
     public:     virtual element * add(const element & item) = 0;
+    public:     virtual element * add(element && item) = 0;
     public:     virtual element & del(element & item) = 0;
     public:     collectable(void) {}
     public:     ~collectable(void) override {}

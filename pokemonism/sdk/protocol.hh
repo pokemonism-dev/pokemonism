@@ -16,6 +16,7 @@ namespace pokemonism::sdk {
 
     class protocol {
     public:     struct transmission;
+    public:     struct hypertext;
     public:     protocol(void) {}
     public:     virtual ~protocol(void) {}
     public:     protocol(protocol & o) = delete;
@@ -27,5 +28,6 @@ namespace pokemonism::sdk {
 }
 
 #include <pokemonism/sdk/protocol/transmission.hh>
+#include <pokemonism/sdk/protocol/hypertext.hh>
 
 #endif // __POKEMONISM_SDK_PROTOCOL_HH__
