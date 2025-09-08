@@ -26,4 +26,6 @@ namespace pokemonism::sdk {
 
 }
 
+#include <pokemonism/sdk/protocol/transmission/control/socket.hh>
+
 #endif // __POKEMONISM_SDK_PROTOCOL_TRANSMISSION_CONTROL_HH__

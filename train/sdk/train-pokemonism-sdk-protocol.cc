@@ -10,7 +10,8 @@
 #include <pokemonism/sdk/protocol.hh>
 
 int main(int argc, char ** argv) {
-    pokemonism::sdk::protocol base;
+    pokemonism::sdk::protocol protocol;
     pokemonism::sdk::protocol::transmission::control o;
+    pokemonism::sdk::protocol::transmission::control::socket socket;
     return 0;
 }
