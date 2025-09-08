@@ -16,7 +16,7 @@
 
 namespace pokemonism::sdk::collection {
 
-    template <typename element>
+    template <typename element, typename primitivable = typographer<element>::primitive, typename characterizable = typographer<element>::character, unsigned long unit = typographer<element>::unit>
     class stream : public collection::streamable<element> {
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
@@ -26,11 +26,11 @@ namespace pokemonism::sdk::collection {
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
-    public:     inline virtual unsigned long set(const stream<element> & source);
-    public:     inline virtual unsigned long set(stream<element> && source) noexcept;
+    public:     inline virtual unsigned long set(const stream<element, primitivable, characterizable, unit> & source);
+    public:     inline virtual unsigned long set(stream<element, primitivable, characterizable, unit> && source) noexcept;
     public:     inline unsigned long cat(const element & item, unsigned long n) override;
     public:     inline unsigned long cat(const element * source, unsigned long sourceLen) override;
-    public:     inline virtual unsigned long cat(const stream<element> & source);
+    public:     inline virtual unsigned long cat(const stream<element, primitivable, characterizable, unit> & source);
     public:     inline unsigned long cut(unsigned long offset) override;
     public:     inline unsigned long pop(unsigned long length) override;
     public:     inline const element & at(unsigned long index) const override;
@@ -50,19 +50,19 @@ namespace pokemonism::sdk::collection {
     public:     inline stream(const element * source, unsigned long sourceLen);
     public:     inline stream(void);
     public:     inline ~stream(void) override;
-    public:     inline stream(const stream<element> & o);
-    public:     inline stream(stream<element> && o) noexcept;
-    public:     inline virtual stream<element> & operator=(const stream<element> & o);
-    public:     inline virtual stream<element> & operator=(stream<element> && o) noexcept;
+    public:     inline stream(const stream<element, primitivable, characterizable, unit> & o);
+    public:     inline stream(stream<element, primitivable, characterizable, unit> && o) noexcept;
+    public:     inline virtual stream<element, primitivable, characterizable, unit> & operator=(const stream<element, primitivable, characterizable, unit> & o);
+    public:     inline virtual stream<element, primitivable, characterizable, unit> & operator=(stream<element, primitivable, characterizable, unit> && o) noexcept;
     };
 
-    template <typename element>
-    unsigned long stream<element>::positionGet(void) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    unsigned long stream<element, primitivable, characterizable, unit>::positionGet(void) const {
         return position;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::set(void) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::set(void) {
         if (position != size) memorizer<element>::del(storage + position, size - position);
 
         position = declaration::zero;
@@ -71,11 +71,11 @@ namespace pokemonism::sdk::collection {
         return declaration::zero;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::set(const element & item, unsigned long n) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::set(const element & item, unsigned long n) {
         if (position != size) memorizer<element>::del(storage + position, size - position);
 
-        if (capacity < n) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element>::capacityCal(n, stream<element>::page)));
+        if (capacity < n) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(n, stream<element, primitivable, characterizable, unit>::page)));
 
         memorizer<element>::set(storage, item, size = n);
         position = declaration::zero;
@@ -83,11 +83,11 @@ namespace pokemonism::sdk::collection {
         return n;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::set(const element * source, unsigned long sourceLen) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::set(const element * source, unsigned long sourceLen) {
         if (position != size) memorizer<element>::del(storage + position, size - position);
 
-        if (capacity < sourceLen) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element>::capacityCal(sourceLen, stream<element>::page)));
+        if (capacity < sourceLen) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(sourceLen, stream<element, primitivable, characterizable, unit>::page)));
 
         memorizer<element>::set(storage, source, size = sourceLen);
         position = declaration::zero;
@@ -95,13 +95,13 @@ namespace pokemonism::sdk::collection {
         return sourceLen;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::set(const stream<element> & source) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::set(const stream<element, primitivable, characterizable, unit> & source) {
         if (position != size) memorizer<element>::del(storage + position, size - position);
 
         const unsigned long length = source.size - source.position;
 
-        if (capacity < length) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element>::capacityCal(length, stream<element>::page)));
+        if (capacity < length) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(length, stream<element, primitivable, characterizable, unit>::page)));
 
         memorizer<element>::set(storage, source.storage, size = length);
         position = declaration::zero;
@@ -109,8 +109,8 @@ namespace pokemonism::sdk::collection {
         return source.size;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::set(stream<element> && source) noexcept {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::set(stream<element, primitivable, characterizable, unit> && source) noexcept {
         if (position != size) memorizer<element>::del(storage + position, size - position);
         allocator::rel(storage);
 
@@ -127,39 +127,39 @@ namespace pokemonism::sdk::collection {
         return size;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::cat(const element & item, unsigned long n) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::cat(const element & item, unsigned long n) {
         if (position == size && position != 0) position = size = 0;
-        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element>::capacityCal(size + n, pageGet())));
+        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + n, pageGet())));
         memorizer<element>::set(storage + size, item, n);
         size = size + n;
 
         return n;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::cat(const element * source, unsigned long sourceLen) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::cat(const element * source, unsigned long sourceLen) {
         if (position == size && position != 0) position = size = 0;
-        if (capacity < size + sourceLen) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element>::capacityCal(size + sourceLen, pageGet())));
+        if (capacity < size + sourceLen) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + sourceLen, pageGet())));
         memorizer<element>::set(storage + size, source, sourceLen);
         size = size + sourceLen;
 
         return sourceLen;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::cat(const stream<element> & source) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::cat(const stream<element, primitivable, characterizable, unit> & source) {
         if (position == size && position != 0) position = size = 0;
         const unsigned long length = source.size - source.position;
-        if (capacity < size + length) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element>::capacityCal(size + length, pageGet())));
+        if (capacity < size + length) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + length, pageGet())));
         memorizer<element>::set(storage + size, source.storage, length);
         size = size + length;
 
         return length;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::cut(unsigned long offset) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::cut(unsigned long offset) {
         if (position + offset <= size) return declaration::zero;
 
         const unsigned long deleted = size - (offset + position);
@@ -171,8 +171,8 @@ namespace pokemonism::sdk::collection {
         return deleted;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::pop(unsigned long length) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::pop(unsigned long length) {
         if ((size - position) < length) length = (size - position);
 
         const unsigned long remain = size - position - length;
@@ -185,54 +185,54 @@ namespace pokemonism::sdk::collection {
         return length;
     }
 
-    template <typename element>
-    inline const element & stream<element>::at(unsigned long index) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline const element & stream<element, primitivable, characterizable, unit>::at(unsigned long index) const {
         pokemon_develop_check(size <= position + index, exit(declaration::fail));
 
         return storage[position + index];
     }
 
-    template <typename element>
-    inline element & stream<element>::at(unsigned long index) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline element & stream<element, primitivable, characterizable, unit>::at(unsigned long index) {
         pokemon_develop_check(size <= position + index, exit(declaration::fail));
 
         return storage[position + index];
     }
 
-    template <typename element>
-    inline const element & stream<element>::operator[](unsigned long index) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline const element & stream<element, primitivable, characterizable, unit>::operator[](unsigned long index) const {
         pokemon_develop_check(size <= position + index, exit(declaration::fail));
 
         return storage[position + index];
     }
 
-    template <typename element>
-    inline element & stream<element>::operator[](unsigned long index) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline element & stream<element, primitivable, characterizable, unit>::operator[](unsigned long index) {
         pokemon_develop_check(size <= position + index, exit(declaration::fail));
 
         return storage[position + index];
     }
 
-    template <typename element>
-    inline element * stream<element>::add(const element & item) {
-        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element>::capacityCal(size + 1, pageGet())));
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline element * stream<element, primitivable, characterizable, unit>::add(const element & item) {
+        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + 1, pageGet())));
         memorizer<element>::set(storage + size, item);
         size = size + 1;
 
         return storage + size - 1;
     }
 
-    template <typename element>
-    inline element * stream<element>::add(element && item) {
-        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element>::capacityCal(size + 1, pageGet())));
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline element * stream<element, primitivable, characterizable, unit>::add(element && item) {
+        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + 1, pageGet())));
         memorizer<element>::set(storage + size, std::move(item));
         size = size + 1;
 
         return storage + size - 1;
     }
 
-    template <typename element>
-    inline element & stream<element>::del(element & item) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline element & stream<element, primitivable, characterizable, unit>::del(element & item) {
         element * front = storage + position;
         for (unsigned long i = 0; i < size; i = i + 1) {
             if (item == front[i]) {
@@ -245,23 +245,23 @@ namespace pokemonism::sdk::collection {
         return item;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::pageGet(void) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::pageGet(void) const {
         return declaration::eight;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::sizeGet(void) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::sizeGet(void) const {
         return size;
     }
 
-    template <typename element>
-    inline unsigned long stream<element>::capacityGet(void) const {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::capacityGet(void) const {
         return capacity;
     }
 
-    template <typename element>
-    inline void stream<element>::clear(void) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::clear(void) {
         memorizer<element>::del(storage + position, size - position);
         storage = static_cast<element *>(allocator::rel(storage));
         position = declaration::zero;
@@ -269,41 +269,41 @@ namespace pokemonism::sdk::collection {
         capacity = declaration::zero;
     }
 
-    template <typename element>
-    inline void stream<element>::clean(void) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::clean(void) {
         memorizer<element>::del(storage + position, size - position);
         position = declaration::zero;
         size = declaration::zero;
     }
 
-    template <typename element>
-    inline void stream<element>::reset(void) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::reset(void) {
         memorizer<element>::del(storage + position, size - position);
         position = declaration::zero;
         size = declaration::zero;
     }
 
     // ReSharper disable once CppVirtualFunctionCallInsideCtor
-    template <typename element>
-    inline stream<element>::stream(const element & item, unsigned long n) : size(n), capacity(stream<element>::capacityCal(n, pageGet())), position(declaration::zero) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::stream(const element & item, unsigned long n) : size(n), capacity(stream<element, primitivable, characterizable, unit>::capacityCal(n, pageGet())), position(declaration::zero) {
         storage = static_cast<element *>(allocator::gen(capacity * sizeof(element)));
         memorizer<element>::set(storage, item, n);
     }
 
     // ReSharper disable once CppVirtualFunctionCallInsideCtor
-    template <typename element>
-    inline stream<element>::stream(const element * source, unsigned long sourceLen) : size(sourceLen), capacity(stream<element>::capacityCal(sourceLen, pageGet())), position(declaration::zero) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::stream(const element * source, unsigned long sourceLen) : size(sourceLen), capacity(stream<element, primitivable, characterizable, unit>::capacityCal(sourceLen, pageGet())), position(declaration::zero) {
         storage = static_cast<element *>(allocator::gen(capacity * sizeof(element)));
         memorizer<element>::set(storage, source, sourceLen);
     }
 
-    template <typename element>
-    inline stream<element>::stream(void) : size(declaration::zero), capacity(declaration::zero), storage(nullptr), position(declaration::zero) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::stream(void) : size(declaration::zero), capacity(declaration::zero), storage(nullptr), position(declaration::zero) {
 
     }
 
-    template <typename element>
-    inline stream<element>::~stream(void) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::~stream(void) {
         memorizer<element>::del(storage + position, size - position);
         storage = static_cast<element *>(allocator::rel(storage));
         position = declaration::zero;
@@ -311,28 +311,28 @@ namespace pokemonism::sdk::collection {
         capacity = declaration::zero;
     }
 
-    template <typename element>
-    inline stream<element>::stream(const stream<element> & o) : size(o.size - o.position), capacity(o.capacity), position(declaration::zero) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::stream(const stream<element, primitivable, characterizable, unit> & o) : size(o.size - o.position), capacity(o.capacity), position(declaration::zero) {
         storage = static_cast<element *>(allocator::gen(capacity * sizeof(element)));
         memorizer<element>::set(storage, o.storage + o.position, size);
     }
 
-    template <typename element>
-    inline stream<element>::stream(stream<element> && o) noexcept : size(o.size), capacity(o.capacity), storage(o.storage), position(o.position) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit>::stream(stream<element, primitivable, characterizable, unit> && o) noexcept : size(o.size), capacity(o.capacity), storage(o.storage), position(o.position) {
         o.position = declaration::zero;
         o.size = declaration::zero;
         o.capacity = declaration::zero;
         o.storage = nullptr;
     }
 
-    template <typename element>
-    inline stream<element> & stream<element>::operator=(const stream<element> & o) {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit> & stream<element, primitivable, characterizable, unit>::operator=(const stream<element, primitivable, characterizable, unit> & o) {
         if (pointof(o) != this) {
             memorizer<element>::del(storage + position, size - position);
 
             size = o.size - o.position;
 
-            if (capacity < size) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element>::capacityCal(size, pageGet())));
+            if (capacity < size) storage = static_cast<element *>(allocator::reset(storage, capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size, pageGet())));
 
             memorizer<element>::set(storage, o.storage + o.position, size);
             position = declaration::zero;
@@ -340,8 +340,8 @@ namespace pokemonism::sdk::collection {
         return *this;
     }
 
-    template <typename element>
-    inline stream<element> & stream<element>::operator=(stream<element> && o) noexcept {
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline stream<element, primitivable, characterizable, unit> & stream<element, primitivable, characterizable, unit>::operator=(stream<element, primitivable, characterizable, unit> && o) noexcept {
         if (pointof(o) != this) {
             memorizer<element>::del(storage + position, size - position);
             storage = static_cast<element *>(allocator::rel(storage));
@@ -360,5 +360,8 @@ namespace pokemonism::sdk::collection {
     }
 
 }
+
+#include <pokemonism/sdk/collection/stream/primitivable.hh>
+#include <pokemonism/sdk/collection/stream/characterizable.hh>
 
 #endif // __POKEMONISM_SDK_CONTAINER_STREAM_HH__
