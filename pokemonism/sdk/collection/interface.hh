@@ -24,8 +24,9 @@ namespace pokemonism::sdk::collection {
     public:     inline int wakeup(void) override { return declaration::fail; }
     public:     inline int wait(long second, long nano) override { return declaration::fail; }
     public:     inline int wakeup(bool all) override { return declaration::fail; }
-    public:     virtual unsigned long sizeGet(void) = 0;
-    public:     virtual unsigned long capacityGet(void) = 0;
+    public:     inline virtual unsigned long pageGet(void) const { return declaration::eight; }
+    public:     virtual unsigned long sizeGet(void) const = 0;
+    public:     virtual unsigned long capacityGet(void) const = 0;
     public:     virtual void clear(void) = 0;
     public:     virtual void clean(void) = 0;
     public:     virtual void reset(void) = 0;

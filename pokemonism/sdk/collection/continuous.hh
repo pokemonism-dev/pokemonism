@@ -16,19 +16,19 @@
 
 namespace pokemonism::sdk::collection {
 
-    template <typename element, class interfaceable = collection::continuable<element>>
-    class continuous : public interfaceable {
-    protected:  unsigned long size;
-    protected:  unsigned long capacity;
-    protected:  element * storage;
+    template <typename element>
+    class continuous : public collection::continuable<element> {
+    protected:  unsigned long   size;
+    protected:  unsigned long   capacity;
+    protected:  element *       storage;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
-    public:     inline virtual unsigned long set(const continuous<element, interfaceable> & source);
-    public:     inline virtual unsigned long set(continuous<element, interfaceable> && source) noexcept;
+    public:     inline virtual unsigned long set(const continuous<element> & source);
+    public:     inline virtual unsigned long set(continuous<element> && source) noexcept;
     public:     inline unsigned long cat(const element & item, unsigned long n) override;
     public:     inline unsigned long cat(const element * source, unsigned long sourceLen) override;
-    public:     inline virtual unsigned long cat(const continuous<element, interfaceable> & source);
+    public:     inline virtual unsigned long cat(const continuous<element> & source);
     public:     inline unsigned long cut(unsigned long offset) override;
     public:     inline unsigned long pop(unsigned long length) override;
     public:     inline const element & at(unsigned long index) const override;
@@ -38,8 +38,9 @@ namespace pokemonism::sdk::collection {
     public:     inline element * add(const element & item) override;
     public:     inline element * add(element && item) override;
     public:     inline element & del(element & item) override;
-    public:     inline unsigned long sizeGet(void) override;
-    public:     inline unsigned long capacityGet(void) override;
+    public:     inline unsigned long pageGet(void) const override;
+    public:     inline unsigned long sizeGet(void) const override;
+    public:     inline unsigned long capacityGet(void) const override;
     public:     inline void clear(void) override;
     public:     inline void clean(void) override;
     public:     inline void reset(void) override;
@@ -47,51 +48,51 @@ namespace pokemonism::sdk::collection {
     public:     inline continuous(const element * source, unsigned long sourceLen);
     public:     inline continuous(void);
     public:     inline ~continuous(void) override;
-    public:     inline continuous(const continuous<element, interfaceable> & o);
-    public:     inline continuous(continuous<element, interfaceable> && o) noexcept;
-    public:     inline virtual continuous<element, interfaceable> & operator=(const continuous<element, interfaceable> & o);
-    public:     inline virtual continuous<element, interfaceable> & operator=(continuous<element, interfaceable> && o) noexcept;
+    public:     inline continuous(const continuous<element> & o);
+    public:     inline continuous(continuous<element> && o) noexcept;
+    public:     inline virtual continuous<element> & operator=(const continuous<element> & o);
+    public:     inline virtual continuous<element> & operator=(continuous<element> && o) noexcept;
     };
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::set(void) {
+    template <typename element>
+    inline unsigned long continuous<element>::set(void) {
         memorizer<element>::del(storage, size);
         size = declaration::zero;
 
         return declaration::zero;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::set(const element & item, unsigned long n) {
+    template <typename element>
+    inline unsigned long continuous<element>::set(const element & item, unsigned long n) {
         memorizer<element>::del(storage, size);
-        if (capacity < n) storage = static_cast<element *>(allocator::reset(storage, capacity = continuous<element, interfaceable>::capacityCal(n, continuous<element, interfaceable>::page)));
+        if (capacity < n) storage = static_cast<element *>(allocator::reset(storage, (capacity = continuous<element>::capacityCal(n, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage, item, size = n);
 
         return n;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::set(const element * source, unsigned long sourceLen) {
+    template <typename element>
+    inline unsigned long continuous<element>::set(const element * source, unsigned long sourceLen) {
         memorizer<element>::del(storage, size);
-        if (capacity < sourceLen) storage = static_cast<element *>(allocator::reset(storage, capacity = continuous<element, interfaceable>::capacityCal(sourceLen, continuous<element, interfaceable>::page)));
+        if (capacity < sourceLen) storage = static_cast<element *>(allocator::reset(storage, (capacity = continuous<element>::capacityCal(sourceLen, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage, source, size = sourceLen);
 
         return sourceLen;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::set(const continuous<element, interfaceable> & source) {
+    template <typename element>
+    inline unsigned long continuous<element>::set(const continuous<element> & source) {
         memorizer<element>::del(storage, size);
-        if (capacity < source.size) storage = static_cast<element *>(allocator::reset(storage, capacity = continuous<element, interfaceable>::capacityCal(source.size, continuous<element, interfaceable>::page)));
+        if (capacity < source.size) storage = static_cast<element *>(allocator::reset(storage, (capacity = continuous<element>::capacityCal(source.size, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage, source.storage, size = source.size);
 
         return size;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::set(continuous<element, interfaceable> && source) noexcept {
+    template <typename element>
+    inline unsigned long continuous<element>::set(continuous<element> && source) noexcept {
         memorizer<element>::del(storage, size);
-        allocator::del(storage);
+        allocator::rel(storage);
 
         storage = source.storage;
         capacity = source.capacity;
@@ -100,35 +101,35 @@ namespace pokemonism::sdk::collection {
         return size;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::cat(const element & item, unsigned long n) {
-        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, capacity = continuous<element, interfaceable>::capacityCal(size + n, continuous<element, interfaceable>::page)));
+    template <typename element>
+    inline unsigned long continuous<element>::cat(const element & item, unsigned long n) {
+        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element>::capacityCal(size + n, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage + size, item, n);
         size = size + n;
 
         return n;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::cat(const element * source, unsigned long sourceLen) {
-        if (capacity < size + sourceLen) storage = static_cast<element *>(allocator::regen(storage, capacity = continuous<element, interfaceable>::capacityCal(size + sourceLen, continuous<element, interfaceable>::page)));
+    template <typename element>
+    inline unsigned long continuous<element>::cat(const element * source, unsigned long sourceLen) {
+        if (capacity < size + sourceLen) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element>::capacityCal(size + sourceLen, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage + size, source, sourceLen);
         size = size + sourceLen;
 
         return sourceLen;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::cat(const continuous<element, interfaceable> & source) {
-        if (capacity < size + source.size) storage = static_cast<element *>(allocator::regen(storage, capacity = continuous<element, interfaceable>::capacityCal(size + source.size, continuous<element, interfaceable>::page)));
+    template <typename element>
+    inline unsigned long continuous<element>::cat(const continuous<element> & source) {
+        if (capacity < size + source.size) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element>::capacityCal(size + source.size, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage + size, source.storage, source.size);
         size = size + source.size;
 
         return source.size;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::cut(unsigned long offset) {
+    template <typename element>
+    inline unsigned long continuous<element>::cut(unsigned long offset) {
         if (offset <= size) return declaration::zero;
 
         const unsigned long deleted = size - offset;
@@ -138,8 +139,8 @@ namespace pokemonism::sdk::collection {
         return deleted;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::pop(unsigned long length) {
+    template <typename element>
+    inline unsigned long continuous<element>::pop(unsigned long length) {
         if (size < length) length = size;
 
         const unsigned long remain = size - length;
@@ -150,54 +151,54 @@ namespace pokemonism::sdk::collection {
         return length;
     }
 
-    template <typename element, class interfaceable>
-    inline const element & continuous<element, interfaceable>::at(unsigned long index) const {
-        pokemon_develop_check(size <= index, exit(declaration::zero));
+    template <typename element>
+    inline const element & continuous<element>::at(unsigned long index) const {
+        pokemon_develop_check(size <= index, exit(declaration::fail));
 
         return storage[index];
     }
 
-    template <typename element, class interfaceable>
-    inline element & continuous<element, interfaceable>::at(unsigned long index) {
-        pokemon_develop_check(size <= index, exit(declaration::zero));
+    template <typename element>
+    inline element & continuous<element>::at(unsigned long index) {
+        pokemon_develop_check(size <= index, exit(declaration::fail));
 
         return storage[index];
     }
 
-    template <typename element, class interfaceable>
-    inline const element & continuous<element, interfaceable>::operator[](unsigned long index) const {
-        pokemon_develop_check(size <= index, exit(declaration::zero));
+    template <typename element>
+    inline const element & continuous<element>::operator[](unsigned long index) const {
+        pokemon_develop_check(size <= index, exit(declaration::fail));
 
         return storage[index];
     }
 
-    template <typename element, class interfaceable>
-    inline element & continuous<element, interfaceable>::operator[](unsigned long index) {
-        pokemon_develop_check(size <= index, exit(declaration::zero));
+    template <typename element>
+    inline element & continuous<element>::operator[](unsigned long index) {
+        pokemon_develop_check(size <= index, exit(declaration::fail));
 
         return storage[index];
     }
 
-    template <typename element, class interfaceable>
-    inline element * continuous<element, interfaceable>::add(const element & item) {
-        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = continuous<element, interfaceable>::capacityCal(size + 1, continuous<element, interfaceable>::page)));
+    template <typename element>
+    inline element * continuous<element>::add(const element & item) {
+        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element>::capacityCal(size + 1, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage + size, item);
         size = size + 1;
 
         return storage + size - 1;
     }
 
-    template <typename element, class interfaceable>
-    inline element * continuous<element, interfaceable>::add(element && item) {
-        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, capacity = continuous<element, interfaceable>::capacityCal(size + 1, continuous<element, interfaceable>::page)));
+    template <typename element>
+    inline element * continuous<element>::add(element && item) {
+        if (capacity < size + 1) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element>::capacityCal(size + 1, pageGet())) * sizeof(element)));
         memorizer<element>::set(storage + size, std::move(item));
         size = size + 1;
 
         return storage + size - 1;
     }
 
-    template <typename element, class interfaceable>
-    inline element & continuous<element, interfaceable>::del(element & item) {
+    template <typename element>
+    inline element & continuous<element>::del(element & item) {
         for (unsigned long i = 0; i < size; i = i + 1) {
             if (item == storage[i]) {
                 memorizer<element>::del(storage + i);
@@ -209,84 +210,91 @@ namespace pokemonism::sdk::collection {
         return item;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::sizeGet(void) {
+    template <typename element>
+    inline unsigned long continuous<element>::pageGet(void) const {
+        return declaration::eight;
+    }
+
+    template <typename element>
+    inline unsigned long continuous<element>::sizeGet(void) const {
         return size;
     }
 
-    template <typename element, class interfaceable>
-    inline unsigned long continuous<element, interfaceable>::capacityGet(void) {
+    template <typename element>
+    inline unsigned long continuous<element>::capacityGet(void) const {
         return capacity;
     }
 
-    template <typename element, class interfaceable>
-    inline void continuous<element, interfaceable>::clear(void) {
+    template <typename element>
+    inline void continuous<element>::clear(void) {
         memorizer<element>::del(storage, size);
         storage = static_cast<element *>(allocator::rel(storage));
         capacity = size = 0;
     }
 
-    template <typename element, class interfaceable>
-    inline void continuous<element, interfaceable>::clean(void) {
+    template <typename element>
+    inline void continuous<element>::clean(void) {
         memorizer<element>::del(storage, size);
         size = 0;
     }
 
-    template <typename element, class interfaceable>
-    inline void continuous<element, interfaceable>::reset(void) {
+    template <typename element>
+    inline void continuous<element>::reset(void) {
         memorizer<element>::del(storage, size);
         size = 0;
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::continuous(const element & item, unsigned long n) : size(n), capacity(continuous<element, interfaceable>::capacityCal(n, continuous<element, interfaceable>::page)) {
-        storage = static_cast<element *>(allocator::gen(capacity));
+    // ReSharper disable once CppVirtualFunctionCallInsideCtor
+    template <typename element>
+    inline continuous<element>::continuous(const element & item, unsigned long n) : size(n), capacity(continuous<element>::capacityCal(n, pageGet())) {
+        storage = static_cast<element *>(allocator::gen(capacity * sizeof(element)));
         memorizer<element>::set(item, n);
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::continuous(const element * source, unsigned long sourceLen) : size(sourceLen), capacity(continuous<element, interfaceable>::capacityCal(sourceLen, continuous<element, interfaceable>::page)) {
-        storage = static_cast<element *>(allocator::gen(capacity));
+    // ReSharper disable once CppVirtualFunctionCallInsideCtor
+    template <typename element>
+    inline continuous<element>::continuous(const element * source, unsigned long sourceLen) : size(sourceLen), capacity(continuous<element>::capacityCal(sourceLen, pageGet())) {
+        storage = static_cast<element *>(allocator::gen(capacity * sizeof(element)));
         memorizer<element>::set(source, sourceLen);
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::continuous(void) : size(declaration::zero), capacity(declaration::zero), storage(nullptr) {
+    template <typename element>
+    inline continuous<element>::continuous(void) : size(declaration::zero), capacity(declaration::zero), storage(nullptr) {
 
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::~continuous(void) {
+    template <typename element>
+    inline continuous<element>::~continuous(void) {
         memorizer<element>::del(storage, size);
         storage = static_cast<element *>(allocator::rel(storage));
         size = declaration::zero;
         capacity = declaration::zero;
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::continuous(const continuous<element, interfaceable> & o) : size(declaration::zero), capacity(o.capacity), storage(allocator::gen(o.capacity)) {
+    template <typename element>
+    inline continuous<element>::continuous(const continuous<element> & o) : size(declaration::zero), capacity(o.capacity), storage(allocator::gen(o.capacity  * sizeof(element))) {
         memorizer<element>::set(storage, o.storage, size = o.size);
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable>::continuous(continuous<element, interfaceable> && o) noexcept : size(o.size), capacity(o.capacity), storage(o.storage) {
+    template <typename element>
+    inline continuous<element>::continuous(continuous<element> && o) noexcept : size(o.size), capacity(o.capacity), storage(o.storage) {
         o.size = declaration::zero;
         o.capacity = declaration::zero;
         o.storage = nullptr;
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable> & continuous<element, interfaceable>::operator=(const continuous<element, interfaceable> & o) {
+    template <typename element>
+    inline continuous<element> & continuous<element>::operator=(const continuous<element> & o) {
         if (pointof(o) != this) {
             memorizer<element>::del(storage, size);
-            if (capacity < o.size) storage = static_cast<element *>(allocator::reset(storage, capacity = continuous<element, interfaceable>::capacityCal(o.size, continuous<element, interfaceable>::page)));
+            if (capacity < o.size) storage = static_cast<element *>(allocator::reset(storage, (capacity = continuous<element>::capacityCal(o.size, pageGet())) * sizeof(element)));
             memorizer<element>::set(storage, o.storage, size = o.size);
         }
         return *this;
     }
 
-    template <typename element, class interfaceable>
-    inline continuous<element, interfaceable> & continuous<element, interfaceable>::operator=(continuous<element, interfaceable> && o) noexcept {
+    template <typename element>
+    inline continuous<element> & continuous<element>::operator=(continuous<element> && o) noexcept {
         if (pointof(o) != this) {
             memorizer<element>::del(storage, size);
             allocator::rel(storage);
