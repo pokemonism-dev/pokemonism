@@ -24,8 +24,8 @@ namespace pokemonism::sdk::collection {
     public:     virtual unsigned long cat(const elementable * source, unsigned long sourceLen) = 0;
     public:     virtual unsigned long cut(unsigned long offset) = 0;
     public:     virtual unsigned long pop(unsigned long length) = 0;
-    public:     continuable(void) {}
-    public:     ~continuable(void) override {}
+    protected:  continuable(void) {}
+    protected:  ~continuable(void) override {}
     public:     continuable(const collection::continuable<elementable> & o) = delete;
     public:     continuable(collection::continuable<elementable> && o) noexcept = delete;
     public:     collection::continuable<elementable> & operator=(const collection::continuable<elementable> & o) = delete;

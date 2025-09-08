@@ -20,8 +20,8 @@ namespace pokemonism::sdk::collection {
     public:     virtual elementable & at(unsigned long index) = 0;
     public:     virtual const elementable & operator[](unsigned long index) const = 0;
     public:     virtual elementable & operator[](unsigned long index) = 0;
-    public:     sequenceable(void) {}
-    public:     ~sequenceable(void) override {}
+    protected:  sequenceable(void) {}
+    protected:  ~sequenceable(void) override {}
     public:     sequenceable(const collection::sequenceable<elementable> & o) = delete;
     public:     sequenceable(collection::sequenceable<elementable> && o) noexcept = delete;
     public:     collection::sequenceable<elementable> & operator=(const collection::sequenceable<elementable> & o) = delete;

@@ -21,8 +21,8 @@ namespace pokemonism::sdk::collection {
     public:     virtual element * add(const element & item) = 0;
     public:     virtual element * add(element && item) = 0;
     public:     virtual element & del(element & item) = 0;
-    public:     collectable(void) {}
-    public:     ~collectable(void) override {}
+    protected:  collectable(void) {}
+    protected:  ~collectable(void) override {}
     public:     collectable(const collection::collectable<elementable> & o) = delete;
     public:     collectable(collection::collectable<elementable> && o) noexcept = delete;
     public:     collection::collectable<elementable> & operator=(const collection::collectable<elementable> & o) = delete;

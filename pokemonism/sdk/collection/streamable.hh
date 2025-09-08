@@ -16,7 +16,12 @@ namespace pokemonism::sdk::collection {
 
     template <typename elementable>
     class streamable : public continuable<elementable> {
-
+    protected:  streamable(void) {}
+    protected:  ~streamable(void) override {}
+    public:     streamable(const collection::streamable<elementable> & o) = delete;
+    public:     streamable(collection::streamable<elementable> && o) noexcept = delete;
+    public:     collection::streamable<elementable> & operator=(const collection::streamable<elementable> & o) = delete;
+    public:     collection::streamable<elementable> & operator=(collection::streamable<elementable> && o) noexcept = delete;
     };
 
 }

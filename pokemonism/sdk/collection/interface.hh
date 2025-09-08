@@ -29,8 +29,8 @@ namespace pokemonism::sdk::collection {
     public:     virtual void clear(void) = 0;
     public:     virtual void clean(void) = 0;
     public:     virtual void reset(void) = 0;
-    public:     inline interface(void) {}
-    public:     inline ~interface(void) override {}
+    protected:  inline interface(void) {}
+    protected:  inline ~interface(void) override {}
     public:     interface(const collection::interface & o) = delete;
     public:     interface(collection::interface && o) noexcept = delete;
     public:     collection::interface & operator=(const collection::interface & o) = delete;
