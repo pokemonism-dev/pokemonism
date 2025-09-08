@@ -172,7 +172,7 @@ namespace pokemonism::sdk::collection  {
         if ((size - position) < length) length = (size - position);
 
         const unsigned long remain = size - position - length;
-        if (remain > 0) memcpy(storage + position, storage + position + length, remain * sizeof(element));
+        if (remain > 0) memmove(storage + position, storage + position + length, remain * sizeof(element));
         size = position + remain;
 
         if (position == size) position = size = 0;
@@ -234,7 +234,7 @@ namespace pokemonism::sdk::collection  {
         element * front = storage + position;
         for (unsigned long i = 0; i < size; i = i + 1) {
             if (item == front[i]) {
-                if (position + i + 1 < size) memcpy(front + i, front + i + 1, size - position - i - 1);
+                if (position + i + 1 < size) memmove(front + i, front + i + 1, size - position - i - 1);
                 size = size - 1;
                 storage[size] = 0;
                 return item;

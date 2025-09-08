@@ -145,7 +145,7 @@ namespace pokemonism::sdk::collection {
 
         const unsigned long remain = size - length;
         memorizer<element>::del(storage, length);
-        if (remain > 0) memcpy(storage, storage + length, remain * sizeof(element));
+        if (remain > 0) memmove(storage, storage + length, remain * sizeof(element));
         size = remain;
 
         return length;
@@ -202,7 +202,7 @@ namespace pokemonism::sdk::collection {
         for (unsigned long i = 0; i < size; i = i + 1) {
             if (item == storage[i]) {
                 memorizer<element>::del(storage + i);
-                if (i + 1 < size) memcpy(storage + i, storage + i + 1, size - i - 1);
+                if (i + 1 < size) memmove(storage + i, storage + i + 1, size - i - 1);
                 size = size - 1;
                 return item;
             }
@@ -311,5 +311,8 @@ namespace pokemonism::sdk::collection {
     }
 
 }
+
+#include <pokemonism/sdk/collection/continuous/primitivable.hh>
+#include <pokemonism/sdk/collection/continuous/characterizable.hh>
 
 #endif // __POKEMONISM_SDK_COLLECTION_CONTINUOUS_HH__

@@ -177,7 +177,7 @@ namespace pokemonism::sdk::collection {
 
         const unsigned long remain = size - position - length;
         memorizer<element>::del(storage + position, length);
-        if (remain > 0) memcpy(storage + position, storage + position + length, remain * sizeof(element));
+        if (remain > 0) memmove(storage + position, storage + position + length, remain * sizeof(element));
         size = position + remain;
 
         if (position == size) position = size = 0;
@@ -237,7 +237,7 @@ namespace pokemonism::sdk::collection {
         for (unsigned long i = 0; i < size; i = i + 1) {
             if (item == front[i]) {
                 memorizer<element>::del(front + i);
-                if (position + i + 1 < size) memcpy(front + i, front + i + 1, size - position - i - 1);
+                if (position + i + 1 < size) memmove(front + i, front + i + 1, size - position - i - 1);
                 size = size - 1;
                 return item;
             }

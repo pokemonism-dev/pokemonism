@@ -21,6 +21,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             collection/stream.hh
                                             collection/stream/primitivable.hh
                                             collection/stream/characterizable.hh
+                                            collection/continuous/primitivable.hh
+                                            collection/continuous/characterizable.hh
                                             protocol.hh
                                             protocol/hypertext.hh
                                             protocol/hypertext/transfer.hh
@@ -107,6 +109,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             collection/stream/primitivable.cc
                                             collection/stream/characterizable.cc
                                             collection/continuous.cc
+                                            collection/continuous/primitivable.cc
+                                            collection/continuous/characterizable.cc
                                             protocol.cc
                                             protocol/hypertext.cc
                                             protocol/hypertext/transfer.cc
