@@ -8,3 +8,7 @@ target_link_libraries(train-pokemonism-sdk-engine               pokemonism-dev p
 
 add_executable(train-pokemonism-sdk-generic-command             train-pokemonism-sdk-generic-command.cc)
 target_link_libraries(train-pokemonism-sdk-generic-command      pokemonism-dev pokemonism-sdk)
+
+add_executable(train-pokemonism-sdk-protocol                    train-pokemonism-sdk-protocol.cc)
+target_link_libraries(train-pokemonism-sdk-protocol             pokemonism-dev pokemonism-sdk)
+

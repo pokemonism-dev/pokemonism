@@ -12,6 +12,9 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             event/generator.hh
                                             event/subscription.hh
                                             event/internal/subscription.hh
+                                            protocol.hh
+                                            protocol/transmission.hh
+                                            protocol/transmission/control.hh
                                             command.hh
                                             command/event.hh
                                             command/event/link.hh
@@ -53,6 +56,9 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             event/generator.cc
                                             event/subscription.cc
                                             event/internal/subscription.cc
+                                            protocol.cc
+                                            protocol/transmission.cc
+                                            protocol/transmission/control.cc
                                             command.cc
                                             command/event.cc
                                             command/event/link.cc
