@@ -204,7 +204,7 @@ namespace pokemonism::sdk {
     if(pokemon_exception_minimum_level <= level) {                                                                                  \
         throw pokemonism::sdk::exception(subject, level, __FILE__, __LINE__, __func__);                                             \
     }                                                                                                                               \
-    pokemonLog("[%s:%d/%s] %s(...) => %s\n", __FILE__, __LINE__, level, __func__, subject);                                         \
+    pokemonLog("[%s:%d/%s] %s(...) => %s\n", __FILE__, __LINE__, pokemonism::sdk::exception::to(level), __func__, subject);         \
     code;                                                                                                                           \
 } while (0)
 

@@ -73,6 +73,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             lambdable/pure/command.hh
                                             allocator.hh
                                             memorizer.hh
+                                            memorizer/primitivable.hh
+                                            memorizer/primitivable/one.hh
                                             typographer.hh
                                             subscription.hh
                                             callable.hh
@@ -157,6 +159,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             lambdable/pure/command.cc
                                             allocator.cc
                                             memorizer.cc
+                                            memorizer/primitivable.cc
+                                            memorizer/primitivable/one.cc
                                             typographer.cc
                                             subscription.cc
                                             callable.cc

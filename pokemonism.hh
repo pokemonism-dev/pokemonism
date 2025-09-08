@@ -38,6 +38,7 @@ namespace pokemonism {
 }
 
 #define pointof(o)                  (&(o))
+#define valueof(o)                  (*(o))
 #define referenceof(o)              (*(o))
 #define pokemonname                 typename
 #define trainername                 typename

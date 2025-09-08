@@ -15,7 +15,7 @@
 
 namespace pokemonism::sdk {
 
-    template <typename elementable, typename primitivable = typographer<elementable>::primitive, typename characterizable = typographer<elementable>::character, unsigned long size = typographer<elementable>::unit>
+    template <typename elementable, typename primitivable = typographer<elementable>::primitive, unsigned long size = typographer<elementable>::unit>
     class memorizer {
     public:     static elementable * set(elementable * destination, const elementable & item);
     public:     static elementable * set(elementable * destination, elementable && item);
@@ -25,14 +25,14 @@ namespace pokemonism::sdk {
     public:     static elementable * del(elementable * destination);
     public:     memorizer(void);
     public:     virtual ~memorizer(void);
-    public:     memorizer(const memorizer<elementable, primitivable, characterizable, size> & o) = delete;
-    public:     memorizer(memorizer<elementable, primitivable, characterizable, size> && o) noexcept = delete;
-    public:     memorizer<elementable, primitivable, characterizable, size> & operator=(const memorizer<elementable, primitivable, characterizable, size> & o) = delete;
-    public:     memorizer<elementable, primitivable, characterizable, size> & operator=(memorizer<elementable, primitivable, characterizable, size> && o) noexcept = delete;
+    public:     memorizer(const memorizer<elementable, primitivable, size> & o) = delete;
+    public:     memorizer(memorizer<elementable, primitivable, size> && o) noexcept = delete;
+    public:     memorizer<elementable, primitivable, size> & operator=(const memorizer<elementable, primitivable, size> & o) = delete;
+    public:     memorizer<elementable, primitivable, size> & operator=(memorizer<elementable, primitivable, size> && o) noexcept = delete;
     };
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::set(elementable * destination, const elementable & item) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable & item) {
         pokemon_develop_check(destination == nullptr, return nullptr);
 
         new (destination) elementable(item);
@@ -40,8 +40,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::set(elementable * destination, elementable && item) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, elementable && item) {
         pokemon_develop_check(destination == nullptr, return nullptr);
 
         new (destination) elementable(std::move(item));
@@ -49,8 +49,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::set(elementable * destination, const elementable & item, unsigned int n) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable & item, unsigned int n) {
         if (destination == nullptr || n == 0) return destination;
 
         for (unsigned long i = 0; i < n; i = i + 1) new (destination + i) elementable(item);
@@ -58,8 +58,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
         pokemon_develop_check(source == nullptr && sourceLen > 0, return destination);
         pokemon_develop_check(destination == nullptr && sourceLen > 0, return destination);
         if (destination == nullptr) return destination;
@@ -69,8 +69,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::del(elementable * source, unsigned long sourceLen) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::del(elementable * source, unsigned long sourceLen) {
         pokemon_develop_check(source == nullptr && sourceLen > 0, return source);
         if (source == nullptr) return source;
 
@@ -79,23 +79,25 @@ namespace pokemonism::sdk {
         return source;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    elementable * memorizer<elementable, primitivable, characterizable, size>::del(elementable * destination) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    elementable * memorizer<elementable, primitivable, size>::del(elementable * destination) {
         if (destination != nullptr) destination->~elementable();
 
         return destination;
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    memorizer<elementable, primitivable, characterizable, size>::memorizer(void) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    memorizer<elementable, primitivable, size>::memorizer(void) {
 
     }
 
-    template <typename elementable, typename primitivable, typename characterizable, unsigned long size>
-    memorizer<elementable, primitivable, characterizable, size>::~memorizer(void) {
+    template <typename elementable, typename primitivable, unsigned long size>
+    memorizer<elementable, primitivable, size>::~memorizer(void) {
 
     }
 
 }
+
+#include <pokemonism/sdk/memorizer/primitivable.hh>
 
 #endif // __POKEMONISM_SDK_MEMORIZER_HH__
