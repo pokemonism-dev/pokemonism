@@ -54,7 +54,7 @@ namespace pokemonism::sdk {
     stream * stream::buffer::streamGet(unsigned long n) {
         shrink();
 
-        if (gen != nullptr && (tail == nullptr || (tail->capacity >= stream::buffer::page && tail->remainGet() < n))) gen(this);
+        if (tail == nullptr || (tail->capacity >= stream::buffer::page && tail->remainGet() < n)) gen();
 
         if (tail != nullptr) tail->grow(n);
 
