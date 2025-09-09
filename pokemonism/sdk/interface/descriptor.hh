@@ -39,11 +39,11 @@ namespace pokemonism::sdk::interface {
     protected:  virtual long write(void) = 0;
     protected:  virtual long write(const unsigned char * storage, unsigned long n) = 0;
     public:     virtual unsigned int check(unsigned int state) const = 0;
-    public:     virtual void clear(void) = 0;
-    public:     virtual void clean(void) = 0;
-    public:     virtual void reset(void) = 0;
-    public:     inline virtual void stateOn(unsigned int state, long result, exception * e = nullptr);
-    public:     virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
+    protected:  virtual void clear(void) = 0;
+    protected:  virtual void clean(void) = 0;
+    protected:  virtual void reset(void) = 0;
+    protected:  inline virtual void stateOn(unsigned int state, long result, exception * e = nullptr);
+    protected:  virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
     public:     inline explicit descriptor(type value);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;

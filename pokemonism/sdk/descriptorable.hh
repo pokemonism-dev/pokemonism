@@ -10,13 +10,13 @@
 #ifndef   __POKEMONISM_SDK_DESCRIPTORABLE_HH__
 #define   __POKEMONISM_SDK_DESCRIPTORABLE_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk {
 
     struct descriptorable {
-    public:     class unix;
-    public:     using def = descriptorable::unix;
+    public:     template <class descriptor = interface::descriptor> class unix;
+    public:     using def = descriptorable::unix<interface::descriptor>;
     };
 
 }

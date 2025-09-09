@@ -23,9 +23,9 @@ namespace pokemonism::sdk {
     protected:  inline long read(void) override;
     protected:  inline long read(unsigned char * storage, unsigned long capacity) override;
     protected:  inline virtual long read(pokemonism::sdk::stream * node);
-    public:     inline void clear(void) override;
-    public:     inline void clean(void) override;
-    public:     inline void reset(void) override;
+    protected:  inline void clear(void) override;
+    protected:  inline void clean(void) override;
+    protected:  inline void reset(void) override;
     protected:  inline virtual void onStreamIn(pokemonism::sdk::stream * node);
     protected:  inline explicit stream(type value);
     protected:  inline explicit stream(pokemonism::sdk::stream::buffer * in);

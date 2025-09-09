@@ -16,6 +16,8 @@
 using namespace pokemonism::sdk;
 
 int main(int argc, char ** argv) {
-    generic::descriptor<input::stream<output::stream<descriptorable::unix>>> o;
+    generic::descriptor<input::stream<output::stream<descriptorable::unix<interface::descriptor>>>> o;
+    // generic::socket<input::stream<output::stream<socketable::unix<interface::socket>>>> o;
+
     return 0;
 }
