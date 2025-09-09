@@ -8,8 +8,6 @@
  */
 
 #include <cstdio>
-
-#include <pokemonism/sdk/context.hh>
 #include <pokemonism/sdk/typographer.hh>
 #include <pokemonism/sdk/collection/continuous.hh>
 
@@ -23,8 +21,6 @@ int main(int argc, char ** argv) {
     collection::continuous<int *> container;
 
     printf("%s\n", collection::continuous<int *>::name);
-
-    printf("%s\n", collection::continuous<context *>::name);
 
 
 
