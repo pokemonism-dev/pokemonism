@@ -23,6 +23,8 @@ namespace pokemonism::sdk::collection {
     protected:  element *       storage;
     protected:  unsigned long   position;
     public:     inline unsigned long positionGet(void) const override;
+    public:     inline unsigned long lengthGet(void) const override;
+    public:     inline unsigned long remainGet(void) const override;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
@@ -31,8 +33,15 @@ namespace pokemonism::sdk::collection {
     public:     inline unsigned long cat(const element & item, unsigned long n) override;
     public:     inline unsigned long cat(const element * source, unsigned long sourceLen) override;
     public:     inline virtual unsigned long cat(const stream<element, primitivable, characterizable, unit> & source);
+    public:     inline virtual unsigned long cat(stream<element, primitivable, characterizable, unit> && source);
     public:     inline unsigned long cut(unsigned long offset) override;
     public:     inline unsigned long pop(unsigned long length) override;
+
+
+    public:     inline void grow(unsigned long n) override;
+    public:     inline void shrink(void) override;
+    public:     inline void fit(void) override;
+    public:     inline void trash(void) override;
     public:     inline const element & at(unsigned long index) const override;
     public:     inline element & at(unsigned long index) override;
     public:     inline const element & operator[](unsigned long index) const override;
@@ -46,6 +55,7 @@ namespace pokemonism::sdk::collection {
     public:     inline void clear(void) override;
     public:     inline void clean(void) override;
     public:     inline void reset(void) override;
+
     public:     inline stream(const element & item, unsigned long n);
     public:     inline stream(const element * source, unsigned long sourceLen);
     public:     inline stream(void);
@@ -55,6 +65,16 @@ namespace pokemonism::sdk::collection {
     public:     inline virtual stream<element, primitivable, characterizable, unit> & operator=(const stream<element, primitivable, characterizable, unit> & o);
     public:     inline virtual stream<element, primitivable, characterizable, unit> & operator=(stream<element, primitivable, characterizable, unit> && o) noexcept;
     };
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::lengthGet(void) const {
+        return size - position;
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::remainGet(void) const {
+        return capacity - size;
+    }
 
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>
     unsigned long stream<element, primitivable, characterizable, unit>::positionGet(void) const {
@@ -159,14 +179,26 @@ namespace pokemonism::sdk::collection {
     }
 
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline unsigned long stream<element, primitivable, characterizable, unit>::cat(stream<element, primitivable, characterizable, unit> && source) {
+        if (capacity < size + (source.size - source.position)) storage = static_cast<element *>(allocator::regen(storage, (capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + (source.size - source.position), pageGet())) * sizeof(element)));
+        const unsigned long n = source.size - source.position;
+        if (n > 0) {
+            memcpy(storage + size, source.storage, n * sizeof(element));
+            size = size + n;
+        }
+        source.storage = static_cast<element *>(allocator::rel(source.storage));
+        source.size = 0;
+        source.capacity = 0;
+        return n;
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
     inline unsigned long stream<element, primitivable, characterizable, unit>::cut(unsigned long offset) {
         if (position + offset <= size) return declaration::zero;
 
         const unsigned long deleted = size - (offset + position);
         if (deleted > 0) memorizer<element>::del(storage + position + offset, deleted);
         size = position + offset;
-
-        if (position == size) position = size = 0;
 
         return deleted;
     }
@@ -180,9 +212,36 @@ namespace pokemonism::sdk::collection {
         if (remain > 0) memmove(storage + position, storage + position + length, remain * sizeof(element));
         size = position + remain;
 
-        if (position == size) position = size = 0;
-
         return length;
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::grow(unsigned long n) {
+        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, (capacity = stream<element, primitivable, characterizable, unit>::capacityCal(size + n, pageGet())) * sizeof(element)));
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::shrink(void) {
+        if (size != capacity) storage = static_cast<element *>(allocator::reset(storage, (capacity = size) * sizeof(element)));
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::fit(void) {
+        trash();
+        shrink();
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline void stream<element, primitivable, characterizable, unit>::trash(void) {
+        if (position != 0) {
+            if (position != size) {
+                memmove(storage, storage + position, (size - position) * sizeof(element));
+                size = size - position;
+            } else {
+                size = 0;
+            }
+            position = 0;
+        }
     }
 
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>

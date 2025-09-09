@@ -21,6 +21,8 @@ namespace pokemonism::sdk::collection  {
     protected:  element *       storage;
     protected:  unsigned long   position;
     public:     inline unsigned long positionGet(void) const override;
+    public:     inline unsigned long lengthGet(void) const override;
+    public:     inline unsigned long remainGet(void) const override;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
@@ -29,8 +31,13 @@ namespace pokemonism::sdk::collection  {
     public:     inline unsigned long cat(const element & item, unsigned long n) override;
     public:     inline unsigned long cat(const element * source, unsigned long sourceLen) override;
     public:     inline virtual unsigned long cat(const stream<element, unsigned char, char, unit> & source);
+    public:     inline virtual unsigned long cat(stream<element, unsigned char, char, unit> && source);
     public:     inline unsigned long cut(unsigned long offset) override;
     public:     inline unsigned long pop(unsigned long length) override;
+    public:     inline void grow(unsigned long n) override;
+    public:     inline void shrink(void) override;
+    public:     inline void fit(void) override;
+    public:     inline void trash(void) override;
     public:     inline const element & at(unsigned long index) const override;
     public:     inline element & at(unsigned long index) override;
     public:     inline const element & operator[](unsigned long index) const override;
@@ -53,6 +60,16 @@ namespace pokemonism::sdk::collection  {
     public:     inline virtual stream<element, unsigned char, char, unit> & operator=(const stream<element, unsigned char, char, unit> & o);
     public:     inline virtual stream<element, unsigned char, char, unit> & operator=(stream<element, unsigned char, char, unit> && o) noexcept;
     };
+
+    template <typename element, unsigned long unit>
+    inline unsigned long stream<element, unsigned char, char, unit>::lengthGet(void) const {
+        return size - position;
+    }
+
+    template <typename element, unsigned long unit>
+    inline unsigned long stream<element, unsigned char, char, unit>::remainGet(void) const {
+        return capacity - size;
+    }
 
     template <typename element, unsigned long unit>
     unsigned long stream<element, unsigned char, char, unit>::positionGet(void) const {
@@ -155,13 +172,26 @@ namespace pokemonism::sdk::collection  {
     }
 
     template <typename element, unsigned long unit>
+    inline unsigned long stream<element, unsigned char, char, unit>::cat(stream<element, unsigned char, char, unit> && source) {
+        if (capacity < size + (source.size - source.position)) storage = static_cast<element *>(allocator::regen(storage, (capacity = stream<element, unsigned char, char, unit>::capacityCal(size + (source.size - source.position), pageGet())) * sizeof(element)));
+        const unsigned long n = source.size - source.position;
+        if (n > 0) {
+            memcpy(storage + size, source.storage, n * sizeof(element));
+            size = size + n;
+        }
+        source.storage = static_cast<element *>(allocator::rel(source.storage));
+        source.size = 0;
+        source.capacity = 0;
+        return n;
+    }
+
+    template <typename element, unsigned long unit>
     inline unsigned long stream<element, unsigned char, char, unit>::cut(unsigned long offset) {
         if (position + offset <= size) return declaration::zero;
 
         const unsigned long deleted = size - (offset + position);
         size = position + offset;
 
-        if (position == size) position = size = 0;
         storage[size] = 0;
 
         return deleted;
@@ -175,10 +205,39 @@ namespace pokemonism::sdk::collection  {
         if (remain > 0) memmove(storage + position, storage + position + length, remain * sizeof(element));
         size = position + remain;
 
-        if (position == size) position = size = 0;
         storage[size] = 0;
 
         return length;
+    }
+
+    template <typename element, unsigned long unit>
+    inline void stream<element, unsigned char, char, unit>::grow(unsigned long n) {
+        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, (capacity = stream<element, unsigned char, char, unit>::capacityCal(size + n + 1, pageGet())) * sizeof(element)));
+    }
+
+    template <typename element, unsigned long unit>
+        inline void stream<element, unsigned char, char, unit>::shrink(void) {
+        if (size != capacity) storage = static_cast<element *>(allocator::reset(storage, ((capacity = size) + 1) * sizeof(element)));
+    }
+
+    template <typename element, unsigned long unit>
+    inline void stream<element, unsigned char, char, unit>::fit(void) {
+        trash();
+        shrink();
+    }
+
+    template <typename element, unsigned long unit>
+    inline void stream<element, unsigned char, char, unit>::trash(void) {
+        if (position != 0) {
+            if (position != size) {
+                memmove(storage, storage + position, (size - position) * sizeof(element));
+                size = size - position;
+            } else {
+                size = 0;
+            }
+            position = 0;
+            storage[size] = 0;
+        }
     }
 
     template <typename element, unsigned long unit>

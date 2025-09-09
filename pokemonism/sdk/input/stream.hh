@@ -16,17 +16,18 @@
 
 namespace pokemonism::sdk {
 
-    class input::stream : public interface::input {
+    template <class outputable>
+    class input::stream : public outputable {
     // public:     pokemonism::sdk::stream storage;
-    public:     void clear(void) override;
-    public:     void clean(void) override;
-    public:     void reset(void) override;
-    public:     stream(void);
-    public:     ~stream(void) override;
-    public:     stream(const pokemonism::sdk::input::stream & o) = delete;
-    public:     stream(pokemonism::sdk::input::stream && o) noexcept = delete;
-    public:     pokemonism::sdk::input::stream & operator=(const pokemonism::sdk::input::stream & o) = delete;
-    public:     pokemonism::sdk::input::stream & operator=(pokemonism::sdk::input::stream && o) noexcept = delete;
+    // public:     void clear(void) override;
+    // public:     void clean(void) override;
+    // public:     void reset(void) override;
+    // public:     stream(void);
+    // public:     ~stream(void) override;
+    // public:     stream(const pokemonism::sdk::input::stream & o) = delete;
+    // public:     stream(pokemonism::sdk::input::stream && o) noexcept = delete;
+    // public:     pokemonism::sdk::input::stream & operator=(const pokemonism::sdk::input::stream & o) = delete;
+    // public:     pokemonism::sdk::input::stream & operator=(pokemonism::sdk::input::stream && o) noexcept = delete;
     };
 
 }

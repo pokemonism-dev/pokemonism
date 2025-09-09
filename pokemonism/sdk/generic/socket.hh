@@ -17,15 +17,15 @@
 
 namespace pokemonism::sdk::generic {
 
-    template <class inputable = pokemonism::sdk::interface::input, class outputable = pokemonism::sdk::interface::output>
-    class socket : public interface::socket, public generic::descriptor<inputable, outputable> {
-    public:     socket(void) {}
-    public:     ~socket(void) override {}
-    public:     socket(const generic::socket<inputable, outputable> & o) = delete;
-    public:     socket(generic::socket<inputable, outputable> && o) noexcept = delete;
-    public:     generic::socket<inputable, outputable> & operator=(const generic::socket<inputable, outputable> & o) = delete;
-    public:     generic::socket<inputable, outputable> & operator=(generic::socket<inputable, outputable> && o) noexcept = delete;
-    };
+    // template <class inputable = pokemonism::sdk::interface::input, class outputable = pokemonism::sdk::interface::output>
+    // class socket : public interface::socket, public generic::descriptor<inputable, outputable> {
+    // public:     socket(void) {}
+    // public:     ~socket(void) override {}
+    // public:     socket(const generic::socket<inputable, outputable> & o) = delete;
+    // public:     socket(generic::socket<inputable, outputable> && o) noexcept = delete;
+    // public:     generic::socket<inputable, outputable> & operator=(const generic::socket<inputable, outputable> & o) = delete;
+    // public:     generic::socket<inputable, outputable> & operator=(generic::socket<inputable, outputable> && o) noexcept = delete;
+    // };
 }
 
 #endif // __POKEMONISM_SOCKET_HH__

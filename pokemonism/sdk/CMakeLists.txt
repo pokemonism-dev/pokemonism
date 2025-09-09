@@ -63,6 +63,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             generic/descriptor.hh
                                             generic/functional/command.hh
                                             stream.hh
+                                            stream/buffer.hh
                                             input.hh
                                             input/stream.hh
                                             output.hh
@@ -151,6 +152,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/descriptor.cc
                                             generic/functional/command.cc
                                             stream.cc
+                                            stream/buffer.cc
                                             input.cc
                                             input/stream.cc
                                             output.cc

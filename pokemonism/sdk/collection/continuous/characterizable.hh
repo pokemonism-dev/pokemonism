@@ -20,6 +20,8 @@ namespace pokemonism::sdk::collection {
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
     protected:  element *       storage;
+    public:     inline unsigned long lengthGet(void) const override;
+    public:     inline unsigned long remainGet(void) const override;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
@@ -28,8 +30,12 @@ namespace pokemonism::sdk::collection {
     public:     inline unsigned long cat(const element & item, unsigned long n) override;
     public:     inline unsigned long cat(const element * source, unsigned long sourceLen) override;
     public:     inline virtual unsigned long cat(const continuous<element, unsigned char, char, unit> & source);
+    public:     inline virtual unsigned long cat(continuous<element, unsigned char, char, unit> && source);
     public:     inline unsigned long cut(unsigned long offset) override;
     public:     inline unsigned long pop(unsigned long length) override;
+    public:     inline void grow(unsigned long n) override;
+    public:     inline void shrink(void) override;
+    public:     inline void fit(void) override;
     public:     inline const element & at(unsigned long index) const override;
     public:     inline element & at(unsigned long index) override;
     public:     inline const element & operator[](unsigned long index) const override;
@@ -52,6 +58,16 @@ namespace pokemonism::sdk::collection {
     public:     inline virtual continuous<element, unsigned char, char, unit> & operator=(const continuous<element, unsigned char, char, unit> & o);
     public:     inline virtual continuous<element, unsigned char, char, unit> & operator=(continuous<element, unsigned char, char, unit> && o) noexcept;
     };
+
+    template <typename element, unsigned long unit>
+    inline unsigned long continuous<element, unsigned char, char, unit>::lengthGet(void) const {
+        return size;
+    }
+
+    template <typename element, unsigned long unit>
+    inline unsigned long continuous<element, unsigned char, char, unit>::remainGet(void) const {
+        return capacity - size;
+    }
 
     template <typename element, unsigned long unit>
     inline unsigned long continuous<element, unsigned char, char, unit>::set(void) {
@@ -123,6 +139,20 @@ namespace pokemonism::sdk::collection {
     }
 
     template <typename element, unsigned long unit>
+    inline unsigned long continuous<element, unsigned char, char, unit>::cat(continuous<element, unsigned char, char, unit> && source) {
+        if (capacity < size + source.size) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element, unsigned char, char, unit>::capacityCal(size + source.size, pageGet())) * sizeof(element)));
+        const unsigned long n = source.size;
+        if (n > 0) {
+            memcpy(storage + size, source.storage, n * sizeof(element));
+            size = size + n;
+        }
+        source.storage = static_cast<element *>(allocator::rel(source.storage));
+        source.size = 0;
+        source.capacity = 0;
+        return n;
+    }
+
+    template <typename element, unsigned long unit>
     inline unsigned long continuous<element, unsigned char, char, unit>::cut(unsigned long offset) {
         if (offset <= size) return declaration::zero;
 
@@ -142,6 +172,22 @@ namespace pokemonism::sdk::collection {
 
         return length;
     }
+
+    template <typename element, unsigned long unit>
+    inline void continuous<element, unsigned char, char, unit>::grow(unsigned long n) {
+        if (capacity < size + n) storage = static_cast<element *>(allocator::regen(storage, (capacity = continuous<element, unsigned char, char, unit>::capacityCal(size + n + 1, pageGet())) * sizeof(element)));
+    }
+
+    template <typename element, unsigned long unit>
+    inline void continuous<element, unsigned char, char, unit>::shrink(void) {
+        if (size != capacity) storage = static_cast<element *>(allocator::reset(storage, ((capacity = size) + 1) * sizeof(element)));
+    }
+
+    template <typename element, unsigned long unit>
+    inline void continuous<element, unsigned char, char, unit>::fit(void) {
+        shrink();
+    }
+
 
     template <typename element, unsigned long unit>
     inline const element & continuous<element, unsigned char, char, unit>::at(unsigned long index) const {

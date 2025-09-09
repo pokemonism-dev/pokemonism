@@ -17,6 +17,8 @@ namespace pokemonism::sdk::collection {
     template <typename elementable>
     class continuable : public collection::sequenceable<elementable> {
     public:     constexpr static unsigned long page = 8;
+    public:     virtual unsigned long lengthGet(void) const = 0;
+    public:     virtual unsigned long remainGet(void) const = 0;
     public:     virtual unsigned long set(void) = 0;
     public:     virtual unsigned long set(const elementable & item, unsigned long n) = 0;
     public:     virtual unsigned long set(const elementable * source, unsigned long sourceLen) = 0;
@@ -24,6 +26,9 @@ namespace pokemonism::sdk::collection {
     public:     virtual unsigned long cat(const elementable * source, unsigned long sourceLen) = 0;
     public:     virtual unsigned long cut(unsigned long offset) = 0;
     public:     virtual unsigned long pop(unsigned long length) = 0;
+    public:     virtual void grow(unsigned long n) = 0;
+    public:     virtual void shrink(void) = 0;
+    public:     virtual void fit(void) = 0;
     protected:  continuable(void) {}
     protected:  ~continuable(void) override {}
     public:     continuable(const collection::continuable<elementable> & o) = delete;

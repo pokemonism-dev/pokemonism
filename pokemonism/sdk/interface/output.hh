@@ -10,16 +10,13 @@
 #ifndef   __POKEMONISM_SDK_INTERFACE_OUTPUT_HH__
 #define   __POKEMONISM_SDK_INTERFACE_OUTPUT_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk::interface {
 
-    class output {
-    public:     virtual void clear(void) = 0;
-    public:     virtual void clean(void) = 0;
-    public:     virtual void reset(void) = 0;
+    class output : public interface::descriptor {
     public:     output(void) {}
-    public:     virtual ~output(void) {}
+    public:     ~output(void) override {}
     public:     output(const interface::output & o) = delete;
     public:     output(interface::output && o) noexcept = delete;
     public:     interface::output & operator=(const interface::output & o) = delete;

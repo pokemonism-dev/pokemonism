@@ -30,6 +30,8 @@ namespace pokemonism {
         constexpr int               invalid = -1;
         constexpr int               infinite = -1;
         constexpr int               zero = 0;
+        constexpr int               one = 1;
+        constexpr int               two = 2;
         constexpr int               eight = 8;
         constexpr int               none = 0;
 

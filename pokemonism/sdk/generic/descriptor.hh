@@ -15,11 +15,13 @@
 #include <pokemonism/sdk/interface/input.hh>
 #include <pokemonism/sdk/interface/output.hh>
 #include <pokemonism/sdk/interface/descriptor.hh>
+#include <pokemonism/sdk/interface/input.hh>
+#include <pokemonism/sdk/interface/output.hh>
 
 namespace pokemonism::sdk::generic {
 
-    template <class inputable = pokemonism::sdk::interface::input, class outputable = pokemonism::sdk::interface::output>
-    class descriptor : public inputable, public outputable, public pokemonism::sdk::interface::descriptor {
+    template <class outputable = pokemonism::sdk::interface::output, class inputable = pokemonism::sdk::interface::input<outputable>>
+    class descriptor : public inputable {
     protected:  int value;
     protected:  inline int valueGet(void) const;
     public:     inline int close(void) override;
@@ -30,19 +32,19 @@ namespace pokemonism::sdk::generic {
     protected:  inline  explicit descriptor(int value);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;
-    public:     descriptor(const generic::descriptor<inputable, outputable> & o) = delete;
-    public:     descriptor(generic::descriptor<inputable, outputable> && o) noexcept = delete;
-    public:     generic::descriptor<inputable, outputable> & operator=(const generic::descriptor<inputable, outputable> & o) = delete;
-    public:     generic::descriptor<inputable, outputable> & operator=(generic::descriptor<inputable, outputable> && o) noexcept = delete;
+    public:     descriptor(const generic::descriptor<outputable, inputable> & o) = delete;
+    public:     descriptor(generic::descriptor<outputable, inputable> && o) noexcept = delete;
+    public:     generic::descriptor<outputable, inputable> & operator=(const generic::descriptor<outputable, inputable> & o) = delete;
+    public:     generic::descriptor<outputable, inputable> & operator=(generic::descriptor<outputable, inputable> && o) noexcept = delete;
     };
 
-    template <class inputable, class outputable>
-    inline int descriptor<inputable, outputable>::valueGet(void) const {
+    template <class outputable, class inputable>
+    inline int descriptor<outputable, inputable>::valueGet(void) const {
         return value;
     }
 
-    template <class inputable, class outputable>
-    inline int descriptor<inputable, outputable>::close(void) {
+    template <class outputable, class inputable>
+    inline int descriptor<outputable, inputable>::close(void) {
         if (value > declaration::invalid) {
             ::close(value);
 
@@ -56,41 +58,41 @@ namespace pokemonism::sdk::generic {
         return declaration::success;
     }
 
-    template <class inputable, class outputable>
-    inline void descriptor<inputable, outputable>::clear(void) {
+    template <class outputable, class inputable>
+    inline void descriptor<outputable, inputable>::clear(void) {
         inputable::clear();
         outputable::clear();
     }
 
-    template <class inputable, class outputable>
-    inline void descriptor<inputable, outputable>::clean(void) {
+    template <class outputable, class inputable>
+    inline void descriptor<outputable, inputable>::clean(void) {
         inputable::clean();
         outputable::clean();
     }
 
-    template <class inputable, class outputable>
-    inline void descriptor<inputable, outputable>::reset(void) {
+    template <class outputable, class inputable>
+    inline void descriptor<outputable, inputable>::reset(void) {
         inputable::reset();
         outputable::reset();
     }
 
-    template <class inputable, class outputable>
-    inline void descriptor<inputable, outputable>::stateOn(unsigned int state, long result, exception * e) {
+    template <class outputable, class inputable>
+    inline void descriptor<outputable, inputable>::stateOn(unsigned int state, long result, exception * e) {
 
     }
 
-    template <class inputable, class outputable>
-    inline descriptor<inputable, outputable>::descriptor(int value) : value(value) {
+    template <class outputable, class inputable>
+    inline descriptor<outputable, inputable>::descriptor(int value) : value(value) {
 
     }
 
-    template <class inputable, class outputable>
-    inline descriptor<inputable, outputable>::descriptor(void) : value(declaration::invalid) {
+    template <class outputable, class inputable>
+    inline descriptor<outputable, inputable>::descriptor(void) : value(declaration::invalid) {
 
     }
 
-    template <class inputable, class outputable>
-    inline descriptor<inputable, outputable>::~descriptor(void) {
+    template <class outputable, class inputable>
+    inline descriptor<outputable, inputable>::~descriptor(void) {
         descriptor::close();
     }
 

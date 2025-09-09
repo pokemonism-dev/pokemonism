@@ -10,12 +10,12 @@
 #ifndef   __POKEMONISM_SDK_INPUT_HH__
 #define   __POKEMONISM_SDK_INPUT_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/output.hh>
 
 namespace pokemonism::sdk {
 
     struct input {
-    public:     class stream;
+    public:     template <class outputable = output::stream> class stream;
     };
 
 }

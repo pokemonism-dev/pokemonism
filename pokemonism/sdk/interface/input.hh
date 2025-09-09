@@ -10,20 +10,18 @@
 #ifndef   __POKEMONISM_SDK_INTERFACE_INPUT_HH__
 #define   __POKEMONISM_SDK_INTERFACE_INPUT_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/interface/output.hh>
 
 namespace pokemonism::sdk::interface {
 
-    class input {
-    public:     virtual void clear(void) = 0;
-    public:     virtual void clean(void) = 0;
-    public:     virtual void reset(void) = 0;
+    template <class output = interface::output>
+    class input : public output {
     public:     input(void) {}
     public:     virtual ~input(void) {}
-    public:     input(const interface::input & o) = delete;
-    public:     input(interface::input && o) noexcept = delete;
-    public:     interface::input & operator=(const interface::input & o) = delete;
-    public:     interface::input & operator=(interface::input && o) noexcept = delete;
+    public:     input(const interface::input<output> & o) = delete;
+    public:     input(interface::input<output> && o) noexcept = delete;
+    public:     interface::input<output> & operator=(const interface::input<output> & o) = delete;
+    public:     interface::input<output> & operator=(interface::input<output> && o) noexcept = delete;
     };
 
 }

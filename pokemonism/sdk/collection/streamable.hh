@@ -17,6 +17,7 @@ namespace pokemonism::sdk::collection {
     template <typename elementable>
     class streamable : public continuable<elementable> {
     public:     virtual unsigned long positionGet(void) const = 0;
+    public:     virtual void trash(void) = 0;
     protected:  streamable(void) {}
     protected:  ~streamable(void) override {}
     public:     streamable(const collection::streamable<elementable> & o) = delete;
