@@ -86,16 +86,19 @@ namespace pokemonism::sdk {
     template <class descriptorable>
     inline void output::stream<descriptorable>::clear(void) {
         out->clear();
+        descriptorable::clear();
     }
 
     template <class descriptorable>
     inline void output::stream<descriptorable>::clean(void) {
         out->clean();
+        descriptorable::clean();
     }
 
     template <class descriptorable>
     inline void output::stream<descriptorable>::reset(void) {
         out->reset();
+        descriptorable::reset();
     }
 
     template<class descriptorable>

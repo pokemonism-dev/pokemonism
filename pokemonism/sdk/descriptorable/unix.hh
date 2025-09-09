@@ -25,6 +25,9 @@ namespace pokemonism::sdk {
     protected:  interface::descriptor::exception *  exception;
     protected:  inline int valueGet(void) const;
     public:     inline int open(void) override;
+    public:     inline void clear(void) override;
+    public:     inline void clean(void) override;
+    public:     inline void reset(void) override;
     protected:  long write(const unsigned char * storage, unsigned long n) override;
     protected:  long read(unsigned char * storage, unsigned long capacity) override;
     public:     inline int close(void) override;
@@ -61,6 +64,18 @@ namespace pokemonism::sdk {
         }
 
         return declaration::success;
+    }
+
+    inline void descriptorable::unix::clear(void) {
+
+    }
+
+    inline void descriptorable::unix::clean(void) {
+
+    }
+
+    inline void descriptorable::unix::reset(void) {
+
     }
 
     inline unsigned int descriptorable::unix::check(unsigned int state) const {

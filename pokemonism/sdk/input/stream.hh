@@ -81,16 +81,19 @@ namespace pokemonism::sdk {
     template <class outputable>
     inline void input::stream<outputable>::clear(void) {
         in->clear();
+        outputable::clear();
     }
 
     template <class outputable>
     inline void input::stream<outputable>::clean(void) {
         in->clean();
+        outputable::clean();
     }
 
     template <class outputable>
     inline void input::stream<outputable>::reset(void) {
         in->reset();
+        outputable::reset();
     }
 
     template <class outputable>

@@ -27,7 +27,6 @@ namespace pokemonism::sdk::generic {
     public:     inline void clear(void) override;
     public:     inline void clean(void) override;
     public:     inline void reset(void) override;
-    // public:     inline void stateOn(unsigned int state, long result, exception * e = nullptr) override;
     protected:  inline explicit descriptor(type value);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;

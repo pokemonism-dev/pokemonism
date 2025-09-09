@@ -17,6 +17,21 @@
 
 namespace pokemonism::sdk::generic {
 
+    // template <class inputable>
+    // class socket : public inputable {
+    // public:     typedef inputable::type        type;
+    // public:     inline void clear(void) override;
+    // public:     inline void clean(void) override;
+    // public:     inline void reset(void) override;
+    // protected:  inline explicit descriptor(type value);
+    // public:     inline descriptor(void);
+    // public:     inline ~descriptor(void) override;
+    // public:     descriptor(const generic::descriptor<inputable> & o) = delete;
+    // public:     descriptor(generic::descriptor<inputable> && o) noexcept = delete;
+    // public:     generic::descriptor<inputable> & operator=(const generic::descriptor<inputable> & o) = delete;
+    // public:     generic::descriptor<inputable> & operator=(generic::descriptor<inputable> && o) noexcept = delete;
+    // };
+
     // template <class inputable = pokemonism::sdk::interface::input, class outputable = pokemonism::sdk::interface::output>
     // class socket : public interface::socket, public generic::descriptor<inputable, outputable> {
     // public:     socket(void) {}
