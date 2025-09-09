@@ -42,6 +42,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             socket.hh
                                             client.hh
                                             exception.hh
+                                            interface/protocol.hh
                                             interface/input.hh
                                             interface/output.hh
                                             interface/pipe.hh
@@ -137,6 +138,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             socket.cc
                                             client.cc
                                             exception.cc
+                                            interface/protocol.cc
                                             interface/input.cc
                                             interface/output.cc
                                             interface/pipe.cc

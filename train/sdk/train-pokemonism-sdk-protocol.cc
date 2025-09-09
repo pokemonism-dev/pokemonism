@@ -11,11 +11,12 @@
 
 #include <pokemonism/sdk/generic/descriptor.hh>
 
+using namespace pokemonism::sdk;
+
 int main(int argc, char ** argv) {
-    pokemonism::sdk::protocol protocol;
-    pokemonism::sdk::protocol::transmission::control o;
-    pokemonism::sdk::protocol::transmission::control::socket socket;
-    pokemonism::sdk::protocol::hypertext::transfer http;
+    protocol::transmission::control o;
+    protocol::transmission::control::socket socket;
+    protocol::hypertext::transfer http;
     // pokemonism::sdk::descriptor
     return 0;
 }

@@ -12,16 +12,16 @@
 
 #include <pokemonism/sdk/protocol/hypertext.hh>
 
-namespace pokemonism::sdk {
+namespace pokemonism::sdk::protocol {
 
-    class protocol::hypertext::transfer : public protocol {
+    class hypertext::transfer : public interface::protocol {
     public:     class client;
     public:     transfer(void) {}
     public:     ~transfer(void) override {}
-    public:     transfer(const protocol::hypertext::transfer & o) = delete;
-    public:     transfer(protocol::hypertext::transfer && o) noexcept = delete;
-    public:     protocol::hypertext::transfer & operator=(const protocol::hypertext::transfer & o) = delete;
-    public:     protocol::hypertext::transfer & operator=(protocol::hypertext::transfer && o) noexcept = delete;
+    public:     transfer(const pokemonism::sdk::protocol::hypertext::transfer & o) = delete;
+    public:     transfer(pokemonism::sdk::protocol::hypertext::transfer && o) noexcept = delete;
+    public:     pokemonism::sdk::protocol::hypertext::transfer & operator=(const pokemonism::sdk::protocol::hypertext::transfer & o) = delete;
+    public:     pokemonism::sdk::protocol::hypertext::transfer & operator=(pokemonism::sdk::protocol::hypertext::transfer && o) noexcept = delete;
     };
 
 }

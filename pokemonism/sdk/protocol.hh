@@ -10,20 +10,12 @@
 #ifndef   __POKEMONISM_SDK_PROTOCOL_HH__
 #define   __POKEMONISM_SDK_PROTOCOL_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/interface/protocol.hh>
 
-namespace pokemonism::sdk {
+namespace pokemonism::sdk::protocol {
 
-    class protocol {
-    public:     struct transmission;
-    public:     struct hypertext;
-    public:     protocol(void) {}
-    public:     virtual ~protocol(void) {}
-    public:     protocol(protocol & o) = delete;
-    public:     protocol(protocol && o) noexcept = delete;
-    public:     protocol & operator=(protocol & o) = delete;
-    public:     protocol & operator=(protocol && o) noexcept = delete;
-    };
+    struct transmission;
+    struct hypertext;
 
 }
 

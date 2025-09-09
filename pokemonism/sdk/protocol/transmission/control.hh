@@ -12,16 +12,16 @@
 
 #include <pokemonism/sdk/protocol/transmission.hh>
 
-namespace pokemonism::sdk {
+namespace pokemonism::sdk::protocol {
 
-    class protocol::transmission::control : public protocol {
+    class transmission::control : public interface::protocol {
     public:     class socket;
     public:     control(void) {}
     public:     ~control(void) override {}
-    public:     control(const protocol::transmission::control & o) = delete;
-    public:     control(protocol::transmission::control && o) noexcept = delete;
-    public:     protocol::transmission::control & operator=(const protocol::transmission::control & o) = delete;
-    public:     protocol::transmission::control & operator=(protocol::transmission::control && o) noexcept = delete;
+    public:     control(const pokemonism::sdk::protocol::transmission::control & o) = delete;
+    public:     control(pokemonism::sdk::protocol::transmission::control && o) noexcept = delete;
+    public:     pokemonism::sdk::protocol::transmission::control & operator=(const pokemonism::sdk::protocol::transmission::control & o) = delete;
+    public:     pokemonism::sdk::protocol::transmission::control & operator=(pokemonism::sdk::protocol::transmission::control && o) noexcept = delete;
     };
 
 }

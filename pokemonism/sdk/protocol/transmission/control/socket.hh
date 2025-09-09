@@ -17,10 +17,10 @@ namespace pokemonism::sdk {
     class protocol::transmission::control::socket {
     public:     socket(void) {}
     public:     ~socket(void) {}
-    public:     socket(const protocol::transmission::control::socket & o) = delete;
-    public:     socket(protocol::transmission::control::socket && o) noexcept = delete;
-    public:     protocol::transmission::control::socket & operator=(const protocol::transmission::control::socket & o) = delete;
-    public:     protocol::transmission::control::socket & operator=(protocol::transmission::control::socket && o) noexcept = delete;
+    public:     socket(const transmission::control::socket & o) = delete;
+    public:     socket(transmission::control::socket && o) noexcept = delete;
+    public:     transmission::control::socket & operator=(const transmission::control::socket & o) = delete;
+    public:     transmission::control::socket & operator=(transmission::control::socket && o) noexcept = delete;
     };
 
 }
