@@ -18,7 +18,6 @@ namespace pokemonism::sdk {
 
     class stream : public collection::stream<unsigned char> {
     public:     class buffer;
-    public:     static stream * factory(stream::buffer * container);
     protected:  stream::buffer *    container;
     protected:  stream *            prev;
     protected:  stream *            next;

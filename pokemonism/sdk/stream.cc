@@ -12,10 +12,6 @@
 
 namespace pokemonism::sdk {
 
-    stream * stream::factory(stream::buffer * container) {
-        return new stream(container);
-    }
-
     unsigned long stream::pageGet(void) const { return container != nullptr ? container->pageGet() : stream::buffer::defaultPage; }
 
     stream::stream(stream::buffer * container) : container(nullptr), prev(nullptr), next(nullptr) {

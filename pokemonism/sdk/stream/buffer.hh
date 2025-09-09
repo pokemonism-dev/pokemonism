@@ -16,13 +16,11 @@ namespace pokemonism::sdk {
 
     class stream::buffer : public synchronizable {
     public:     constexpr static unsigned long defaultPage = 8192;
-    public:     typedef stream * (*factory)(stream::buffer *);
     public:     using collection = linked::list<stream::buffer, stream>;
     protected:  unsigned long   size;
     protected:  stream *        head;
     protected:  stream *        tail;
     protected:  unsigned long   page;
-    protected:  factory         gen;
     public:     inline unsigned long pageGet(void) const;
     protected:  inline int lock(void) noexcept override { return declaration::fail; }
     protected:  inline int unlock(void) noexcept override { return declaration::fail; }
@@ -46,7 +44,8 @@ namespace pokemonism::sdk {
     public:     virtual void reset(void);
     public:     virtual stream * add(stream * node);
     public:     virtual stream * del(stream * node);
-    public:     inline explicit buffer(unsigned long page, stream * (*factory)(stream::buffer *) = stream::factory);
+    public:     virtual stream * gen(void);
+    public:     inline explicit buffer(unsigned long page);
     public:     inline buffer(void);
     public:     inline ~buffer(void) override;
     public:     buffer(const stream::buffer & o) = delete;
@@ -61,7 +60,7 @@ namespace pokemonism::sdk {
     }
 
     inline stream::buffer * stream::buffer::clone(void) const {
-        return new stream::buffer(page, gen);
+        return new stream::buffer(page);
     }
 
     inline stream * stream::buffer::frontGet(void) {
@@ -94,11 +93,11 @@ namespace pokemonism::sdk {
         return false;
     }
 
-    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage), gen(stream::factory) {
+    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage) {
 
     }
 
-    stream::buffer::buffer(unsigned long page, stream * (*factory)(stream::buffer *)) : size(declaration::zero), head(nullptr), tail(nullptr), page(page == 0 ? defaultPage : page), gen(factory) {
+    stream::buffer::buffer(unsigned long page) : size(declaration::zero), head(nullptr), tail(nullptr), page(page == 0 ? defaultPage : page) {
 
     }
 
@@ -106,7 +105,6 @@ namespace pokemonism::sdk {
         // ReSharper disable once CppVirtualFunctionCallInsideCtor
         clear();
 
-        gen = nullptr;
         page = declaration::zero;
     }
 

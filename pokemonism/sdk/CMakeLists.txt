@@ -94,7 +94,9 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             socketable/unix.hh
                                             linked/list.hh
                                             engine.hh
-                                            functional/command.hh)
+                                            functional/command.hh
+                                            context.hh
+                                            context/buffer.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -187,7 +189,9 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             socketable/unix.cc
                                             linked/list.cc
                                             engine.cc
-                                            functional/command.cc)
+                                            functional/command.cc
+                                            context.cc
+                                            context/buffer.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

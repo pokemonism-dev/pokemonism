@@ -28,6 +28,10 @@ namespace pokemonism::sdk {
         return node;
     }
 
+    stream * stream::buffer::gen(void) {
+        return new stream(this);
+    }
+
     stream * stream::buffer::untilGet(unsigned long n) {
         trash();
 
