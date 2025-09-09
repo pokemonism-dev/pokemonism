@@ -14,10 +14,10 @@
 
 namespace pokemonism::sdk::interface {
 
-    class socket {
+    class socket : public interface::descriptor {
     public:     virtual int shutdown(int how) = 0;
     public:     socket(void) {}
-    public:     virtual ~socket(void) {}
+    public:     ~socket(void) override {}
     public:     socket(const interface::socket & o) = delete;
     public:     socket(interface::socket && o) noexcept = delete;
     public:     interface::socket & operator=(const interface::socket & o) = delete;

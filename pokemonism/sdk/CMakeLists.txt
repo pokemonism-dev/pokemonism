@@ -90,6 +90,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             synchronizable.hh
                                             descriptorable.hh
                                             descriptorable/unix.hh
+                                            socketable.hh
+                                            socketable/unix.hh
                                             linked/list.hh
                                             engine.hh
                                             functional/command.hh)
@@ -181,6 +183,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             synchronizable.cc
                                             descriptorable.cc
                                             descriptorable/unix.cc
+                                            socketable.cc
+                                            socketable/unix.cc
                                             linked/list.cc
                                             engine.cc
                                             functional/command.cc)
