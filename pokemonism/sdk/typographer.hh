@@ -16,16 +16,29 @@ namespace pokemonism::sdk {
 
     template <typename elementable>
     struct typographer {
+    public:     constexpr static const char*    name = "basic";
     public:     typedef elementable             element;
     public:     typedef void                    primitive;
     public:     typedef void                    character;
     public:     constexpr static unsigned long  unit = sizeof(elementable);
     };
 
+    template <typename elementable>
+    struct typographer<elementable *> {
+    public:     constexpr static const char*    name = "pointer";
+    public:     typedef elementable *           element;
+    public:     typedef unsigned char           primitive;
+    public:     typedef void                    character;
+    public:     constexpr static unsigned long  unit = sizeof(elementable *);
+    };
+
+
+
 }
 
 #define describe_typographer(element_type, primitive_type, character_type, size)        \
 template <> struct pokemonism::sdk::typographer<element_type> {                         \
+public:     constexpr static const char*    name = #element_type;                       \
 public:     typedef element_type            element;                                    \
 public:     typedef primitive_type          primitive;                                  \
 public:     typedef character_type          character;                                  \

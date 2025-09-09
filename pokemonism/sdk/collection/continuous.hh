@@ -18,6 +18,7 @@ namespace pokemonism::sdk::collection {
 
     template <typename element, typename primitivable = typographer<element>::primitive, typename characterizable = typographer<element>::character, unsigned long unit = typographer<element>::unit>
     class continuous : public collection::continuable<element> {
+    public:     constexpr static const char * name = "basic";
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
     protected:  element *       storage;
