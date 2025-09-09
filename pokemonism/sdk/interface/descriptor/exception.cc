@@ -4,15 +4,11 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 08, 2025
+ * @since           9월 09, 2025
  */
 
 
-#include "stream.hh"
+#include "exception.hh"
 
-namespace pokemonism::sdk {
-
-
-
-
+namespace pokemonism {
 }

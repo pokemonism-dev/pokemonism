@@ -15,6 +15,7 @@
 namespace pokemonism::sdk {
 
     class descriptor : public synchronizable {
+    public:     typedef int         type;
     public:     descriptor(void) {}
     public:     ~descriptor(void) override {}
     public:     descriptor(const descriptor & o) = delete;

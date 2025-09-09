@@ -16,6 +16,6 @@
 using namespace pokemonism::sdk;
 
 int main(int argc, char ** argv) {
-    // generic::descriptor<output::stream, input::stream<output::stream>> o;
+    generic::descriptor<input::stream<output::stream<descriptorable::unix>>> o;
     return 0;
 }

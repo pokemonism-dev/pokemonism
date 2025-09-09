@@ -70,14 +70,15 @@ namespace pokemonism::sdk {
 
     template <typename elementable, unsigned long size>
     elementable * memorizer<elementable, unsigned char, size>::del(elementable * source, unsigned long sourceLen) {
-        pokemon_develop_throw("", return source);
+        pokemon_develop_throw(return source);
 
+        // ReSharper disable once CppDFAUnreachableCode
         return source;
     }
 
     template <typename elementable, unsigned long size>
     elementable * memorizer<elementable, unsigned char, size>::del(elementable * destination) {
-        pokemon_develop_throw("", return destination);
+        pokemon_develop_throw(return destination);
     }
 
     template <typename elementable, unsigned long size>

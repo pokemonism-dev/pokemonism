@@ -42,6 +42,8 @@ namespace pokemonism::sdk {
     public:     virtual void shrink(void);
     public:     virtual void fit(void);
     public:     virtual void clear(void);
+    public:     virtual void clean(void);
+    public:     virtual void reset(void);
     public:     virtual stream * add(stream * node);
     public:     virtual stream * del(stream * node);
     public:     inline explicit buffer(unsigned long page, stream * (*factory)(stream::buffer *) = stream::factory);
@@ -92,7 +94,7 @@ namespace pokemonism::sdk {
         return false;
     }
 
-    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage), gen(nullptr) {
+    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage), gen(stream::factory) {
 
     }
 

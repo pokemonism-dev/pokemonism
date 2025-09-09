@@ -10,5 +10,8 @@
 
 #include "stream.hh"
 
-namespace pokemonism {
+namespace pokemonism::sdk {
+
+
+
 }

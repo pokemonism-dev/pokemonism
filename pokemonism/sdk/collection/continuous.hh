@@ -23,6 +23,7 @@ namespace pokemonism::sdk::collection {
     protected:  element *       storage;
     public:     inline unsigned long lengthGet(void) const override;
     public:     inline unsigned long remainGet(void) const override;
+    public:     inline const element * frontGet(void) const override;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
@@ -68,6 +69,11 @@ namespace pokemonism::sdk::collection {
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>
     inline unsigned long continuous<element, primitivable, characterizable, unit>::remainGet(void) const {
         return capacity - size;
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline const element * continuous<element, primitivable, characterizable, unit>::frontGet(void) const {
+        return size != 0 ? storage : nullptr;
     }
 
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>

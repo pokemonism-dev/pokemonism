@@ -19,6 +19,7 @@ namespace pokemonism::sdk::collection {
     public:     constexpr static unsigned long page = 8;
     public:     virtual unsigned long lengthGet(void) const = 0;
     public:     virtual unsigned long remainGet(void) const = 0;
+    public:     virtual const elementable * frontGet(void) const = 0;
     public:     virtual unsigned long set(void) = 0;
     public:     virtual unsigned long set(const elementable & item, unsigned long n) = 0;
     public:     virtual unsigned long set(const elementable * source, unsigned long sourceLen) = 0;

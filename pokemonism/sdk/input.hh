@@ -15,7 +15,7 @@
 namespace pokemonism::sdk {
 
     struct input {
-    public:     template <class outputable = output::stream> class stream;
+    public:     template <class outputable> class stream;
     };
 
 }

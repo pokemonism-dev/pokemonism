@@ -25,6 +25,7 @@ namespace pokemonism::sdk::collection {
     public:     inline unsigned long positionGet(void) const override;
     public:     inline unsigned long lengthGet(void) const override;
     public:     inline unsigned long remainGet(void) const override;
+    public:     inline const element * frontGet(void) const override;
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const element & item, unsigned long n) override;
     public:     inline unsigned long set(const element * source, unsigned long sourceLen) override;
@@ -79,6 +80,11 @@ namespace pokemonism::sdk::collection {
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>
     unsigned long stream<element, primitivable, characterizable, unit>::positionGet(void) const {
         return position;
+    }
+
+    template <typename element, typename primitivable, typename characterizable, unsigned long unit>
+    inline const element * stream<element, primitivable, characterizable, unit>::frontGet(void) const {
+        return size != position ? storage + position : nullptr;
     }
 
     template <typename element, typename primitivable, typename characterizable, unsigned long unit>
@@ -207,10 +213,8 @@ namespace pokemonism::sdk::collection {
     inline unsigned long stream<element, primitivable, characterizable, unit>::pop(unsigned long length) {
         if ((size - position) < length) length = (size - position);
 
-        const unsigned long remain = size - position - length;
         memorizer<element>::del(storage + position, length);
-        if (remain > 0) memmove(storage + position, storage + position + length, remain * sizeof(element));
-        size = position + remain;
+        position = position + length;
 
         return length;
     }

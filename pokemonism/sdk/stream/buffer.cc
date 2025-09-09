@@ -87,4 +87,14 @@ namespace pokemonism::sdk {
         collection::clear(this);
     }
 
+    void stream::buffer::clean(void) {
+        // ### 20250909: UPDATE THIS
+        collection::clear(this);
+    }
+
+    void stream::buffer::reset(void) {
+        // ### 20250909: UPDATE THIS
+        collection::clear(this);
+    }
+
 }

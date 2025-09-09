@@ -14,14 +14,32 @@
 
 namespace pokemonism::sdk::interface {
 
-    class output : public interface::descriptor {
-    public:     output(void) {}
-    public:     ~output(void) override {}
-    public:     output(const interface::output & o) = delete;
-    public:     output(interface::output && o) noexcept = delete;
-    public:     interface::output & operator=(const interface::output & o) = delete;
-    public:     interface::output & operator=(interface::output && o) noexcept = delete;
+    template <class descriptorable = interface::descriptor>
+    class output : public descriptorable {
+    public:     typedef descriptorable::type type;
+    public:     inline explicit output(type value);
+    public:     inline output(void);
+    public:     inline virtual ~output(void) override;
+    public:     output(const interface::output<descriptorable> & o) = delete;
+    public:     output(interface::output<descriptorable> && o) noexcept = delete;
+    public:     interface::output<descriptorable> & operator=(const interface::output<descriptorable> & o) = delete;
+    public:     interface::output<descriptorable> & operator=(interface::output<descriptorable> && o) noexcept = delete;
     };
+
+    template <class descriptorable>
+    inline output<descriptorable>::output(type value) : descriptorable(value) {
+
+    }
+
+    template <class descriptorable>
+    inline output<descriptorable>::output(void) {
+
+    }
+
+    template <class descriptorable>
+    inline output<descriptorable>::~output(void) {
+
+    }
 
 }
 

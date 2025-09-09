@@ -10,12 +10,12 @@
 #ifndef   __POKEMONISM_SDK_OUTPUT_HH__
 #define   __POKEMONISM_SDK_OUTPUT_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk {
 
     struct output {
-    public:     class stream;
+    public:     template <class descriptorable = interface::descriptor> class stream;
     };
 
 }
