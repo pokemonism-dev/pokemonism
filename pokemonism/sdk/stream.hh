@@ -18,13 +18,40 @@
 
 namespace pokemonism::sdk {
 
+    class protocol;
+
     class stream : public collection::stream<unsigned char> {
     public:     class buffer;
+    public:     struct state {
+                public:     constexpr static unsigned int none = (0x00000000U <<  0U);
+                public:     struct prepare {
+                            public:     constexpr static unsigned int begin = (0x00000001U <<  0U);
+                            public:     constexpr static unsigned int end   = (0x00000001U <<  7U);
+                            };
+                public:     struct process {
+                            public:     constexpr static unsigned int begin = (0x00000001U <<  8U);
+                            public:     constexpr static unsigned int end   = (0x00000001U << 15U);
+                            };
+                public:     struct package {
+                            public:     constexpr static unsigned int begin = (0x00000001U << 16U);
+                            public:     constexpr static unsigned int end   = (0x00000001U << 23U);
+                            };
+                public:     struct publish {
+                            public:     constexpr static unsigned int begin = (0x00000001U << 24U);
+                            public:     constexpr static unsigned int move  = (0x00000001U << 29U);
+                            public:     constexpr static unsigned int end   = (0x00000001U << 30U);
+                            public:     constexpr static unsigned int rel   = (0x00000001U << 31U);
+                            };
+                };
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class input;
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class output;
     protected:  stream::buffer *    container;
     protected:  stream *            prev;
     protected:  stream *            next;
+    protected:  unsigned int        status;
+    public:     virtual void unlink(void);
+    public:     virtual void stateSet(unsigned int v);
+    public:     inline virtual void onState(unsigned int previous, unsigned int state);
     public:     inline unsigned long set(void) override;
     public:     inline unsigned long set(const unsigned char & item, unsigned long n) override;
     public:     inline unsigned long set(const unsigned char * source, unsigned long sourceLen) override;
@@ -39,6 +66,7 @@ namespace pokemonism::sdk {
     public:     inline virtual unsigned long cat(const stream & source);
     public:     inline virtual unsigned long cat(stream && source);
     public:     unsigned long pageGet(void) const override;
+    public:     inline stream(const char * format, va_list ap);
     public:     explicit stream(stream::buffer * container);
     public:     inline stream(unsigned char item, unsigned long n);
     public:     inline stream(const unsigned char * source, unsigned long sourceLen);
@@ -52,6 +80,7 @@ namespace pokemonism::sdk {
     public:     inline virtual stream & operator=(stream && o) noexcept;
     public:     inline stream & operator=(const collection::stream<unsigned char> & o) override;
     public:     inline stream & operator=(collection::stream<unsigned char> && o) noexcept override;
+    public:     friend protocol;
     public:     friend linked::list<stream::buffer, stream>;
     public:     template <class descriptorable> friend class pokemonism::sdk::interface::input::stream;
     };
@@ -63,6 +92,9 @@ namespace pokemonism::sdk {
     protected:  stream *        head;
     protected:  stream *        tail;
     protected:  unsigned long   page;
+    protected:  stream *        prepare;
+    protected:  stream *        process;
+    protected:  stream *        publish;
     public:     inline unsigned long pageGet(void) const;
     protected:  inline int lock(void) noexcept override { return declaration::fail; }
     protected:  inline int unlock(void) noexcept override { return declaration::fail; }
@@ -72,15 +104,14 @@ namespace pokemonism::sdk {
     protected:  inline int wakeup(bool all) noexcept override { return declaration::fail; }
     public:     inline virtual stream::buffer * clone(void) const;
     public:     inline virtual stream * frontGet(void);
-    public:     virtual stream * untilGet(unsigned long n);
-    public:     inline virtual stream * backGet(void);
-    public:     stream * streamGet(unsigned long n);
+    public:     inline virtual stream * streamGet(unsigned long n);
     public:     inline virtual stream * headGet(void) const;
-    public:     inline virtual bool empty(void) const;
-    public:     inline virtual bool exist(void) const;
+    public:     inline virtual stream * prepareGet(void);
+    public:     inline virtual stream * processGet(void);
+    public:     inline virtual stream * publishGet(void);
     public:     virtual void trash(void);
-    public:     virtual void shrink(void);
-    public:     virtual void fit(void);
+    public:     inline virtual void shrink(void);
+    public:     inline virtual void fit(void);
     public:     virtual void clear(void);
     public:     virtual void clean(void);
     public:     virtual void reset(void);
@@ -135,6 +166,10 @@ namespace pokemonism::sdk {
     public:     stream::output<descriptorable> & operator=(stream::output<descriptorable> && o) noexcept = delete;
     };
 
+    inline void stream::onState(unsigned int previous, unsigned int state) {
+
+    }
+
     inline unsigned long stream::set(void) { return collection::stream<unsigned char>::set(); }
 
     inline unsigned long stream::set(const unsigned char & item, unsigned long n) { return collection::stream<unsigned char>::set(item, n); }
@@ -161,27 +196,43 @@ namespace pokemonism::sdk {
 
     inline unsigned long stream::cat(stream && source) { return collection::stream<unsigned char>::set(std::move(source)); }
 
-    inline stream::stream(unsigned char item, unsigned long n) : collection::stream<unsigned char>(item, n), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(const char * format, va_list ap) : container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {
+        capacity = size = vasprintf(reinterpret_cast<char **>(pointof(storage)), format, ap);
+    }
 
-    inline stream::stream(const unsigned char * source, unsigned long sourceLen) : collection::stream<unsigned char>(source, sourceLen), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(unsigned char item, unsigned long n) : collection::stream<unsigned char>(item, n), container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {}
 
-    inline stream::stream(void) : container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(const unsigned char * source, unsigned long sourceLen) : collection::stream<unsigned char>(source, sourceLen), container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {}
 
-    inline stream::stream(const stream & o) : collection::stream<unsigned char>(o), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(void) : container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {}
 
-    inline stream::stream(stream && o) noexcept : collection::stream<unsigned char>(std::move(o)), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(const stream & o) : collection::stream<unsigned char>(o), container(nullptr), prev(nullptr), next(nullptr), status(o.status) {}
 
-    inline stream::stream(const collection::stream<unsigned char> & o) : collection::stream<unsigned char>(o), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(stream && o) noexcept : collection::stream<unsigned char>(std::move(o)), container(nullptr), prev(nullptr), next(nullptr), status(o.status) {
+        o.status = o.status | stream::state::publish::move;
+    }
 
-    inline stream::stream(collection::stream<unsigned char> && o) noexcept : collection::stream<unsigned char>(std::move(o)), container(nullptr), prev(nullptr), next(nullptr) {}
+    inline stream::stream(const collection::stream<unsigned char> & o) : collection::stream<unsigned char>(o), container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {}
+
+    inline stream::stream(collection::stream<unsigned char> && o) noexcept : collection::stream<unsigned char>(std::move(o)), container(nullptr), prev(nullptr), next(nullptr), status(stream::state::prepare::begin) {}
 
     inline stream & stream::operator=(const stream & o) {
-        collection::stream<unsigned char>::operator=(o);
+        if (pointof(o) != this) {
+            collection::stream<unsigned char>::operator=(o);
+
+            status = o.status;
+        }
         return *this;
     }
 
     inline stream & stream::operator=(stream && o) noexcept {
-        collection::stream<unsigned char>::operator=(std::move(o));
+        if (pointof(o) != this) {
+            collection::stream<unsigned char>::operator=(std::move(o));
+
+            status = o.status;
+
+            o.status = (o.status | stream::state::publish::move);
+        }
         return *this;
     }
 
@@ -204,40 +255,55 @@ namespace pokemonism::sdk {
     }
 
     inline stream * stream::buffer::frontGet(void) {
-        trash();
+        while (process != nullptr && process->status & stream::state::process::end && process->next != nullptr) process = process->next;
 
-        return head;
+        return (process != nullptr && process->status & stream::state::process::begin) ? process : nullptr;
     }
 
-    inline stream * stream::buffer::backGet(void) {
-        shrink();
+    inline stream * stream::buffer::streamGet(unsigned long n) {
+        while (prepare != nullptr && prepare->status & stream::state::prepare::end) prepare = prepare->next;
 
-        return tail;
+        if (prepare == nullptr) prepare = gen();
+
+        prepare->grow(n);
+
+        return prepare;
     }
 
     inline stream * stream::buffer::headGet(void) const {
         return head;
     }
 
-    inline bool stream::buffer::empty(void) const {
-        for (const stream * node = head; node != nullptr; node = node->next) {
-            if (node->lengthGet() > 0) return false;
-        }
-        return true;
+    inline stream * stream::buffer::prepareGet(void) {
+        while (prepare != nullptr && prepare->status & stream::state::prepare::end) prepare = prepare->next;
+
+        return prepare;
     }
 
-    inline bool stream::buffer::exist(void) const {
-        for (const stream * node = head; node != nullptr; node = node->next) {
-            if (node->lengthGet() > 0) return true;
-        }
-        return false;
+    inline stream * stream::buffer::processGet(void) {
+        return frontGet();
     }
 
-    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage) {
+    inline stream * stream::buffer::publishGet(void) {
+        while (publish != nullptr && publish->status & stream::state::publish::end && publish->next != nullptr) publish = publish->next;
+
+        return (publish != nullptr && publish->status & stream::state::publish::begin) ? publish : nullptr;
+    }
+
+    inline void stream::buffer::shrink(void) {
 
     }
 
-    stream::buffer::buffer(unsigned long page) : size(declaration::zero), head(nullptr), tail(nullptr), page(page == 0 ? defaultPage : page) {
+    inline void stream::buffer::fit(void) {
+        trash();
+        shrink();
+    }
+
+    stream::buffer::buffer(void) : size(declaration::zero), head(nullptr), tail(nullptr), page(defaultPage), prepare(nullptr), process(nullptr), publish(nullptr) {
+
+    }
+
+    stream::buffer::buffer(unsigned long page) : size(declaration::zero), head(nullptr), tail(nullptr), page(page == 0 ? defaultPage : page), prepare(nullptr), process(nullptr), publish(nullptr) {
 
     }
 
@@ -344,16 +410,19 @@ namespace pokemonism::sdk {
     template <class descriptorable>
     long stream::output<descriptorable>::write(void) {
         long total = 0;
-        while (pokemonism::sdk::stream * node = out->untilGet(out->pageGet())) {
-            const long n = write(*node);
+        while (pokemonism::sdk::stream * node = out->frontGet()) {
+            if (node->lengthGet() > 0) {
+                const long n = write(*node);
 
-            if (n > 0) {
-                total = total + n;
+                if (n > 0) {
+                    total = total + n;
 
-                continue;
+                    continue;
+                }
+
+                if (n < 0) return n;
             }
-
-            if (n < 0) return n;
+            break;
         }
 
         return total;

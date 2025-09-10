@@ -343,7 +343,6 @@ namespace pokemonism::sdk::collection {
     inline void stream<element, primitivable, characterizable, unit>::reset(void) {
         memorizer<element>::del(storage + position, size - position);
         position = declaration::zero;
-        size = declaration::zero;
     }
 
     // ReSharper disable once CppVirtualFunctionCallInsideCtor

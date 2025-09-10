@@ -16,24 +16,24 @@
 namespace pokemonism::sdk {
 
     class context : public stream {
-    public:     struct state {
-                public:     struct prepare {
-                            public:     constexpr static unsigned int begin = (0x00000001U <<  0U);
-                            public:     constexpr static unsigned int end   = (0x00000001U <<  8U);
+    public:     struct state : public stream::state {
+                public:     struct prepare : public stream::state::prepare {
+                            public:     constexpr static unsigned int begin = stream::state::prepare::begin;    // (0x00000001U <<  0U)
+                            public:     constexpr static unsigned int end   = stream::state::prepare::end;      // (0x00000001U <<  8U);
                             };
-                public:     struct process {
-                            public:     constexpr static unsigned int begin = (0x00000001U <<  8U);
-                            public:     constexpr static unsigned int end   = (0x00000001U << 16U);
+                public:     struct process : public stream::state::process {
+                            public:     constexpr static unsigned int begin = stream::state::process::begin;    // (0x00000001U <<  8U);
+                            public:     constexpr static unsigned int end   = stream::state::process::end;      // (0x00000001U << 16U);
                             };
-                public:     struct package {
-                            public:     constexpr static unsigned int begin = (0x00000001U << 16U);
-                            public:     constexpr static unsigned int end   = (0x00000001U << 24U);
+                public:     struct package : public stream::state::package {
+                            public:     constexpr static unsigned int begin = stream::state::package::begin;    // (0x00000001U << 16U);
+                            public:     constexpr static unsigned int end   = stream::state::package::end;      // (0x00000001U << 23U);
                             };
-                public:     struct publish {
-                            public:     constexpr static unsigned int begin = (0x00000001U << 24U);
-                            public:     constexpr static unsigned int move  = (0x00000001U << 29U);
-                            public:     constexpr static unsigned int end   = (0x00000001U << 30U);
-                            public:     constexpr static unsigned int rel   = (0x00000001U << 31U);
+                public:     struct publish : public stream::state::publish {
+                            public:     constexpr static unsigned int begin = stream::state::publish::begin;    // (0x00000001U << 24U);
+                            public:     constexpr static unsigned int move  = stream::state::publish::move;     // (0x00000001U << 29U);
+                            public:     constexpr static unsigned int end   = stream::state::publish::end;      // (0x00000001U << 30U);
+                            public:     constexpr static unsigned int rel   = stream::state::publish::rel;      // (0x00000001U << 31U);
                             };
                 };
     public:     struct property {
@@ -45,7 +45,6 @@ namespace pokemonism::sdk {
 
                 };
     public:     class buffer;
-    protected:  unsigned int                        status;
     protected:  unsigned int                        properties;
     protected:  context *                           parent;
     protected:  collection::continuous<context *>   children;
@@ -70,6 +69,7 @@ namespace pokemonism::sdk {
 
 }
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/sdk/context/buffer.hh>
 
 #endif // __POKEMONISM_SDK_CONTEXT_HH__

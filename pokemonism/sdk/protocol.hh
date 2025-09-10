@@ -15,6 +15,7 @@
 namespace pokemonism::sdk {
 
     class protocol {
+    protected:  inline static unsigned char ** streamStorageGet(stream & o);
     public:     protocol(void) {}
     public:     virtual ~protocol(void) {}
     public:     protocol(const protocol & o) = delete;
@@ -22,6 +23,10 @@ namespace pokemonism::sdk {
     public:     protocol & operator=(const protocol & o) = delete;
     public:     protocol & operator=(protocol && o) noexcept = delete;
     };
+
+    inline unsigned char ** protocol::streamStorageGet(stream & o) {
+        return pointof(o.storage);
+    }
 
 }
 

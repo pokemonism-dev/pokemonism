@@ -10,5 +10,17 @@
 
 #include "echo.hh"
 
-namespace pokemonism {
+namespace pokemonism::protocol {
+
+    echo::deserializer & echo::in = echo::deserializer::get();
+    echo::serializer & echo::out = echo::serializer::get();
+
+    echo & echo::get(void) {
+        static echo singleton;
+
+        return singleton;
+    }
+
+
+
 }

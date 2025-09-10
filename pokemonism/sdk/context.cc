@@ -9,24 +9,23 @@
 
 
 #include "context.hh"
-#include "context.hh"
 
 namespace pokemonism::sdk {
 
-    context::context(context::buffer * container) : status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(context::buffer * container) : properties(context::property::type::none), parent(nullptr) {
         pokemon_develop_check(container == nullptr, return);
         container->add(this);
     }
 
-    context::context(unsigned char item, unsigned long n) : stream(item, n), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(unsigned char item, unsigned long n) : stream(item, n), properties(context::property::type::none), parent(nullptr) {
 
     }
 
-    context::context(const unsigned char * source, unsigned long sourceLen) : stream(source, sourceLen), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(const unsigned char * source, unsigned long sourceLen) : stream(source, sourceLen), properties(context::property::type::none), parent(nullptr) {
 
     }
 
-    context::context(void) : status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(void) : properties(context::property::type::none), parent(nullptr) {
 
     }
 
@@ -34,11 +33,11 @@ namespace pokemonism::sdk {
         if (container != nullptr) container->del(this);
     }
 
-    context::context(const context & o) : stream(o), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(const context & o) : stream(o), properties(context::property::type::none), parent(nullptr) {
 
     }
 
-    context::context(context && o) noexcept : stream(std::move(o)), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(context && o) noexcept : stream(std::move(o)), properties(context::property::type::none), parent(nullptr) {
 
     }
 
@@ -46,7 +45,6 @@ namespace pokemonism::sdk {
         if (pointof(o) != this) {
             stream::operator=(o);
 
-            status = o.status;
             properties = o.properties;
         }
         return *this;
@@ -56,17 +54,16 @@ namespace pokemonism::sdk {
         if (pointof(o) != this) {
             stream::operator=(std::move(o));
 
-            status = o.status;
             properties = o.properties;
         }
         return *this;
     }
 
-    context::context(const stream & o) : stream(o), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(const stream & o) : stream(o), properties(context::property::type::none), parent(nullptr) {
 
     }
 
-    context::context(stream && o) noexcept : stream(std::move(o)), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(stream && o) noexcept : stream(std::move(o)), properties(context::property::type::none), parent(nullptr) {
 
     }
 
@@ -84,11 +81,11 @@ namespace pokemonism::sdk {
         return *this;
     }
 
-    context::context(const collection::stream<unsigned char> & o) : stream(o), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(const collection::stream<unsigned char> & o) : stream(o), properties(context::property::type::none), parent(nullptr) {
 
     }
 
-    context::context(collection::stream<unsigned char> && o) noexcept : stream(std::move(o)), status(context::state::prepare::begin), properties(context::property::type::none), parent(nullptr) {
+    context::context(collection::stream<unsigned char> && o) noexcept : stream(std::move(o)), properties(context::property::type::none), parent(nullptr) {
 
     }
 

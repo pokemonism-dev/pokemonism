@@ -14,7 +14,7 @@
 
 namespace pokemonism::sdk::generic {
 
-    template <class outputable = context, class inputable = stream>
+    template <class outputable = stream, class inputable = stream>
     class deserializer {
     public:     virtual outputable * deserialize(inputable * input, outputable * output = nullptr) = 0;
     public:     deserializer(void) {}
