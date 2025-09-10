@@ -7,11 +7,13 @@
  * @since           9월 09, 2025
  */
 
-#ifndef   __POKEMONISM_EXCEPTION_HH__
-#define   __POKEMONISM_EXCEPTION_HH__
+#ifndef   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_EXCEPTION_HH__
+#define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_EXCEPTION_HH__
 
-#include <pokemonism/sdk/interface/descriptor.hh>
 #include <pokemonism/sdk/exception.hh>
+
+// ReSharper disable once CppUnusedIncludeDirective
+#include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk::interface {
 
@@ -102,4 +104,4 @@ namespace pokemonism::sdk::interface {
 
 }
 
-#endif // __POKEMONISM_EXCEPTION_HH__
+#endif // __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_EXCEPTION_HH__

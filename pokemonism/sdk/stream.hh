@@ -12,11 +12,19 @@
 
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/sdk/collection/stream.hh>
+#include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk {
 
+    namespace input {
+        template <class descriptorable> class stream;
+    }
+
+
     class stream : public collection::stream<unsigned char> {
     public:     class buffer;
+    public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class input;
+    public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class output;
     protected:  stream::buffer *    container;
     protected:  stream *            prev;
     protected:  stream *            next;
@@ -48,6 +56,7 @@ namespace pokemonism::sdk {
     public:     inline stream & operator=(const collection::stream<unsigned char> & o) override;
     public:     inline stream & operator=(collection::stream<unsigned char> && o) noexcept override;
     public:     friend linked::list<stream::buffer, stream>;
+    public:     template <class descriptorable> friend class pokemonism::sdk::input::stream;
     };
 
     inline unsigned long stream::set(void) { return collection::stream<unsigned char>::set(); }

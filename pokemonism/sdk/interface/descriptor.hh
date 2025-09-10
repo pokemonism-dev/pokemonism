@@ -10,8 +10,8 @@
 #ifndef   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 #define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 
+#include <pokemonism/sdk/exception.hh>
 #include <pokemonism/sdk/synchronizable.hh>
-#include <pokemonism/sdk/interface/descriptor/exception.hh>
 
 namespace pokemonism::sdk::interface {
 

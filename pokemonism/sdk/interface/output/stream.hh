@@ -18,13 +18,13 @@ namespace pokemonism::sdk::interface::output {
     template <class descriptorable = interface::descriptor>
     class stream : public descriptorable {
     public:     typedef descriptorable::type type;
-    protected:  long write(void) override = 0;
-    protected:  inline long write(const unsigned char * storage, unsigned long n) override;
+    protected:  virtual long write(void) override = 0;
+    protected:  inline virtual long write(const unsigned char * storage, unsigned long n) override;
     protected:  inline virtual long write(pokemonism::sdk::stream & node);
     protected:  inline virtual void onStreamOut(pokemonism::sdk::stream & node, long n);
     public:     inline explicit stream(stream<descriptorable>::type value);
     public:     inline stream(void);
-    public:     inline ~stream(void) override;
+    public:     inline virtual ~stream(void) override;
     public:     stream(const stream<descriptorable> & o) = delete;
     public:     stream(stream<descriptorable> && o) noexcept = delete;
     public:     stream<descriptorable> & operator=(const stream<descriptorable> & o) = delete;

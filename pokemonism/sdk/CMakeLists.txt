@@ -41,11 +41,16 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             interface/descriptor/event.hh
                                             interface/standard/input.hh
                                             interface/standard/output.hh
+                                            interface/input/stream.hh
+                                            interface/output/stream.hh
                                             generic/command.hh
+                                            generic/descriptor.hh
                                             generic/envelope.hh
                                             generic/functional/command.hh
                                             stream.hh
                                             stream/buffer.hh
+                                            stream/input.hh
+                                            stream/output.hh
                                             templateable/engine.hh
                                             templateable/command.hh
                                             templateable/command/subscription.hh
@@ -110,11 +115,16 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             interface/descriptor/event.cc
                                             interface/standard/input.cc
                                             interface/standard/output.cc
+                                            interface/input/stream.cc
+                                            interface/output/stream.cc
                                             generic/command.cc
                                             generic/envelope.cc
+                                            generic/descriptor.cc
                                             generic/functional/command.cc
                                             stream.cc
                                             stream/buffer.cc
+                                            stream/input.cc
+                                            stream/output.cc
                                             templateable/engine.cc
                                             templateable/command.cc
                                             templateable/command/subscription.cc
