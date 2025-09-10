@@ -20,22 +20,15 @@ namespace pokemonism::sdk::generic::descriptorable {
 
     template <class descriptor = interface::descriptor>
     class unix : public descriptor {
-    public:     typedef int                                 type;
-    protected:  int                                         value;
-    protected:  unsigned int                                status;
-    protected:  unsigned int                                properties;
-    protected:  interface::descriptor::exception *          exception;
+    public:     typedef int     type;
+    protected:  int             value;
     public:     int close(void) override;
     protected:  long read(void) override;
     protected:  long read(unsigned char * storage, unsigned long capacity) override;
     protected:  long write(void) override;
     protected:  long write(const unsigned char * storage, unsigned long n) override;
-    public:     unsigned int check(unsigned int state) const override;
-    protected:  void clear(void) override;
-    protected:  void clean(void) override;
-    protected:  void reset(void) override;
-    protected:  inline void exceptionSet(interface::descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) override;
-    public:     inline explicit unix(int value, unsigned int properties = interface::descriptor::property::none);
+    public:     inline explicit unix(unsigned int properties);
+    public:     inline unix(int value, unsigned int properties);
     public:     inline unix(void);
     public:     inline ~unix(void) override;
     public:     unix(const generic::descriptorable::unix<descriptor> & o) = delete;
@@ -52,7 +45,8 @@ namespace pokemonism::sdk::generic::descriptorable {
             }
 
             value = declaration::invalid;
-            status = interface::descriptor::state::none;
+            this->statusSet(interface::descriptor::state::none);
+            this->onState(interface::descriptor::state::type::close, declaration::success);
         }
 
         return declaration::success;
@@ -70,19 +64,18 @@ namespace pokemonism::sdk::generic::descriptorable {
         const long result = ::read(value, storage, capacity);
 
         if (result > 0) {
-            status = status | interface::descriptor::state::in;
-
+            this->statusSet(interface::descriptor::state::in);
             this->onState(interface::descriptor::state::type::in, result);
 
             return result;
         }
 
-        status = status & (~(interface::descriptor::state::in));
+        this->statusDel(interface::descriptor::state::in);
 
         if (result == 0) return result;
         if (errno == EAGAIN) return declaration::success;
 
-        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::read), errno), interface::descriptor::state::type::in, result);
+        this->exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::read), errno), interface::descriptor::state::type::in, result);
 
         return result;
     }
@@ -99,75 +92,38 @@ namespace pokemonism::sdk::generic::descriptorable {
         const long result = ::write(value, storage, n);
 
         if (result > 0) {
-            status = status | interface::descriptor::state::out;
-
+            this->statusSet(interface::descriptor::state::out);
             this->onState(interface::descriptor::state::type::out, result);
 
             return result;
         }
 
-        status = status & (~(interface::descriptor::state::out));
+        this->statusDel(interface::descriptor::state::out);
 
         if (result == 0) return result;
         if (errno == EAGAIN) return declaration::success;
 
-        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::write), errno), interface::descriptor::state::type::out, result);
+        this->exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::write), errno), interface::descriptor::state::type::out, result);
 
         return result;
     }
 
     template <class descriptor>
-    unsigned int unix<descriptor>::check(unsigned int state) const {
-        return (status & state);
+    inline unix<descriptor>::unix(unsigned int properties) : descriptor(properties), value(declaration::invalid) {
     }
 
     template <class descriptor>
-    void unix<descriptor>::clear(void) {
-        status = status & (~(interface::descriptor::state::exception));
-        exception = allocator::del(exception);
+    inline unix<descriptor>::unix(int value, unsigned int properties) : descriptor(properties), value(value) {
     }
 
     template <class descriptor>
-    void unix<descriptor>::clean(void) {
-        status = status & (~(interface::descriptor::state::exception));
-        exception = allocator::del(exception);
-    }
-
-    template <class descriptor>
-    void unix<descriptor>::reset(void) {
-        status = status & (~(interface::descriptor::state::exception));
-        exception = allocator::del(exception);
-    }
-
-    template <class descriptor>
-    inline void unix<descriptor>::exceptionSet(pokemonism::sdk::interface::descriptor::exception * e, unsigned int state, long result) {
-        pokemon_develop_check(e == nullptr, return);
-
-        if (exception != nullptr) {
-            this->onState(state, result, e);
-            delete e;
-            return;
-        }
-
-        exception = e;
-        this->onState(state, result, e);
-    }
-
-    template <class descriptor>
-    inline unix<descriptor>::unix(int value, unsigned int properties) : value(value), properties(properties), exception(nullptr) {
-        status = value > declaration::invalid ? pokemonism::sdk::interface::descriptor::state::open : pokemonism::sdk::interface::descriptor::state::none;
-    }
-
-    template <class descriptor>
-    inline unix<descriptor>::unix(void) : value(declaration::invalid), status(pokemonism::sdk::interface::descriptor::state::none), properties(pokemonism::sdk::interface::descriptor::property::none), exception(nullptr) {
+    inline unix<descriptor>::unix(void) : value(declaration::invalid) {
 
     }
 
     template <class descriptor>
     inline unix<descriptor>::~unix(void) {
         close();
-
-        exception = allocator::del(exception);
     }
 
 }

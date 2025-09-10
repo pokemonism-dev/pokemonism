@@ -29,6 +29,9 @@ namespace pokemonism::sdk::interface {
                             };
                 };
     public:     struct method {
+                public:     int domain;
+                public:     int type;
+                public:     int protocol;
                 public:     struct shutdown {
                             public:     constexpr static int in  = SHUT_RD;
                             public:     constexpr static int out = SHUT_WR;

@@ -20,18 +20,16 @@ namespace pokemonism::sdk {
 
         template <class descriptorable = interface::descriptor>
         class stream : public descriptorable {
-        public:     typedef descriptorable::type type;
-        protected:
-            virtual void clear(void) override;
-        protected:
-            virtual void clean(void) override;
-        protected:
-            virtual void reset(void) override;
+        public:     typedef descriptorable::type    type;
+        protected:  virtual void clear(void) override;
+        protected:  virtual void clean(void) override;
+        protected:  virtual void reset(void) override;
         protected:  virtual long read(void) override;
         protected:  inline virtual long read(unsigned char * storage, unsigned long capacity) override;
         protected:  inline virtual long read(pokemonism::sdk::stream & node);
         protected:  inline virtual void onStreamIn(pokemonism::sdk::stream & node, long n);
-        public:     inline explicit stream(stream<descriptorable>::type value);
+        public:     inline explicit stream(unsigned int properties);
+        public:     inline stream(stream<descriptorable>::type value, unsigned int properties);
         public:     inline stream(void);
         public:     inline virtual ~stream(void) override;
         public:     stream(const stream<descriptorable> & o) = delete;
@@ -76,7 +74,12 @@ namespace pokemonism::sdk {
         }
 
         template <class descriptorable>
-        inline stream<descriptorable>::stream(stream<descriptorable>::type value) : descriptorable(value) {
+        inline stream<descriptorable>::stream(unsigned int properties) : descriptorable(properties) {
+
+        }
+
+        template <class descriptorable>
+        inline stream<descriptorable>::stream(stream<descriptorable>::type value, unsigned int properties) : descriptorable(value, properties) {
 
         }
 

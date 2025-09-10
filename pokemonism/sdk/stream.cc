@@ -15,8 +15,10 @@ namespace pokemonism::sdk {
     void stream::stateSet(unsigned int v) {
         if (v & stream::state::process::end) v = v | (stream::state::package::begin | stream::state::package::end | stream::state::publish::begin);
 
-        unsigned int state = (status ^ v) & (~v);
+        unsigned int state = (status ^ v) & (~status);
         unsigned int previous = status;
+
+        status = status | state;
 
         onState(previous, state);
     }

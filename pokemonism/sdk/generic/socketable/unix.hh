@@ -19,6 +19,13 @@ namespace pokemonism::sdk::generic::socketable {
     class unix : public descriptorable::unix<descriptor> {
     public:     typedef descriptorable::unix<descriptor>::type  type;
     public:     int shutdown(int how) override;
+    // protected:  inline explicit unix(const interface::socket::method * method, const socket<socketable>::address & addr);
+    // protected:  inline explicit unix(const interface::socket::method * method, socket<socketable>::address * addr);
+    // protected:  inline unix(const interface::socket::method * method, const unsigned char * addr, unsigned long addrLen);
+    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, const socket<socketable>::address & addr);
+    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, socket<socketable>::address * addr);
+    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, const unsigned char * addr, unsigned long addrLen);
+    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method);
     public:     inline explicit unix(int value, unsigned int properties = interface::descriptor::property::none);
     public:     inline unix(void);
     public:     inline ~unix(void) override;

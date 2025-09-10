@@ -10,6 +10,7 @@
 #ifndef   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 #define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 
+#include <pokemonism/sdk/allocator.hh>
 #include <pokemonism/sdk/exception.hh>
 #include <pokemonism/sdk/interface/communicator.hh>
 
@@ -31,6 +32,7 @@ namespace pokemonism::sdk::interface {
                 public:     constexpr static unsigned int in        = (0x00000001U <<  1U);
                 public:     constexpr static unsigned int out       = (0x00000001U <<  2U);
                 public:     constexpr static unsigned int exception = (0x00000001U <<  3U);
+                public:     constexpr static unsigned int engine    = (0x00000001U << 31U);
                 };
     public:     struct property {
                 public:     constexpr static unsigned int none      = (0x00000000U <<  0U);
@@ -39,9 +41,13 @@ namespace pokemonism::sdk::interface {
                             public:     constexpr static unsigned int input  = 2;
                             public:     constexpr static unsigned int output = 3;
                             };
+                public:     constexpr static unsigned int nonblock  = (0x00010000U <<  0U);
                 };
     public:     class event;
     public:     class exception;
+    protected:  unsigned int                status;
+    protected:  unsigned int                properties;
+    protected:  descriptor::exception *     e;
     protected:  int lock(void) noexcept override { return declaration::fail; }
     protected:  int unlock(void) noexcept override { return declaration::fail; }
     protected:  int wait(void) noexcept override { return declaration::fail; }
@@ -49,17 +55,20 @@ namespace pokemonism::sdk::interface {
     protected:  int wait(long second, long nano) noexcept override { return declaration::fail; }
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
     public:     int open(void) override;
-    protected:  long read(void) override;
-    protected:  virtual long read(unsigned char * storage, unsigned long capacity);
-    protected:  long write(void) override;
-    protected:  virtual long write(const unsigned char * storage, unsigned long n);
-    public:     virtual unsigned int check(unsigned int state) const = 0;
-    protected:  virtual void clear(void);
-    protected:  virtual void clean(void);
-    protected:  virtual void reset(void);
-    protected:  inline virtual void onState(unsigned int state, long result, descriptor::exception * e = nullptr);
-    protected:  virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
-    public:     inline explicit descriptor(type value);
+    protected:  inline long read(void) override;
+    protected:  inline virtual long read(unsigned char * storage, unsigned long capacity);
+    protected:  inline long write(void) override;
+    protected:  inline virtual long write(const unsigned char * storage, unsigned long n);
+    public:     inline virtual void statusSet(unsigned int v);
+    public:     inline virtual void statusDel(unsigned int v);
+    public:     inline virtual unsigned int stateChk(unsigned int v) const;
+    public:     inline virtual unsigned int propertyChk(unsigned int v) const;
+    protected:  inline virtual void clear(void);
+    protected:  inline virtual void clean(void);
+    protected:  inline virtual void reset(void);
+    protected:  inline virtual void onState(unsigned int state, long result, descriptor::exception * caution = nullptr);
+    protected:  inline virtual void exceptionSet(descriptor::exception * caution, unsigned int state = declaration::none, long result = declaration::fail);
+    public:     inline explicit descriptor(unsigned int properties);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;
     public:     descriptor(const interface::descriptor & o) = delete;
@@ -68,16 +77,102 @@ namespace pokemonism::sdk::interface {
     public:     interface::descriptor & operator=(interface::descriptor && o) noexcept = delete;
     };
 
-    inline void descriptor::clear(void) {
+    class descriptor::exception : public pokemonism::sdk::exception {
+    public:     struct category {
+                public:     constexpr static unsigned int none = declaration::none;
+                public:     constexpr static unsigned int sys = 1;
+                public:     constexpr static unsigned int lib = 2;
+                public:     constexpr static unsigned int user = 3;
+                };
+    public:     struct code {
+                public:     constexpr static unsigned int none = declaration::none;
+                public:     constexpr static unsigned int eof = 1;
+                };
+    protected:  unsigned int    tag;
+    protected:  void *          func;
+    protected:  unsigned int    number;
+    public:     inline unsigned int categoryGet(void) const;
+    public:     inline void * functionGet(void) const;
+    public:     inline unsigned int numberGet(void) const;
+    public:     inline exception(void);
+    public:     exception(unsigned int category, void * func, unsigned int number);
+    public:     ~exception(void) override;
+    public:     exception(const descriptor::exception & o);
+    public:     exception(descriptor::exception && o) noexcept;
+    public:     descriptor::exception & operator=(const descriptor::exception & o);
+    public:     descriptor::exception & operator=(descriptor::exception && o) noexcept;
+    };
 
+    inline unsigned int descriptor::exception::categoryGet(void) const {
+        return tag;
+    }
+
+    inline void * descriptor::exception::functionGet(void) const {
+        return func;
+    }
+
+    inline unsigned int descriptor::exception::numberGet(void) const {
+        return number;
+    }
+
+    inline descriptor::exception::exception(void) : tag(declaration::none), func(nullptr), number(declaration::none) {
+
+    }
+
+    inline descriptor::exception::exception(unsigned int category, void * func, unsigned int number) : tag(category), func(func), number(number) {
+
+    }
+
+    inline descriptor::exception::~exception(void) {
+
+    }
+
+    inline descriptor::exception::exception(const descriptor::exception & o) : pokemonism::sdk::exception(o), tag(o.tag), func(o.func), number(o.number) {
+
+    }
+
+    inline descriptor::exception::exception(descriptor::exception && o) noexcept : pokemonism::sdk::exception(std::move(o)), tag(o.tag), func(o.func), number(o.number) {
+        o.tag = declaration::none;
+        o.func = nullptr;
+        o.number = declaration::none;
+    }
+
+
+    inline descriptor::exception & descriptor::exception::operator=(const descriptor::exception & o) {
+        if (pointof(o) != this) {
+            pokemonism::sdk::exception::operator=(o);
+            tag = o.tag;
+            func = o.func;
+            number = o.number;
+        }
+        return *this;
+    }
+
+    inline descriptor::exception & descriptor::exception::operator=(descriptor::exception && o) noexcept {
+        if (pointof(o) != this) {
+            pokemonism::sdk::exception::operator=(std::move(o));
+            tag = o.tag;
+            func = o.func;
+            number = o.number;
+
+            o.tag = declaration::none;
+            o.func = nullptr;
+            o.number = declaration::none;
+        }
+        return *this;
+    }
+
+    inline void descriptor::clear(void) {
+        e = allocator::del(e);
+        status = descriptor::state::none;
     }
 
     inline void descriptor::clean(void) {
-
+        e = allocator::del(e);
     }
 
     inline void descriptor::reset(void) {
-
+        e = allocator::del(e);
     }
 
     inline int descriptor::open(void) {
@@ -100,15 +195,42 @@ namespace pokemonism::sdk::interface {
         pokemon_develop_throw(return declaration::fail);
     }
 
-    inline void descriptor::onState(unsigned int state, long result, exception * e) {
+    inline void descriptor::statusSet(unsigned int v) {
+        status = status | v;
+    }
+
+    inline void descriptor::statusDel(unsigned int v) {
+        status = status & (~v);
+    }
+
+    inline unsigned int descriptor::stateChk(unsigned int v) const {
+        return status & v;
+    }
+
+    inline unsigned int descriptor::propertyChk(unsigned int v) const {
+        return properties & v;
+    }
+
+    inline void descriptor::onState(unsigned int state, long result, exception * caution) {
 
     }
 
-    inline descriptor::descriptor(type value) {
-        pokemon_develop_throw(return);
+    inline void descriptor::exceptionSet(descriptor::exception * caution, unsigned int state, long result) {
+        if (e != nullptr) {
+            onState(state, result, caution);
+            delete caution;
+            return;
+        }
+
+        e = caution;
+        onState(state, result, caution);
     }
 
-    inline descriptor::descriptor(void) {
+    inline descriptor::descriptor(unsigned int properties) : status(descriptor::state::none), properties(properties), e(nullptr) {
+
+    }
+
+    inline descriptor::descriptor(void) : status(descriptor::state::none), properties(descriptor::property::none), e(nullptr) {
 
     }
 

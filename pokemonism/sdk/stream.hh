@@ -13,6 +13,7 @@
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/sdk/collection/stream.hh>
 #include <pokemonism/sdk/interface/descriptor.hh>
+#include <pokemonism/sdk/interface/server.hh>
 #include <pokemonism/sdk/interface/input/stream.hh>
 #include <pokemonism/sdk/interface/output/stream.hh>
 
@@ -45,6 +46,7 @@ namespace pokemonism::sdk {
                 };
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class input;
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class output;
+    public:     template <class descriptorable = pokemonism::sdk::interface::server> class server;
     protected:  stream::buffer *    container;
     protected:  stream *            prev;
     protected:  stream *            next;
@@ -138,7 +140,8 @@ namespace pokemonism::sdk {
     protected:  long read(unsigned char * storage, unsigned long capacity) override;
     protected:  long read(void) override;
     protected:  long read(pokemonism::sdk::stream & node) override;
-    public:     inline explicit input(stream::input<descriptorable>::type value);
+    public:     inline explicit input(unsigned int properties);
+    public:     inline input(stream::input<descriptorable>::type value, unsigned int properties);
     public:     inline input(void);
     public:     inline ~input(void) override;
     public:     input(const stream::input<descriptorable> & o) = delete;
@@ -157,13 +160,33 @@ namespace pokemonism::sdk {
     protected:  long write(const unsigned char * storage, unsigned long n) override;
     protected:  long write(void) override;
     protected:  long write(pokemonism::sdk::stream & node) override;
-    public:     inline explicit output(stream::output<descriptorable>::type value);
+    public:     inline explicit output(unsigned int properties);
+    public:     inline output(stream::output<descriptorable>::type value, unsigned int properties);
     public:     inline output(void);
     public:     inline ~output(void) override;
     public:     output(const stream::output<descriptorable> & o) = delete;
     public:     output(stream::output<descriptorable> && o) noexcept = delete;
     public:     stream::output<descriptorable> & operator=(const stream::output<descriptorable> & o) = delete;
     public:     stream::output<descriptorable> & operator=(stream::output<descriptorable> && o) noexcept = delete;
+    };
+
+    template <class descriptorable>
+    class stream::server : public pokemonism::sdk::interface::input::stream<descriptorable> {
+    public:     typedef pokemonism::sdk::interface::input::stream<descriptorable>::type type;
+    public:     pokemonism::sdk::stream::buffer * in;
+    protected:  void clear(void) override;
+    protected:  void clean(void) override;
+    protected:  void reset(void) override;
+    protected:  long read(unsigned char * storage, unsigned long capacity) override;
+    protected:  long read(void) override;
+    protected:  long read(pokemonism::sdk::stream & node) override;
+    public:     inline explicit server(stream::server<descriptorable>::type value);
+    public:     inline server(void);
+    public:     inline ~server(void) override;
+    public:     server(const stream::server<descriptorable> & o) = delete;
+    public:     server(stream::server<descriptorable> && o) noexcept = delete;
+    public:     stream::server<descriptorable> & operator=(const stream::server<descriptorable> & o) = delete;
+    public:     stream::server<descriptorable> & operator=(stream::server<descriptorable> && o) noexcept = delete;
     };
 
     inline void stream::onState(unsigned int previous, unsigned int state) {
@@ -375,8 +398,13 @@ namespace pokemonism::sdk {
     }
 
     template <class descriptorable>
-    inline stream::input<descriptorable>::input(stream::input<descriptorable>::type value) : pokemonism::sdk::interface::input::stream<descriptorable>(value), in(new stream::buffer()) {
+    inline stream::input<descriptorable>::input(unsigned int properties) : pokemonism::sdk::interface::input::stream<descriptorable>(properties), in(new stream::buffer()) {
 
+    }
+
+    template <class descriptorable>
+    inline stream::input<descriptorable>::input(stream::input<descriptorable>::type value, unsigned int properties) : pokemonism::sdk::interface::input::stream<descriptorable>(value, properties), in(new stream::buffer()) {
+        if (this->value > declaration::invalid) this->status = this->status | pokemonism::sdk::interface::input::stream<descriptorable>::state::in;
     }
 
     template <class descriptorable>
@@ -440,8 +468,12 @@ namespace pokemonism::sdk {
     }
 
     template <class descriptorable>
-    inline stream::output<descriptorable>::output(stream::output<descriptorable>::type value) : pokemonism::sdk::interface::output::stream<descriptorable>(value), out(new stream::buffer()) {
+    inline stream::output<descriptorable>::output(unsigned int properties) : pokemonism::sdk::interface::output::stream<descriptorable>(properties), out(new stream::buffer()) {
+    }
 
+    template <class descriptorable>
+    inline stream::output<descriptorable>::output(stream::output<descriptorable>::type value, unsigned int properties) : pokemonism::sdk::interface::output::stream<descriptorable>(value, properties), out(new stream::buffer()) {
+        if (this->value > declaration::invalid) this->status = this->status | pokemonism::sdk::interface::output::stream<descriptorable>::state::out;
     }
 
     template <class descriptorable>

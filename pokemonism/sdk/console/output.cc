@@ -17,7 +17,7 @@ namespace pokemonism::sdk {
         return singleton;
     }
 
-    console::output::output(void) : generic::descriptorable::unix<interface::input::stream<pokemonism::sdk::stream::output<interface::descriptor>>> (STDOUT_FILENO, interface::descriptor::property::console::output){
+    console::output::output(void) : generic::descriptor<interface::input::stream<pokemonism::sdk::stream::output<generic::descriptorable::unix<>>>>(STDOUT_FILENO, interface::descriptor::property::console::output){
 
     }
 
@@ -29,6 +29,7 @@ namespace pokemonism::sdk {
         pokemonism::sdk::stream * node = out->streamGet(1);
 
         node->cat(c, 1);
+        node->stateSet(pokemonism::sdk::stream::state::process::begin);
 
         return write();
     }
@@ -36,9 +37,11 @@ namespace pokemonism::sdk {
     long console::output::operator()(const char * s) {
         const unsigned long n = strlen(s);
 
-        pokemonism::sdk::stream * node = out->streamGet(n);
-
-        node->cat(reinterpret_cast<const unsigned char *>(s), n);
+        if (n > 0) {
+            pokemonism::sdk::stream * node = out->streamGet(n);
+            node->cat(reinterpret_cast<const unsigned char *>(s), n);
+            node->stateSet(pokemonism::sdk::stream::state::process::begin);
+        }
 
         return write();
     }

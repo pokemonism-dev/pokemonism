@@ -28,7 +28,7 @@ namespace pokemonism::sdk {
     public:     console & operator=(console && o) noexcept = delete;
     };
 
-    class console::input : public generic::descriptorable::unix<pokemonism::sdk::stream::input<interface::output::stream<interface::descriptor>>> {
+    class console::input : public generic::descriptor<pokemonism::sdk::stream::input<interface::output::stream<generic::descriptorable::unix<>>>> {
     public:     static console::input & get(void);
     private:    input(void);
     public:     ~input(void) override;
@@ -38,7 +38,7 @@ namespace pokemonism::sdk {
     public:     console::input & operator=(console::input && o) noexcept = delete;
     };
 
-    class console::output : public generic::descriptorable::unix<interface::input::stream<pokemonism::sdk::stream::output<interface::descriptor>>> {
+    class console::output : public generic::descriptor<interface::input::stream<pokemonism::sdk::stream::output<generic::descriptorable::unix<>>>> {
     public:     static console::output & get(void);
     public:     virtual long operator()(char c);
     public:     virtual long operator()(const char * s);
@@ -50,7 +50,7 @@ namespace pokemonism::sdk {
     public:     console::output & operator=(console::output && o) noexcept = delete;
     };
 
-    inline console::input::input(void) : generic::descriptorable::unix<pokemonism::sdk::stream::input<interface::output::stream<interface::descriptor>>>(STDIN_FILENO, interface::descriptor::property::console::input) {
+    inline console::input::input(void) : generic::descriptor<pokemonism::sdk::stream::input<interface::output::stream<generic::descriptorable::unix<>>>>(STDIN_FILENO, interface::descriptor::property::console::input) {
 
     }
 

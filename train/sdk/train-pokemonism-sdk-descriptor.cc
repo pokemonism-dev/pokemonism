@@ -9,14 +9,19 @@
 
 #include <pokemonism/sdk/stream.hh>
 #include <pokemonism/sdk/generic/descriptorable/unix.hh>
+#include <pokemonism/sdk/generic/socketable/unix.hh>
 
 using namespace pokemonism::sdk;
 
 int main(int argc, char ** argv) {
 
-    generic::descriptorable::unix<stream::input<stream::output<>>> o;
-    generic::descriptorable::unix<interface::input::stream<stream::output<>>> o1;
-    generic::descriptorable::unix<stream::input<interface::output::stream<>>> o2;
+    generic::descriptor<stream::input<stream::output<generic::descriptorable::unix<>>>> o;
+
+    // generic::descriptorable::unix<stream::input<stream::output<generic::descriptor<>>>> o;
+    // generic::descriptorable::unix<interface::input::stream<stream::output<generic::descriptor<>>>> o1;
+    // generic::descriptorable::unix<stream::input<interface::output::stream<generic::descriptor<>>>> o2;
+
+    // generic::socketable::unix<generic::descriptorable::unix<
 
 
     return 0;
