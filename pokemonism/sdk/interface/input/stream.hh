@@ -7,21 +7,21 @@
  * @since           9월 10, 2025
  */
 
-#ifndef   __POKEMONISM_SDK_INTERFACE_OUTPUT_STREAM_HH__
-#define   __POKEMONISM_SDK_INTERFACE_OUTPUT_STREAM_HH__
+#ifndef   __POKEMONISM_SDK_INTERFACE_INPUT_STREAM_HH__
+#define   __POKEMONISM_SDK_INTERFACE_INPUT_STREAM_HH__
 
 #include <pokemonism/sdk/stream.hh>
 #include <pokemonism/sdk/interface/descriptor.hh>
 
-namespace pokemonism::sdk::interface::output {
+namespace pokemonism::sdk::interface::input {
 
     template <class descriptorable = interface::descriptor>
     class stream : public descriptorable {
     public:     typedef descriptorable::type type;
-    protected:  long write(void) override = 0;
-    protected:  inline long write(const unsigned char * storage, unsigned long n) override;
-    protected:  inline virtual long write(pokemonism::sdk::stream & node);
-    protected:  inline virtual void onStreamOut(pokemonism::sdk::stream & node, long n);
+    protected:  long read(void) override = 0;
+    protected:  inline long read(unsigned char * storage, unsigned long capacity) override;
+    protected:  inline virtual long read(pokemonism::sdk::stream & node);
+    protected:  inline virtual void onStreamIn(pokemonism::sdk::stream & node, long n);
     public:     inline explicit stream(stream<descriptorable>::type value);
     public:     inline stream(void);
     public:     inline ~stream(void) override;
@@ -32,23 +32,24 @@ namespace pokemonism::sdk::interface::output {
     };
 
     template <class descriptorable>
-    long stream<descriptorable>::write(const unsigned char * storage, unsigned long n) {
-        return descriptorable::write(storage, n);
+    long stream<descriptorable>::read(unsigned char * storage, unsigned long capacity) {
+        return descriptorable::read(storage, capacity);
     }
 
     template <class descriptorable>
-    long stream<descriptorable>::write(pokemonism::sdk::stream & node) {
-        const long n = write(node.frontGet(), node.lengthGet());
+    long stream<descriptorable>::read(pokemonism::sdk::stream & node) {
 
-        onStreamOut(node, n);
+        const long n = read(node.storage + node.size, node.remainGet());
 
-        if (n > 0) node.pop(n);
+        onStreamIn(node, n);
+
+        if (n > 0) node.size = node.size + n;
 
         return n;
     }
 
     template <class descriptorable>
-    inline void stream<descriptorable>::onStreamOut(pokemonism::sdk::stream & node, long n) {
+    inline void stream<descriptorable>::onStreamIn(pokemonism::sdk::stream & node, long n) {
 
     }
 
@@ -69,4 +70,4 @@ namespace pokemonism::sdk::interface::output {
 
 }
 
-#endif // __POKEMONISM_SDK_INTERFACE_OUTPUT_STREAM_HH__
+#endif // __POKEMONISM_SDK_INTERFACE_INPUT_STREAM_HH__
