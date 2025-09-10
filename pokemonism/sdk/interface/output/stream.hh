@@ -19,9 +19,9 @@ namespace pokemonism::sdk {
         template <class descriptorable = interface::descriptor>
         class stream : public descriptorable {
         public:     typedef descriptorable::type type;
-        protected:  virtual long write(void) override = 0;
+        protected:  virtual long write(void) override;
         protected:  inline virtual long write(const unsigned char * storage, unsigned long n) override;
-        protected:  inline virtual long write(pokemonism::sdk::stream & node);
+        protected:  inline virtual long write(pokemonism::sdk::stream & node) = 0;
         protected:  inline virtual void onStreamOut(pokemonism::sdk::stream & node, long n);
         public:     inline explicit stream(stream<descriptorable>::type value);
         public:     inline stream(void);
@@ -33,8 +33,18 @@ namespace pokemonism::sdk {
         };
 
         template <class descriptorable>
+        long stream<descriptorable>::write(void) {
+            return declaration::fail;
+        }
+
+        template <class descriptorable>
         long stream<descriptorable>::write(const unsigned char * storage, unsigned long n) {
             return descriptorable::write(storage, n);
+        }
+
+        template <class descriptorable>
+        inline long stream<descriptorable>::write(pokemonism::sdk::stream & node) {
+            return declaration::fail;
         }
 
         template <class descriptorable>

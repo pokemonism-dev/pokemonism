@@ -21,7 +21,7 @@ namespace pokemonism::sdk {
         template <class descriptorable = interface::descriptor>
         class stream : public descriptorable {
         public:     typedef descriptorable::type type;
-        protected:  virtual long read(void) override = 0;
+        protected:  virtual long read(void) override;
         protected:  inline virtual long read(unsigned char * storage, unsigned long capacity) override;
         protected:  inline virtual long read(pokemonism::sdk::stream & node);
         protected:  inline virtual void onStreamIn(pokemonism::sdk::stream & node, long n);
@@ -35,8 +35,18 @@ namespace pokemonism::sdk {
         };
 
         template <class descriptorable>
+        long stream<descriptorable>::read(void) {
+            return declaration::fail;
+        }
+
+        template <class descriptorable>
         long stream<descriptorable>::read(unsigned char * storage, unsigned long capacity) {
             return descriptorable::read(storage, capacity);
+        }
+
+        template <class descriptorable>
+        inline long stream<descriptorable>::read(pokemonism::sdk::stream & node) {
+            return declaration::fail;
         }
 
         template <class descriptorable>
