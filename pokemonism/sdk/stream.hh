@@ -101,6 +101,9 @@ namespace pokemonism::sdk {
     class stream::input : public pokemonism::sdk::interface::input::stream<descriptorable> {
     public:     typedef pokemonism::sdk::interface::input::stream<descriptorable>::type type;
     public:     pokemonism::sdk::stream::buffer * in;
+    protected:  void clear(void) override;
+    protected:  void clean(void) override;
+    protected:  void reset(void) override;
     protected:  long read(unsigned char * storage, unsigned long capacity) override;
     protected:  long read(void) override;
     protected:  long read(pokemonism::sdk::stream & node) override;
@@ -117,6 +120,9 @@ namespace pokemonism::sdk {
     class stream::output : public pokemonism::sdk::interface::output::stream<descriptorable> {
     public:     typedef pokemonism::sdk::interface::output::stream<descriptorable>::type type;
     public:     pokemonism::sdk::stream::buffer * out;
+    protected:  void clear(void) override;
+    protected:  void clean(void) override;
+    protected:  void reset(void) override;
     protected:  long write(const unsigned char * storage, unsigned long n) override;
     protected:  long write(void) override;
     protected:  long write(pokemonism::sdk::stream & node) override;
@@ -243,6 +249,24 @@ namespace pokemonism::sdk {
     }
 
     template <class descriptorable>
+    void stream::input<descriptorable>::clear(void) {
+        in->clear();
+        descriptorable::clear();
+    }
+
+    template <class descriptorable>
+    void stream::input<descriptorable>::clean(void) {
+        in->clean();
+        descriptorable::clean();
+    }
+
+    template <class descriptorable>
+    void stream::input<descriptorable>::reset(void) {
+        in->reset();
+        descriptorable::reset();
+    }
+
+    template <class descriptorable>
     long stream::input<descriptorable>::read(unsigned char * storage, unsigned long capacity) {
         return descriptorable::read(storage, capacity);
     }
@@ -292,6 +316,24 @@ namespace pokemonism::sdk {
     template <class descriptorable>
     inline stream::input<descriptorable>::~input(void) {
         in = allocator::del(in);
+    }
+
+    template <class descriptorable>
+    void stream::output<descriptorable>::clear(void) {
+        out->clear();
+        descriptorable::clear();
+    }
+
+    template <class descriptorable>
+    void stream::output<descriptorable>::clean(void) {
+        out->clean();
+        descriptorable::clean();
+    }
+
+    template <class descriptorable>
+    void stream::output<descriptorable>::reset(void) {
+        out->reset();
+        descriptorable::reset();
     }
 
     template <class descriptorable>

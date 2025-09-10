@@ -18,6 +18,14 @@ namespace pokemonism::sdk::interface {
     class descriptor : public synchronizable {
     public:     typedef int type;
     public:     struct state {
+                public:     struct type {
+                            public:     constexpr static unsigned int open      = 0;
+                            public:     constexpr static unsigned int in        = 1;
+                            public:     constexpr static unsigned int out       = 2;
+                            public:     constexpr static unsigned int exception = 3;
+                            public:     constexpr static unsigned int close     = 4;
+                            public:     constexpr static unsigned int max       = 5;
+                            };
                 public:     constexpr static unsigned int none      = (0x00000000U <<  0U);
                 public:     constexpr static unsigned int open      = (0x00000001U <<  0U);
                 public:     constexpr static unsigned int in        = (0x00000001U <<  1U);
@@ -47,9 +55,9 @@ namespace pokemonism::sdk::interface {
     protected:  virtual long write(void);
     protected:  virtual long write(const unsigned char * storage, unsigned long n);
     public:     virtual unsigned int check(unsigned int state) const = 0;
-    protected:  virtual void clear(void) = 0;
-    protected:  virtual void clean(void) = 0;
-    protected:  virtual void reset(void) = 0;
+    protected:  virtual void clear(void);
+    protected:  virtual void clean(void);
+    protected:  virtual void reset(void);
     protected:  inline virtual void onState(unsigned int state, long result, descriptor::exception * e = nullptr);
     protected:  virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
     public:     inline explicit descriptor(type value);
@@ -60,6 +68,18 @@ namespace pokemonism::sdk::interface {
     public:     interface::descriptor & operator=(const interface::descriptor & o) = delete;
     public:     interface::descriptor & operator=(interface::descriptor && o) noexcept = delete;
     };
+
+    inline void descriptor::clear(void) {
+
+    }
+
+    inline void descriptor::clean(void) {
+
+    }
+
+    inline void descriptor::reset(void) {
+
+    }
 
     inline int descriptor::open(void) {
         pokemon_develop_throw(return declaration::fail);
@@ -99,6 +119,7 @@ namespace pokemonism::sdk::interface {
 
 }
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/sdk/interface/descriptor/event.hh>
 #include <pokemonism/sdk/interface/descriptor/exception.hh>
 

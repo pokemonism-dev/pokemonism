@@ -8,7 +8,7 @@
  */
 
 
-#include "descriptorable.hh"
+#include "socket.hh"
 
 namespace pokemonism {
 }

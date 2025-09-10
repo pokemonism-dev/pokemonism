@@ -46,7 +46,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             generic/command.hh
                                             generic/envelope.hh
                                             generic/descriptor.hh
-                                            generic/descriptorable.hh
+                                            generic/socket.hh
+                                            generic/socketable/unix.hh
                                             generic/descriptorable/unix.hh
                                             generic/functional/command.hh
                                             stream.hh
@@ -122,7 +123,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/command.cc
                                             generic/envelope.cc
                                             generic/descriptor.cc
-                                            generic/descriptorable.cc
+                                            generic/socket.cc
+                                            generic/socketable/unix.cc
                                             generic/descriptorable/unix.cc
                                             generic/functional/command.cc
                                             stream.cc

@@ -52,6 +52,7 @@ namespace pokemonism::sdk::generic::descriptorable {
             }
 
             value = declaration::invalid;
+            status = interface::descriptor::state::none;
         }
 
         return declaration::success;
@@ -69,19 +70,19 @@ namespace pokemonism::sdk::generic::descriptorable {
         const long result = ::read(value, storage, capacity);
 
         if (result > 0) {
-            status = status | interface::descriptor::state::out;
+            status = status | interface::descriptor::state::in;
 
-            this->onState(interface::descriptor::state::out, result);
+            this->onState(interface::descriptor::state::type::in, result);
 
             return result;
         }
 
-        status = status & (~(interface::descriptor::state::out));
+        status = status & (~(interface::descriptor::state::in));
 
         if (result == 0) return result;
         if (errno == EAGAIN) return declaration::success;
 
-        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::read), errno), interface::descriptor::state::out, result);
+        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::read), errno), interface::descriptor::state::type::in, result);
 
         return result;
     }
@@ -100,7 +101,7 @@ namespace pokemonism::sdk::generic::descriptorable {
         if (result > 0) {
             status = status | interface::descriptor::state::out;
 
-            this->onState(interface::descriptor::state::out, result);
+            this->onState(interface::descriptor::state::type::out, result);
 
             return result;
         }
@@ -110,7 +111,7 @@ namespace pokemonism::sdk::generic::descriptorable {
         if (result == 0) return result;
         if (errno == EAGAIN) return declaration::success;
 
-        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::write), errno), interface::descriptor::state::out, result);
+        exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::write), errno), interface::descriptor::state::type::out, result);
 
         return result;
     }
@@ -122,16 +123,19 @@ namespace pokemonism::sdk::generic::descriptorable {
 
     template <class descriptor>
     void unix<descriptor>::clear(void) {
+        status = status & (~(interface::descriptor::state::exception));
         exception = allocator::del(exception);
     }
 
     template <class descriptor>
     void unix<descriptor>::clean(void) {
+        status = status & (~(interface::descriptor::state::exception));
         exception = allocator::del(exception);
     }
 
     template <class descriptor>
     void unix<descriptor>::reset(void) {
+        status = status & (~(interface::descriptor::state::exception));
         exception = allocator::del(exception);
     }
 
