@@ -10,5 +10,12 @@
 
 #include "session.hh"
 
-namespace pokemonism {
+#include "server.hh"
+
+namespace pokemonism::sdk::interface {
+
+    session::~session(void) {
+        if (container != nullptr) container->del(this);
+    }
+
 }
