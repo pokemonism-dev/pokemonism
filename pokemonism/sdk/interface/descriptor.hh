@@ -11,11 +11,11 @@
 #define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 
 #include <pokemonism/sdk/exception.hh>
-#include <pokemonism/sdk/synchronizable.hh>
+#include <pokemonism/sdk/interface/communicator.hh>
 
 namespace pokemonism::sdk::interface {
 
-    class descriptor : public synchronizable {
+    class descriptor : public communicator {
     public:     typedef int type;
     public:     struct state {
                 public:     struct type {
@@ -50,9 +50,9 @@ namespace pokemonism::sdk::interface {
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
     public:     virtual int open(void);
     public:     virtual int close(void) = 0;
-    protected:  virtual long read(void);
+    protected:  long read(void) override;
     protected:  virtual long read(unsigned char * storage, unsigned long capacity);
-    protected:  virtual long write(void);
+    protected:  long write(void) override;
     protected:  virtual long write(const unsigned char * storage, unsigned long n);
     public:     virtual unsigned int check(unsigned int state) const = 0;
     protected:  virtual void clear(void);

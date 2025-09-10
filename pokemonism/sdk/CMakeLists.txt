@@ -43,6 +43,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             interface/standard/output.hh
                                             interface/input/stream.hh
                                             interface/output/stream.hh
+                                            interface/communicator.hh
                                             generic/command.hh
                                             generic/envelope.hh
                                             generic/descriptor.hh
@@ -127,6 +128,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             interface/standard/output.cc
                                             interface/input/stream.cc
                                             interface/output/stream.cc
+                                            interface/communicator.cc
                                             generic/command.cc
                                             generic/envelope.cc
                                             generic/descriptor.cc
