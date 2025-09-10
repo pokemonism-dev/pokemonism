@@ -17,7 +17,6 @@ namespace pokemonism::sdk::interface {
 
     class descriptor : public synchronizable {
     public:     typedef int type;
-    public:     class event;
     public:     struct state {
                 public:     constexpr static unsigned int none      = (0x00000000U <<  0U);
                 public:     constexpr static unsigned int open      = (0x00000001U <<  0U);
@@ -25,6 +24,11 @@ namespace pokemonism::sdk::interface {
                 public:     constexpr static unsigned int out       = (0x00000001U <<  2U);
                 public:     constexpr static unsigned int exception = (0x00000001U <<  3U);
                 };
+    public:     struct property {
+                public:     constexpr static unsigned int none      = (0x00000000U <<  0U);
+                public:     constexpr static unsigned int socket    = (0x00000001U <<  0U);
+                };
+    public:     class event;
     public:     class exception;
     protected:  int lock(void) noexcept override { return declaration::fail; }
     protected:  int unlock(void) noexcept override { return declaration::fail; }
@@ -42,7 +46,7 @@ namespace pokemonism::sdk::interface {
     protected:  virtual void clear(void) = 0;
     protected:  virtual void clean(void) = 0;
     protected:  virtual void reset(void) = 0;
-    protected:  inline virtual void onState(unsigned int state, long result, exception * e = nullptr);
+    protected:  inline virtual void onState(unsigned int state, long result, descriptor::exception * e = nullptr);
     protected:  virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
     public:     inline explicit descriptor(type value);
     public:     inline descriptor(void);

@@ -44,13 +44,12 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             interface/input/stream.hh
                                             interface/output/stream.hh
                                             generic/command.hh
-                                            generic/descriptor.hh
                                             generic/envelope.hh
+                                            generic/descriptor.hh
+                                            generic/descriptorable.hh
+                                            generic/descriptorable/unix.hh
                                             generic/functional/command.hh
                                             stream.hh
-                                            stream/buffer.hh
-                                            stream/input.hh
-                                            stream/output.hh
                                             templateable/engine.hh
                                             templateable/command.hh
                                             templateable/command/subscription.hh
@@ -120,11 +119,10 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/command.cc
                                             generic/envelope.cc
                                             generic/descriptor.cc
+                                            generic/descriptorable.cc
+                                            generic/descriptorable/unix.cc
                                             generic/functional/command.cc
                                             stream.cc
-                                            stream/buffer.cc
-                                            stream/input.cc
-                                            stream/output.cc
                                             templateable/engine.cc
                                             templateable/command.cc
                                             templateable/command/subscription.cc

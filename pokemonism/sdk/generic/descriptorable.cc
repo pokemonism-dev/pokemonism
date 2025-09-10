@@ -8,7 +8,7 @@
  */
 
 
-#include "output.hh"
+#include "descriptorable.hh"
 
 namespace pokemonism {
 }

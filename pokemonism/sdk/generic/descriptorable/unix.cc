@@ -8,7 +8,7 @@
  */
 
 
-#include "input.hh"
+#include "unix.hh"
 
 namespace pokemonism {
 }
