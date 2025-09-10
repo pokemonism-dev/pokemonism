@@ -10,8 +10,8 @@
 #ifndef   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 #define   __POKEMONISM_SDK_INTERFACE_DESCRIPTOR_HH__
 
-#include <pokemonism.hh>
 #include <pokemonism/sdk/synchronizable.hh>
+#include <pokemonism/sdk/interface/descriptor/exception.hh>
 
 namespace pokemonism::sdk::interface {
 
@@ -32,17 +32,17 @@ namespace pokemonism::sdk::interface {
     protected:  int wakeup(void) noexcept override { return declaration::fail; }
     protected:  int wait(long second, long nano) noexcept override { return declaration::fail; }
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
-    public:     virtual int open(void) = 0;
+    public:     virtual int open(void);
     public:     virtual int close(void) = 0;
-    protected:  virtual long read(void) = 0;
-    protected:  virtual long read(unsigned char * storage, unsigned long capacity) = 0;
-    protected:  virtual long write(void) = 0;
-    protected:  virtual long write(const unsigned char * storage, unsigned long n) = 0;
+    protected:  virtual long read(void);
+    protected:  virtual long read(unsigned char * storage, unsigned long capacity);
+    protected:  virtual long write(void);
+    protected:  virtual long write(const unsigned char * storage, unsigned long n);
     public:     virtual unsigned int check(unsigned int state) const = 0;
     protected:  virtual void clear(void) = 0;
     protected:  virtual void clean(void) = 0;
     protected:  virtual void reset(void) = 0;
-    protected:  inline virtual void stateOn(unsigned int state, long result, exception * e = nullptr);
+    protected:  inline virtual void onState(unsigned int state, long result, exception * e = nullptr);
     protected:  virtual void exceptionSet(descriptor::exception * e, unsigned int state = declaration::none, long result = declaration::fail) = 0;
     public:     inline explicit descriptor(type value);
     public:     inline descriptor(void);
@@ -53,12 +53,32 @@ namespace pokemonism::sdk::interface {
     public:     interface::descriptor & operator=(interface::descriptor && o) noexcept = delete;
     };
 
-    inline void descriptor::stateOn(unsigned int state, long result, exception * e) {
+    inline int descriptor::open(void) {
+        pokemon_develop_throw(return declaration::fail);
+    }
+
+    inline long descriptor::read(void) {
+        pokemon_develop_throw(return declaration::fail);
+    }
+
+    inline long descriptor::read(unsigned char * storage, unsigned long capacity) {
+        pokemon_develop_throw(return declaration::fail);
+    }
+
+    inline long descriptor::write(void) {
+        pokemon_develop_throw(return declaration::fail);
+    }
+
+    inline long descriptor::write(const unsigned char * storage, unsigned long n) {
+        pokemon_develop_throw(return declaration::fail);
+    }
+
+    inline void descriptor::onState(unsigned int state, long result, exception * e) {
 
     }
 
     inline descriptor::descriptor(type value) {
-
+        pokemon_develop_throw(return);
     }
 
     inline descriptor::descriptor(void) {
