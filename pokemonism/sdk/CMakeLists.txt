@@ -23,13 +23,6 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             collection/stream/characterizable.hh
                                             collection/continuous/primitivable.hh
                                             collection/continuous/characterizable.hh
-                                            protocol.hh
-                                            protocol/hypertext.hh
-                                            protocol/hypertext/transfer.hh
-                                            protocol/hypertext/transfer/client.hh
-                                            protocol/transmission.hh
-                                            protocol/transmission/control.hh
-                                            protocol/transmission/control/socket.hh
                                             command.hh
                                             command/event.hh
                                             command/event/link.hh
@@ -38,13 +31,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             command/event/processor.hh
                                             command/event/subscription.hh
                                             command/event/internal/subscription.hh
-                                            descriptor.hh
-                                            socket.hh
-                                            client.hh
                                             exception.hh
-                                            interface/protocol.hh
-                                            interface/input.hh
-                                            interface/output.hh
                                             interface/pipe.hh
                                             interface/fifo.hh
                                             interface/file.hh
@@ -54,21 +41,11 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             interface/descriptor/event.hh
                                             interface/standard/input.hh
                                             interface/standard/output.hh
-                                            interface/communicator.hh
-                                            interface/communication/server.hh
-                                            interface/communication/client.hh
-                                            interface/communication/session.hh
-                                            generic/socket.hh
                                             generic/command.hh
                                             generic/envelope.hh
-                                            generic/descriptor.hh
                                             generic/functional/command.hh
                                             stream.hh
                                             stream/buffer.hh
-                                            input.hh
-                                            input/stream.hh
-                                            output.hh
-                                            output/stream.hh
                                             templateable/engine.hh
                                             templateable/command.hh
                                             templateable/command/subscription.hh
@@ -89,10 +66,6 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             primitivable.hh
                                             functionable.hh
                                             synchronizable.hh
-                                            descriptorable.hh
-                                            descriptorable/unix.hh
-                                            socketable.hh
-                                            socketable/unix.hh
                                             linked/list.hh
                                             engine.hh
                                             functional/command.hh
@@ -119,13 +92,6 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             collection/continuous.cc
                                             collection/continuous/primitivable.cc
                                             collection/continuous/characterizable.cc
-                                            protocol.cc
-                                            protocol/hypertext.cc
-                                            protocol/hypertext/transfer.cc
-                                            protocol/hypertext/transfer/client.cc
-                                            protocol/transmission.cc
-                                            protocol/transmission/control.cc
-                                            protocol/transmission/control/socket.cc
                                             command.cc
                                             command/event.cc
                                             command/event/link.cc
@@ -134,13 +100,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             command/event/processor.cc
                                             command/event/subscription.cc
                                             command/event/internal/subscription.cc
-                                            descriptor.cc
-                                            socket.cc
-                                            client.cc
                                             exception.cc
-                                            interface/protocol.cc
-                                            interface/input.cc
-                                            interface/output.cc
                                             interface/pipe.cc
                                             interface/fifo.cc
                                             interface/file.cc
@@ -150,21 +110,11 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             interface/descriptor/event.cc
                                             interface/standard/input.cc
                                             interface/standard/output.cc
-                                            interface/communicator.cc
-                                            interface/communication/server.cc
-                                            interface/communication/client.cc
-                                            interface/communication/session.cc
-                                            generic/socket.cc
                                             generic/command.cc
                                             generic/envelope.cc
-                                            generic/descriptor.cc
                                             generic/functional/command.cc
                                             stream.cc
                                             stream/buffer.cc
-                                            input.cc
-                                            input/stream.cc
-                                            output.cc
-                                            output/stream.cc
                                             templateable/engine.cc
                                             templateable/command.cc
                                             templateable/command/subscription.cc
@@ -185,10 +135,6 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             primitivable.cc
                                             functionable.cc
                                             synchronizable.cc
-                                            descriptorable.cc
-                                            descriptorable/unix.cc
-                                            socketable.cc
-                                            socketable/unix.cc
                                             linked/list.cc
                                             engine.cc
                                             functional/command.cc
