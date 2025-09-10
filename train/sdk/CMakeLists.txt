@@ -26,3 +26,6 @@ target_link_libraries(train-pokemonism-sdk-console                  pokemonism-d
 
 add_executable(train-pokemonism-sdk-protocol-echo                   train-pokemonism-sdk-protocol-echo.cc)
 target_link_libraries(train-pokemonism-sdk-protocol-echo            pokemonism-dev pokemonism-sdk)
+
+add_executable(train-pokemonism-sdk-list                            train-pokemonism-sdk-list.cc)
+target_link_libraries(train-pokemonism-sdk-list                     pokemonism-dev pokemonism-sdk)

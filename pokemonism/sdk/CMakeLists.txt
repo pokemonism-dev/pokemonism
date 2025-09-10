@@ -23,6 +23,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             collection/stream/characterizable.hh
                                             collection/continuous/primitivable.hh
                                             collection/continuous/characterizable.hh
+                                            collection/linked/list.hh
                                             command.hh
                                             command/event.hh
                                             command/event/link.hh
@@ -44,6 +45,10 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             interface/input/stream.hh
                                             interface/output/stream.hh
                                             interface/communicator.hh
+                                            interface/channel.hh
+                                            interface/server.hh
+                                            interface/session.hh
+                                            interface/client.hh
                                             generic/command.hh
                                             generic/envelope.hh
                                             generic/descriptor.hh
@@ -108,6 +113,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             collection/continuous.cc
                                             collection/continuous/primitivable.cc
                                             collection/continuous/characterizable.cc
+                                            collection/linked/list.cc
                                             command.cc
                                             command/event.cc
                                             command/event/link.cc
@@ -129,6 +135,10 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             interface/input/stream.cc
                                             interface/output/stream.cc
                                             interface/communicator.cc
+                                            interface/channel.cc
+                                            interface/server.cc
+                                            interface/session.cc
+                                            interface/client.cc
                                             generic/command.cc
                                             generic/envelope.cc
                                             generic/descriptor.cc
@@ -175,3 +185,4 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})
+

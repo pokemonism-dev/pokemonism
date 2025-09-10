@@ -48,8 +48,7 @@ namespace pokemonism::sdk::interface {
     protected:  int wakeup(void) noexcept override { return declaration::fail; }
     protected:  int wait(long second, long nano) noexcept override { return declaration::fail; }
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
-    public:     virtual int open(void);
-    public:     virtual int close(void) = 0;
+    public:     int open(void) override;
     protected:  long read(void) override;
     protected:  virtual long read(unsigned char * storage, unsigned long capacity);
     protected:  long write(void) override;

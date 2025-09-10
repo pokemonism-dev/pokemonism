@@ -17,8 +17,10 @@
 namespace pokemonism::sdk::interface {
 
     class communicator : public synchronizable {
+    public:     virtual int open(void) = 0;
     protected:  virtual long read(void) = 0;
     protected:  virtual long write(void) = 0;
+    public:     virtual int close(void) = 0;
     public:     communicator(void) {}
     public:     ~communicator(void) override {}
     public:     communicator(const communicator & o) = delete;
