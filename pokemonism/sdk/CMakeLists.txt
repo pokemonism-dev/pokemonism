@@ -50,6 +50,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             generic/socketable/unix.hh
                                             generic/descriptorable/unix.hh
                                             generic/functional/command.hh
+                                            generic/serializer.hh
+                                            generic/deserializer.hh
                                             stream.hh
                                             templateable/engine.hh
                                             templateable/command.hh
@@ -78,7 +80,9 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             context/buffer.hh
                                             console.hh
                                             console/input.hh
-                                            console/output.hh)
+                                            console/output.hh
+                                            protocol.hh
+                                            protocol/echo.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -127,6 +131,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/socketable/unix.cc
                                             generic/descriptorable/unix.cc
                                             generic/functional/command.cc
+                                            generic/serializer.cc
+                                            generic/deserializer.cc
                                             stream.cc
                                             templateable/engine.cc
                                             templateable/command.cc
@@ -155,7 +161,9 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             context/buffer.cc
                                             console.cc
                                             console/input.cc
-                                            console/output.cc)
+                                            console/output.cc
+                                            protocol.cc
+                                            protocol/echo.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})
