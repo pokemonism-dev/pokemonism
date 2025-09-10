@@ -88,7 +88,7 @@ namespace pokemonism::sdk::generic::descriptorable {
 
     template <class descriptor>
     long unix<descriptor>::write(void) {
-        return descriptor::read();
+        return descriptor::write();
     }
 
     template <class descriptor>

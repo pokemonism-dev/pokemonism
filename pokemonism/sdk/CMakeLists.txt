@@ -74,7 +74,10 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             engine.hh
                                             functional/command.hh
                                             context.hh
-                                            context/buffer.hh)
+                                            context/buffer.hh
+                                            console.hh
+                                            console/input.hh
+                                            console/output.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -147,7 +150,10 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             engine.cc
                                             functional/command.cc
                                             context.cc
-                                            context/buffer.cc)
+                                            context/buffer.cc
+                                            console.cc
+                                            console/input.cc
+                                            console/output.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

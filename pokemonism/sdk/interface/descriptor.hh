@@ -26,7 +26,11 @@ namespace pokemonism::sdk::interface {
                 };
     public:     struct property {
                 public:     constexpr static unsigned int none      = (0x00000000U <<  0U);
-                public:     constexpr static unsigned int socket    = (0x00000001U <<  0U);
+                public:     constexpr static unsigned int socket    = 1;
+                public:     struct console {
+                            public:     constexpr static unsigned int input  = 2;
+                            public:     constexpr static unsigned int output = 3;
+                            };
                 };
     public:     class event;
     public:     class exception;

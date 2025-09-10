@@ -20,3 +20,6 @@ target_link_libraries(train-pokemonism-sdk-typographer              pokemonism-d
 
 add_executable(train-pokemonism-sdk-descriptor                      train-pokemonism-sdk-descriptor.cc)
 target_link_libraries(train-pokemonism-sdk-descriptor               pokemonism-dev pokemonism-sdk)
+
+add_executable(train-pokemonism-sdk-console                         train-pokemonism-sdk-console.cc)
+target_link_libraries(train-pokemonism-sdk-console                  pokemonism-dev pokemonism-sdk)
