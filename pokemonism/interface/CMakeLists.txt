@@ -1,11 +1,27 @@
 cmake_minimum_required(VERSION 3.28.3)
 
-project(pokemonism- LANGUAGES CXX)
+project(pokemonism-interface-dev LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-set(POKEMONISM_INTERFACE_SOURCE         Application.cc)
+include_directories(src)
 
-set(POKEMONISM_INTERFACE_HEADER         Application.hh)
+set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/virtualable.cc
+                                            src/pokemonism/observable.cc
+                                            src/pokemonism/observerable.cc
+                                            src/pokemonism/runnable.cc
+                                            src/pokemonism/synchronizable.cc)
 
-add_library(pokemonism-sdk              ${POKEMONISM_SDK_SOURCE}
-        ${POKEMONISM_SDK_HEADER})
+set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/virtualable.hh
+                                            src/pokemonism/observable.hh
+                                            src/pokemonism/observerable.hh
+                                            src/pokemonism/runnable.hh
+                                            src/pokemonism/synchronizable.hh)
+
+add_library(pokemonism-interface-dev        ${POKEMONISM_INTERFACE_SOURCE}
+                                            ${POKEMONISM_INTERFACE_HEADER})
+
+add_executable(pokemonism-interface-runnable test/pokemonism/runnable.cc)
+target_link_libraries(pokemonism-interface-runnable pokemonism-interface-dev)
+
+add_executable(pokemonism-interface-synchronizable test/pokemonism/synchronizable.cc)
+target_link_libraries(pokemonism-interface-synchronizable pokemonism-interface-dev)
