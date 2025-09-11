@@ -55,6 +55,7 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             generic/socket.hh
                                             generic/socketable/unix.hh
                                             generic/descriptorable/unix.hh
+                                            generic/linkable/socket/unix.hh
                                             generic/functional/command.hh
                                             generic/serializer.hh
                                             generic/deserializer.hh
@@ -91,7 +92,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             protocol.hh
                                             protocol/echo.hh
                                             protocol/echo/serializer.hh
-                                            protocol/echo/deserializer.hh)
+                                            protocol/echo/deserializer.hh
+                                            protocol/transmission/control/protocol.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -145,6 +147,7 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/socket.cc
                                             generic/socketable/unix.cc
                                             generic/descriptorable/unix.cc
+                                            generic/linkable/socket/unix.cc
                                             generic/functional/command.cc
                                             generic/serializer.cc
                                             generic/deserializer.cc
@@ -181,7 +184,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             protocol.cc
                                             protocol/echo.cc
                                             protocol/echo/serializer.cc
-                                            protocol/echo/deserializer.cc)
+                                            protocol/echo/deserializer.cc
+                                            protocol/transmission/control/protocol.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

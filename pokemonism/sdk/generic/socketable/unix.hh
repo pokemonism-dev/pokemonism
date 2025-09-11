@@ -15,31 +15,29 @@
 
 namespace pokemonism::sdk::generic::socketable {
 
-    template <class descriptor = interface::socket>
+    template <class tag, class descriptor = interface::socket>
     class unix : public descriptorable::unix<descriptor> {
     public:     typedef descriptorable::unix<descriptor>::type  type;
     public:     struct connection {
-                public:     unix<descriptor>::type       value;
+                public:     unix<tag, descriptor>::type       value;
                 public:     interface::socket::address * addr;
                 };
     public:     int open(void) override;
     public:     int shutdown(int how) override;
     public:     inline explicit unix(unsigned int properties);
-    public:     inline unix(descriptorable::unix<descriptor>::type value, unsigned int properties);
+    public:     inline unix(unix<tag, descriptor>::type value, unsigned int properties);
     public:     inline unix(void);
     public:     inline ~unix(void) override;
-    public:     unix(const generic::socketable::unix<descriptor> & o) = delete;
-    public:     unix(generic::socketable::unix<descriptor> && o) noexcept = delete;
-    public:     generic::socketable::unix<descriptor> & operator=(const generic::socketable::unix<descriptor> & o) = delete;
-    public:     generic::socketable::unix<descriptor> & operator=(generic::socketable::unix<descriptor> && o) noexcept = delete;
+    public:     unix(const generic::socketable::unix<tag, descriptor> & o) = delete;
+    public:     unix(generic::socketable::unix<tag, descriptor> && o) noexcept = delete;
+    public:     generic::socketable::unix<tag, descriptor> & operator=(const generic::socketable::unix<tag, descriptor> & o) = delete;
+    public:     generic::socketable::unix<tag, descriptor> & operator=(generic::socketable::unix<tag, descriptor> && o) noexcept = delete;
     };
 
-    template <class descriptor>
-    int unix<descriptor>::open(void) {
-        pokemon_develop_check(this->method == nullptr, return declaration::fail);
-
+    template <class tag, class descriptor>
+    int unix<tag, descriptor>::open(void) {
         if (this->value <= declaration::invalid) {
-            this->value = ::socket(this->method->domain, this->method->type, this->method->protocol);
+            this->value = ::socket(tag::domain, tag::type, tag::protocol);
 
             if (this->value <= declaration::invalid) {
                 this->exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::socket), errno), interface::descriptor::state::type::open, declaration::fail);
@@ -63,11 +61,11 @@ namespace pokemonism::sdk::generic::socketable {
     }
 
     // ReSharper disable once CppDFAConstantFunctionResult
-    template <class descriptor>
-    int unix<descriptor>::shutdown(int how) {
+    template <class tag, class descriptor>
+    int unix<tag, descriptor>::shutdown(int how) {
         pokemon_develop_check(this->value <= declaration::invalid, return declaration::success);
 
-        if (shutdown(this->value, how) != declaration::success) {
+        if (::shutdown(this->value, how) != declaration::success) {
             // ### 20250910 | ERROR HANDLING
         }
 
@@ -86,23 +84,23 @@ namespace pokemonism::sdk::generic::socketable {
         return declaration::success;
     }
 
-    template <class descriptor>
-    inline unix<descriptor>::unix(unsigned int properties) : descriptorable::unix<descriptor>(properties) {
+    template <class tag, class descriptor>
+    inline unix<tag, descriptor>::unix(unsigned int properties) : descriptorable::unix<descriptor>(properties) {
 
     }
 
-    template <class descriptor>
-    inline unix<descriptor>::unix(typename descriptorable::unix<descriptor>::type value, unsigned int properties) : descriptorable::unix<descriptor>(value, properties) {
+    template <class tag, class descriptor>
+    inline unix<tag, descriptor>::unix(unix<tag, descriptor>::type value, unsigned int properties) : descriptorable::unix<descriptor>(value, properties) {
 
     }
 
-    template <class descriptor>
-    inline unix<descriptor>::unix(void) {
+    template <class tag, class descriptor>
+    inline unix<tag, descriptor>::unix(void) {
 
     }
 
-    template <class descriptor>
-    inline unix<descriptor>::~unix(void) {
+    template <class tag, class descriptor>
+    inline unix<tag, descriptor>::~unix(void) {
 
     }
 

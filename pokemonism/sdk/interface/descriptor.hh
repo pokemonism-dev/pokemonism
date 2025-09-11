@@ -90,6 +90,10 @@ namespace pokemonism::sdk::interface {
     public:     struct code {
                 public:     constexpr static unsigned int none = declaration::none;
                 public:     constexpr static unsigned int eof = 1;
+                public:     constexpr static unsigned int nil = 2;
+                public:     struct invalid {
+                            public:     constexpr static unsigned int parameter = 3;
+                            };
                 };
     protected:  unsigned int    tag;
     protected:  void *          func;

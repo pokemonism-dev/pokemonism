@@ -29,6 +29,10 @@ namespace pokemonism::sdk::generic {
 
     template <class socketable>
     inline int socket<socketable>::link(void) {
+        // this->value = linker::open<method, category>(this->value);
+
+
+
         if (this->stateChk(interface::descriptor::state::open)) {
             unsigned int state = interface::socket::state::link::begin | interface::socket::state::link::end;
             if (this->readable()) state = state | interface::socket::state::link::in;

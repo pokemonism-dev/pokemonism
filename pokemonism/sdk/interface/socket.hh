@@ -11,6 +11,7 @@
 #define   __POKEMONISM_SDK_INTERFACE_SOCKET_HH__
 
 #include <sys/socket.h>
+#include <netinet/in.h>
 
 #include <pokemonism/sdk/interface/descriptor.hh>
 
@@ -48,17 +49,26 @@ namespace pokemonism::sdk::interface {
                             public:     constexpr static int all = SHUT_RDWR;
                             };
                 };
-    public:     struct method {
-                public:     int domain;
-                public:     int type;
-                public:     int protocol;
+    public:     struct tag {
+                public:     constexpr static int domain = AF_INET;
+                public:     constexpr static int type = SOCK_STREAM;
+                public:     constexpr static int protocol = IPPROTO_TCP;
                 };
+    public:     struct server : public tag {
+
+                };
+    public:     struct client;
+    public:     struct session;
     public:     struct address {
                 public:     unsigned long size;
                 public:     unsigned char value[];
                 };
-    protected:  const socket::method *  tag;
-    protected:  socket::address *       addr;
+    public:     template <typename type> struct linker {
+                public:     static int link(type & value, const void * addr, unsigned int len, unsigned int * status, interface::descriptor::exception ** e) { return declaration::fail; }
+                public:     template <typename tag> static type open(type & value, unsigned int * status, interface::descriptor::exception ** e){ return value; }
+                };
+    public:
+    protected:  socket::address * addr;
     public:     virtual int shutdown(int how) = 0;
     protected:  inline virtual int link(void);
     public:     inline virtual void addressSet(const void * o, unsigned long len);
@@ -97,16 +107,15 @@ namespace pokemonism::sdk::interface {
         addr = o;
     }
 
-    inline socket::socket(unsigned int properties) : interface::descriptor(properties), tag(nullptr), addr(nullptr) {
+    inline socket::socket(unsigned int properties) : interface::descriptor(properties), addr(nullptr) {
 
     }
 
-    inline socket::socket(void) : tag(nullptr), addr(nullptr) {
+    inline socket::socket(void) : addr(nullptr) {
 
     }
 
     inline socket::~socket(void) {
-        tag = nullptr;
         addr = allocator::del(addr);
     }
 
