@@ -18,13 +18,32 @@ using namespace pokemonism::protocol;
 
 int main(int argc, char ** argv) {
 
-    generic::descriptor<stream::input<stream::output<generic::descriptorable::unix<>>>> o;
+    {
+        generic::descriptor<stream::input<stream::output<generic::descriptorable::unix<>>>> o;
+    }
 
-    // interface::socket::
-    // socket::tcp::server
-    // transmission::control::protocol::socket::server
 
-    generic::socket<stream::input<stream::output<generic::socketable::unix<transmission::control::protocol::socket::session>>>> o2;
+    try {
+        generic::socket<stream::input<stream::output<generic::socketable::unix<transmission::control::protocol::socket::session>>>> o;
+        o.open();
+    } catch (...) {
+
+    }
+
+    try {
+        generic::socket<stream::input<stream::output<generic::socketable::unix<transmission::control::protocol::socket::server>>>> o;
+        o.open();
+    } catch (...) {
+
+    }
+
+    try {
+        generic::socket<stream::input<stream::output<generic::socketable::unix<transmission::control::protocol::socket::client>>>> o;
+        o.open();
+    } catch (...) {
+
+    }
+
         // interface::tag::socket::ptr::server>>>> o;
 
     // generic::descriptorable::unix<stream::input<stream::output<generic::descriptor<>>>> o;

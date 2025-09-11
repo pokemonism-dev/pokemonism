@@ -18,8 +18,8 @@ namespace pokemonism::sdk::generic {
     template <class descriptorable = interface::descriptor>
     class descriptor : public descriptorable {
     protected:  typedef descriptorable::type        type;
-    protected:  inline explicit descriptor(unsigned int properties);
-    protected:  inline descriptor(generic::descriptor<descriptorable>::type value, unsigned int properties);
+    public:     inline explicit descriptor(unsigned int properties);
+    public:     inline descriptor(generic::descriptor<descriptorable>::type value, unsigned int properties);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;
     public:     descriptor(const generic::descriptor<descriptorable> & o) = delete;

@@ -39,6 +39,7 @@ namespace pokemonism::sdk::interface {
                             public:     constexpr static unsigned int in        = (0x00000001U <<  5U);
                             public:     constexpr static unsigned int out       = (0x00000001U <<  6U);
                             public:     constexpr static unsigned int end       = (0x00000001U <<  7U);
+                            public:     constexpr static unsigned int all       = (interface::socket::state::link::begin | interface::socket::state::link::in | interface::socket::state::link::out | interface::socket::state::link::end);
                             };
                 public:     constexpr static unsigned int engine                = interface::descriptor::state::engine;     // (0x00000001U << 31U);
                 };
@@ -50,22 +51,18 @@ namespace pokemonism::sdk::interface {
                             };
                 };
     public:     struct tag {
-                public:     constexpr static int domain = AF_INET;
-                public:     constexpr static int type = SOCK_STREAM;
-                public:     constexpr static int protocol = IPPROTO_TCP;
+                public:     constexpr static int domain     = declaration::zero;
+                public:     constexpr static int type       = declaration::zero;
+                public:     constexpr static int protocol   = declaration::zero;
                 };
-    public:     struct server : public tag {
-
-                };
-    public:     struct client;
-    public:     struct session;
     public:     struct address {
                 public:     unsigned long size;
                 public:     unsigned char value[];
                 };
-    public:     template <typename type> struct linker {
-                public:     static int link(type & value, const void * addr, unsigned int len, unsigned int * status, interface::descriptor::exception ** e) { return declaration::fail; }
-                public:     template <typename tag> static type open(type & value, unsigned int * status, interface::descriptor::exception ** e){ return value; }
+    public:     template <typename type, class tag = interface::socket::tag> struct linker {
+                public:     constexpr static const char * name = "linker";
+                public:     static int link(type & value, const void * addr, unsigned int len, unsigned int * status, interface::descriptor::exception ** e);
+                public:     static type open(type & value, unsigned int * status, interface::descriptor::exception ** e);
                 };
     public:
     protected:  socket::address * addr;
@@ -81,6 +78,16 @@ namespace pokemonism::sdk::interface {
     public:     interface::socket & operator=(const interface::socket & o) = delete;
     public:     interface::socket & operator=(interface::socket && o) noexcept = delete;
     };
+
+    template <typename type, class tag>
+    int socket::linker<type, tag>::link(type & value, const void * addr, unsigned int len, unsigned int * status, interface::descriptor::exception ** e) {
+        return value;
+    }
+
+    template <typename type, class tag>
+    type socket::linker<type, tag>::open(type & value, unsigned int * status, interface::descriptor::exception ** e) {
+        return value;
+    }
 
     inline int socket::link(void) {
         if (stateChk(interface::descriptor::state::open)) {

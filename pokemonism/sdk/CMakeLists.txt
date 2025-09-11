@@ -55,7 +55,6 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             generic/socket.hh
                                             generic/socketable/unix.hh
                                             generic/descriptorable/unix.hh
-                                            generic/linkable/socket/unix.hh
                                             generic/functional/command.hh
                                             generic/serializer.hh
                                             generic/deserializer.hh
@@ -147,7 +146,6 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             generic/socket.cc
                                             generic/socketable/unix.cc
                                             generic/descriptorable/unix.cc
-                                            generic/linkable/socket/unix.cc
                                             generic/functional/command.cc
                                             generic/serializer.cc
                                             generic/deserializer.cc

@@ -18,7 +18,9 @@ namespace pokemonism::sdk::generic {
     template <class socketable = interface::socket>
     class socket : public generic::descriptor<socketable> {
     protected:  typedef socketable::type    type;
-    protected:  inline int link(void) override;
+    public:     inline socket(const char * addr, unsigned long len, unsigned int properties);
+    public:     inline explicit socket(unsigned int properties);
+    public:     inline socket(generic::socket<socketable>::type value, unsigned int properties);
     public:     inline socket(void);
     public:     inline ~socket(void) override;
     public:     socket(const generic::socket<socketable> & o) = delete;
@@ -28,19 +30,18 @@ namespace pokemonism::sdk::generic {
     };
 
     template <class socketable>
-    inline int socket<socketable>::link(void) {
-        // this->value = linker::open<method, category>(this->value);
+    inline socket<socketable>::socket(const char * addr, unsigned long len, unsigned int properties) : generic::descriptor<socketable>(properties) {
+        this->addressSet(addr, len);
+    }
 
+    template <class socketable>
+    inline socket<socketable>::socket(unsigned int properties) : generic::descriptor<socketable>(properties) {
 
+    }
 
-        if (this->stateChk(interface::descriptor::state::open)) {
-            unsigned int state = interface::socket::state::link::begin | interface::socket::state::link::end;
-            if (this->readable()) state = state | interface::socket::state::link::in;
-            if (this->writeable()) state = state | interface::socket::state::link::out;
-            this->stateSet(state);
-            return declaration::success;
-        }
-        return declaration::fail;
+    template <class socketable>
+    inline socket<socketable>::socket(generic::socket<socketable>::type value, unsigned int properties) : generic::descriptor<socketable>(value, properties) {
+
     }
 
     template <class socketable>
