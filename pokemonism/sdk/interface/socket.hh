@@ -11,7 +11,6 @@
 #define   __POKEMONISM_SDK_INTERFACE_SOCKET_HH__
 
 #include <sys/socket.h>
-#include <netinet/in.h>
 
 #include <pokemonism/sdk/interface/descriptor.hh>
 
@@ -60,7 +59,7 @@ namespace pokemonism::sdk::interface {
                 public:     unsigned char value[];
                 };
     public:     template <typename type, class tag = interface::socket::tag> struct linker {
-                public:     constexpr static const char * name = "linker";
+                public:     constexpr static const char * name = "interface::socket::linker";
                 public:     static int link(type & value, const void * addr, unsigned int len, unsigned int * status, interface::descriptor::exception ** e);
                 public:     static type open(type & value, unsigned int * status, interface::descriptor::exception ** e);
                 };

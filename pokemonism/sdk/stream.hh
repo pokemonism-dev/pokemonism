@@ -13,7 +13,6 @@
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/sdk/collection/stream.hh>
 #include <pokemonism/sdk/interface/descriptor.hh>
-#include <pokemonism/sdk/interface/server.hh>
 #include <pokemonism/sdk/interface/input/stream.hh>
 #include <pokemonism/sdk/interface/output/stream.hh>
 
@@ -46,7 +45,6 @@ namespace pokemonism::sdk {
                 };
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class input;
     public:     template <class descriptorable = pokemonism::sdk::interface::descriptor> class output;
-    public:     template <class descriptorable = pokemonism::sdk::interface::server> class server;
     protected:  stream::buffer *    container;
     protected:  stream *            prev;
     protected:  stream *            next;
@@ -170,25 +168,6 @@ namespace pokemonism::sdk {
     public:     output(stream::output<descriptorable> && o) noexcept = delete;
     public:     stream::output<descriptorable> & operator=(const stream::output<descriptorable> & o) = delete;
     public:     stream::output<descriptorable> & operator=(stream::output<descriptorable> && o) noexcept = delete;
-    };
-
-    template <class descriptorable>
-    class stream::server : public pokemonism::sdk::interface::input::stream<descriptorable> {
-    public:     typedef pokemonism::sdk::interface::input::stream<descriptorable>::type type;
-    public:     pokemonism::sdk::stream::buffer * in;
-    protected:  void clear(void) override;
-    protected:  void clean(void) override;
-    protected:  void reset(void) override;
-    protected:  long read(unsigned char * storage, unsigned long capacity) override;
-    protected:  long read(void) override;
-    protected:  long read(pokemonism::sdk::stream & node) override;
-    public:     inline explicit server(stream::server<descriptorable>::type value);
-    public:     inline server(void);
-    public:     inline ~server(void) override;
-    public:     server(const stream::server<descriptorable> & o) = delete;
-    public:     server(stream::server<descriptorable> && o) noexcept = delete;
-    public:     stream::server<descriptorable> & operator=(const stream::server<descriptorable> & o) = delete;
-    public:     stream::server<descriptorable> & operator=(stream::server<descriptorable> && o) noexcept = delete;
     };
 
     inline void stream::onState(unsigned int previous, unsigned int state) {

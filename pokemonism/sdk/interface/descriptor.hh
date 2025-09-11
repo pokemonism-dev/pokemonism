@@ -12,11 +12,11 @@
 
 #include <pokemonism/sdk/allocator.hh>
 #include <pokemonism/sdk/exception.hh>
-#include <pokemonism/sdk/interface/communicator.hh>
+#include <pokemonism/sdk/synchronizable.hh>
 
 namespace pokemonism::sdk::interface {
 
-    class descriptor : public communicator {
+    class descriptor : public synchronizable {
     public:     typedef int type;
     public:     struct state {
                 public:     struct type {
@@ -54,12 +54,15 @@ namespace pokemonism::sdk::interface {
     protected:  int wakeup(void) noexcept override { return declaration::fail; }
     protected:  int wait(long second, long nano) noexcept override { return declaration::fail; }
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
-    public:     int open(void) override;
+    public:     virtual int open(void);
+    public:     inline virtual bool readable(void) const;
+    public:     inline virtual bool writeable(void) const;
     public:     virtual int nonblockSet(void) = 0;
     public:     virtual int nonblockDel(void) = 0;
-    protected:  inline long read(void) override;
+    public:     virtual int close(void) = 0;
+    protected:  inline virtual long read(void);
     protected:  inline virtual long read(unsigned char * storage, unsigned long capacity);
-    protected:  inline long write(void) override;
+    protected:  inline virtual long write(void);
     protected:  inline virtual long write(const unsigned char * storage, unsigned long n);
     public:     inline virtual void stateSet(unsigned int v);
     public:     inline virtual void stateDel(unsigned int v);
@@ -240,6 +243,14 @@ namespace pokemonism::sdk::interface {
         }
 
         e = caution;
+    }
+
+    inline bool descriptor::readable(void) const {
+        return false;
+    }
+
+    inline bool descriptor::writeable(void) const {
+        return false;
     }
 
     inline descriptor::descriptor(unsigned int properties) : status(descriptor::state::none), properties(properties), e(nullptr) {
