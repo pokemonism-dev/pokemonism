@@ -10,7 +10,10 @@ set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/virtualable.cc
                                             src/pokemonism/observerable.cc
                                             src/pokemonism/runnable.cc
                                             src/pokemonism/callable.cc
+                                            src/pokemonism/cloneable.cc
+                                            src/pokemonism/envelopeable.cc
                                             src/pokemonism/primitivable.cc
+                                            src/pokemonism/communicatable.cc
                                             src/pokemonism/synchronizable.cc)
 
 set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/virtualable.hh
@@ -18,7 +21,10 @@ set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/virtualable.hh
                                             src/pokemonism/observerable.hh
                                             src/pokemonism/runnable.hh
                                             src/pokemonism/callable.hh
+                                            src/pokemonism/cloneable.hh
+                                            src/pokemonism/envelopeable.hh
                                             src/pokemonism/primitivable.hh
+                                            src/pokemonism/communicatable.hh
                                             src/pokemonism/synchronizable.hh)
 
 add_library(pokemonism-interface-dev        ${POKEMONISM_INTERFACE_SOURCE}
