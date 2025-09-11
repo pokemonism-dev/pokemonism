@@ -77,6 +77,13 @@
 //     return 0;
 // }
 
+PokemonismSdk::Vulkan
+pokemonism::sdk::vulkan
+
 int main(int argc, char ** argv) {
+    // LinkedList::del(...);
+    // LinkedList::add(...);
+    // linked::list::del(...);
+
     return 0;
 }
