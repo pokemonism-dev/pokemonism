@@ -25,27 +25,90 @@ namespace pokemonism::sdk::interface {
                             public:     constexpr static unsigned int exception = interface::descriptor::state::type::exception;
                             public:     constexpr static unsigned int close     = interface::descriptor::state::type::close;
                             public:     constexpr static unsigned int shutdown  = interface::descriptor::state::type::max;
-                            public:     constexpr static unsigned int max       = interface::descriptor::state::type::max + 1;
+                            public:     constexpr static unsigned int link      = interface::descriptor::state::type::max + 1;
+                            public:     constexpr static unsigned int max       = interface::descriptor::state::type::max + 2;
                             };
+                public:     constexpr static unsigned int none                  = interface::descriptor::state::none;       // (0x00000000U <<  0U);
+                public:     constexpr static unsigned int open                  = interface::descriptor::state::open;       // (0x00000001U <<  0U);
+                public:     constexpr static unsigned int in                    = interface::descriptor::state::in;         // (0x00000001U <<  1U);
+                public:     constexpr static unsigned int out                   = interface::descriptor::state::out;        // (0x00000001U <<  2U);
+                public:     constexpr static unsigned int exception             = interface::descriptor::state::exception;  // (0x00000001U <<  3U);
+                public:     struct link {
+                            public:     constexpr static unsigned int begin     = (0x00000001U <<  4U);
+                            public:     constexpr static unsigned int in        = (0x00000001U <<  5U);
+                            public:     constexpr static unsigned int out       = (0x00000001U <<  6U);
+                            public:     constexpr static unsigned int end       = (0x00000001U <<  7U);
+                            };
+                public:     constexpr static unsigned int engine                = interface::descriptor::state::engine;     // (0x00000001U << 31U);
                 };
-    public:     struct method {
-                public:     int domain;
-                public:     int type;
-                public:     int protocol;
+    public:     struct flag {
                 public:     struct shutdown {
                             public:     constexpr static int in  = SHUT_RD;
                             public:     constexpr static int out = SHUT_WR;
                             public:     constexpr static int all = SHUT_RDWR;
                             };
                 };
+    public:     struct method {
+                public:     int domain;
+                public:     int type;
+                public:     int protocol;
+                };
+    public:     struct address {
+                public:     unsigned long size;
+                public:     unsigned char value[];
+                };
+    protected:  const socket::method *  tag;
+    protected:  socket::address *       addr;
     public:     virtual int shutdown(int how) = 0;
-    public:     socket(void) {}
-    public:     ~socket(void) override {}
+    protected:  inline virtual int link(void);
+    public:     inline virtual void addressSet(const void * o, unsigned long len);
+    public:     inline virtual void addressSet(socket::address * o);
+    public:     inline explicit socket(unsigned int properties);
+    public:     inline socket(void);
+    public:     inline ~socket(void) override;
     public:     socket(const interface::socket & o) = delete;
     public:     socket(interface::socket && o) noexcept = delete;
     public:     interface::socket & operator=(const interface::socket & o) = delete;
     public:     interface::socket & operator=(interface::socket && o) noexcept = delete;
     };
+
+    inline int socket::link(void) {
+        if (stateChk(interface::descriptor::state::open)) {
+            stateSet(interface::socket::state::link::begin);
+            return declaration::success;
+        }
+        return declaration::fail;
+    }
+
+    inline void socket::addressSet(const void * o, unsigned long len) {
+        if (addr != nullptr && addr->size != len) addr = allocator::del(addr);
+
+        if (addr == nullptr && len > 0) addr = static_cast<socket::address *>(allocator::gen(len));
+
+        if (addr != nullptr) {
+            addr->size = len;
+            memcpy(addr->value, o, len);
+        }
+    }
+
+    inline void socket::addressSet(socket::address * o) {
+        if (addr != nullptr) delete addr;
+
+        addr = o;
+    }
+
+    inline socket::socket(unsigned int properties) : interface::descriptor(properties), tag(nullptr), addr(nullptr) {
+
+    }
+
+    inline socket::socket(void) : tag(nullptr), addr(nullptr) {
+
+    }
+
+    inline socket::~socket(void) {
+        tag = nullptr;
+        addr = allocator::del(addr);
+    }
 
 }
 

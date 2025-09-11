@@ -140,6 +140,7 @@ namespace pokemonism::sdk {
     protected:  long read(unsigned char * storage, unsigned long capacity) override;
     protected:  long read(void) override;
     protected:  long read(pokemonism::sdk::stream & node) override;
+    public:     inline bool readable(void) const override;
     public:     inline explicit input(unsigned int properties);
     public:     inline input(stream::input<descriptorable>::type value, unsigned int properties);
     public:     inline input(void);
@@ -160,6 +161,7 @@ namespace pokemonism::sdk {
     protected:  long write(const unsigned char * storage, unsigned long n) override;
     protected:  long write(void) override;
     protected:  long write(pokemonism::sdk::stream & node) override;
+    public:     inline bool writeable(void) const override;
     public:     inline explicit output(unsigned int properties);
     public:     inline output(stream::output<descriptorable>::type value, unsigned int properties);
     public:     inline output(void);
@@ -393,6 +395,11 @@ namespace pokemonism::sdk {
     }
 
     template <class descriptorable>
+    inline bool stream::input<descriptorable>::readable(void) const {
+        return true;
+    }
+
+    template <class descriptorable>
     inline stream::input<descriptorable>::input(void) : in(new stream::buffer()) {
 
     }
@@ -465,6 +472,11 @@ namespace pokemonism::sdk {
         if (n > 0) node.pop(n);
 
         return n;
+    }
+
+    template <class descriptorable>
+    inline bool stream::output<descriptorable>::writeable(void) const {
+        return true;
     }
 
     template <class descriptorable>

@@ -55,19 +55,22 @@ namespace pokemonism::sdk::interface {
     protected:  int wait(long second, long nano) noexcept override { return declaration::fail; }
     protected:  int wakeup(bool all) noexcept override { return declaration::fail; }
     public:     int open(void) override;
+    public:     virtual int nonblockSet(void) = 0;
+    public:     virtual int nonblockDel(void) = 0;
     protected:  inline long read(void) override;
     protected:  inline virtual long read(unsigned char * storage, unsigned long capacity);
     protected:  inline long write(void) override;
     protected:  inline virtual long write(const unsigned char * storage, unsigned long n);
-    public:     inline virtual void statusSet(unsigned int v);
-    public:     inline virtual void statusDel(unsigned int v);
+    public:     inline virtual void stateSet(unsigned int v);
+    public:     inline virtual void stateDel(unsigned int v);
     public:     inline virtual unsigned int stateChk(unsigned int v) const;
     public:     inline virtual unsigned int propertyChk(unsigned int v) const;
     protected:  inline virtual void clear(void);
     protected:  inline virtual void clean(void);
     protected:  inline virtual void reset(void);
     protected:  inline virtual void onState(unsigned int state, long result, descriptor::exception * caution = nullptr);
-    protected:  inline virtual void exceptionSet(descriptor::exception * caution, unsigned int state = declaration::none, long result = declaration::fail);
+    protected:  inline virtual void exceptionSet(descriptor::exception * caution, unsigned int state, long result);
+    protected:  inline virtual void exceptionSet(descriptor::exception * caution);
     public:     inline explicit descriptor(unsigned int properties);
     public:     inline descriptor(void);
     public:     inline ~descriptor(void) override;
@@ -195,11 +198,11 @@ namespace pokemonism::sdk::interface {
         pokemon_develop_throw(return declaration::fail);
     }
 
-    inline void descriptor::statusSet(unsigned int v) {
+    inline void descriptor::stateSet(unsigned int v) {
         status = status | v;
     }
 
-    inline void descriptor::statusDel(unsigned int v) {
+    inline void descriptor::stateDel(unsigned int v) {
         status = status & (~v);
     }
 
@@ -224,6 +227,15 @@ namespace pokemonism::sdk::interface {
 
         e = caution;
         onState(state, result, caution);
+    }
+
+    inline void descriptor::exceptionSet(descriptor::exception * caution) {
+        if (e != nullptr) {
+            delete caution;
+            return;
+        }
+
+        e = caution;
     }
 
     inline descriptor::descriptor(unsigned int properties) : status(descriptor::state::none), properties(properties), e(nullptr) {

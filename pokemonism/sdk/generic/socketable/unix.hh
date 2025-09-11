@@ -18,15 +18,14 @@ namespace pokemonism::sdk::generic::socketable {
     template <class descriptor = interface::socket>
     class unix : public descriptorable::unix<descriptor> {
     public:     typedef descriptorable::unix<descriptor>::type  type;
+    public:     struct connection {
+                public:     unix<descriptor>::type       value;
+                public:     interface::socket::address * addr;
+                };
+    public:     int open(void) override;
     public:     int shutdown(int how) override;
-    // protected:  inline explicit unix(const interface::socket::method * method, const socket<socketable>::address & addr);
-    // protected:  inline explicit unix(const interface::socket::method * method, socket<socketable>::address * addr);
-    // protected:  inline unix(const interface::socket::method * method, const unsigned char * addr, unsigned long addrLen);
-    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, const socket<socketable>::address & addr);
-    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, socket<socketable>::address * addr);
-    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method, const unsigned char * addr, unsigned long addrLen);
-    // protected:  inline unix(generic::socket<socketable>::type value, const interface::socket::method * method);
-    public:     inline explicit unix(int value, unsigned int properties = interface::descriptor::property::none);
+    public:     inline explicit unix(unsigned int properties);
+    public:     inline unix(descriptorable::unix<descriptor>::type value, unsigned int properties);
     public:     inline unix(void);
     public:     inline ~unix(void) override;
     public:     unix(const generic::socketable::unix<descriptor> & o) = delete;
@@ -34,6 +33,34 @@ namespace pokemonism::sdk::generic::socketable {
     public:     generic::socketable::unix<descriptor> & operator=(const generic::socketable::unix<descriptor> & o) = delete;
     public:     generic::socketable::unix<descriptor> & operator=(generic::socketable::unix<descriptor> && o) noexcept = delete;
     };
+
+    template <class descriptor>
+    int unix<descriptor>::open(void) {
+        pokemon_develop_check(this->method == nullptr, return declaration::fail);
+
+        if (this->value <= declaration::invalid) {
+            this->value = ::socket(this->method->domain, this->method->type, this->method->protocol);
+
+            if (this->value <= declaration::invalid) {
+                this->exceptionSet(new interface::descriptor::exception(interface::descriptor::exception::category::sys, reinterpret_cast<void *>(::socket), errno), interface::descriptor::state::type::open, declaration::fail);
+                return declaration::fail;
+            }
+
+            if ((this->properties & interface::descriptor::property::nonblock) || this->stateChk(interface::descriptor::state::engine)) {
+                if (this->nonblockSet() != declaration::success) {
+                    this->close();
+                    return declaration::fail;
+                }
+            }
+
+            if (this->link() != declaration::success) {
+                this->close();
+                return declaration::fail;
+            }
+        }
+
+        return declaration::success;
+    }
 
     // ReSharper disable once CppDFAConstantFunctionResult
     template <class descriptor>
@@ -44,22 +71,29 @@ namespace pokemonism::sdk::generic::socketable {
             // ### 20250910 | ERROR HANDLING
         }
 
-        if (how == interface::socket::method::shutdown::in) {
-            this->status = this->status & (~(interface::socket::state::in));
-            this->onState(interface::socket::state::type::shutdown, interface::socket::method::shutdown::in);
-        } else if (how == interface::socket::method::shutdown::out) {
-            this->status = this->status & (~(interface::socket::state::out));
-            this->onState(interface::socket::state::type::shutdown, interface::socket::method::shutdown::out);
-        } else if (how == interface::socket::method::shutdown::all) {
-            this->status = this->status & (~(interface::socket::state::out | interface::socket::state::in));
-            this->onState(interface::socket::state::type::shutdown, interface::socket::method::shutdown::all);
+        if (how == interface::socket::flag::shutdown::in) {
+            this->stateDel(interface::socket::state::in | interface::socket::state::link::in);
+            this->onState(interface::socket::state::type::shutdown, interface::socket::flag::shutdown::in);
+        } else if (how == interface::socket::flag::shutdown::out) {
+            this->stateDel(interface::socket::state::out | interface::socket::state::link::out);
+            this->onState(interface::socket::state::type::shutdown, interface::socket::flag::shutdown::out);
+        } else if (how == interface::socket::flag::shutdown::all) {
+            this->stateDel(interface::socket::state::out | interface::socket::state::link::out | interface::socket::state::in | interface::socket::state::link::in);
+            this->onState(interface::socket::state::type::shutdown, interface::socket::flag::shutdown::all);
+            this->close();
         }
 
         return declaration::success;
     }
 
     template <class descriptor>
-    inline unix<descriptor>::unix(int value, unsigned int properties) : descriptorable::unix<descriptor>(value, properties) {
+    inline unix<descriptor>::unix(unsigned int properties) : descriptorable::unix<descriptor>(properties) {
+
+    }
+
+    template <class descriptor>
+    inline unix<descriptor>::unix(typename descriptorable::unix<descriptor>::type value, unsigned int properties) : descriptorable::unix<descriptor>(value, properties) {
+
     }
 
     template <class descriptor>
@@ -69,7 +103,9 @@ namespace pokemonism::sdk::generic::socketable {
 
     template <class descriptor>
     inline unix<descriptor>::~unix(void) {
+
     }
+
 
 }
 

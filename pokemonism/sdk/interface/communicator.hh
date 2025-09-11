@@ -21,6 +21,8 @@ namespace pokemonism::sdk::interface {
     protected:  virtual long read(void) = 0;
     protected:  virtual long write(void) = 0;
     public:     virtual int close(void) = 0;
+    public:     inline virtual bool readable(void) const;
+    public:     inline virtual bool writeable(void) const;
     public:     communicator(void) {}
     public:     ~communicator(void) override {}
     public:     communicator(const communicator & o) = delete;
@@ -28,6 +30,14 @@ namespace pokemonism::sdk::interface {
     public:     communicator & operator=(const communicator & o) = delete;
     public:     communicator & operator=(communicator && o) noexcept = delete;
     };
+
+    inline bool communicator::readable(void) const {
+        return false;
+    }
+
+    inline bool communicator::writeable(void) const {
+        return false;
+    }
 
 }
 
