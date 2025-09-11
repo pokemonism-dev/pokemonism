@@ -87,7 +87,8 @@ set(POKEMONISM_SDK_HEADER                   log.hh
                                             protocol/echo.hh
                                             protocol/echo/serializer.hh
                                             protocol/echo/deserializer.hh
-                                            protocol/transmission/control/protocol.hh)
+                                            protocol/transmission/control/protocol.hh
+                                            socket.hh)
 
 set(POKEMONISM_SDK_SOURCE                   log.cc
                                             sync.cc
@@ -173,7 +174,8 @@ set(POKEMONISM_SDK_SOURCE                   log.cc
                                             protocol/echo.cc
                                             protocol/echo/serializer.cc
                                             protocol/echo/deserializer.cc
-                                            protocol/transmission/control/protocol.cc)
+                                            protocol/transmission/control/protocol.cc
+                                            socket.cc)
 
 add_library(pokemonism-sdk                  ${POKEMONISM_SDK_HEADER}
                                             ${POKEMONISM_SDK_SOURCE})

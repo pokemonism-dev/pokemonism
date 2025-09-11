@@ -16,9 +16,6 @@
 
 namespace pokemonism::protocol::transmission::control {
 
-    class socket {
-
-    };
 
 
     class protocol {

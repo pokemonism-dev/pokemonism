@@ -11,7 +11,6 @@
 #define   __POKEMONISM_SDK_INTERFACE_SOCKET_HH__
 
 #include <sys/socket.h>
-
 #include <pokemonism/sdk/interface/descriptor.hh>
 
 namespace pokemonism::sdk::interface {

@@ -59,11 +59,11 @@ namespace pokemonism::sdk::interface {
     public:     inline virtual bool writeable(void) const;
     public:     virtual int nonblockSet(void) = 0;
     public:     virtual int nonblockDel(void) = 0;
-    public:     virtual int close(void) = 0;
     protected:  inline virtual long read(void);
     protected:  inline virtual long read(unsigned char * storage, unsigned long capacity);
     protected:  inline virtual long write(void);
     protected:  inline virtual long write(const unsigned char * storage, unsigned long n);
+    public:     virtual int close(void) = 0;
     public:     inline virtual void stateSet(unsigned int v);
     public:     inline virtual void stateDel(unsigned int v);
     public:     inline virtual unsigned int stateChk(unsigned int v) const;

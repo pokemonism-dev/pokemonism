@@ -131,7 +131,7 @@ namespace pokemonism::sdk {
     template <class descriptorable>
     class stream::input : public pokemonism::sdk::interface::input::stream<descriptorable> {
     public:     typedef pokemonism::sdk::interface::input::stream<descriptorable>::type type;
-    public:     pokemonism::sdk::stream::buffer * in;
+    protected:  pokemonism::sdk::stream::buffer * in;
     protected:  void clear(void) override;
     protected:  void clean(void) override;
     protected:  void reset(void) override;
@@ -152,7 +152,7 @@ namespace pokemonism::sdk {
     template <class descriptorable>
     class stream::output : public pokemonism::sdk::interface::output::stream<descriptorable> {
     public:     typedef pokemonism::sdk::interface::output::stream<descriptorable>::type type;
-    public:     pokemonism::sdk::stream::buffer * out;
+    protected:  pokemonism::sdk::stream::buffer * out;
     protected:  void clear(void) override;
     protected:  void clean(void) override;
     protected:  void reset(void) override;

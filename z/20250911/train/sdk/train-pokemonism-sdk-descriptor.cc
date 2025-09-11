@@ -12,11 +12,37 @@
 #include <pokemonism/sdk/generic/socketable/unix.hh>
 #include <pokemonism/sdk/generic/socket.hh>
 #include <pokemonism/sdk/protocol/transmission/control/protocol.hh>
+#include <pokemonism/sdk/socket.hh>
 
+using namespace pokemonism;
 using namespace pokemonism::sdk;
 using namespace pokemonism::protocol;
 
+struct TransmissionControlProtocol {};
+
+#include <iostream>
+
 int main(int argc, char ** argv) {
+    {
+
+
+        pokemonism::sdk::socket<transmission::control::protocol::socket::session> socket;
+        //
+        // TransmissionControlSocket descriptor;
+        //
+        // Socket<TransmissionControlProtocol> descriptor;
+        //
+        // Socket::open(...);
+        //
+        // PokemonismSdk
+        //
+        // GoogleSdk
+
+
+        // sdk::socket
+
+
+    }
 
     {
         generic::descriptor<stream::input<stream::output<generic::descriptorable::unix<>>>> o;
@@ -44,14 +70,11 @@ int main(int argc, char ** argv) {
 
     }
 
-        // interface::tag::socket::ptr::server>>>> o;
-
+    // interface::tag::socket::ptr::server>>>> o;
     // generic::descriptorable::unix<stream::input<stream::output<generic::descriptor<>>>> o;
     // generic::descriptorable::unix<interface::input::stream<stream::output<generic::descriptor<>>>> o1;
     // generic::descriptorable::unix<stream::input<interface::output::stream<generic::descriptor<>>>> o2;
-
     // generic::socketable::unix<generic::descriptorable::unix<
-
 
     return 0;
 }
