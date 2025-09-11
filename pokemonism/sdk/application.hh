@@ -22,15 +22,13 @@ namespace pokemonism::sdk {
      * @class       pokemonism::sdk::Application
      * @brief       어플리케이션 라이브러리로 사용자는 상속하여 사용할 수 있다.
      * @details     콘솔과 윈도우즈로 나뉜다.
+     *              콘솔과 윈도우즈 어플리케이션을 어떻게 처리해야할까?
      *
-     * Application.run()
-     *
-     * application::run();
      *
      */
     class Application : public Observable<Application, Observerable<Application, tag::NondisposableTag>, Runnable<Synchronizable<>>> {
     protected:  Synchronizable * synchronizer;
-    protected:  Observerable<Application, tag::NondisposableTag> * observable;
+    protected:  Observable<Application, tag::NondisposableTag> * observable;
     protected:  inline int lock(void) override;
     protected:  inline int unlock(void) override;
     protected:  inline int wait(void) override;
@@ -38,7 +36,6 @@ namespace pokemonism::sdk {
     protected:  inline int wait(long second, long nano) override;
     protected:  inline int wakeup(bool all) override;
     public:     inline Observerable<Application, tag::NondisposableTag> * subscribe(Observerable<Application, tag::NondisposableTag> * o) override;
-    public:     int run(void) override = 0;
     public:     Application(void);
     public:     ~Application(void) override;
     public:     Application(const Application & o) = delete;

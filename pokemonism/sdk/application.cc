@@ -12,10 +12,6 @@
 
 namespace pokemonism::sdk {
 
-    int Application::run(void) {
-        return 0;
-    }
-
     Application::Application(void) : synchronizer(nullptr), observable(nullptr) {
 
     }
@@ -26,7 +22,8 @@ namespace pokemonism::sdk {
 
 }
 
-int main(int argc, char ** argv) {
-    pokemonism::sdk::Application o;
-    return 0;
-}
+// int main(int argc, char ** argv) {
+//     pokemonism::sdk::Application application;
+//
+//     return application.run();
+// }
