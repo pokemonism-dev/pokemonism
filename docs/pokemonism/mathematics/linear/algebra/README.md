@@ -30,4 +30,32 @@ __예제 1.1.__ $A=(-1, 2)$ 이고 $B=(3, 4)$일 때, $\overrightarrow{AB}$를 �
 1. 표준 위치인 벡터로 그려라.
 2. 시점이 $C=(2, -1)$인 벡터로 그려라.
 
+```c++
+#include <pokemonism/mathematics/linear/algebra/vector.hh>
+
+using namespace pokemonism;
+using namespace pokemonism::mathematics::linear::algebra;
+
+int main(int argc, char ** argv) {
+    Point<DimensionTag::Two> a(-1, 2);
+    Point<DimensionTag::Two> b(3, -1); 
+    
+    Vector<DimensionTag::Two> first = b - a;
+    
+    printf("first: $\overrightarrow{AB}=(%d, %d)$\n", first[dimensional::axis::x], first[dimension::two::axis::y]);
+    
+    Vector<DimensionTag::Two> second = c(2, -1) + first;
+    
+    printf("second: $\overrightarrow{AB}=(%d, %d)$\n", second[dimensional:axis::x], second[dimension::two::axis::y]);
+    
+    return 0;
+}
+```
+
+<!--
+
+WINDOWS 
+
+  -->
+
 

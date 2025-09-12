@@ -15,8 +15,8 @@
 namespace pokemonism::mathematics {
 
     struct ScalarTag : public Tag {
-    public:     typedef float               Type;
-    public:     constexpr static float      zero = 0.0F;
+    public:     typedef int                 Type;
+    public:     constexpr static int        zero = 0.0F;
     };
 
     struct FloatTag : public ScalarTag {

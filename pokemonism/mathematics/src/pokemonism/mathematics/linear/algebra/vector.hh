@@ -14,6 +14,7 @@
 
 #include <cstring>
 
+#include <pokemonism/sdk/exception.hh>
 #include <pokemonism/mathematics/scalar.hh>
 
 namespace pokemonism::mathematics::linear::algebra {
@@ -23,23 +24,94 @@ namespace pokemonism::mathematics::linear::algebra {
     public:     constexpr static unsigned long size = sizeof(Precisional::Type) * dimension;
     public:     static const Vector<dimension, Precisional> zero;
     protected:  Precisional::Type v[dimension];
+    public:     inline Precisional::Type & at(unsigned int index);
+    public:     inline const Precisional::Type & at(unsigned int index) const;
     public:     inline Vector(void);
     public:     inline ~Vector(void);
     public:     inline Vector(const Vector<dimension, Precisional> & o);
     public:     inline Vector(Vector<dimension, Precisional> && o) noexcept;
     public:     inline Vector<dimension, Precisional> & operator=(const Vector<dimension, Precisional> & o);
     public:     inline Vector<dimension, Precisional> & operator=(Vector<dimension, Precisional> && o) noexcept;
+    public:     inline Precisional::Type & operator[](unsigned int index);
+    public:     inline const Precisional::Type & operator[](unsigned int index) const;
     public:     inline Vector<dimension, Precisional> & operator+=(const Vector<dimension, Precisional> & o);
     public:     inline Vector<dimension, Precisional> & operator-=(Vector<dimension, Precisional> && o) noexcept;
-    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & o);
-    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right);
-    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & o);
-    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right);
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(Primitivable left, const Vector<dimension, Precisional> & right);
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(const Vector<dimension, Precisional> & left, Primitivable right);
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(Primitivable left, const Vector<dimension, Precisional> & right);
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(const Vector<dimension, Precisional> & left, Primitivable right);
+    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & o) {
+                    return Vector<dimension, Precisional>(o);
+                }
+    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right[i];
+
+                    return x;
+                }
+    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & o) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = -1 * o[i];
+
+                    return x;
+                }
+    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right[i];
+
+                    return x;
+                }
+    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(Primitivable left, const Vector<dimension, Precisional> & right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left * right[i];
+
+                    return x;
+                }
+    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(const Vector<dimension, Precisional> & left, Primitivable right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right;
+
+                    return x;
+                }
+    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(Primitivable left, const Vector<dimension, Precisional> & right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left / right[i];
+
+                    return x;
+                }
+    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(const Vector<dimension, Precisional> & left, Primitivable right) {
+                    Vector<dimension, Precisional> x;
+
+                    // ### 20250912 | SUPPORT SIMD, CUDA
+                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] / right;
+
+                    return x;
+                }
     };
+
+    template <int dimension, class Precisional = ScalarTag> using Point = Vector<dimension, Precisional>;
+
+    template <int dimension, class Precisional>
+    inline Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) {
+        if (dimension <= index) throw Exception();
+
+        return v[index];
+    }
+
+    template <int dimension, class Precisional>
+    inline const Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) const {
+        if (dimension <= index) throw Exception();
+
+        return v[index];
+    }
 
     template <int dimension, class Precisional>
     inline Vector<dimension, Precisional>::Vector(void) {
@@ -73,6 +145,21 @@ namespace pokemonism::mathematics::linear::algebra {
     }
 
     template <int dimension, class Precisional>
+    inline Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) {
+        if (dimension <= index) throw Exception();
+
+        return v[index];
+    }
+
+    template <int dimension, class Precisional>
+    inline const Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) const {
+        if (dimension <= index) throw Exception();
+
+        return v[index];
+    }
+
+
+    template <int dimension, class Precisional>
     inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator+=(const Vector<dimension, Precisional> & o) {
         if (pointof(o) != this) {
             for (int i = 0; i < dimension; i = i + 1) v[i] = v[i] + o.v[i];
@@ -88,81 +175,8 @@ namespace pokemonism::mathematics::linear::algebra {
         return *this;
     }
 
-    template <int dimension, class Precisional>
-    inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & o) {
-        return Vector<dimension, Precisional>(o);
-    }
-
-    template <int dimension, class Precisional>
-    inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
-        Vector<dimension, Precisional> x(left);
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = x.v[i] + right.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional, typename Primitivable>
-    inline Vector<dimension, Precisional> operator*(Primitivable left, const Vector<dimension, Precisional> & right) {
-        Vector<dimension, Precisional> x;
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = left * right.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional, typename Primitivable>
-    inline Vector<dimension, Precisional> operator*(const Vector<dimension, Precisional> & left, Primitivable right) {
-        Vector<dimension, Precisional> x;
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = right * left.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional>
-    inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & o) {
-        Vector<dimension, Precisional> x;
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = -1 * o.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional>
-    inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
-        Vector<dimension, Precisional> x(left);
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = x.v[i] - right.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional, typename Primitivable>
-    inline Vector<dimension, Precisional> operator/(Primitivable left, const Vector<dimension, Precisional> & right) {
-        Vector<dimension, Precisional> x;
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = left / right.v[i];
-
-        return x;
-    }
-
-    template <int dimension, class Precisional, typename Primitivable>
-    inline Vector<dimension, Precisional> operator/(const Vector<dimension, Precisional> & left, Primitivable right) {
-        Vector<dimension, Precisional> x;
-
-        // ### 20250912 | SUPPORT SIMD, CUDA
-        for (int i = 0; i < dimension; i = i + 1) x.v[i] = right / left.v[i];
-
-        return x;
-    }
-
 }
+
+#include <pokemonism/mathematics/linear/algebra/vector/dimension/two.hh>
 
 #endif // __POKEMONISM_MATHEMATICS_LINEAR_ALGEBRA_VECTOR_HH__
