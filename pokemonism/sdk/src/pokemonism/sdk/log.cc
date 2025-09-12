@@ -8,7 +8,7 @@
  */
 
 
-#include "exception.hh"
+#include "log.hh"
 
 namespace pokemonism {
 }

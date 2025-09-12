@@ -16,8 +16,6 @@
 
 namespace pokemonism::sdk {
 
-
-
     /**
      * @class       pokemonism::sdk::Application
      * @brief       어플리케이션 라이브러리로 사용자는 상속하여 사용할 수 있다.
