@@ -43,6 +43,11 @@ namespace pokemonism::physics {
     public:     Coordinate<dimensional::two, Unit>::Point<Precisional> & operator=(Coordinate<dimensional::two, Unit>::Point<Precisional> && o) noexcept = delete;
     };
 
+    /**
+     * 변위(displacement): 물체가 이동한 거리와 위치 변화로 크기와 방향을 갖는 양이다. 이런 양을 벡터라고 하며 화살표로 나타낸다.
+     */
+
+
     template <class Unit>
     inline Coordinate<dimensional::two, Unit>::Coordinate(void) {
 

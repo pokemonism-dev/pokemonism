@@ -43,6 +43,8 @@ namespace pokemonism::physics {
 
 
 
+
+
     template <class Unit>
     inline Coordinate<dimensional::one, Unit>::Coordinate(void) {
 
