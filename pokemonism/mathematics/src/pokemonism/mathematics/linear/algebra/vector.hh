@@ -14,7 +14,7 @@
 
 #include <cstring>
 
-#include <pokemonism/sdk/exception.hh>
+#include <../../../../../../sdk/src/pokemonism/exception.hh>
 #include <pokemonism/mathematics/scalar.hh>
 
 namespace pokemonism::mathematics::linear::algebra {

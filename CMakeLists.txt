@@ -3,10 +3,17 @@ cmake_minimum_required(VERSION 3.28.3)
 project(pokemonism LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-include_directories(./ pokemonism/interface/src pokemonism/physics/src pokemonism/mathematics/src)
+include_directories(./
+                    pokemonism/sdk/src
+                    pokemonism/interface/src
+                    pokemonism/physics/src
+                    pokemonism/mathematics/src
+                    pokemonism/window/src)
 
 add_subdirectory(pokemonism/interface)
 add_subdirectory(pokemonism/sdk)
+add_subdirectory(pokemonism/window)
+add_subdirectory(pokemonism/vulkan)
 add_subdirectory(pokemonism/mathematics)
 add_subdirectory(pokemonism/physics)
 
