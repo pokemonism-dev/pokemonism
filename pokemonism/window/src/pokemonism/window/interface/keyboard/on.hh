@@ -7,8 +7,8 @@
  * @since           9월 12, 2025
  */
 
-#ifndef   __POKEMONISM_ON_HH__
-#define   __POKEMONISM_ON_HH__
+#ifndef   __POKEMONISM_WINDOW_INTERFACE_KEYBOARD_ON_HH__
+#define   __POKEMONISM_WINDOW_INTERFACE_KEYBOARD_ON_HH__
 
 #include <pokemonism/observerable.hh>
 #include <pokemonism/sdk/linked/list.hh>
@@ -35,4 +35,4 @@ namespace pokemonism::window::interface {
 
 }
 
-#endif // __POKEMONISM_ON_HH__
+#endif // __POKEMONISM_WINDOW_INTERFACE_KEYBOARD_ON_HH__
