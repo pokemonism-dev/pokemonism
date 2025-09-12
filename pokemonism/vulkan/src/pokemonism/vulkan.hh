@@ -10,16 +10,15 @@
 #ifndef   __POKEMONISM_VULKAN_HH__
 #define   __POKEMONISM_VULKAN_HH__
 
-#include <../../../sdk/src/pokemonism/application.hh>
+#include <pokemonism/sdk/application.hh>
 
 namespace pokemonism::vulkan {
 
-    class Vulkan : public pokemonism::sdk::Application {
+    class Vulkan {
     public:     static void init(void);
     public:     static void term(void);
-    public:     int run(void) override;
     public:     inline Vulkan(void);
-    public:     inline ~Vulkan(void) override;
+    public:     inline virtual ~Vulkan(void);
     public:     Vulkan(const Vulkan & o) = delete;
     public:     Vulkan(Vulkan && o) noexcept = delete;
     public:     Vulkan & operator=(const Vulkan & o) = delete;

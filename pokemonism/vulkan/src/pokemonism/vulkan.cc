@@ -23,17 +23,17 @@ namespace pokemonism::vulkan {
 
     }
 
-    int Vulkan::run(void) {
-        try {
-            Window::init();
-            Vulkan::init();
-
-            Vulkan::term();
-            return declaration::success;
-        } catch (const std::exception & e) {
-            printf("%s\n", e.what());
-        }
-        return declaration::fail;
-    }
+    // int Vulkan::run(void) {
+    //     try {
+    //         Window::init();
+    //         Vulkan::init();
+    //
+    //         Vulkan::term();
+    //         return declaration::success;
+    //     } catch (const std::exception & e) {
+    //         printf("%s\n", e.what());
+    //     }
+    //     return declaration::fail;
+    // }
 
 }

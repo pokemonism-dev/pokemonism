@@ -41,7 +41,7 @@ namespace pokemonism {
     }
 
     template <class Element, class Super>
-    class Observerable<Element, tag::DisposableTag, Super> : public Super {
+    class Observerable<Element, tag::NondisposableTag, Super> : public Super {
     public:     virtual void on(const Element & item) = 0;
     public:     inline Observerable(void);
     public:     inline ~Observerable(void) override;
@@ -52,12 +52,12 @@ namespace pokemonism {
     };
 
     template <class Element, class Super>
-    inline Observerable<Element, tag::DisposableTag, Super>::Observerable(void) {
+    inline Observerable<Element, tag::NondisposableTag, Super>::Observerable(void) {
 
     }
 
     template <class Element, class Super>
-    inline Observerable<Element, tag::DisposableTag, Super>::~Observerable(void) {
+    inline Observerable<Element, tag::NondisposableTag, Super>::~Observerable(void) {
 
     }
 

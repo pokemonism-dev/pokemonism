@@ -8,7 +8,7 @@
  */
 
 #ifndef   __POKEMONISM_WINDOW_COCOA_LIB_HH__
-#define   __POKEMONISM_WINDOW_COCAO_LIB_HH__
+#define   __POKEMONISM_WINDOW_COCOA_LIB_HH__
 
 #include <pokemonism/window/lib.hh>
 

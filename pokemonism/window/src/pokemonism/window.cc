@@ -20,10 +20,6 @@ namespace pokemonism::window {
 
     }
 
-    Window::Window(void) {
-
-    }
-
     Window::~Window(void) {
 
     }

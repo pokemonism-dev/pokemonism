@@ -8,7 +8,7 @@
  */
 
 
-#include "../../application.hh"
+#include "application.hh"
 
 namespace pokemonism::sdk {
 
@@ -21,9 +21,3 @@ namespace pokemonism::sdk {
     }
 
 }
-
-// int main(int argc, char ** argv) {
-//     pokemonism::sdk::Application application;
-//
-//     return application.run();
-// }

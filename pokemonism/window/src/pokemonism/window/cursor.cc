@@ -8,7 +8,16 @@
  */
 
 
-#include "allocator.hh"
+#include "cursor.hh"
 
-namespace pokemonism {
+namespace pokemonism::window {
+
+    Cursor::Cursor(void) {
+
+    }
+
+    Cursor::~Cursor(void) {
+
+    }
+
 }

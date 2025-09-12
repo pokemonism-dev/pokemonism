@@ -7,8 +7,12 @@
  * @since           9월 12, 2025
  */
 
+#ifndef   __POKEMONISM_KEYBOARD_HH__
+#define   __POKEMONISM_KEYBOARD_HH__
 
-#include "allocator.hh"
+#include <pokemonism.hh>
 
 namespace pokemonism {
 }
+
+#endif // __POKEMONISM_KEYBOARD_HH__

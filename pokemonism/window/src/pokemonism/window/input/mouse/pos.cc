@@ -8,7 +8,7 @@
  */
 
 
-#include "allocator.hh"
+#include "pos.hh"
 
 namespace pokemonism {
 }
