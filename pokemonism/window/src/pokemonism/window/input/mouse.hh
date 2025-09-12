@@ -28,7 +28,7 @@ namespace pokemonism::window::input {
     protected:  virtual void clear(void);
     public:     virtual void rawMouseMotionSet(bool enable) = 0;
     public:     virtual bool rawMouseMotionSupportGet(void) const = 0;
-    public:     virtual void passthroughSet(void) = 0;
+    public:     virtual void passthroughSet(bool enable) = 0;
     public:     inline MouseOn * subscribe(MouseOn * observer) override;
     public:     Mouse(void);
     public:     ~Mouse(void) override;

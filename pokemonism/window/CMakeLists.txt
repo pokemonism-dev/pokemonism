@@ -2,9 +2,19 @@ cmake_minimum_required(VERSION 3.28.3)
 
 project(pokemonism-window LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(POKEMONISM_WINDOW_SOURCE            src/pokemonism/window.cc
                                         src/pokemonism/window/application.cc
+                                        src/pokemonism/window/interface/window.cc
+                                        src/pokemonism/window/interface/keyboard.cc
+                                        src/pokemonism/window/interface/keyboard/on.cc
+                                        src/pokemonism/window/interface/keyboard/key.cc
+                                        src/pokemonism/window/interface/mouse.cc
+                                        src/pokemonism/window/interface/mouse/on.cc
+                                        src/pokemonism/window/interface/mouse/pos.cc
+                                        src/pokemonism/window/interface/monitor.cc
+
                                         src/pokemonism/window/input/mouse.cc
                                         src/pokemonism/window/input/mouse/on.cc
                                         src/pokemonism/window/input/mouse/pos.cc
@@ -19,14 +29,19 @@ set(POKEMONISM_WINDOW_SOURCE            src/pokemonism/window.cc
                                         src/pokemonism/window/platform.cc
                                         src/pokemonism/window/config.cc
                                         src/pokemonism/window/lib.cc
-                                        src/pokemonism/window/vulkan/config.cc
-                                        src/pokemonism/window/cocoa/lib.cc
-                                        src/pokemonism/window/cocoa/cursor.cc
-                                        src/pokemonism/window/cocoa/input/keyboard.cc
-                                        src/pokemonism/window/cocoa/config.cc)
+                                        src/pokemonism/window/vulkan/config.cc)
 
 set(POKEMONISM_WINDOW_HEADER            src/pokemonism/window.hh
                                         src/pokemonism/window/application.hh
+                                        src/pokemonism/window/interface/window.hh
+                                        src/pokemonism/window/interface/keyboard.hh
+                                        src/pokemonism/window/interface/keyboard/on.hh
+                                        src/pokemonism/window/interface/keyboard/key.hh
+                                        src/pokemonism/window/interface/mouse.hh
+                                        src/pokemonism/window/interface/mouse/on.hh
+                                        src/pokemonism/window/interface/mouse/pos.hh
+                                        src/pokemonism/window/interface/monitor.hh
+
                                         src/pokemonism/window/input/mouse.hh
                                         src/pokemonism/window/input/mouse/on.hh
                                         src/pokemonism/window/input/mouse/pos.hh
@@ -41,12 +56,41 @@ set(POKEMONISM_WINDOW_HEADER            src/pokemonism/window.hh
                                         src/pokemonism/window/platform.hh
                                         src/pokemonism/window/config.hh
                                         src/pokemonism/window/lib.hh
-                                        src/pokemonism/window/vulkan/config.hh
+                                        src/pokemonism/window/vulkan/config.hh)
+
+
+#                                        src/pokemonism/window/cocoa/window.hh
+#                                        src/pokemonism/window/cocoa/lib.hh
+#                                        src/pokemonism/window/cocoa/cursor.hh
+#                                        src/pokemonism/window/cocoa/input/keyboard.hh
+#                                        src/pokemonism/window/cocoa/input/mouse.hh
+#                                        src/pokemonism/window/cocoa/config.hh)
+
+set(POKEMONISM_WINDOW_COCOA_SOURCE      src/pokemonism/window/cocoa/input/mouse.mm
+                                        src/pokemonism/window/cocoa/window.mm)
+
+set(POKEMONISM_WINDOW_COCOA_HEADER      src/pokemonism/window/cocoa/window.hh
                                         src/pokemonism/window/cocoa/lib.hh
                                         src/pokemonism/window/cocoa/cursor.hh
+                                        src/pokemonism/window/cocoa/monitor.hh
                                         src/pokemonism/window/cocoa/input/keyboard.hh
+                                        src/pokemonism/window/cocoa/input/mouse.hh
                                         src/pokemonism/window/cocoa/config.hh)
 
 add_library(pokemonism-window-dev       ${POKEMONISM_WINDOW_SOURCE}
-                                        ${POKEMONISM_WINDOW_HEADER})
+        ${POKEMONISM_WINDOW_HEADER})
 
+target_sources(pokemonism-window-dev    PRIVATE ${POKEMONISM_WINDOW_COCOA_SOURCE}
+                                                ${POKEMONISM_WINDOW_COCOA_HEADER})
+
+target_link_libraries(pokemonism-window-dev     PRIVATE     "-framework Cocoa"
+                                                            "-framework IOKit"
+                                                            "-framework CoreFoundation")
+
+add_executable(pokemonism-window-example src/pokemonism/window.cc)
+target_compile_definitions(pokemonism-window-example PRIVATE __EXPORT_POKEMONISM_WINDOW_EXAMPLE)
+target_link_libraries(pokemonism-window-example PRIVATE     "-framework Cocoa"
+                                                            "-framework IOKit"
+                                                            "-framework CoreFoundation"
+                                                            pokemonism-window-dev
+                                                            pokemonism-sdk)
