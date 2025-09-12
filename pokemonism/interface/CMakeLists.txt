@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.28.3)
 project(pokemonism-interface-dev LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-include_directories(src)
+include_directories(./src)
 
 set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/virtualable.cc
                                             src/pokemonism/observable.cc
