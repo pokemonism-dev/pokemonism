@@ -13,6 +13,9 @@
 #include <exception>
 
 namespace pokemonism {
+
+    struct Tag {};
+
     namespace declaration {
         typedef char                int8;
         typedef short               int16;

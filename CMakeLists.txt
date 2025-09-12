@@ -7,6 +7,7 @@ include_directories(./ pokemonism/interface/src)
 
 add_subdirectory(pokemonism/interface)
 add_subdirectory(pokemonism/sdk)
+add_subdirectory(pokemonism/physics)
 
 
 #

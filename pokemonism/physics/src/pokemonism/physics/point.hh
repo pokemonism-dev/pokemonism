@@ -14,7 +14,6 @@
 
 namespace pokemonism::physics {
 
-    template <class Unit = unit::m>
     class Point {
     public:     inline Point(void);
     public:     inline virtual ~Point(void);
@@ -24,13 +23,11 @@ namespace pokemonism::physics {
     public:     Point & operator=(Point && o) noexcept = delete;
     };
 
-    template<class Unit>
-    inline Point<Unit>::Point(void) {
+    inline Point::Point(void) {
 
     }
 
-    template<class Unit>
-    inline Point<Unit>::~Point(void) {
+    inline Point::~Point(void) {
 
     }
 

@@ -14,6 +14,9 @@
 
 namespace pokemonism {
 
+    /**
+     * 가상 함수
+     */
     class Virtualable {
     public:     Virtualable(void);
     public:     virtual ~Virtualable(void);

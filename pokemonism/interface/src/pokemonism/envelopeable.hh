@@ -10,12 +10,14 @@
 #ifndef   __POKEMONISM_ENVELOPEABLE_HH__
 #define   __POKEMONISM_ENVELOPEABLE_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/virtualable.hh>
+#include <pokemonism/primitivable.hh>
 
 namespace pokemonism {
 
     template <class Super>
     class Envelopeable : public Super {
+    public:     virtual Primitivable * messagePop(void) = 0;
     public:     inline Envelopeable(void);
     public:     inline~Envelopeable(void) override;
     public:     Envelopeable(const Envelopeable<Super> & o) = delete;
