@@ -10,16 +10,30 @@
 
 #include "application.hh"
 
+#include "window.hh"
+
 #include "../platform/application.hh"
 
 namespace pokemonism::window {
+
+    AbstractWindow * AbstractWindowApplication::add(AbstractWindow * node) {
+        return Collection::add(this, node);
+    }
+
+    AbstractWindow * AbstractWindowApplication::del(AbstractWindow * node) {
+        return Collection::del(this, node);
+    }
+
+    void AbstractWindowApplication::clear(void) {
+        Collection::clear(this);
+    }
 
     AbstractWindowApplication::AbstractWindowApplication(void) : size(declaration::zero), head(nullptr), tail(nullptr), adapter(PlatformWindowApplication::get())  {
 
     }
 
     AbstractWindowApplication::~AbstractWindowApplication(void) {
-
+        Collection::clear(this);
     }
 
     Window * AbstractWindowApplication::gen(const WindowConfig & config) {

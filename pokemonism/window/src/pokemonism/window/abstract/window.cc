@@ -10,5 +10,12 @@
 
 #include "window.hh"
 
-namespace pokemonism {
+#include "application.hh"
+
+namespace pokemonism::window {
+
+    AbstractWindow::~AbstractWindow(void) {
+        if (container != nullptr) container->del(this);
+    }
+
 }

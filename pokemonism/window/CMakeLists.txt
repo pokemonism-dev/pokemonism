@@ -10,10 +10,7 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
                                                                         src/pokemonism/window/applicationable.cc
                                                                         src/pokemonism/window/abstract/application.cc
                                                                         src/pokemonism/window/abstract/window.cc
-                                                                        src/pokemonism/window/interface/window.cc
-                                                                        src/pokemonism/window/interface/window/config.cc
-                                                                        src/pokemonism/window/interface/application.cc
-                                                                        src/pokemonism/window/decoratorable/application.cc)
+                                                                        src/pokemonism/window/platform/application.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window/application.hh
                                                                         src/pokemonism/window/window.hh
@@ -21,10 +18,7 @@ set(POKEMONISM_WINDOW_SOURCE                                            src/poke
                                                                         src/pokemonism/window/applicationable.hh
                                                                         src/pokemonism/window/abstract/application.hh
                                                                         src/pokemonism/window/abstract/window.hh
-                                                                        src/pokemonism/window/interface/window.hh
-                                                                        src/pokemonism/window/interface/window/config.hh
-                                                                        src/pokemonism/window/interface/application.hh
-                                                                        src/pokemonism/window/decoratorable/application.hh)
+                                                                        src/pokemonism/window/platform/application.hh)
 
 add_library(pokemonism-window-dev                                       ${POKEMONISM_WINDOW_HEARER}
                                                                         ${POKEMONISM_WINDOW_SOURCE})

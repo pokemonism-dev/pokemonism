@@ -13,24 +13,32 @@
 #include <pokemonism/window/applicationable.hh>
 #include <pokemonism/window/platform/application.hh>
 
+#include <pokemonism/sdk/linked/list.hh>
+
 namespace pokemonism::window {
 
         class AbstractWindow;
 
         class AbstractWindowApplication : public WindowApplicationable {
+        protected:  using Collection = pokemonism::sdk::LinkedList<AbstractWindowApplication, AbstractWindow>;
         protected:  unsigned long               size;
         protected:  AbstractWindow *            head;
         protected:  AbstractWindow *            tail;
         protected:  PlatformWindowApplication & adapter;
         public:     inline const char * platformNameGet(void) const noexcept override { return adapter.platformNameGet();  }
-        public:     Window * gen(const WindowConfig & config) override;
         protected:  inline int run(void) override { return adapter.run(); }
+        public:     Window * gen(const WindowConfig & config) override;
+        protected:  virtual AbstractWindow * add(AbstractWindow * node);
+        protected:  virtual AbstractWindow * del(AbstractWindow * node);
+        protected:  virtual void clear(void);
         public:     AbstractWindowApplication(void);
         public:     ~AbstractWindowApplication(void) override;
         public:     AbstractWindowApplication(const AbstractWindowApplication & o) = delete;
         public:     AbstractWindowApplication(AbstractWindowApplication && o) noexcept = delete;
         public:     AbstractWindowApplication & operator=(const AbstractWindowApplication & o) = delete;
         public:     AbstractWindowApplication & operator=(AbstractWindowApplication && o) noexcept = delete;
+        public:     friend Collection;
+        public:     friend AbstractWindow;
         };
 
 }

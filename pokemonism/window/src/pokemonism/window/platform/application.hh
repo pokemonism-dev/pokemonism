@@ -11,8 +11,6 @@
 #define   __POKEMONISM_APPLICATION_HH__
 
 #include <pokemonism/window/applicationable.hh>
-#include <pokemonism/window/interface/application.hh>
-
 
 namespace pokemonism::window {
 
