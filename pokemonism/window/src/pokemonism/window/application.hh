@@ -16,15 +16,18 @@
 namespace pokemonism::window {
 
     class Window;
+    class WindowCfg;
 
     class Application : public pokemonism::sdk::Application {
     protected:  using Collection = pokemonism::sdk::LinkedList<Application, Window>;
+    protected:  using Window = pokemonism::window::Window;
     private:    unsigned long   size;
     private:    Window *        head;
     private:    Window *        tail;
-    public:     virtual Window * add(Window * node);
-    public:     virtual Window * del(Window * node);
-    public:     virtual void clear(void);
+    public:     virtual Application::Window * gen(const WindowCfg & config);
+    protected:  virtual Window * add(Window * node);
+    protected:  virtual Window * del(Window * node);
+    protected:  virtual void clear(void);
     public:     int run(void) override;
     public:     Application(void);
     public:     ~Application(void) override;
@@ -33,6 +36,7 @@ namespace pokemonism::window {
     public:     Application & operator=(const Application & o) = delete;
     public:     Application & operator=(Application && o) noexcept = delete;
     public:     friend Collection;
+    public:     friend Window;
     };
 
 }

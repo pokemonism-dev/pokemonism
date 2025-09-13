@@ -7,14 +7,18 @@
  * @since           9월 13, 2025
  */
 
-#include "window.hh"
+#include "mouse.hh"
 
 namespace pokemonism::window::cocoa {
 
-    Window::Window(void) : mouse(this), monitor(this), keyboard(this) {
+    void Mouse::passthroughSet(bool enable) {
     }
 
-    Window::~Window(void) {
+    Mouse::Mouse(Window * window) : window(window) {
+    }
+
+    Mouse::~Mouse(void) {
+
     }
 
 }

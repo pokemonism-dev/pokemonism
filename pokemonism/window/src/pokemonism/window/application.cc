@@ -32,6 +32,10 @@ namespace pokemonism::window {
         return declaration::success;
     }
 
+    Application::Window * Application::gen(const WindowCfg & config) {
+        return nullptr;
+    }
+
     Application::Application(void) : size(declaration::zero), head(nullptr), tail(nullptr) {
 
     }
@@ -41,3 +45,13 @@ namespace pokemonism::window {
     }
 
 }
+
+#ifndef   __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE
+
+using namespace pokemonism::window;
+
+int main(int argc, char ** argv) {
+    Application * application = new Application();
+    return application->run();
+}
+#endif // __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE

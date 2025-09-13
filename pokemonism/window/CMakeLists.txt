@@ -66,16 +66,15 @@ set(POKEMONISM_WINDOW_HEADER            src/pokemonism/window.hh
 #                                        src/pokemonism/window/cocoa/input/mouse.hh
 #                                        src/pokemonism/window/cocoa/config.hh)
 
-set(POKEMONISM_WINDOW_COCOA_SOURCE      src/pokemonism/window/cocoa/input/mouse.mm
-                                        src/pokemonism/window/cocoa/window.mm)
+set(POKEMONISM_WINDOW_COCOA_SOURCE      src/pokemonism/window/cocoa/window.mm
+                                        src/pokemonism/window/cocoa/mouse.mm
+                                        src/pokemonism/window/cocoa/monitor.mm
+                                        src/pokemonism/window/cocoa/keyboard.mm)
 
 set(POKEMONISM_WINDOW_COCOA_HEADER      src/pokemonism/window/cocoa/window.hh
-                                        src/pokemonism/window/cocoa/lib.hh
-                                        src/pokemonism/window/cocoa/cursor.hh
+                                        src/pokemonism/window/cocoa/mouse.hh
                                         src/pokemonism/window/cocoa/monitor.hh
-                                        src/pokemonism/window/cocoa/input/keyboard.hh
-                                        src/pokemonism/window/cocoa/input/mouse.hh
-                                        src/pokemonism/window/cocoa/config.hh)
+                                        src/pokemonism/window/cocoa/keyboard.hh)
 
 add_library(pokemonism-window-dev       ${POKEMONISM_WINDOW_SOURCE}
         ${POKEMONISM_WINDOW_HEADER})
@@ -87,10 +86,18 @@ target_link_libraries(pokemonism-window-dev     PRIVATE     "-framework Cocoa"
                                                             "-framework IOKit"
                                                             "-framework CoreFoundation")
 
-add_executable(pokemonism-window-example src/pokemonism/window.cc)
-target_compile_definitions(pokemonism-window-example PRIVATE __EXPORT_POKEMONISM_WINDOW_EXAMPLE)
-target_link_libraries(pokemonism-window-example PRIVATE     "-framework Cocoa"
-                                                            "-framework IOKit"
-                                                            "-framework CoreFoundation"
-                                                            pokemonism-window-dev
-                                                            pokemonism-sdk)
+#add_executable(pokemonism-window-example src/pokemonism/window.cc)
+#target_compile_definitions(pokemonism-window-example PRIVATE __EXPORT_POKEMONISM_WINDOW_EXAMPLE)
+#target_link_libraries(pokemonism-window-example PRIVATE     "-framework Cocoa"
+#                                                            "-framework IOKit"
+#                                                            "-framework CoreFoundation"
+#                                                            pokemonism-window-dev
+#                                                            pokemonism-sdk)
+
+add_executable(pokemonism-window-application-example                            src/pokemonism/window.cc)
+target_compile_definitions(pokemonism-window-application-example    PRIVATE     __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE)
+target_link_libraries(pokemonism-window-application-example         PRIVATE     "-framework Cocoa"
+                                                                                "-framework IOKit"
+                                                                                "-framework CoreFoundation"
+                                                                                pokemonism-window-dev
+                                                                                pokemonism-sdk)

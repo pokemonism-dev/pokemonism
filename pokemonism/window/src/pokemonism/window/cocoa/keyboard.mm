@@ -7,14 +7,14 @@
  * @since           9월 13, 2025
  */
 
-#include "window.hh"
+#include "keyboard.hh"
 
 namespace pokemonism::window::cocoa {
 
-    Window::Window(void) : mouse(this), monitor(this), keyboard(this) {
+    Keyboard::Keyboard(Window * window) : window(window) {
     }
 
-    Window::~Window(void) {
+    Keyboard::~Keyboard(void) {
     }
 
 }

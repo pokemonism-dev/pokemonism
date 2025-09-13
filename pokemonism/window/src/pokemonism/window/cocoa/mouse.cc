@@ -8,7 +8,7 @@
  */
 
 
-#include "monitor.hh"
+#include "mouse.hh"
 
 namespace pokemonism {
 }

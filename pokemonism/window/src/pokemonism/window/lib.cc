@@ -12,7 +12,7 @@
 
 #include "lib.hh"
 
-#include "cocoa/lib.hh"
+#include "cocoa2/lib.hh"
 
 namespace pokemonism::window {
 
