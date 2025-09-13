@@ -17,10 +17,10 @@ namespace pokemonism {
     namespace sdk {
 
         class Allocator {
-        public:     static inline void * gen(unsigned long n);
-        public:     static inline void * gen(void * origin, unsigned long n);
-        public:     static inline void * reset(void * origin, unsigned long n);
-        public:     static inline void * rel(void * n);
+        public:     template <typename Element> static inline Element * gen(unsigned long n);
+        public:     template <typename Element> static inline Element * gen(void * origin, unsigned long n);
+        public:     template <typename Element> static inline Element * reset(void * origin, unsigned long n);
+        public:     template <typename Element> static inline Element * rel(void * n);
         public:     template <typename Type> static inline Type * del(Type * o);
         public:     template <typename Type> static inline Type * del(Type * o, unsigned long n);
         public:     inline Allocator(void);
@@ -31,39 +31,43 @@ namespace pokemonism {
         public:     Allocator & operator=(Allocator && o) noexcept = delete;
         };
 
-        inline void * Allocator::gen(unsigned long n) {
-            return n > 0 ? malloc(n) : nullptr;
+        template <typename Element>
+        inline Element * Allocator::gen(unsigned long n) {
+            return static_cast<Element *>(n > 0 ? malloc(n * sizeof(Element)) : nullptr);
         }
 
-        inline void * Allocator::gen(void * origin, unsigned long n) {
+        template <typename Element>
+        inline Element * Allocator::gen(void * origin, unsigned long n) {
             if (n == 0) {
                 if (origin) free(origin);
                 return nullptr;
             }
 
-            return origin != nullptr ? realloc(origin, n) : malloc(n);
+            return static_cast<Element *>(origin != nullptr ? realloc(origin, n * sizeof(Element)) : malloc(n * sizeof(Element)));
         }
 
-        inline void * Allocator::reset(void * origin, unsigned long n) {
+        template <typename Element>
+        inline Element * Allocator::reset(void * origin, unsigned long n) {
             if (origin) free(origin);
 
-            return n > 0 ? malloc(n) : nullptr;
+            return static_cast<Element *>(n > 0 ? malloc(n * sizeof(Element)) : nullptr);
         }
 
-        inline void * Allocator::rel(void * origin) {
+        template <typename Element>
+        inline Element * Allocator::rel(void * origin) {
             if (origin) free(origin);
 
             return nullptr;
         }
 
-        template <typename Type>
-        inline Type * Allocator::del(Type * o) {
+        template <typename Element>
+        inline Element * Allocator::del(Element * o) {
             if (o != nullptr) delete o;
             return nullptr;
         }
 
-        template <typename Type>
-        inline Type * Allocator::del(Type * o, unsigned long n) {
+        template <typename Element>
+        inline Element * Allocator::del(Element * o, unsigned long n) {
             if (o != nullptr) delete[] o;
             return nullptr;
         }
