@@ -14,23 +14,23 @@
 
 namespace pokemonism {
 
-    template <class Element, class Super = Virtualable>
-    class Continuable {
+    template <class Elementable, class Super = Virtualable>
+    class Continuable : public Super {
     public:     inline Continuable(void);
-    public:     inline ~Continuable(void);
-    public:     Continuable(const Continuable<Element, Super> & o) = delete;
-    public:     Continuable(Continuable<Element, Super> && o) noexcept = delete;
-    public:     Continuable<Element, Super> & operator=(const Continuable<Element, Super> & o) = delete;
-    public:     Continuable<Element, Super> & operator=(Continuable<Element, Super> && o) noexcept = delete;
+    public:     inline ~Continuable(void) override;
+    public:     Continuable(const Continuable<Elementable, Super> & o) = delete;
+    public:     Continuable(Continuable<Elementable, Super> && o) noexcept = delete;
+    public:     Continuable<Elementable, Super> & operator=(const Continuable<Elementable, Super> & o) = delete;
+    public:     Continuable<Elementable, Super> & operator=(Continuable<Elementable, Super> && o) noexcept = delete;
     };
 
-    template <class Element, class Super>
-    inline Continuable<Element, Super>::Continuable(void) {
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super>::Continuable(void) {
 
     }
 
-    template <class Element, class Super>
-    inline Continuable<Element, Super>::~Continuable(void) {
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super>::~Continuable(void) {
 
     }
 

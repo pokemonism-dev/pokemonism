@@ -14,14 +14,14 @@
 
 namespace pokemonism::vulkan {
 
-    class Application : public window::Application {
-    public:     Application(void);
-    public:     ~Application(void) override;
-    public:     Application(const Application & o) = delete;
-    public:     Application(Application && o) noexcept = delete;
-    public:     Application & operator=(const Application & o) = delete;
-    public:     Application & operator=(Application && o) noexcept = delete;
-    };
+    // class Application : public window::Application {
+    // public:     Application(void);
+    // public:     ~Application(void) override;
+    // public:     Application(const Application & o) = delete;
+    // public:     Application(Application && o) noexcept = delete;
+    // public:     Application & operator=(const Application & o) = delete;
+    // public:     Application & operator=(Application && o) noexcept = delete;
+    // };
 
 }
 

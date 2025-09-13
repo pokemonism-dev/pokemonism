@@ -10,36 +10,30 @@
 #ifndef   __POKEMONISM_COLLECTABLE_HH__
 #define   __POKEMONISM_COLLECTABLE_HH__
 
-#include <pokemonism/virtualable.hh>
+#include <pokemonism/containable.hh>
 
 namespace pokemonism {
-    /**
-     * 리턴 값에 대해서 고민해보자... 리턴 값은 무엇인가?
-     *
-     *
-     * @tparam Element
-     * @tparam Super
-     */
-    template <typename Element, class Super = Virtualable>
+
+    template <typename Elementable, class Super = Containable>
     class Collectable : public Super {
-    public:     virtual void add(const Element & item) = 0;
-    public:     virtual void add(Element && item) = 0;
-    public:     virtual void del(const Element & item) = 0;
+    public:     virtual void add(const Elementable & item) = 0;
+    public:     virtual void add(Elementable && item) = 0;
+    public:     virtual void del(const Elementable & item) = 0;
     public:     inline Collectable(void);
     public:     inline ~Collectable(void);
-    public:     Collectable(const Collectable<Element, Super> & o) = delete;
-    public:     Collectable(Collectable<Element, Super> && o) noexcept = delete;
-    public:     Collectable<Element, Super> & operator=(const Collectable<Element, Super> & o) = delete;
-    public:     Collectable<Element, Super> & operator=(Collectable<Element, Super> && o) noexcept = delete;
+    public:     Collectable(const Collectable<Elementable, Super> & o) = delete;
+    public:     Collectable(Collectable<Elementable, Super> && o) noexcept = delete;
+    public:     Collectable<Elementable, Super> & operator=(const Collectable<Elementable, Super> & o) = delete;
+    public:     Collectable<Elementable, Super> & operator=(Collectable<Elementable, Super> && o) noexcept = delete;
     };
 
-    template <typename Element, class Super>
-    inline Collectable<Element, Super>::Collectable(void) {
+    template <typename Elementable, class Super>
+    inline Collectable<Elementable, Super>::Collectable(void) {
 
     }
 
-    template <typename Element, class Super>
-    inline Collectable<Element, Super>::~Collectable(void) {
+    template <typename Elementable, class Super>
+    inline Collectable<Elementable, Super>::~Collectable(void) {
 
     }
 

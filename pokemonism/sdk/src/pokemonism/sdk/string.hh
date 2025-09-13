@@ -10,15 +10,15 @@
 #ifndef   __POKEMONISM_SDK_STRING_HH__
 #define   __POKEMONISM_SDK_STRING_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/collection/string.hh>
 
 namespace pokemonism {
 
     namespace sdk {
 
-        class String {
+        class String : public pokemonism::collection::String {
         public:     String(void) {}
-        public:     virtual ~String(void) {}
+        public:     ~String(void) override {}
         public:     String(const String & o) {}
         public:     String(String && o) noexcept {}
         public:     String & operator=(const String & o) { return *this; }

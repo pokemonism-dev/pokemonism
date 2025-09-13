@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 23)
 include_directories(./
                     pokemonism/sdk/src
                     pokemonism/interface/src
+                    pokemonism/collection/src
                     pokemonism/physics/src
                     pokemonism/mathematics/src
                     pokemonism/window/src)
 
 add_subdirectory(pokemonism/interface)
+add_subdirectory(pokemonism/collection)
 add_subdirectory(pokemonism/sdk)
 add_subdirectory(pokemonism/window)
 add_subdirectory(pokemonism/vulkan)
