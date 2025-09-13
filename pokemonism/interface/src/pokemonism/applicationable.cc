@@ -11,4 +11,7 @@
 #include "applicationable.hh"
 
 namespace pokemonism {
+
+    Applicationable * Applicationable::singleton = nullptr;
+
 }

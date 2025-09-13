@@ -16,6 +16,8 @@
 
 namespace pokemonism::window {
 
+    class AbstractWindowApplication;
+
     class PlatformWindowApplication : public WindowApplicationable {
     public:     static PlatformWindowApplication & get(void);
     public:     PlatformWindowApplication(void);
@@ -24,6 +26,7 @@ namespace pokemonism::window {
     public:     PlatformWindowApplication(PlatformWindowApplication && o) noexcept = delete;
     public:     PlatformWindowApplication & operator=(const PlatformWindowApplication & o) = delete;
     public:     PlatformWindowApplication & operator=(PlatformWindowApplication && o) noexcept = delete;
+    public:     friend AbstractWindowApplication;
     };
 
     inline PlatformWindowApplication::PlatformWindowApplication(void) {

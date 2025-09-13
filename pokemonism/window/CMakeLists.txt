@@ -39,7 +39,8 @@ target_link_libraries(pokemonism-window-application         PRIVATE     "-framew
                                                                         "-framework IOKit"
                                                                         "-framework CoreFoundation"
                                                                         pokemonism-window-dev
-                                                                        pokemonism-sdk)
+                                                                        pokemonism-sdk
+                                                                        pokemonism-interface-dev)
 target_compile_definitions(pokemonism-window-application    PRIVATE     __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE)
 
 

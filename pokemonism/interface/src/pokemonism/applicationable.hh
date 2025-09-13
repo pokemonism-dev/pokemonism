@@ -16,7 +16,9 @@
 namespace pokemonism {
 
     class Applicationable : public Runnable<Virtualable> {
+    protected:  static Applicationable * singleton;
     public:     virtual const char * platformNameGet(void) const noexcept = 0;
+    protected:  int run(void) override = 0;
     public:     inline Applicationable(void);
     public:     inline ~Applicationable(void) override;
     public:     Applicationable(const Applicationable & o) = delete;

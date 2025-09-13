@@ -36,16 +36,10 @@ using namespace pokemonism::window;
 
 int main(int argc, char ** argv) {
 
-    Application<AbstractWindowApplication> * application = new Application<AbstractWindowApplication>();
+    Application<AbstractWindowApplication> * application = Application<AbstractWindowApplication>::gen();
 
     printf("%s\n", application->platformNameGet());
 
-    application->run();
-
-    delete application;
-    //
-    // // WindowObservable
-    // Application * o = new Application<ObservableWindowApplication<WindowApplication<>>>();
-    return declaration::success;
+    return Application<AbstractWindowApplication>::exec(application);
 }
 #endif // __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE
