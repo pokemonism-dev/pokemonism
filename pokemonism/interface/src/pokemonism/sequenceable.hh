@@ -18,10 +18,10 @@ namespace pokemonism {
     class Sequenceable : public Super {
     public:     inline Sequenceable(void);
     public:     inline ~Sequenceable(void) override;
-    public:     Sequenceable(const Sequenceable<Elementable, Super> & o) = delete;
-    public:     Sequenceable(Sequenceable<Elementable, Super> && o) noexcept = delete;
-    public:     Sequenceable<Elementable, Super> & operator=(const Sequenceable<Elementable, Super> & o) = delete;
-    public:     Sequenceable<Elementable, Super> & operator=(Sequenceable<Elementable, Super> && o) noexcept = delete;
+    public:     inline Sequenceable(const Sequenceable<Elementable, Super> & o);
+    public:     inline Sequenceable(Sequenceable<Elementable, Super> && o) noexcept;
+    public:     inline Sequenceable<Elementable, Super> & operator=(const Sequenceable<Elementable, Super> & o);
+    public:     inline Sequenceable<Elementable, Super> & operator=(Sequenceable<Elementable, Super> && o) noexcept;
     };
 
     template <class Elementable, class Super>
@@ -32,6 +32,30 @@ namespace pokemonism {
     template <class Elementable, class Super>
     inline Sequenceable<Elementable, Super>::~Sequenceable(void) {
 
+    }
+
+    template <class Elementable, class Super>
+    inline Sequenceable<Elementable, Super>::Sequenceable(const Sequenceable<Elementable, Super> & o) : Super(o) {
+
+    }
+
+    template <class Elementable, class Super>
+    inline Sequenceable<Elementable, Super>::Sequenceable(Sequenceable<Elementable, Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template <class Elementable, class Super>
+    inline Sequenceable<Elementable, Super> & Sequenceable<Elementable, Super>::operator=(const Sequenceable<Elementable, Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+
+        return *this;
+    }
+
+    template <class Elementable, class Super>
+    inline Sequenceable<Elementable, Super> & Sequenceable<Elementable, Super>::operator=(Sequenceable<Elementable, Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(std::move(o));
+
+        return *this;
     }
 
 }

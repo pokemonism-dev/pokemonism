@@ -17,22 +17,46 @@ namespace pokemonism {
     template <class Super = Virtualable>
     class Runnable : public Super {
     public:     virtual int run(void) = 0;
-    public:     Runnable(void);
-    public:     ~Runnable(void) override;
-    public:     Runnable(const Runnable<Super> & o) = delete;
-    public:     Runnable(Runnable<Super> && o) noexcept = delete;
-    public:     Runnable<Super> & operator=(const Runnable<Super> & o) = delete;
-    public:     Runnable<Super> & operator=(Runnable<Super> && o) noexcept = delete;
+    public:     inline Runnable(void);
+    public:     inline ~Runnable(void) override;
+    public:     inline Runnable(const Runnable<Super> & o);
+    public:     inline Runnable(Runnable<Super> && o) noexcept;
+    public:     inline Runnable<Super> & operator=(const Runnable<Super> & o);
+    public:     inline Runnable<Super> & operator=(Runnable<Super> && o) noexcept;
     };
 
     template<class Super>
-    Runnable<Super>::Runnable(void) {
+    inline Runnable<Super>::Runnable(void) {
 
     }
 
     template<class Super>
-    Runnable<Super>::~Runnable(void) {
+    inline Runnable<Super>::~Runnable(void) {
 
+    }
+
+    template<class Super>
+    inline Runnable<Super>::Runnable(const Runnable<Super> & o) : Super(o) {
+
+    }
+
+    template<class Super>
+    inline Runnable<Super>::Runnable(Runnable<Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template<class Super>
+    inline Runnable<Super> & Runnable<Super>::operator=(const Runnable<Super> & o) {
+        if (pointof(o) != this) Runnable<Super>::operator=(o);
+
+        return *this;
+    }
+
+    template<class Super>
+    inline Runnable<Super> & Runnable<Super>::operator=(Runnable<Super> && o) noexcept {
+        if (pointof(o) != this) Runnable<Super>::operator=(std::move(o));
+
+        return *this;
     }
 
 

@@ -19,10 +19,10 @@ namespace pokemonism {
     public:     virtual Cloneable<Super> * clone(void) const = 0;
     public:     inline Cloneable(void);
     public:     inline ~Cloneable(void) override;
-    public:     Cloneable(const Cloneable<Super> & o) = delete;
-    public:     Cloneable(Cloneable<Super> && o) noexcept = delete;
-    public:     Cloneable<Super> & operator=(const Cloneable<Super> & o) = delete;
-    public:     Cloneable<Super> & operator=(Cloneable<Super> && o) noexcept = delete;
+    public:     inline Cloneable(const Cloneable<Super> & o);
+    public:     inline Cloneable(Cloneable<Super> && o) noexcept;
+    public:     inline Cloneable<Super> & operator=(const Cloneable<Super> & o);
+    public:     inline Cloneable<Super> & operator=(Cloneable<Super> && o) noexcept;
     };
 
     template<class Super>
@@ -35,6 +35,29 @@ namespace pokemonism {
 
     }
 
+    template<class Super>
+    inline Cloneable<Super>::Cloneable(const Cloneable<Super> & o) : Super(o) {
+
+    }
+
+    template<class Super>
+    inline Cloneable<Super>::Cloneable(Cloneable<Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template<class Super>
+    inline Cloneable<Super> & Cloneable<Super>::operator=(const Cloneable<Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+
+        return *this;
+    }
+
+    template<class Super>
+    inline Cloneable<Super> & Cloneable<Super>::operator=(Cloneable<Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(std::move(o));
+
+        return *this;
+    }
 
 }
 

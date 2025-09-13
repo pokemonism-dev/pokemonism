@@ -17,22 +17,44 @@ namespace pokemonism::collection {
 
     template <class Element, class Super = Collectable<Container>>
     class Collection : public Super {
-    public:     Collection(void);
-    public:     ~Collection(void) override;
-    public:     Collection(const Collection<Element, Super> & o) = delete;
-    public:     Collection(Collection<Element, Super> && o) noexcept = delete;
-    public:     Collection<Element, Super> & operator=(const Collection<Element, Super> & o) = delete;
-    public:     Collection<Element, Super> & operator=(Collection<Element, Super> && o) noexcept = delete;
+    public:     inline Collection(void);
+    public:     inline ~Collection(void) override;
+    public:     inline Collection(const Collection<Element, Super> & o);
+    public:     inline Collection(Collection<Element, Super> && o) noexcept;
+    public:     inline Collection<Element, Super> & operator=(const Collection<Element, Super> & o);
+    public:     inline Collection<Element, Super> & operator=(Collection<Element, Super> && o) noexcept;
     };
 
     template<class Element, class Super>
-    Collection<Element, Super>::Collection(void) {
+    inline Collection<Element, Super>::Collection(void) {
 
     }
 
     template<class Element, class Super>
-    Collection<Element, Super>::~Collection(void) {
+    inline Collection<Element, Super>::~Collection(void) {
 
+    }
+
+    template<class Element, class Super>
+    inline Collection<Element, Super>::Collection(const Collection<Element, Super> & o) : Super(o) {
+
+    }
+
+    template<class Element, class Super>
+    inline Collection<Element, Super>::Collection(Collection<Element, Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template<class Element, class Super>
+    inline Collection<Element, Super> & Collection<Element, Super>::operator=(const Collection<Element, Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+        return *this;
+    }
+
+    template<class Element, class Super>
+    inline Collection<Element, Super> & Collection<Element, Super>::operator=(Collection<Element, Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(std::move(o));
+        return *this;
     }
 
 }

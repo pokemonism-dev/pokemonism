@@ -10,25 +10,28 @@
 #ifndef   __POKEMONISM_SDK_TYPOGRAPHER_HH__
 #define   __POKEMONISM_SDK_TYPOGRAPHER_HH__
 
-namespace pokemonism::sdk {
+namespace pokemonism {
+    namespace sdk {
+        template <typename Elementable>
+        struct Typographer {
+        public:     constexpr static const char *   name = "basic";
+        public:     typedef Elementable             Type;
+        public:     typedef void                    PrimitiveType;
+        public:     typedef void                    CharacterType;
+        public:     constexpr static unsigned long  unit = sizeof(Elementable);
+        };
 
-    template <typename Elementable>
-    struct Typographer {
-    public:     constexpr static const char *   name = "basic";
-    public:     typedef Elementable             Type;
-    public:     typedef void                    PrimitiveType;
-    public:     typedef void                    CharacterType;
-    public:     constexpr static unsigned long  unit = sizeof(Elementable);
-    };
+        template <typename Elementable>
+        struct Typographer<Elementable *> {
+        public:     constexpr static const char *   name = "pointer";
+        public:     typedef Elementable *           Type;
+        public:     typedef unsigned char           PrimitiveType;
+        public:     typedef void                    CharacterType;
+        public:     constexpr static unsigned long  unit = sizeof(Elementable *);
+        };
+    }
 
-    template <typename Elementable>
-    struct Typographer<Elementable *> {
-    public:     constexpr static const char *   name = "pointer";
-    public:     typedef Elementable *           Type;
-    public:     typedef unsigned char           PrimitiveType;
-    public:     typedef void                    CharacterType;
-    public:     constexpr static unsigned long  unit = sizeof(Elementable *);
-    };
+    template <typename Elementable> using Typographer = pokemonism::sdk::Typographer<Elementable>;
 
 }
 

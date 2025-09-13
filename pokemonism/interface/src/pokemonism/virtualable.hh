@@ -18,12 +18,12 @@ namespace pokemonism {
      * 가상 함수
      */
     class Virtualable {
-    public:     Virtualable(void);
-    public:     virtual ~Virtualable(void);
-    public:     Virtualable(const Virtualable & o) = delete;
-    public:     Virtualable(Virtualable && o) noexcept = delete;
-    public:     Virtualable & operator=(const Virtualable & o) = delete;
-    public:     Virtualable & operator=(Virtualable && o) noexcept = delete;
+    public:     inline Virtualable(void);
+    public:     inline virtual ~Virtualable(void);
+    public:     inline Virtualable(const Virtualable & o);
+    public:     inline Virtualable(Virtualable && o) noexcept;
+    public:     inline Virtualable & operator=(const Virtualable & o);
+    public:     inline Virtualable & operator=(Virtualable && o) noexcept;
     };
 
     inline Virtualable::Virtualable(void) {
@@ -32,6 +32,22 @@ namespace pokemonism {
 
     inline Virtualable::~Virtualable(void) {
 
+    }
+
+    inline Virtualable::Virtualable(const Virtualable & o) {
+
+    }
+
+    inline Virtualable::Virtualable(Virtualable && o) noexcept {
+
+    }
+
+    inline Virtualable & Virtualable::operator=(const Virtualable & o) {
+        return *this;
+    }
+
+    inline Virtualable & Virtualable::operator=(Virtualable && o) noexcept {
+        return *this;
     }
 
 

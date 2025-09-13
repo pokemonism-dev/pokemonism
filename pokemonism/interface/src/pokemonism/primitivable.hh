@@ -10,17 +10,15 @@
 #ifndef   __POKEMONISM_PRIMITIVABLE_HH__
 #define   __POKEMONISM_PRIMITIVABLE_HH__
 
-#include <pokemonism.hh>
-
 namespace pokemonism {
 
     class Primitivable {
     public:     inline Primitivable(void);
     public:     inline virtual ~Primitivable(void);
-    public:     Primitivable(const Primitivable & o) = delete;
-    public:     Primitivable(Primitivable && o) noexcept = delete;
-    public:     Primitivable & operator=(const Primitivable & o) = delete;
-    public:     Primitivable & operator=(Primitivable && o) noexcept = delete;
+    public:     inline Primitivable(const Primitivable & o);
+    public:     inline Primitivable(Primitivable && o) noexcept;
+    public:     inline Primitivable & operator=(const Primitivable & o);
+    public:     inline Primitivable & operator=(Primitivable && o) noexcept;
     };
 
     inline Primitivable::Primitivable(void) {
@@ -29,6 +27,22 @@ namespace pokemonism {
 
     inline Primitivable::~Primitivable(void) {
 
+    }
+
+    inline Primitivable::Primitivable(const Primitivable & o) {
+
+    }
+
+    inline Primitivable::Primitivable(Primitivable && o) noexcept {
+
+    }
+
+    inline Primitivable & Primitivable::operator=(const Primitivable & o) {
+        return *this;
+    }
+
+    inline Primitivable & Primitivable::operator=(Primitivable && o) noexcept {
+        return *this;
     }
 
 }

@@ -19,10 +19,10 @@ namespace pokemonism::collection {
     class Sequence : public Super {
     public:     inline Sequence(void);
     public:     inline ~Sequence(void) override;
-    public:     Sequence(const Sequence<Element, Super> & o) = delete;
-    public:     Sequence(Sequence<Element, Super> && o) noexcept = delete;
-    public:     Sequence<Element, Super> & operator=(const Sequence<Element, Super> & o) = delete;
-    public:     Sequence<Element, Super> & operator=(Sequence<Element, Super> && o) noexcept = delete;
+    public:     inline Sequence(const Sequence<Element, Super> & o);
+    public:     inline Sequence(Sequence<Element, Super> && o) noexcept;
+    public:     inline Sequence<Element, Super> & operator=(const Sequence<Element, Super> & o);
+    public:     inline Sequence<Element, Super> & operator=(Sequence<Element, Super> && o) noexcept;
     };
 
     template <class Element, class Super>
@@ -33,6 +33,28 @@ namespace pokemonism::collection {
     template <class Element, class Super>
     inline Sequence<Element, Super>::~Sequence(void) {
 
+    }
+
+    template <class Element, class Super>
+    inline Sequence<Element, Super>::Sequence(const Sequence<Element, Super> & o) : Super(o) {
+
+    }
+
+    template <class Element, class Super>
+    inline Sequence<Element, Super>::Sequence(Sequence<Element, Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template <class Element, class Super>
+    inline Sequence<Element, Super> & Sequence<Element, Super>::operator=(const Sequence<Element, Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+        return *this;
+    }
+
+    template <class Element, class Super>
+    inline Sequence<Element, Super> & Sequence<Element, Super>::operator=(Sequence<Element, Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(std::move(o));
+        return *this;
     }
 
 }

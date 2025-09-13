@@ -15,12 +15,13 @@
 namespace pokemonism {
 
     class Containable : public Virtualable {
+    public:     virtual void clear(void) = 0;
     public:     inline Containable(void);
     public:     inline ~Containable(void) override;
-    public:     Containable(const Containable & o) = delete;
-    public:     Containable(Containable && o) noexcept = delete;
-    public:     Containable & operator=(const Containable & o) = delete;
-    public:     Containable & operator=(Containable && o) noexcept = delete;
+    public:     inline Containable(const Containable & o);
+    public:     inline Containable(Containable && o) noexcept;
+    public:     inline Containable & operator=(const Containable & o);
+    public:     inline Containable & operator=(Containable && o) noexcept;
     };
 
     inline Containable::Containable(void) {
@@ -29,6 +30,22 @@ namespace pokemonism {
 
     inline Containable::~Containable(void) {
 
+    }
+
+    inline Containable::Containable(const Containable & o) {
+
+    }
+
+    inline Containable::Containable(Containable && o) noexcept {
+
+    }
+
+    inline Containable & Containable::operator=(const Containable & o) {
+        return *this;
+    }
+
+    inline Containable & Containable::operator=(Containable && o) noexcept {
+        return *this;
     }
 
 

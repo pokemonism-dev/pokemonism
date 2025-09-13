@@ -20,10 +20,10 @@ namespace pokemonism {
     public:     virtual Output * call(void) = 0;
     public:     inline Callable(void);
     public:     inline ~Callable(void) override;
-    public:     Callable(const Callable<Output, Super> & o) = delete;
-    public:     Callable(Callable<Output, Super> && o) noexcept = delete;
-    public:     Callable<Output, Super> & operator=(const Callable<Output, Super> & o) = delete;
-    public:     Callable<Output, Super> & operator=(Callable<Output, Super> && o) noexcept = delete;
+    public:     inline Callable(const Callable<Output, Super> & o);
+    public:     inline Callable(Callable<Output, Super> && o) noexcept;
+    public:     inline Callable<Output, Super> & operator=(const Callable<Output, Super> & o);
+    public:     inline Callable<Output, Super> & operator=(Callable<Output, Super> && o) noexcept;
     };
 
     template<class Output, class Super>
@@ -36,6 +36,29 @@ namespace pokemonism {
 
     }
 
+    template<class Output, class Super>
+    inline Callable<Output, Super>::Callable(const Callable<Output, Super> & o) : Super(o) {
+
+    }
+
+    template<class Output, class Super>
+    inline Callable<Output, Super>::Callable(Callable<Output, Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template<class Output, class Super>
+    inline Callable<Output, Super> & Callable<Output, Super>::operator=(const Callable<Output, Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+
+        return *this;
+    }
+
+    template<class Output, class Super>
+    inline Callable<Output, Super> & Callable<Output, Super>::operator=(Callable<Output, Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(std::move(o));
+
+        return *this;
+    }
 
 }
 

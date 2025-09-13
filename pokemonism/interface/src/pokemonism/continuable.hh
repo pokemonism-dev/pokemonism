@@ -18,10 +18,10 @@ namespace pokemonism {
     class Continuable : public Super {
     public:     inline Continuable(void);
     public:     inline ~Continuable(void) override;
-    public:     Continuable(const Continuable<Elementable, Super> & o) = delete;
-    public:     Continuable(Continuable<Elementable, Super> && o) noexcept = delete;
-    public:     Continuable<Elementable, Super> & operator=(const Continuable<Elementable, Super> & o) = delete;
-    public:     Continuable<Elementable, Super> & operator=(Continuable<Elementable, Super> && o) noexcept = delete;
+    public:     inline Continuable(const Continuable<Elementable, Super> & o);
+    public:     inline Continuable(Continuable<Elementable, Super> && o) noexcept;
+    public:     inline Continuable<Elementable, Super> & operator=(const Continuable<Elementable, Super> & o);
+    public:     inline Continuable<Elementable, Super> & operator=(Continuable<Elementable, Super> && o) noexcept;
     };
 
     template <class Elementable, class Super>
@@ -32,6 +32,30 @@ namespace pokemonism {
     template <class Elementable, class Super>
     inline Continuable<Elementable, Super>::~Continuable(void) {
 
+    }
+
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super>::Continuable(const Continuable<Elementable, Super> & o) : Super(o) {
+
+    }
+
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super>::Continuable(Continuable<Elementable, Super> && o) noexcept : Super(std::move(o)) {
+
+    }
+
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super> & Continuable<Elementable, Super>::operator=(const Continuable<Elementable, Super> & o) {
+        if (pointof(o) != this) Super::operator=(o);
+
+        return *this;
+    }
+
+    template <class Elementable, class Super>
+    inline Continuable<Elementable, Super> & Continuable<Elementable, Super>::operator=(Continuable<Elementable, Super> && o) noexcept {
+        if (pointof(o) != this) Super::operator=(o);
+
+        return *this;
     }
 
 }

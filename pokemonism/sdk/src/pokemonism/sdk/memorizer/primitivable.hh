@@ -92,4 +92,6 @@ namespace pokemonism::sdk {
 
 }
 
+#include <pokemonism/sdk/memorizer/primitivable/one.hh>
+
 #endif // __POKEMONISM_SDK_MEMORIZER_PRIMITIVABLE_HH__
