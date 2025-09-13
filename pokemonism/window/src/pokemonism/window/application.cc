@@ -32,9 +32,9 @@ using namespace pokemonism;
 // Observable<Window
 
 int main(int argc, char ** argv) {
-
-    // WindowObservable
-    Application * o = new Application<ObservableWindowApplication<WindowApplication<>>>();
+    //
+    // // WindowObservable
+    // Application * o = new Application<ObservableWindowApplication<WindowApplication<>>>();
     return declaration::success;
 }
 #endif // __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE

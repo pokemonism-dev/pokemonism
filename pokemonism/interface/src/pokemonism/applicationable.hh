@@ -15,30 +15,23 @@
 
 namespace pokemonism {
 
-    template <class Super = Virtualable>
-    class Applicationable : public Runnable<Super> {
-    public:     Applicationable(void);
-    public:     ~Applicationable(void) override;
-    public:     Applicationable(const Applicationable<Super> & o) = delete;
-    public:     Applicationable(Applicationable<Super> && o) noexcept = delete;
-    public:     Applicationable<Super> & operator=(const Applicationable<Super> & o) = delete;
-    public:     Applicationable<Super> & operator=(Applicationable<Super> && o) noexcept = delete;
+    class Applicationable : public Runnable<Virtualable> {
+    public:     virtual const char * platformNameGet(void) const noexcept = 0;
+    public:     inline Applicationable(void);
+    public:     inline ~Applicationable(void) override;
+    public:     Applicationable(const Applicationable & o) = delete;
+    public:     Applicationable(Applicationable && o) noexcept = delete;
+    public:     Applicationable & operator=(const Applicationable & o) = delete;
+    public:     Applicationable & operator=(Applicationable && o) noexcept = delete;
     };
 
-    template <class Super>
-    Applicationable<Super>::Applicationable(void) {
+    Applicationable::Applicationable(void) {
 
     }
 
-    template <class Super>
-    Applicationable<Super>::~Applicationable(void) {
+    Applicationable::~Applicationable(void) {
 
     }
-
-    /**
-     * WindowApp
-     * ConsoleApp
-     */
 
 }
 
