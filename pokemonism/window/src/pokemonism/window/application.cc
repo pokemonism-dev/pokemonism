@@ -25,13 +25,24 @@ namespace pokemonism::window {
 }
 
 #else
+#include <cstdio>
+#include <pokemonism/sdk/application.hh>
 #include <pokemonism/window/platform/application.hh>
 
 using namespace pokemonism;
+using namespace pokemonism::window;
 
 // Observable<Window
 
 int main(int argc, char ** argv) {
+
+    Application<AbstractWindowApplication> * application = new Application<AbstractWindowApplication>();
+
+    printf("%s\n", application->platformNameGet());
+
+    application->run();
+
+    delete application;
     //
     // // WindowObservable
     // Application * o = new Application<ObservableWindowApplication<WindowApplication<>>>();
