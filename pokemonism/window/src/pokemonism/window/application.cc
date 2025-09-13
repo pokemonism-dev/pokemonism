@@ -4,68 +4,37 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 12, 2025
+ * @since           9월 13, 2025
  */
 
 
 #include "application.hh"
 
-#include "platform.hh"
-#include "../window.hh"
+#ifndef   __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE
 
 namespace pokemonism::window {
 
-    Window * Application::add(Window * node) {
-        return Collection::add(this, node);
-    }
-
-    Window * Application::del(Window * node) {
-        return Collection::del(this, node);
-    }
-
-    void Application::clear(void) {
-        Collection::clear(this);
-    }
-
-    int Application::run(void) {
-        while (size > 0) wait(0, 1000);
-
-        return declaration::success;
-    }
-
-    Application::Window * Application::gen(const WindowCfg & config) {
-        pokemonism::Window * window = new pokemonism::Window(new pokemonism::window::platform::Window());
-
-        add(window);
-
-        window->create();
-
-        // window->execute();
-        // window->on();
-        // window->off();
-        // window->create();
-        // window->destroy();
-
-        return window;
-    }
-
-    Application::Application(void) : size(declaration::zero), head(nullptr), tail(nullptr) {
-
-    }
-
-    Application::~Application(void) {
-        Collection::clear(this);
-    }
+    // pokemonism::window::Application & Application::applicationGen(void) {
+    //
+    // }
+    //
+    // pokemonism::window::Application & Application::applicationGet(void) {
+    //
+    // }
 
 }
 
-#ifndef   __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE
+#else
+#include <pokemonism/window/platform/application.hh>
 
-using namespace pokemonism::window;
+using namespace pokemonism;
+
+// Observable<Window
 
 int main(int argc, char ** argv) {
-    Application * application = new Application();
-    application->gen(WindowCfg::defaultConfig);
-    return application->run();
+
+    // WindowObservable
+    Application * o = new Application<ObservableWindowApplication<WindowApplication<>>>();
+    return declaration::success;
 }
 #endif // __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE

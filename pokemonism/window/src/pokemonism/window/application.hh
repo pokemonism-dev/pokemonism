@@ -4,42 +4,47 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 12, 2025
+ * @since           9월 13, 2025
  */
 
 #ifndef   __POKEMONISM_WINDOW_APPLICATION_HH__
 #define   __POKEMONISM_WINDOW_APPLICATION_HH__
 
-#include <pokemonism/sdk/linked/list.hh>
-#include <pokemonism/sdk/application.hh>
+#include <pokemonism.hh>
 
-#include <pokemonism/window/cfg.hh>
+#include <pokemonism/window/interface/application.hh>
+#include <pokemonism/window/platform/application.hh>
 
 namespace pokemonism::window {
 
-    class Window;
-    class WindowCfg;
+    template <class Super = interface::WindowApplication>
+    class WindowApplication : public Super {
 
-    class Application : public pokemonism::sdk::Application {
-    protected:  using Collection = pokemonism::sdk::LinkedList<Application, Window>;
-    protected:  using Window = pokemonism::window::Window;
-    private:    unsigned long   size;
-    private:    Window *        head;
-    private:    Window *        tail;
-    public:     virtual Application::Window * gen(const WindowCfg & config);
-    protected:  virtual Window * add(Window * node);
-    protected:  virtual Window * del(Window * node);
-    protected:  virtual void clear(void);
-    public:     int run(void) override;
-    public:     Application(void);
-    public:     ~Application(void) override;
+    };
+
+    class Application : public pokemonism::window::interface::Application {
+    protected:  static pokemonism::window::Application & applicationGen(void);
+    protected:  pokemonism::window::interface::Application & adapter;
+    public:     const char * platformNameGet(void) const noexcept override;
+    protected:  inline Application(void);
+    public:     inline ~Application(void) override;
     public:     Application(const Application & o) = delete;
     public:     Application(Application && o) noexcept = delete;
     public:     Application & operator=(const Application & o) = delete;
     public:     Application & operator=(Application && o) noexcept = delete;
-    public:     friend Collection;
-    public:     friend Window;
     };
+
+    inline const char * Application::platformNameGet(void) const noexcept {
+        return adapter.platformNameGet();
+    };
+
+    inline Application::Application(void) : adapter(pokemonism::window::platform::applicationGet()) {
+
+    }
+
+    inline Application::~Application(void) {
+
+    }
 
 }
 

@@ -4,11 +4,11 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 13, 2025
+ * @since           Sep 13, 2025
  */
 
 
-#include "applicationable.hh"
+#include "windowable.hh"
 
 namespace pokemonism {
 }
