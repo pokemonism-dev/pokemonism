@@ -29,6 +29,7 @@ set(POKEMONISM_WINDOW_SOURCE            src/pokemonism/window.cc
                                         src/pokemonism/window/platform.cc
                                         src/pokemonism/window/config.cc
                                         src/pokemonism/window/lib.cc
+                                        src/pokemonism/window/cfg.cc
                                         src/pokemonism/window/vulkan/config.cc)
 
 set(POKEMONISM_WINDOW_HEADER            src/pokemonism/window.hh
@@ -55,6 +56,7 @@ set(POKEMONISM_WINDOW_HEADER            src/pokemonism/window.hh
                                         src/pokemonism/window/clipboard.hh
                                         src/pokemonism/window/platform.hh
                                         src/pokemonism/window/config.hh
+                                        src/pokemonism/window/cfg.hh
                                         src/pokemonism/window/lib.hh
                                         src/pokemonism/window/vulkan/config.hh)
 

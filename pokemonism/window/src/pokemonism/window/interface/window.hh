@@ -21,10 +21,12 @@ namespace pokemonism::window {
     namespace interface {
 
         class Window {
-        protected:  virtual interface::Keyboard & keyboardGet(void) const = 0;
-        protected:  virtual interface::Mouse & mouseGet(void) const = 0;
-        protected:  virtual interface::Monitor & monitorGet(void) const = 0;
+        protected:  virtual interface::Keyboard & keyboardGet(void) = 0;
+        protected:  virtual interface::Mouse & mouseGet(void) = 0;
+        protected:  virtual interface::Monitor & monitorGet(void) = 0;
         public:     virtual void titleSet(const char * name) = 0;
+        public:     virtual int create(void) = 0;
+        public:     virtual int destroy(void) = 0;
         public:     inline Window(void);
         public:     inline virtual ~Window(void);
         public:     Window(const Window & o) = delete;

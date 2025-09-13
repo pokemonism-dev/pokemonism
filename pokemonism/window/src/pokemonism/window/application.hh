@@ -13,6 +13,8 @@
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/sdk/application.hh>
 
+#include <pokemonism/window/cfg.hh>
+
 namespace pokemonism::window {
 
     class Window;

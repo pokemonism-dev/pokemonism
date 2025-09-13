@@ -10,6 +10,7 @@
 
 #include "application.hh"
 
+#include "platform.hh"
 #include "../window.hh"
 
 namespace pokemonism::window {
@@ -33,7 +34,19 @@ namespace pokemonism::window {
     }
 
     Application::Window * Application::gen(const WindowCfg & config) {
-        return nullptr;
+        pokemonism::Window * window = new pokemonism::Window(new pokemonism::window::platform::Window());
+
+        add(window);
+
+        window->create();
+
+        // window->execute();
+        // window->on();
+        // window->off();
+        // window->create();
+        // window->destroy();
+
+        return window;
     }
 
     Application::Application(void) : size(declaration::zero), head(nullptr), tail(nullptr) {
@@ -52,6 +65,7 @@ using namespace pokemonism::window;
 
 int main(int argc, char ** argv) {
     Application * application = new Application();
+    application->gen(WindowCfg::defaultConfig);
     return application->run();
 }
 #endif // __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE

@@ -18,7 +18,7 @@ namespace pokemonism {
     class Runnable : public Super {
     public:     virtual int run(void) = 0;
     public:     Runnable(void);
-    public:     ~Runnable(void) override;
+    public:     virtual ~Runnable(void) override;
     public:     Runnable(const Runnable<Super> & o) = delete;
     public:     Runnable(Runnable<Super> && o) noexcept = delete;
     public:     Runnable<Super> & operator=(const Runnable<Super> & o) = delete;

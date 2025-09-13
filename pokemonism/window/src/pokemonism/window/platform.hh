@@ -10,14 +10,24 @@
 #ifndef   __POKEMONISM_WINDOW_PLATFORM_HH__
 #define   __POKEMONISM_WINDOW_PLATFORM_HH__
 
-namespace pokemonism::window {
+#include <pokemonism/window/cocoa/window.hh>
 
-    struct WindowPlatform {
-    public:     constexpr static unsigned int cocoa = 1;
-    public:     struct Angle {
-                public:     constexpr static unsigned int metal = 1;
-                };
-    };
+namespace pokemonism::window::platform {
+
+    using Window = pokemonism::window::cocoa::Window;
+
+    // using Mouse = pokemonism::window::cocoa::Mouse;
+    // using Monitor = pokemonism::window::cocoa::Monitor;
+    // using Keyboard = pokemonism::window::cocoa::Keyboard;
+
+
+
+    // struct WindowPlatform {
+    // public:     constexpr static unsigned int cocoa = 1;
+    // public:     struct Angle {
+    //             public:     constexpr static unsigned int metal = 1;
+    //             };
+    // };
 
 
 }

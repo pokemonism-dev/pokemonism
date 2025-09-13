@@ -10,8 +10,6 @@
 #ifndef   __POKEMONISM_WINDOW_COCOA_WINDOW_HH__
 #define   __POKEMONISM_WINDOW_COCOA_WINDOW_HH__
 
-#include <Cocoa/Cocoa.h>
-
 #include <pokemonism/window/interface/window.hh>
 
 #include <pokemonism/window/cocoa/mouse.hh>
@@ -21,10 +19,18 @@
 namespace pokemonism::window::cocoa {
 
     class Window : public pokemonism::window::interface::Window {
-    protected:  id object;
+    protected:  struct Cocoa;
+    protected:  Window::Cocoa * internal;
     public:     Mouse mouse;
     public:     Monitor monitor;
     public:     Keyboard keyboard;
+    protected:  interface::Keyboard & keyboardGet(void) override { return keyboard; };
+    protected:  interface::Mouse & mouseGet(void) override { return mouse; }
+    protected:  interface::Monitor & monitorGet(void) override { return monitor; }
+    public:     void titleSet(const char * name) override { }
+
+    public:     int create(void) override;
+    public:     int destroy(void) override;
     public:     Window(void);
     public:     ~Window(void) override;
     public:     Window(const Window & o) = delete;
