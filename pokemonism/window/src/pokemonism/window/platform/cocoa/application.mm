@@ -9,67 +9,81 @@
 
 #include <Cocoa/Cocoa.h>
 
+#include "application.hh"
+
 #include "../application.hh"
+
+@implementation CocoaPlatformWindowApplicationDelegator
+
+- (void) applicationDidFinishLaunching: (NSNotification *) notification {
+
+      NSRect windowRect = NSMakeRect(100, 100, 400, 300);
+      NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable;
+
+      self.window = [[NSWindow alloc] initWithContentRect: windowRect
+                                      styleMask: styleMask
+                                      backing: NSBackingStoreBuffered
+                                      defer: NO];
+
+      self.window.title = @"Hello, world!";
+
+      // Label Create & Set
+      NSRect labelRect = NSMakeRect(0, 0, 400, 300);
+      NSTextField * label = [[NSTextField alloc] initWithFrame: labelRect];
+
+      label.stringValue = @"Objective-C Window Application";
+      label.alignment = NSTextAlignmentCenter;
+      label.editable = NO;
+      label.bordered = NO;
+      label.drawsBackground = NO;
+
+      printf("hello\n");
+
+      [self.window.contentView addSubview: label];
+
+      [self.window makeKeyAndOrderFront: nil];
+
+  }
+
+  - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) sender {
+        return YES;
+    }
+
+@end
 
 namespace pokemonism::window {
 
-    class CocoaPlatformWindowApplication : public PlatformWindowApplication {
-    public:    const char * platformNameGet(void) const noexcept override;
-    public:    int run(void) override;
-    };
+    CocoaPlatformWindowApplication::CocoaPlatformWindowApplication(void) {
+        application = nil;
+        delegator = nil;
+    }
+
+    CocoaPlatformWindowApplication::~CocoaPlatformWindowApplication(void) {
+    }
 
     const char * CocoaPlatformWindowApplication::platformNameGet(void) const noexcept {
         return "cocoa";
     }
 
+    Window * CocoaPlatformWindowApplication::gen(const WindowConfig & config) {
+        return nullptr;
+    }
+
     int CocoaPlatformWindowApplication::run(void) {
+        @autoreleasepool {
+            application = [NSApplication sharedApplication];
+
+            delegator = [[CocoaPlatformWindowApplicationDelegator alloc] init];
+            application.delegate = delegator;
+            [application run];
+        }
         return declaration::success;
     }
 
     PlatformWindowApplication & PlatformWindowApplication::get(void) {
         static CocoaPlatformWindowApplication singleton;
+
         return singleton;
     }
-
-
-
-//    namespace cocoa {
-//        class Application : public pokemonism::window::interface::Application {
-//        public:    static Application singleton;
-//        public:    inline const char * platformNameGet(void) const noexcept override;
-//        public:    inline pokemonism::window::interface::Window * gen(const pokemonism::window::interface::WindowConfig & config) override;
-//        public:    inline int run(void) override;
-//        public:    inline Application(void);
-//        public:    inline ~Application(void) override;
-//        public:    Application(const Application & o) = delete;
-//        public:    Application(Application && o) noexcept = delete;
-//        public:    Application & operator=(const Application & o) = delete;
-//        public:    Application & operator=(Application && o) noexcept = delete;
-//        };
-//
-//        Application Application::singleton;
-//
-//        inline const char * Application::platformNameGet(void) const noexcept {
-//            return "cocoa";
-//        }
-//
-//        inline pokemonism::window::interface::Window * Application::gen(const pokemonism::window::interface::WindowConfig & config) {
-//            return nullptr;
-//        }
-//
-//        inline int Application::run(void) {
-//            return declaration::success;
-//        }
-//
-//        inline Application::Application(void) {
-//        }
-//
-//        inline Application::~Application(void) {
-//        }
-//    }
-//
-//    pokemonism::window::interface::Application & applicationGet(void) {
-//        return pokemonism::window::platform::cocoa::Application::singleton;
-//    }
 
 }

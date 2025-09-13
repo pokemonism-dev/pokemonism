@@ -22,4 +22,8 @@ namespace pokemonism::window {
 
     }
 
+    Window * AbstractWindowApplication::gen(const WindowConfig & config) {
+        return adapter.gen(config);
+    }
+
 }

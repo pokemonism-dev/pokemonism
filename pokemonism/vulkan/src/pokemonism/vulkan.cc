@@ -7,9 +7,6 @@
  * @since           9월 12, 2025
  */
 
-#include <cstdio>
-
-#include <pokemonism/window.hh>
 
 #include "vulkan.hh"
 

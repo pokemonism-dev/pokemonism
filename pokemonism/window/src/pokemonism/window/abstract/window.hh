@@ -10,13 +10,13 @@
 #ifndef   __POKEMONISM_WINDOW_ABSTRACT_WINDOW_HH__
 #define   __POKEMONISM_WINDOW_ABSTRACT_WINDOW_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/window/window.hh>
 
 namespace pokemonism::window {
 
     class AbstractWindowApplication;
 
-    class AbstractWindow {
+    class AbstractWindow : public Window {
 
     };
 

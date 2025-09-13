@@ -8,7 +8,7 @@
  */
 
 
-#include "windowable.hh"
+#include "config.hh"
 
 namespace pokemonism {
 }

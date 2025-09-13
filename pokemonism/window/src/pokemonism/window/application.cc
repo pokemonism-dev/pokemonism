@@ -13,15 +13,6 @@
 #ifndef   __EXPORT_POKEMONISM_WINDOW_APPLICATION_EXAMPLE
 
 namespace pokemonism::window {
-
-    // pokemonism::window::Application & Application::applicationGen(void) {
-    //
-    // }
-    //
-    // pokemonism::window::Application & Application::applicationGet(void) {
-    //
-    // }
-
 }
 
 #else
@@ -31,8 +22,6 @@ namespace pokemonism::window {
 
 using namespace pokemonism;
 using namespace pokemonism::window;
-
-// Observable<Window
 
 int main(int argc, char ** argv) {
 
