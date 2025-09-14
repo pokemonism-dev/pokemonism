@@ -16,8 +16,6 @@ namespace pokemonism::window {
     int CocoaPlatformWindow::create(void) {
         @autoreleasepool {
             if (window == nil) {
-                printf("create window %d %d %d %d\n", config.rect.x, config.rect.y, config.rect.width, config.rect.height);
-
                 NSRect rect = NSMakeRect(config.rect.x, config.rect.y, config.rect.width, config.rect.height);
 
                 NSWindowStyleMask style = NSWindowStyleMaskBorderless;

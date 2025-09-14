@@ -17,37 +17,11 @@
 
 - (void) applicationDidFinishLaunching: (NSNotification *) notification {
 
-      NSRect windowRect = NSMakeRect(100, 100, 400, 300);
-      NSWindowStyleMask styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable;
-
-      self.window = [[NSWindow alloc] initWithContentRect: windowRect
-                                      styleMask: styleMask
-                                      backing: NSBackingStoreBuffered
-                                      defer: NO];
-
-      self.window.title = @"Hello, world!";
-
-      // Label Create & Set
-      NSRect labelRect = NSMakeRect(0, 0, 400, 300);
-      NSTextField * label = [[NSTextField alloc] initWithFrame: labelRect];
-
-      label.stringValue = @"Objective-C Window Application";
-      label.alignment = NSTextAlignmentCenter;
-      label.editable = NO;
-      label.bordered = NO;
-      label.drawsBackground = NO;
-
-      printf("hello\n");
-
-      [self.window.contentView addSubview: label];
-
-      [self.window makeKeyAndOrderFront: nil];
-
   }
 
-  - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) sender {
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) sender {
         return YES;
-    }
+  }
 
 @end
 

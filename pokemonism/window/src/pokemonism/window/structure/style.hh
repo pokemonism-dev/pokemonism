@@ -7,8 +7,8 @@
  * @since           Sep 14, 2025
  */
 
-#ifndef   __POKEMONISM_STYLE_HH__
-#define   __POKEMONISM_STYLE_HH__
+#ifndef   __POKEMONISM_WINDOW_STRUCTURE_STYLE_HH__
+#define   __POKEMONISM_WINDOW_STRUCTURE_STYLE_HH__
 
 #include <pokemonism.hh>
 
@@ -20,4 +20,4 @@ namespace pokemonism::window {
 
 }
 
-#endif // __POKEMONISM_STYLE_HH__
+#endif // __POKEMONISM_WINDOW_STRUCTURE_STYLE_HH__
