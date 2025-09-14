@@ -10,6 +10,7 @@
 #ifndef   __POKEMONISM_INTERFACE_WINDOW_APPLICATION_HH__
 #define   __POKEMONISM_INTERFACE_WINDOW_APPLICATION_HH__
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/interface/window.hh>
 
 namespace pokemonism::interface {
