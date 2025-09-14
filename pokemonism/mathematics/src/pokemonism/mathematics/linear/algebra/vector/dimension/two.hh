@@ -18,8 +18,8 @@
 
 namespace pokemonism::mathematics::linear::algebra {
 
-    template <class Precisional>
-    class Vector<geometry::dimension::two, Precisional> {
+    template <typename Precisional>
+    struct Vector<geometry::dimension::two, Precisional> {
     public:     constexpr static unsigned long size = sizeof(typename Precisional::Type) * geometry::dimension::two;
     public:     static const Vector<geometry::dimension::two, Precisional> zero;
     protected:  Precisional::Type v[geometry::dimension::two];
@@ -96,65 +96,65 @@ namespace pokemonism::mathematics::linear::algebra {
                 }
     };
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Precisional::Type & Vector<geometry::dimension::two, Precisional>::at(unsigned int index) {
         if (geometry::dimension::two <= index) throw Exception();
 
         return v[index];
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline const Precisional::Type & Vector<geometry::dimension::two, Precisional>::at(unsigned int index) const {
         if (geometry::dimension::two <= index) throw Exception();
 
         return v[index];
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional>::Vector(typename Precisional::Type x, typename Precisional::Type y) {
         v[geometry::plane::axis::x] = x;
         v[geometry::plane::axis::y] = y;
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional>::Vector(void) {
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional>::~Vector(void) {
 
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional>::Vector(const Vector<geometry::dimension::two, Precisional> & o) {
         ::memcpy(v, o.v, size);
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional>::Vector(Vector<geometry::dimension::two, Precisional> && o) noexcept {
         ::memcpy(v, o.v, size);
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> & Vector<geometry::dimension::two, Precisional>::operator=(const Vector<geometry::dimension::two, Precisional> & o) {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> & Vector<geometry::dimension::two, Precisional>::operator=(Vector<geometry::dimension::two, Precisional> && o) noexcept {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Precisional::Type & Vector<geometry::dimension::two, Precisional>::operator[](unsigned int index) {
         if (geometry::dimension::two <= index) throw Exception();
 
         return v[index];
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline const Precisional::Type & Vector<geometry::dimension::two, Precisional>::operator[](unsigned int index) const {
         if (geometry::dimension::two <= index) throw Exception();
 
@@ -162,7 +162,7 @@ namespace pokemonism::mathematics::linear::algebra {
     }
 
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> & Vector<geometry::dimension::two, Precisional>::operator+=(const Vector<geometry::dimension::two, Precisional> & o) {
         if (pointof(o) != this) {
             for (int i = 0; i < geometry::dimension::two; i = i + 1) v[i] = v[i] + o.v[i];
@@ -170,7 +170,7 @@ namespace pokemonism::mathematics::linear::algebra {
         return *this;
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> & Vector<geometry::dimension::two, Precisional>::operator-=(Vector<geometry::dimension::two, Precisional> && o) noexcept {
         if (pointof(o) != this) {
             for (int i = 0; i < geometry::dimension::two; i = i + 1) v[i] = v[i] - o.v[i];
@@ -178,12 +178,12 @@ namespace pokemonism::mathematics::linear::algebra {
         return *this;
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> operator+(const Vector<geometry::dimension::two, Precisional> & o) {
         return Vector<geometry::dimension::two, Precisional>(o);
     }
 
-    template <class Precisional>
+    template <typename Precisional>
     inline Vector<geometry::dimension::two, Precisional> operator+(const Vector<geometry::dimension::two, Precisional> & left, const Vector<geometry::dimension::two, Precisional> & right) {
         Vector<geometry::dimension::two, Precisional> x(left);
 

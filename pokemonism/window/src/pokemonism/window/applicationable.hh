@@ -20,7 +20,7 @@ namespace pokemonism {
         class Window;
 
         class WindowApplicationable : public Applicationable {
-        public:     virtual Window * gen(const WindowConfig & o) = 0;
+        public:     virtual Window * windowGen(const WindowConfig & o) = 0;
         public:     inline WindowApplicationable(void);
         public:     inline ~WindowApplicationable(void) override;
         public:     WindowApplicationable(const WindowApplicationable & o) = delete;

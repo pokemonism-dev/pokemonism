@@ -18,7 +18,7 @@ namespace pokemonism {
     class Collectable : public Super {
     public:     virtual void add(const Elementable & item) = 0;
     public:     virtual void add(Elementable && item) = 0;
-    public:     virtual void del(const Elementable & item) = 0;
+    public:     virtual void del(Elementable & item) = 0;
     public:     inline Collectable(void);
     public:     inline ~Collectable(void);
     public:     inline Collectable(const Collectable<Elementable, Super> & o);

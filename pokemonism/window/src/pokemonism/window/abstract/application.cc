@@ -36,8 +36,15 @@ namespace pokemonism::window {
         Collection::clear(this);
     }
 
-    Window * AbstractWindowApplication::gen(const WindowConfig & config) {
-        return adapter.gen(config);
+    Window * AbstractWindowApplication::windowGen(const WindowConfig & config) {
+        PlatformWindow * platform = adapter.windowGen(config);
+
+        if (platform != nullptr) {
+            AbstractWindow * window = new AbstractWindow(platform);
+            add(window);
+        }
+
+        return platform;
     }
 
 }

@@ -15,6 +15,8 @@
 namespace pokemonism::window {
 
     class Window {
+    public:     virtual int create(void) = 0;
+    public:     virtual int destroy(void) = 0;
     protected:  inline Window(void);
     protected:  inline virtual ~Window(void);
     public:     Window(const Window & o) = delete;

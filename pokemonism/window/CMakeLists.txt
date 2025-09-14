@@ -10,7 +10,9 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
                                                                         src/pokemonism/window/applicationable.cc
                                                                         src/pokemonism/window/abstract/application.cc
                                                                         src/pokemonism/window/abstract/window.cc
-                                                                        src/pokemonism/window/platform/application.cc)
+                                                                        src/pokemonism/window/platform/application.cc
+                                                                        src/pokemonism/window/platform/window.cc
+                                                                        src/pokemonism/window/structure/rect.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window/application.hh
                                                                         src/pokemonism/window/window.hh
@@ -18,14 +20,18 @@ set(POKEMONISM_WINDOW_SOURCE                                            src/poke
                                                                         src/pokemonism/window/applicationable.hh
                                                                         src/pokemonism/window/abstract/application.hh
                                                                         src/pokemonism/window/abstract/window.hh
-                                                                        src/pokemonism/window/platform/application.hh)
+                                                                        src/pokemonism/window/platform/application.hh
+                                                                        src/pokemonism/window/platform/window.hh
+                                                                        src/pokemonism/window/structure/rect.hh)
 
 add_library(pokemonism-window-dev                                       ${POKEMONISM_WINDOW_HEARER}
                                                                         ${POKEMONISM_WINDOW_SOURCE})
 
-set(POKEMONISM_WINDOW_COCOA_HEADER                                      src/pokemonism/window/platform/cocoa/application.hh)
+set(POKEMONISM_WINDOW_COCOA_HEADER                                      src/pokemonism/window/platform/cocoa/application.hh
+                                                                        src/pokemonism/window/platform/cocoa/window.hh)
 
-set(POKEMONISM_WINDOW_COCOA_SOURCE                                      src/pokemonism/window/platform/cocoa/application.mm)
+set(POKEMONISM_WINDOW_COCOA_SOURCE                                      src/pokemonism/window/platform/cocoa/application.mm
+                                                                        src/pokemonism/window/platform/cocoa/window.mm)
 
 target_sources(pokemonism-window-dev                    PRIVATE         ${POKEMONISM_WINDOW_COCOA_HEADER}
                                                                         ${POKEMONISM_WINDOW_COCOA_SOURCE})

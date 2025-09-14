@@ -14,6 +14,10 @@
 
 namespace pokemonism::window {
 
+    AbstractWindow::AbstractWindow(PlatformWindow * window) : container(nullptr), prev(nullptr), next(nullptr), adapter(window) {
+
+    }
+
     AbstractWindow::~AbstractWindow(void) {
         if (container != nullptr) container->del(this);
     }

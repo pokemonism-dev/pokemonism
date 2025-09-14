@@ -15,7 +15,7 @@
 
 namespace pokemonism::collection {
 
-    template <class Element, class Super = Collectable<Container>>
+    template <class Element, class Super = Collectable<Element, Container>>
     class Collection : public Super {
     public:     inline Collection(void);
     public:     inline ~Collection(void) override;

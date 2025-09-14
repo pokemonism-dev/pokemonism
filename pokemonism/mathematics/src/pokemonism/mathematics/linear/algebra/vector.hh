@@ -19,8 +19,8 @@
 
 namespace pokemonism::mathematics::linear::algebra {
 
-    template <int dimension, class Precisional = ScalarTag>
-    class Vector {
+    template <int dimension, typename Precisional = ScalarTag>
+    struct Vector {
     public:     constexpr static unsigned long size = sizeof(Precisional::Type) * dimension;
     public:     static const Vector<dimension, Precisional> zero;
     protected:  Precisional::Type v[dimension];
@@ -97,61 +97,61 @@ namespace pokemonism::mathematics::linear::algebra {
                 }
     };
 
-    template <int dimension, class Precisional = ScalarTag> using Point = Vector<dimension, Precisional>;
+    template <int dimension, typename Precisional = ScalarTag> using Point = Vector<dimension, Precisional>;
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) {
         if (dimension <= index) throw Exception();
 
         return v[index];
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline const Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) const {
         if (dimension <= index) throw Exception();
 
         return v[index];
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional>::Vector(void) {
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional>::~Vector(void) {
 
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional>::Vector(const Vector<dimension, Precisional> & o) {
         ::memcpy(v, o.v, size);
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional>::Vector(Vector<dimension, Precisional> && o) noexcept {
         ::memcpy(v, o.v, size);
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator=(const Vector<dimension, Precisional> & o) {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator=(Vector<dimension, Precisional> && o) noexcept {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) {
         if (dimension <= index) throw Exception();
 
         return v[index];
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline const Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) const {
         if (dimension <= index) throw Exception();
 
@@ -159,7 +159,7 @@ namespace pokemonism::mathematics::linear::algebra {
     }
 
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator+=(const Vector<dimension, Precisional> & o) {
         if (pointof(o) != this) {
             for (int i = 0; i < dimension; i = i + 1) v[i] = v[i] + o.v[i];
@@ -167,7 +167,7 @@ namespace pokemonism::mathematics::linear::algebra {
         return *this;
     }
 
-    template <int dimension, class Precisional>
+    template <int dimension, typename Precisional>
     inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator-=(Vector<dimension, Precisional> && o) noexcept {
         if (pointof(o) != this) {
             for (int i = 0; i < dimension; i = i + 1) v[i] = v[i] - o.v[i];

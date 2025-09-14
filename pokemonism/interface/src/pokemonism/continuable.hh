@@ -16,6 +16,11 @@ namespace pokemonism {
 
     template <class Elementable, class Super = Virtualable>
     class Continuable : public Super {
+    public:     virtual unsigned long capacityCal(unsigned long n) = 0;
+    public:     virtual void set(const Elementable & item, unsigned long n) = 0;
+    public:     virtual void set(const Elementable * source, unsigned long sourceLen) = 0;
+    public:     virtual void cat(const Elementable & item, unsigned long n) = 0;
+    public:     virtual void cat(const Elementable * source, unsigned long sourceLen) = 0;
     public:     inline Continuable(void);
     public:     inline ~Continuable(void) override;
     public:     inline Continuable(const Continuable<Elementable, Super> & o);

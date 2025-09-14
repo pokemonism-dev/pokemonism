@@ -10,6 +10,8 @@
 #ifndef   __POKEMONISM_COLLECTION_CONTINUOUS_HH__
 #define   __POKEMONISM_COLLECTION_CONTINUOUS_HH__
 
+#include <cstring>
+
 #include <pokemonism/sdk/memorizer.hh>
 #include <pokemonism/sdk/allocator.hh>
 
@@ -22,9 +24,18 @@ namespace pokemonism::collection {
     class Continuous : public Super {
     protected:  using memorizer = Memorizer<Element, Primitivable, unit>;
     protected:  using allocator = Allocator;
+    protected:  constexpr static unsigned long page = 8;
     protected:  Element *       storage;
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
+    public:     inline void set(const Element & item, unsigned long n) override;
+    public:     inline void set(const Element * source, unsigned long sourceLen) override;
+    public:     inline void cat(const Element & item, unsigned long n) override;
+    public:     inline void cat(const Element * source, unsigned long sourceLen) override;
+    public:     inline unsigned long capacityCal(unsigned long n) override;
+    public:     inline void add(const Element & item) override;
+    public:     inline void add(Element && item) override;
+    public:     inline void del(Element & item) override;
     public:     inline void clear(void) override;
     public:     inline Continuous(void);
     public:     inline ~Continuous(void) override;
@@ -33,6 +44,65 @@ namespace pokemonism::collection {
     public:     inline Continuous<Element, Super, unit, Characterable, Primitivable> & operator=(const Continuous<Element, Super, unit, Characterable, Primitivable> & o);
     public:     inline Continuous<Element, Super, unit, Characterable, Primitivable> & operator=(Continuous<Element, Super, unit, Characterable, Primitivable> && o) noexcept;
     };
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::set(const Element & item, unsigned long n) {
+        if (size > 0) memorizer::del(storage, size);
+        if (capacity < n) storage = allocator::reset(storage, capacity = capacityCal(n));
+        memorizer::set(storage, item, size = n);
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::set(const Element * source, unsigned long sourceLen) {
+        if (size > 0) memorizer::del(storage, size);
+        if (capacity < sourceLen) storage = allocator::reset(storage, capacity = capacityCal(sourceLen));
+        memorizer::set(storage, source, size = sourceLen);
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::cat(const Element & item, unsigned long n) {
+        if (capacity < size + n) storage = allocator::gen(storage, capacity = capacityCal(size + n));
+        memorizer::set(storage + size, item, n);
+        size = size + n;
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::cat(const Element * source, unsigned long sourceLen) {
+        if (capacity < size + sourceLen) storage = allocator::gen(storage, capacity = capacityCal(size + sourceLen));
+        memorizer::set(storage + size, source, sourceLen);
+        size = size + sourceLen;
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline unsigned long Continuous<Element, Super, unit, Characterable, Primitivable>::capacityCal(unsigned long n) {
+        return (n / page + (n % page > 0 ? 1 : 0)) * page;
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::add(const Element & item) {
+        if (capacity <= size) storage = allocator::gen(storage, capacity = capacityCal(size + 1));
+        memorizer::set(storage + size, item);
+        size = size + 1;
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::add(Element && item) {
+        if (capacity <= size) storage = allocator::gen(storage, capacity = capacityCal(size + 1));
+        memorizer::set(storage + size, std::move(item));
+        size = size + 1;
+    }
+
+    template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
+    inline void Continuous<Element, Super, unit, Characterable, Primitivable>::del(Element & item) {
+        for (unsigned long i = 0; i < size; i = i + 1) {
+            if (storage[i] == item) {
+                memorizer::del(storage + i);
+                if (size - i - 1 > 0) ::memmove(storage + i, storage + i + 1, (size - i - 1) * unit);
+                this->size = this->size - 1;
+                return;
+            }
+        }
+    }
 
     template<class Element, class Super, unsigned long unit, typename Characterable, typename Primitivable>
     void Continuous<Element, Super, unit, Characterable, Primitivable>::clear(void) {

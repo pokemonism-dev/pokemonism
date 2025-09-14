@@ -10,11 +10,15 @@
 #ifndef   __POKEMONISM_WINDOW_CONFIG_HH__
 #define   __POKEMONISM_WINDOW_CONFIG_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/collection/string.hh>
+#include <pokemonism/window/structure/rect.hh>
 
 namespace pokemonism::window {
 
     class WindowConfig {
+    public:     String          title;
+    public:     Rect            rect;
+    public:     unsigned int    style;
     public:     inline WindowConfig(void);
     public:     inline virtual ~WindowConfig(void);
     public:     WindowConfig(const WindowConfig & o) = delete;
@@ -23,7 +27,7 @@ namespace pokemonism::window {
     public:     WindowConfig & operator=(WindowConfig && o) noexcept = delete;
     };
 
-    inline WindowConfig::WindowConfig(void) {
+    inline WindowConfig::WindowConfig(void) : style(declaration::none) {
 
     }
 

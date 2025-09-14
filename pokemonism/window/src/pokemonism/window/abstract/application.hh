@@ -27,7 +27,7 @@ namespace pokemonism::window {
         protected:  PlatformWindowApplication & adapter;
         public:     inline const char * platformNameGet(void) const noexcept override { return adapter.platformNameGet();  }
         protected:  inline int run(void) override { return adapter.run(); }
-        public:     Window * gen(const WindowConfig & config) override;
+        public:     Window * windowGen(const WindowConfig & config) override;
         protected:  virtual AbstractWindow * add(AbstractWindow * node);
         protected:  virtual AbstractWindow * del(AbstractWindow * node);
         protected:  virtual void clear(void);

@@ -24,6 +24,7 @@ namespace pokemonism::window {
     protected:  AbstractWindow * prev;
     protected:  AbstractWindow * next;
     protected:  PlatformWindow * adapter;
+    protected:  explicit AbstractWindow(PlatformWindow * window);
     protected:  inline AbstractWindow(void);
     public:     ~AbstractWindow(void) override;
     public:     AbstractWindow(const AbstractWindow & o) = delete;

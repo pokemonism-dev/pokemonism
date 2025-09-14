@@ -7,17 +7,20 @@
  * @since           9월 13, 2025
  */
 
-#ifndef   __POKEMONISM_APPLICATION_HH__
-#define   __POKEMONISM_APPLICATION_HH__
+#ifndef   __POKEMONISM_WINDOW_PLATFORM_APPLICATION_HH__
+#define   __POKEMONISM_WINDOW_PLATFORM_APPLICATION_HH__
 
 #include <pokemonism/window/applicationable.hh>
+#include <pokemonism/window/platform/window.hh>
 
 namespace pokemonism::window {
 
     class AbstractWindowApplication;
+    class PlatformWindow;
 
     class PlatformWindowApplication : public WindowApplicationable {
     public:     static PlatformWindowApplication & get(void);
+    protected:  PlatformWindow * windowGen(const WindowConfig & config) override = 0;
     public:     PlatformWindowApplication(void);
     public:     ~PlatformWindowApplication(void) override;
     public:     PlatformWindowApplication(const PlatformWindowApplication & o) = delete;
@@ -38,4 +41,4 @@ namespace pokemonism::window {
 
 }
 
-#endif // __POKEMONISM_APPLICATION_HH__
+#endif // __POKEMONISM_WINDOW_PLATFORM_APPLICATION_HH__

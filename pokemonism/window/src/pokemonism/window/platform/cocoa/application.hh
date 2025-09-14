@@ -18,14 +18,16 @@
 
 @end
 
+
 #include <pokemonism/window/platform/application.hh>
+#include <pokemonism/window/platform/cocoa/window.hh>
 
 namespace pokemonism::window {
     class CocoaPlatformWindowApplication : public PlatformWindowApplication {
     protected:  NSApplication * application;
     protected:  CocoaPlatformWindowApplicationDelegator * delegator;
     public:     const char * platformNameGet(void) const noexcept override;
-    public:     Window * gen(const WindowConfig & config) override;
+    public:     CocoaPlatformWindow * windowGen(const WindowConfig & config) override;
     protected:  int run(void) override;
     protected:  CocoaPlatformWindowApplication(void);
     protected:  ~CocoaPlatformWindowApplication(void) override;
