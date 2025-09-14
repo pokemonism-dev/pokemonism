@@ -14,15 +14,15 @@
 
 namespace pokemonism::physics::unit {
 
-    struct Tag : public physics::Tag {};
-
-    struct LengthTag : public physics::unit::Tag {};
-    struct TimeTag : public physics::unit::Tag {};
-    struct MassTag : public physics::unit::Tag {};
-
-    struct m : public LengthTag {};
-    struct s : public TimeTag {};
-    struct kg : public MassTag {};
+    // struct Tag : public physics::Tag {};
+    //
+    // struct LengthTag : public physics::unit::Tag {};
+    // struct TimeTag : public physics::unit::Tag {};
+    // struct MassTag : public physics::unit::Tag {};
+    //
+    // struct m : public LengthTag {};
+    // struct s : public TimeTag {};
+    // struct kg : public MassTag {};
 
 }
 

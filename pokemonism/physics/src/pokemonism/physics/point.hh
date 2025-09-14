@@ -14,22 +14,22 @@
 
 namespace pokemonism::physics {
 
-    class Point {
-    public:     inline Point(void);
-    public:     inline virtual ~Point(void);
-    public:     Point(const Point & o) = delete;
-    public:     Point(Point && o) noexcept = delete;
-    public:     Point & operator=(const Point & o) = delete;
-    public:     Point & operator=(Point && o) noexcept = delete;
-    };
-
-    inline Point::Point(void) {
-
-    }
-
-    inline Point::~Point(void) {
-
-    }
+    // class Point {
+    // public:     inline Point(void);
+    // public:     inline virtual ~Point(void);
+    // public:     Point(const Point & o) = delete;
+    // public:     Point(Point && o) noexcept = delete;
+    // public:     Point & operator=(const Point & o) = delete;
+    // public:     Point & operator=(Point && o) noexcept = delete;
+    // };
+    //
+    // inline Point::Point(void) {
+    //
+    // }
+    //
+    // inline Point::~Point(void) {
+    //
+    // }
 
 
 }

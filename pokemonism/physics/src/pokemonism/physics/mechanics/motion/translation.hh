@@ -14,7 +14,7 @@
 
 namespace pokemonism::physics {
 
-    struct TranslationMotionTag : public physics::Tag {};
+    // struct TranslationMotionTag : public physics::Tag {};
 
 }
 

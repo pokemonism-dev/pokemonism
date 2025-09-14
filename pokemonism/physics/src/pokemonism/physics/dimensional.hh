@@ -14,13 +14,13 @@
 
 namespace pokemonism::physics {
 
-    struct DimensionTag : public physics::Tag {};
-
-    namespace dimensional {
-        struct one : public DimensionTag {};
-        struct two : public DimensionTag {};
-        struct three : public DimensionTag {};
-    }
+    // struct DimensionTag : public physics::Tag {};
+    //
+    // namespace dimensional {
+    //     struct one : public DimensionTag {};
+    //     struct two : public DimensionTag {};
+    //     struct three : public DimensionTag {};
+    // }
 
 }
 

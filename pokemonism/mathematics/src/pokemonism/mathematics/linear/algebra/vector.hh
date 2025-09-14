@@ -19,164 +19,162 @@
 
 namespace pokemonism::mathematics::linear::algebra {
 
-    template <int dimension, typename Precisional = ScalarTag>
+    template <int count, typename precisional = scalar>
     struct Vector {
-    public:     constexpr static unsigned long size = sizeof(Precisional::Type) * dimension;
-    public:     static const Vector<dimension, Precisional> zero;
-    protected:  Precisional::Type v[dimension];
-    public:     inline Precisional::Type & at(unsigned int index);
-    public:     inline const Precisional::Type & at(unsigned int index) const;
+    public:     constexpr static unsigned long size = sizeof(precisional::Type) * count;
+    public:     static const Vector<count, precisional> zero;
+    protected:  precisional::Type v[count];
+    public:     inline precisional::Type & at(unsigned int index);
+    public:     inline const precisional::Type & at(unsigned int index) const;
     public:     inline Vector(void);
     public:     inline ~Vector(void);
-    public:     inline Vector(const Vector<dimension, Precisional> & o);
-    public:     inline Vector(Vector<dimension, Precisional> && o) noexcept;
-    public:     inline Vector<dimension, Precisional> & operator=(const Vector<dimension, Precisional> & o);
-    public:     inline Vector<dimension, Precisional> & operator=(Vector<dimension, Precisional> && o) noexcept;
-    public:     inline Precisional::Type & operator[](unsigned int index);
-    public:     inline const Precisional::Type & operator[](unsigned int index) const;
-    public:     inline Vector<dimension, Precisional> & operator+=(const Vector<dimension, Precisional> & o);
-    public:     inline Vector<dimension, Precisional> & operator-=(Vector<dimension, Precisional> && o) noexcept;
-    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & o) {
-                    return Vector<dimension, Precisional>(o);
+    public:     inline Vector(const Vector<count, precisional> & o);
+    public:     inline Vector(Vector<count, precisional> && o) noexcept;
+    public:     inline Vector<count, precisional> & operator=(const Vector<count, precisional> & o);
+    public:     inline Vector<count, precisional> & operator=(Vector<count, precisional> && o) noexcept;
+    public:     inline precisional::Type & operator[](unsigned int index);
+    public:     inline const precisional::Type & operator[](unsigned int index) const;
+    public:     inline Vector<count, precisional> & operator+=(const Vector<count, precisional> & o);
+    public:     inline Vector<count, precisional> & operator-=(Vector<count, precisional> && o) noexcept;
+    public:     friend inline Vector<count, precisional> operator+(const Vector<count, precisional> & o) {
+                    return Vector<count, precisional>(o);
                 }
-    public:     friend inline Vector<dimension, Precisional> operator+(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
-                    Vector<dimension, Precisional> x;
+    public:     friend inline Vector<count, precisional> operator+(const Vector<count, precisional> & left, const Vector<count, precisional> & right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right[i];
+                    for (int i = 0; i < count; i = i + 1) x[i] = left[i] * right[i];
 
                     return x;
                 }
-    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & o) {
-                    Vector<dimension, Precisional> x;
+    public:     friend inline Vector<count, precisional> operator-(const Vector<count, precisional> & o) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = -1 * o[i];
+                    for (int i = 0; i < count; i = i + 1) x[i] = -1 * o[i];
 
                     return x;
                 }
-    public:     friend inline Vector<dimension, Precisional> operator-(const Vector<dimension, Precisional> & left, const Vector<dimension, Precisional> & right) {
-                    Vector<dimension, Precisional> x;
+    public:     friend inline Vector<count, precisional> operator-(const Vector<count, precisional> & left, const Vector<count, precisional> & right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right[i];
+                    for (int i = 0; i < count; i = i + 1) x[i] = left[i] * right[i];
 
                     return x;
                 }
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(Primitivable left, const Vector<dimension, Precisional> & right) {
-                    Vector<dimension, Precisional> x;
+    public:     template <typename Primitivable> friend inline Vector<count, precisional> operator*(Primitivable left, const Vector<count, precisional> & right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left * right[i];
+                    for (int i = 0; i < count; i = i + 1) x[i] = left * right[i];
 
                     return x;
                 }
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator*(const Vector<dimension, Precisional> & left, Primitivable right) {
-                    Vector<dimension, Precisional> x;
+    public:     template <typename Primitivable> friend inline Vector<count, precisional> operator*(const Vector<count, precisional> & left, Primitivable right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] * right;
+                    for (int i = 0; i < count; i = i + 1) x[i] = left[i] * right;
 
                     return x;
                 }
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(Primitivable left, const Vector<dimension, Precisional> & right) {
-                    Vector<dimension, Precisional> x;
+    public:     template <typename Primitivable> friend inline Vector<count, precisional> operator/(Primitivable left, const Vector<count, precisional> & right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left / right[i];
+                    for (int i = 0; i < count; i = i + 1) x[i] = left / right[i];
 
                     return x;
                 }
-    public:     template <typename Primitivable> friend inline Vector<dimension, Precisional> operator/(const Vector<dimension, Precisional> & left, Primitivable right) {
-                    Vector<dimension, Precisional> x;
+    public:     template <typename Primitivable> friend inline Vector<count, precisional> operator/(const Vector<count, precisional> & left, Primitivable right) {
+                    Vector<count, precisional> x;
 
                     // ### 20250912 | SUPPORT SIMD, CUDA
-                    for (int i = 0; i < dimension; i = i + 1) x[i] = left[i] / right;
+                    for (int i = 0; i < count; i = i + 1) x[i] = left[i] / right;
 
                     return x;
                 }
     };
 
-    template <int dimension, typename Precisional = ScalarTag> using Point = Vector<dimension, Precisional>;
+    template <int count, typename precisional = scalar> using Point = Vector<count, precisional>;
 
-    template <int dimension, typename Precisional>
-    inline Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) {
-        if (dimension <= index) throw Exception();
-
-        return v[index];
-    }
-
-    template <int dimension, typename Precisional>
-    inline const Precisional::Type & Vector<dimension, Precisional>::at(unsigned int index) const {
-        if (dimension <= index) throw Exception();
+    template <int count, typename precisional>
+    inline precisional::Type & Vector<count, precisional>::at(unsigned int index) {
+        if (count <= index) throw exception();
 
         return v[index];
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional>::Vector(void) {
+    template <int count, typename precisional>
+    inline const precisional::Type & Vector<count, precisional>::at(unsigned int index) const {
+        if (count <= index) throw exception();
+
+        return v[index];
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional>::~Vector(void) {
+    template <int count, typename precisional>
+    inline Vector<count, precisional>::Vector(void) {
+    }
+
+    template <int count, typename precisional>
+    inline Vector<count, precisional>::~Vector(void) {
 
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional>::Vector(const Vector<dimension, Precisional> & o) {
+    template <int count, typename precisional>
+    inline Vector<count, precisional>::Vector(const Vector<count, precisional> & o) {
         ::memcpy(v, o.v, size);
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional>::Vector(Vector<dimension, Precisional> && o) noexcept {
+    template <int count, typename precisional>
+    inline Vector<count, precisional>::Vector(Vector<count, precisional> && o) noexcept {
         ::memcpy(v, o.v, size);
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator=(const Vector<dimension, Precisional> & o) {
+    template <int count, typename precisional>
+    inline Vector<count, precisional> & Vector<count, precisional>::operator=(const Vector<count, precisional> & o) {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator=(Vector<dimension, Precisional> && o) noexcept {
+    template <int count, typename precisional>
+    inline Vector<count, precisional> & Vector<count, precisional>::operator=(Vector<count, precisional> && o) noexcept {
         if (pointof(o) != this) ::memcpy(v, o.v, size);
         return *this;
     }
 
-    template <int dimension, typename Precisional>
-    inline Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) {
-        if (dimension <= index) throw Exception();
+    template <int count, typename precisional>
+    inline precisional::Type & Vector<count, precisional>::operator[](unsigned int index) {
+        if (count <= index) throw exception();
 
         return v[index];
     }
 
-    template <int dimension, typename Precisional>
-    inline const Precisional::Type & Vector<dimension, Precisional>::operator[](unsigned int index) const {
-        if (dimension <= index) throw Exception();
+    template <int count, typename precisional>
+    inline const precisional::Type & Vector<count, precisional>::operator[](unsigned int index) const {
+        if (count <= index) throw exception();
 
         return v[index];
     }
 
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator+=(const Vector<dimension, Precisional> & o) {
+    template <int count, typename precisional>
+    inline Vector<count, precisional> & Vector<count, precisional>::operator+=(const Vector<count, precisional> & o) {
         if (pointof(o) != this) {
-            for (int i = 0; i < dimension; i = i + 1) v[i] = v[i] + o.v[i];
+            for (int i = 0; i < count; i = i + 1) v[i] = v[i] + o.v[i];
         }
         return *this;
     }
 
-    template <int dimension, typename Precisional>
-    inline Vector<dimension, Precisional> & Vector<dimension, Precisional>::operator-=(Vector<dimension, Precisional> && o) noexcept {
+    template <int count, typename precisional>
+    inline Vector<count, precisional> & Vector<count, precisional>::operator-=(Vector<count, precisional> && o) noexcept {
         if (pointof(o) != this) {
-            for (int i = 0; i < dimension; i = i + 1) v[i] = v[i] - o.v[i];
+            for (int i = 0; i < count; i = i + 1) v[i] = v[i] - o.v[i];
         }
         return *this;
     }
 
 }
-
-#include <pokemonism/mathematics/linear/algebra/vector/dimension/two.hh>
 
 #endif // __POKEMONISM_MATHEMATICS_LINEAR_ALGEBRA_VECTOR_HH__

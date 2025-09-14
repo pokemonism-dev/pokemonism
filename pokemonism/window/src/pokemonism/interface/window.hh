@@ -28,9 +28,9 @@ namespace pokemonism::interface {
                 public:     interface::window::unit & operator=(const interface::window::unit & o) { return *this; }
                 public:     interface::window::unit & operator=(interface::window::unit && o) noexcept { return *this; }
                 };
-    public:     struct config;
     public:     using color = graphics::color<>;
     public:     using rectangle = mathematics::geometry::rectangle<interface::window::unit::pixel>;
+    public:     struct config;
     public:     class application : public pokemonism::applicationable {
                 public:     virtual interface::window * windowGen(const interface::window::config & config) = 0;
                 public:     inline application(void);

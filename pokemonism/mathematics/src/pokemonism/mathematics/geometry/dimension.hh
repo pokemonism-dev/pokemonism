@@ -15,53 +15,51 @@
 
 namespace pokemonism::mathematics::geometry {
 
-    template <int dimension, typename Precisional = ScalarTag>
-    class Dimension {
-    public:     Precisional::Type v[dimension];
-    public:     inline Dimension(void);
-    public:     inline ~Dimension(void);
-    public:     inline Dimension(const Dimension<dimension, Precisional> & o);
-    public:     inline Dimension(Dimension<dimension, Precisional> && o) noexcept;
-    public:     inline Dimension<dimension, Precisional> & operator=(const Dimension<dimension, Precisional> & o);
-    public:     inline Dimension<dimension, Precisional> & operator=(Dimension<dimension, Precisional> && o) noexcept;
+    template <int count, typename precisional = scalar>
+    class dimension {
+    public:     precisional::Type v[count];
+    public:     inline dimension(void);
+    public:     inline ~dimension(void);
+    public:     inline dimension(const dimension<count, precisional> & o);
+    public:     inline dimension(dimension<count, precisional> && o) noexcept;
+    public:     inline dimension<count, precisional> & operator=(const dimension<count, precisional> & o);
+    public:     inline dimension<count, precisional> & operator=(dimension<count, precisional> && o) noexcept;
     };
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional>::Dimension(void) {
-        for (int i = 0; i < dimension; i = i + 1) v[i] = Precisional::zero;
+    template <int count, typename precisional>
+    inline dimension<count, precisional>::dimension(void) {
+        for (int i = 0; i < count; i = i + 1) v[i] = precisional::zero;
     }
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional>::~Dimension(void) {
+    template <int count, typename precisional>
+    inline dimension<count, precisional>::~dimension(void) {
 
     }
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional>::Dimension(const Dimension<dimension, Precisional> & o) {
-        for (int i = 0; i < dimension; i = i + 1) v[i] = o[i];
+    template <int count, typename precisional>
+    inline dimension<count, precisional>::dimension(const dimension<count, precisional> & o) {
+        for (int i = 0; i < count; i = i + 1) v[i] = o[i];
     }
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional>::Dimension(Dimension<dimension, Precisional> && o) noexcept {
-        for (int i = 0; i < dimension; i = i + 1) v[i] = o[i];
+    template <int count, typename precisional>
+    inline dimension<count, precisional>::dimension(dimension<count, precisional> && o) noexcept {
+        for (int i = 0; i < v; i = i + 1) v[i] = o[i];
     }
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional> & Dimension<dimension, Precisional>::operator=(const Dimension<dimension, Precisional> & o) {
-        if (pointof(o) != this) for (int i = 0; i < dimension; i = i + 1) v[i] = o[i];
+    template <int count, typename precisional>
+    inline dimension<count, precisional> & dimension<count, precisional>::operator=(const dimension<count, precisional> & o) {
+        if (pointof(o) != this) for (int i = 0; i < count; i = i + 1) v[i] = o[i];
 
         return *this;
     }
 
-    template <int dimension, typename Precisional>
-    inline Dimension<dimension, Precisional> & Dimension<dimension, Precisional>::operator=(Dimension<dimension, Precisional> && o) noexcept {
-        if (pointof(o) != this) for (int i = 0; i < dimension; i = i + 1) v[i] = o[i];
+    template <int count, typename precisional>
+    inline dimension<count, precisional> & dimension<count, precisional>::operator=(dimension<count, precisional> && o) noexcept {
+        if (pointof(o) != this) for (int i = 0; i < count; i = i + 1) v[i] = o[i];
 
         return *this;
     }
 
 }
-
-#include <pokemonism/mathematics/geometry/dimension/two.hh>
 
 #endif // __POKEMONISM_MATHEMATICS_GEOMETRY_DIMENSION_HH__

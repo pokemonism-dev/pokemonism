@@ -16,7 +16,7 @@ namespace pokemonism::platform {
 
     class window : public interface::window {
     public:     class application : public interface::window::application {
-
+                public:     platform::window * windowGen(const interface::window::config & o);
                 };
     };
 

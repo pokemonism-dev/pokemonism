@@ -12,7 +12,7 @@
 
 #include <pokemonism.hh>
 
-namespace pokemonism::mathematics::geometry {
+namespace pokemonism::mathematics::geometry::tag {
 
     namespace plane::axis {
         constexpr int x = 0;

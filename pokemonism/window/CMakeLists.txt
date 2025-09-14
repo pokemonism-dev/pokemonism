@@ -8,13 +8,19 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
                                                                         src/pokemonism/interface/window.cc
                                                                         src/pokemonism/interface/window/config.cc
                                                                         src/pokemonism/interface/window/application.cc
-                                                                        src/pokemonism/abstract/window.cc)
+                                                                        src/pokemonism/abstract/window.cc
+                                                                        src/pokemonism/abstract/window/application.cc
+                                                                        src/pokemonism/platform/window.cc
+                                                                        src/pokemonism/platform/window/application.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window.hh
                                                                         src/pokemonism/interface/window.hh
                                                                         src/pokemonism/interface/window/config.hh
                                                                         src/pokemonism/interface/window/application.hh
-                                                                        src/pokemonism/abstract/window.hh)
+                                                                        src/pokemonism/abstract/window.hh
+                                                                        src/pokemonism/abstract/window/application.hh
+                                                                        src/pokemonism/platform/window.hh
+                                                                        src/pokemonism/platform/window/application.hh)
 
 add_library(pokemonism-window-dev                                       ${POKEMONISM_WINDOW_HEARER}
                                                                         ${POKEMONISM_WINDOW_SOURCE})

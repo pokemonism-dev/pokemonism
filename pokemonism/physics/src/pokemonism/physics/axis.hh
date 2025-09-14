@@ -14,22 +14,22 @@
 
 namespace pokemonism::physics {
 
-    class Axis {
-    public:     inline Axis(void);
-    public:     inline virtual ~Axis(void);
-    public:     Axis(const Axis & o) = delete;
-    public:     Axis(Axis && o) noexcept = delete;
-    public:     Axis & operator=(const Axis & o) = delete;
-    public:     Axis & operator=(Axis && o) noexcept = delete;
-    };
-
-    inline Axis::Axis(void) {
-
-    }
-
-    inline Axis::~Axis(void) {
-
-    }
+    // class Axis {
+    // public:     inline Axis(void);
+    // public:     inline virtual ~Axis(void);
+    // public:     Axis(const Axis & o) = delete;
+    // public:     Axis(Axis && o) noexcept = delete;
+    // public:     Axis & operator=(const Axis & o) = delete;
+    // public:     Axis & operator=(Axis && o) noexcept = delete;
+    // };
+    //
+    // inline Axis::Axis(void) {
+    //
+    // }
+    //
+    // inline Axis::~Axis(void) {
+    //
+    // }
 
 }
 

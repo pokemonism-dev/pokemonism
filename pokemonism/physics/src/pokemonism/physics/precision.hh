@@ -14,15 +14,15 @@
 
 namespace pokemonism::physics {
 
-    struct PrecisionTag : public physics::Tag {
-    public:     typedef double  Type;
-    public:     constexpr static double zero = 0.0F;
-    };
-
-    struct IntegerPrecisionTag : public PrecisionTag {
-    public:     typedef long    Type;
-    public:     constexpr static long zero = 0L;
-    };
+    // struct PrecisionTag : public physics::Tag {
+    // public:     typedef double  Type;
+    // public:     constexpr static double zero = 0.0F;
+    // };
+    //
+    // struct IntegerPrecisionTag : public PrecisionTag {
+    // public:     typedef long    Type;
+    // public:     constexpr static long zero = 0L;
+    // };
 
 }
 

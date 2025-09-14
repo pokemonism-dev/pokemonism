@@ -16,25 +16,43 @@
 
 namespace pokemonism::physics {
 
-    template <class Dimension = DimensionTag, class Unit = unit::m>
-    class Coordinate {
-    public:     inline Coordinate(void);
-    public:     inline virtual ~Coordinate(void);
-    public:     Coordinate(const Coordinate<Dimension, Unit> & o) = delete;
-    public:     Coordinate(Coordinate<Dimension, Unit> && o) noexcept = delete;
-    public:     Coordinate<Dimension, Unit> & operator=(const Coordinate<Dimension, Unit> & o) = delete;
-    public:     Coordinate<Dimension, Unit> & operator=(Coordinate<Dimension, Unit> && o) noexcept = delete;
-    };
-
-    template <class Dimension, class Unit>
-    inline Coordinate<Dimension, Unit>::Coordinate(void) {
-
-    }
-
-    template <class Dimension, class Unit>
-    inline Coordinate<Dimension, Unit>::~Coordinate(void) {
-
-    }
+    // template <class Dimension = DimensionTag, class Unit = unit::m>
+    // class Coordinate {
+    // public:     inline Coordinate(void);
+    // public:     inline virtual ~Coordinate(void);
+    // public:     Coordinate(const Coordinate<Dimension, Unit> & o) = delete;
+    // public:     Coordinate(Coordinate<Dimension, Unit> && o) noexcept = delete;
+    // public:     Coordinate<Dimension, Unit> & operator=(const Coordinate<Dimension, Unit> & o) = delete;
+    // public:     Coordinate<Dimension, Unit> & operator=(Coordinate<Dimension, Unit> && o) noexcept = delete;
+    // };
+    //
+    // template <class Dimension, class Unit>
+    // inline Coordinate<Dimension, Unit>::Coordinate(void) {
+    //
+    // }
+    //
+    // template <class Dimension, class Unit>
+    // inline Coordinate<Dimension, Unit>::~Coordinate(void) {
+    //
+    // }// template <class Dimension = DimensionTag, class Unit = unit::m>
+    // class Coordinate {
+    // public:     inline Coordinate(void);
+    // public:     inline virtual ~Coordinate(void);
+    // public:     Coordinate(const Coordinate<Dimension, Unit> & o) = delete;
+    // public:     Coordinate(Coordinate<Dimension, Unit> && o) noexcept = delete;
+    // public:     Coordinate<Dimension, Unit> & operator=(const Coordinate<Dimension, Unit> & o) = delete;
+    // public:     Coordinate<Dimension, Unit> & operator=(Coordinate<Dimension, Unit> && o) noexcept = delete;
+    // };
+    //
+    // template <class Dimension, class Unit>
+    // inline Coordinate<Dimension, Unit>::Coordinate(void) {
+    //
+    // }
+    //
+    // template <class Dimension, class Unit>
+    // inline Coordinate<Dimension, Unit>::~Coordinate(void) {
+    //
+    // }
 
 }
 
