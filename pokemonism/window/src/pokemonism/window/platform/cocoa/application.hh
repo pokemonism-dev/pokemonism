@@ -21,11 +21,13 @@
 
 #include <pokemonism/window/platform/application.hh>
 #include <pokemonism/window/platform/cocoa/window.hh>
+#include <pokemonism/window/structure/videomode.hh>
 
 namespace pokemonism::window {
     class CocoaPlatformWindowApplication : public PlatformWindowApplication {
     protected:  NSApplication * application;
     protected:  CocoaPlatformWindowApplicationDelegator * delegator;
+    protected:  WindowVideoMode videoMode;
     public:     const char * platformNameGet(void) const noexcept override;
     public:     CocoaPlatformWindow * windowGen(const WindowConfig & config) override;
     protected:  int run(void) override;

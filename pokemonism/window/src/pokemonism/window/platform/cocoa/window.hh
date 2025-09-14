@@ -14,7 +14,6 @@
 
 #include <pokemonism/window/platform/window.hh>
 
-
 namespace pokemonism::window {
 
     class CocoaPlatformWindow : public PlatformWindow {

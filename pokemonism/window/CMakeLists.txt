@@ -6,12 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(POKEMONISM_WINDOW_HEARER                                            src/pokemonism/window/application.cc
                                                                         src/pokemonism/window/window.cc
+                                                                        src/pokemonism/window/monitor.cc
                                                                         src/pokemonism/window/config.cc
                                                                         src/pokemonism/window/applicationable.cc
                                                                         src/pokemonism/window/abstract/application.cc
                                                                         src/pokemonism/window/abstract/window.cc
                                                                         src/pokemonism/window/platform/application.cc
                                                                         src/pokemonism/window/platform/window.cc
+                                                                        src/pokemonism/window/platform/monitor.cc
                                                                         src/pokemonism/window/structure/rect.cc
                                                                         src/pokemonism/window/structure/colordepth.cc
                                                                         src/pokemonism/window/structure/videomode.cc
@@ -19,12 +21,14 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window/application.hh
                                                                         src/pokemonism/window/window.hh
+                                                                        src/pokemonism/window/monitor.hh
                                                                         src/pokemonism/window/config.hh
                                                                         src/pokemonism/window/applicationable.hh
                                                                         src/pokemonism/window/abstract/application.hh
                                                                         src/pokemonism/window/abstract/window.hh
                                                                         src/pokemonism/window/platform/application.hh
                                                                         src/pokemonism/window/platform/window.hh
+                                                                        src/pokemonism/window/platform/monitor.hh
                                                                         src/pokemonism/window/structure/rect.hh
                                                                         src/pokemonism/window/structure/colordepth.hh
                                                                         src/pokemonism/window/structure/videomode.hh

@@ -9,6 +9,7 @@ set(POKEMONISM_MATHEMATICS_SOURCE       src/pokemonism/mathematics.cc
                                         src/pokemonism/mathematics/scalar.cc
                                         src/pokemonism/mathematics/geometry.cc
                                         src/pokemonism/mathematics/geometry/rectangle.cc
+                                        src/pokemonism/mathematics/geometry/dimension.cc
                                         src/pokemonism/mathematics/linear/algebra/vector.cc
                                         src/pokemonism/mathematics/linear/algebra/vector/dimension/two.cc)
 
@@ -16,6 +17,7 @@ set(POKEMONISM_MATHEMATICS_HEADER       src/pokemonism/mathematics.hh
                                         src/pokemonism/mathematics/scalar.hh
                                         src/pokemonism/mathematics/geometry.hh
                                         src/pokemonism/mathematics/geometry/rectangle.hh
+                                        src/pokemonism/mathematics/geometry/dimension.hh
                                         src/pokemonism/mathematics/linear/algebra/vector.hh
                                         src/pokemonism/mathematics/linear/algebra/vector/dimension/two.hh)
 
