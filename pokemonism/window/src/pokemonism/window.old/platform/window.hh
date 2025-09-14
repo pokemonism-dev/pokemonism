@@ -10,8 +10,8 @@
 #ifndef   __POKEMONISM_WINDOW_HH__
 #define   __POKEMONISM_WINDOW_HH__
 
-#include <pokemonism/window/window.hh>
-#include <pokemonism/window/config.hh>
+#include <pokemonism/window/src/pokemonism/window.old/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/config.hh>
 
 namespace pokemonism::window {
 

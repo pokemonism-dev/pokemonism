@@ -10,16 +10,14 @@
 #ifndef   __POKEMONISM_WINDOW_STRUCTURE_VIDEOMODE_HH__
 #define   __POKEMONISM_WINDOW_STRUCTURE_VIDEOMODE_HH__
 
-#include <pokemonism/window/structure/colordepth.hh>
+#include <pokemonism/window/src/pokemonism/window.old/structure/color.hh>
 
 namespace pokemonism::window {
-
-
 
     struct WindowVideoMode {
     public:     int width;
     public:     int height;
-    public:     WindowColorDepth colorBits;
+    public:     color colorBits;
     public:     int refreshRate;
     public:     inline WindowVideoMode(void);
     public:     inline ~WindowVideoMode(void);

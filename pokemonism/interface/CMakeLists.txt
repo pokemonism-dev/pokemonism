@@ -41,9 +41,3 @@ set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/virtualable.hh
 
 add_library(pokemonism-interface-dev        ${POKEMONISM_INTERFACE_SOURCE}
                                             ${POKEMONISM_INTERFACE_HEADER})
-
-add_executable(pokemonism-interface-runnable test/pokemonism/runnable.cc)
-target_link_libraries(pokemonism-interface-runnable pokemonism-interface-dev)
-
-add_executable(pokemonism-interface-synchronizable test/pokemonism/synchronizable.cc)
-target_link_libraries(pokemonism-interface-synchronizable pokemonism-interface-dev)

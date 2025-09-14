@@ -15,92 +15,93 @@
 
 namespace pokemonism {
     namespace sdk {
-        template <typename Elementable, typename Primitivable = Typographer<Elementable>::PrimitiveType, unsigned long size = Typographer<Elementable>::unit>
-        class Memorizer {
-        public:     static Elementable * set(Elementable * destination, const Elementable & item);
-        public:     static Elementable * set(Elementable * destination, Elementable && item);
-        public:     static Elementable * set(Elementable * destination, const Elementable & item, unsigned long n);
-        public:     static Elementable * set(Elementable * destination, const Elementable * source, unsigned long sourceLen);
-        public:     static Elementable * del(Elementable * destination);
-        public:     static Elementable * del(Elementable * destination, unsigned long destinationLen);
-        public:     Memorizer(void);
-        public:     virtual ~Memorizer(void);
-        public:     Memorizer(const Memorizer<Elementable, Primitivable, size> & o) = delete;
-        public:     Memorizer(Memorizer<Elementable, Primitivable, size> && o) noexcept = delete;
-        public:     Memorizer<Elementable, Primitivable, size> & operator=(const Memorizer<Elementable, Primitivable, size> & o) = delete;
-        public:     Memorizer<Elementable, Primitivable, size> & operator=(Memorizer<Elementable, Primitivable, size> && o) noexcept = delete;
+        template <typename elementable, typename primitivable = typographer<elementable>::primitivable, unsigned long size = typographer<elementable>::unit>
+        class memorizer {
+        public:     static elementable * set(elementable * destination, const elementable & item);
+        public:     static elementable * set(elementable * destination, elementable && item);
+        public:     static elementable * set(elementable * destination, const elementable & item, unsigned long n);
+        public:     static elementable * set(elementable * destination, const elementable * source, unsigned long sourceLen);
+        public:     static elementable * del(elementable * destination);
+        public:     static elementable * del(elementable * destination, unsigned long destinationLen);
+        public:     memorizer(void);
+        public:     virtual ~memorizer(void);
+        public:     memorizer(const memorizer<elementable, primitivable, size> & o) = delete;
+        public:     memorizer(memorizer<elementable, primitivable, size> && o) noexcept = delete;
+        public:     memorizer<elementable, primitivable, size> & operator=(const memorizer<elementable, primitivable, size> & o) = delete;
+        public:     memorizer<elementable, primitivable, size> & operator=(memorizer<elementable, primitivable, size> && o) noexcept = delete;
         };
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::set(Elementable * destination, const Elementable & item) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable & item) {
             pokemon_develop_check(destination == nullptr, return nullptr);
 
-            new (destination) Elementable(item);
+            new (destination) elementable(item);
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::set(Elementable * destination, Elementable && item) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, elementable && item) {
             pokemon_develop_check(destination == nullptr, return nullptr);
 
-            new (destination) Elementable(std::move(item));
+            new (destination) elementable(std::move(item));
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::set(Elementable * destination, const Elementable & item, unsigned long n) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable & item, unsigned long n) {
             pokemon_develop_check(destination == nullptr || n == 0, return nullptr);
 
-            for (unsigned long i = 0; i < n; i = i + 1) new (destination + i) Elementable(item);
+            for (unsigned long i = 0; i < n; i = i + 1) new (destination + i) elementable(item);
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::set(Elementable * destination, const Elementable * source, unsigned long sourceLen) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
             pokemon_develop_check(destination == nullptr || sourceLen == 0, return nullptr);
 
-            for (unsigned long i = 0; i < sourceLen; i = i + 1) new (destination + i) Elementable(referenceof(source + i));
+            for (unsigned long i = 0; i < sourceLen; i = i + 1) new (destination + i) elementable(referenceof(source + i));
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::del(Elementable * destination) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::del(elementable * destination) {
             pokemon_develop_check(destination == nullptr, return destination);
 
-            destination->~Elementable();
+            destination->~elementable();
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Elementable * Memorizer<Elementable, Primitivable, size>::del(Elementable * destination, unsigned long destinationLen) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        elementable * memorizer<elementable, primitivable, size>::del(elementable * destination, unsigned long destinationLen) {
             pokemon_develop_check(destination == nullptr || destinationLen == 0, return destination);
 
-            for (unsigned long i = 0; i < destinationLen; i = i + 1) (destination + i)->~Elementable();
+            for (unsigned long i = 0; i < destinationLen; i = i + 1) (destination + i)->~elementable();
 
             return destination;
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Memorizer<Elementable, Primitivable, size>::Memorizer(void) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        memorizer<elementable, primitivable, size>::memorizer(void) {
 
         }
 
-        template <typename Elementable, typename Primitivable, unsigned long size>
-        Memorizer<Elementable, Primitivable, size>::~Memorizer(void) {
+        template <typename elementable, typename primitivable, unsigned long size>
+        memorizer<elementable, primitivable, size>::~memorizer(void) {
 
         }
     }
 
-    template <typename Elementable, typename Primitivable = Typographer<Elementable>::PrimitiveType, unsigned long size = Typographer<Elementable>::unit>
-    using Memorizer = pokemonism::sdk::Memorizer<Elementable, Primitivable, size>;
+    template <typename elementable, typename primitivable = typographer<elementable>::primitivable, unsigned long size = typographer<elementable>::unit>
+    using memorizer = pokemonism::sdk::memorizer<elementable, primitivable, size>;
 
 }
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/sdk/memorizer/primitivable.hh>
 
 #endif // __POKEMONISM_SDK_MEMORIZER_HH__

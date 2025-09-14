@@ -4,7 +4,7 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 13, 2025
+ * @since           Sep 13, 2025
  */
 
 #ifndef   __POKEMONISM_CONTAINABLE_HH__
@@ -14,37 +14,37 @@
 
 namespace pokemonism {
 
-    class Containable : public Virtualable {
+    class containable : public virtualable {
     public:     virtual void clear(void) = 0;
-    public:     inline Containable(void);
-    public:     inline ~Containable(void) override;
-    public:     inline Containable(const Containable & o);
-    public:     inline Containable(Containable && o) noexcept;
-    public:     inline Containable & operator=(const Containable & o);
-    public:     inline Containable & operator=(Containable && o) noexcept;
+    public:     inline containable(void);
+    public:     inline ~containable(void) override;
+    public:     inline containable(const containable & o);
+    public:     inline containable(containable && o) noexcept;
+    public:     inline containable & operator=(const containable & o);
+    public:     inline containable & operator=(containable && o) noexcept;
     };
 
-    inline Containable::Containable(void) {
+    inline containable::containable(void) {
 
     }
 
-    inline Containable::~Containable(void) {
+    inline containable::~containable(void) {
 
     }
 
-    inline Containable::Containable(const Containable & o) {
+    inline containable::containable(const containable & o) {
 
     }
 
-    inline Containable::Containable(Containable && o) noexcept {
+    inline containable::containable(containable && o) noexcept {
 
     }
 
-    inline Containable & Containable::operator=(const Containable & o) {
+    inline containable & containable::operator=(const containable & o) {
         return *this;
     }
 
-    inline Containable & Containable::operator=(Containable && o) noexcept {
+    inline containable & containable::operator=(containable && o) noexcept {
         return *this;
     }
 

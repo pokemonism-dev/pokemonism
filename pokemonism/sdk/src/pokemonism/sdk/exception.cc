@@ -17,28 +17,28 @@
 namespace pokemonism {
     namespace sdk {
 
-        Exception::Exception(const char * subject, unsigned int level) : file(nullptr), func(nullptr), line(declaration::zero), level(level), message(nullptr), subject(subject != nullptr ? strdup(subject) : nullptr) {
-            asprintf(pointof(message), "[%s] %s", Exception::Level::to(level), subject);
+        exception::exception(const char * subject, unsigned int level) : file(nullptr), func(nullptr), line(declaration::zero), level(level), message(nullptr), subject(subject != nullptr ? strdup(subject) : nullptr) {
+            asprintf(pointof(message), "[%s] %s", exception::level::to(level), subject);
         }
 
-        Exception::Exception(const char * subject, unsigned int level, const char * file, int line, const char * func) : file(file != nullptr ? strdup(file) : nullptr), func(func != nullptr ? strdup(func) : nullptr), line(line), level(level), subject(subject != nullptr ? strdup(subject) : nullptr) {
-            asprintf(pointof(message), "[%s/%s:%d] %s(...) => %s", Exception::Level::to(level), file, line, func, subject);
+        exception::exception(const char * subject, unsigned int level, const char * file, int line, const char * func) : file(file != nullptr ? strdup(file) : nullptr), func(func != nullptr ? strdup(func) : nullptr), line(line), level(level), subject(subject != nullptr ? strdup(subject) : nullptr) {
+            asprintf(pointof(message), "[%s/%s:%d] %s(...) => %s", exception::level::to(level), file, line, func, subject);
         }
 
-        Exception::Exception(void) : file(nullptr), func(nullptr), line(declaration::zero), level(Exception::Level::none), message(nullptr), subject(nullptr) {
+        exception::exception(void) : file(nullptr), func(nullptr), line(declaration::zero), level(exception::level::none), message(nullptr), subject(nullptr) {
 
         }
 
-        Exception::~Exception(void) {
-            file = static_cast<char *>(Allocator::rel(file));
-            func = static_cast<char *>(Allocator::rel(func));
+        exception::~exception(void) {
+            file = static_cast<char *>(allocator::rel(file));
+            func = static_cast<char *>(allocator::rel(func));
             line = declaration::zero;
-            level = Exception::Level::none;
-            message = static_cast<char *>(Allocator::rel(message));
-            subject = static_cast<char *>(Allocator::rel(subject));
+            level = exception::level::none;
+            message = static_cast<char *>(allocator::rel(message));
+            subject = static_cast<char *>(allocator::rel(subject));
         }
 
-        Exception::Exception(const Exception & o) {
+        exception::exception(const exception & o) {
             file = o.file != nullptr ? strdup(o.file) : nullptr;
             func = o.func != nullptr ? strdup(o.func) : nullptr;
             message = o.message != nullptr ? strdup(o.message) : nullptr;
@@ -47,21 +47,21 @@ namespace pokemonism {
             level = o.level;
         }
 
-        Exception::Exception(Exception && o) noexcept : file(o.file), func(o.func), line(o.line), level(o.level), message(o.message), subject(o.subject) {
+        exception::exception(exception && o) noexcept : file(o.file), func(o.func), line(o.line), level(o.level), message(o.message), subject(o.subject) {
             o.file = nullptr;
             o.func = nullptr;
-            o.level = Exception::Level::none;
+            o.level = exception::level::none;
             o.line = declaration::zero;
             o.message = nullptr;
             o.subject = nullptr;
         }
 
-        Exception & Exception::operator=(const Exception & o) {
+        exception & exception::operator=(const exception & o) {
             if (pointof(o) != this) {
-                file = static_cast<char *>(Allocator::rel(file));
-                func = static_cast<char *>(Allocator::rel(func));
-                message = static_cast<char *>(Allocator::rel(message));
-                subject = static_cast<char *>(Allocator::rel(subject));
+                file = static_cast<char *>(allocator::rel(file));
+                func = static_cast<char *>(allocator::rel(func));
+                message = static_cast<char *>(allocator::rel(message));
+                subject = static_cast<char *>(allocator::rel(subject));
 
                 file = o.file != nullptr ? strdup(o.file) : nullptr;
                 func = o.func != nullptr ? strdup(o.func) : nullptr;
@@ -73,12 +73,12 @@ namespace pokemonism {
             return *this;
         }
 
-        Exception & Exception::operator=(Exception && o) noexcept {
+        exception & exception::operator=(exception && o) noexcept {
             if (pointof(o) != this) {
-                file = static_cast<char *>(Allocator::rel(file));
-                func = static_cast<char *>(Allocator::rel(func));
-                message = static_cast<char *>(Allocator::rel(message));
-                subject = static_cast<char *>(Allocator::rel(subject));
+                file = static_cast<char *>(allocator::rel(file));
+                func = static_cast<char *>(allocator::rel(func));
+                message = static_cast<char *>(allocator::rel(message));
+                subject = static_cast<char *>(allocator::rel(subject));
 
                 file = o.file;
                 func = o.func;
@@ -89,7 +89,7 @@ namespace pokemonism {
 
                 o.file = nullptr;
                 o.func = nullptr;
-                o.level = Exception::Level::none;
+                o.level = exception::level::none;
                 o.line = declaration::zero;
                 o.message = nullptr;
                 o.subject = nullptr;

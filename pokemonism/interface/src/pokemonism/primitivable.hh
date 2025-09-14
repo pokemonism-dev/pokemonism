@@ -12,36 +12,36 @@
 
 namespace pokemonism {
 
-    class Primitivable {
-    public:     inline Primitivable(void);
-    public:     inline virtual ~Primitivable(void);
-    public:     inline Primitivable(const Primitivable & o);
-    public:     inline Primitivable(Primitivable && o) noexcept;
-    public:     inline Primitivable & operator=(const Primitivable & o);
-    public:     inline Primitivable & operator=(Primitivable && o) noexcept;
+    class primitivable {
+    public:     inline primitivable(void);
+    public:     inline virtual ~primitivable(void);
+    public:     inline primitivable(const primitivable & o);
+    public:     inline primitivable(primitivable && o) noexcept;
+    public:     inline primitivable & operator=(const primitivable & o);
+    public:     inline primitivable & operator=(primitivable && o) noexcept;
     };
 
-    inline Primitivable::Primitivable(void) {
+    inline primitivable::primitivable(void) {
 
     }
 
-    inline Primitivable::~Primitivable(void) {
+    inline primitivable::~primitivable(void) {
 
     }
 
-    inline Primitivable::Primitivable(const Primitivable & o) {
+    inline primitivable::primitivable(const primitivable & o) {
 
     }
 
-    inline Primitivable::Primitivable(Primitivable && o) noexcept {
+    inline primitivable::primitivable(primitivable && o) noexcept {
 
     }
 
-    inline Primitivable & Primitivable::operator=(const Primitivable & o) {
+    inline primitivable & primitivable::operator=(const primitivable & o) {
         return *this;
     }
 
-    inline Primitivable & Primitivable::operator=(Primitivable && o) noexcept {
+    inline primitivable & primitivable::operator=(primitivable && o) noexcept {
         return *this;
     }
 

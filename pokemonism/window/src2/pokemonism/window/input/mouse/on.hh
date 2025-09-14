@@ -12,7 +12,7 @@
 
 #include <pokemonism/observerable.hh>
 #include <pokemonism/sdk/linked/list.hh>
-#include <pokemonism/window/input/mouse/pos.hh>
+#include <pokemonism/window/src/pokemonism/window.old/input/mouse/pos.hh>
 
 namespace pokemonism::window::input {
 

@@ -10,52 +10,55 @@
 #ifndef   __POKEMONISM_CALLABLE_HH__
 #define   __POKEMONISM_CALLABLE_HH__
 
+#include <pokemonism.hh>
+
 #include <pokemonism/virtualable.hh>
 #include <pokemonism/primitivable.hh>
 
 namespace pokemonism {
 
-    template <class Output = Primitivable, class Super = Virtualable>
-    class Callable : public Super {
-    public:     virtual Output * call(void) = 0;
-    public:     inline Callable(void);
-    public:     inline ~Callable(void) override;
-    public:     inline Callable(const Callable<Output, Super> & o);
-    public:     inline Callable(Callable<Output, Super> && o) noexcept;
-    public:     inline Callable<Output, Super> & operator=(const Callable<Output, Super> & o);
-    public:     inline Callable<Output, Super> & operator=(Callable<Output, Super> && o) noexcept;
+    template <class outputable = primitivable, class super = virtualable>
+    class callable : public super {
+    public:     typedef outputable  output;
+    public:     virtual output * call(void) = 0;
+    public:     inline callable(void);
+    public:     inline ~callable(void) override;
+    public:     inline callable(const callable<outputable, super> & o);
+    public:     inline callable(callable<outputable, super> && o) noexcept;
+    public:     inline callable<outputable, super> & operator=(const callable<outputable, super> & o);
+    public:     inline callable<outputable, super> & operator=(callable<outputable, super> && o) noexcept;
     };
 
-    template<class Output, class Super>
-    inline Callable<Output, Super>::Callable(void) {
+    template<class outputable, class super>
+    inline callable<outputable, super>::callable(void) {
 
     }
 
-    template<class Output, class Super>
-    inline Callable<Output, Super>::~Callable(void) {
+    template<class outputable, class super>
+    inline callable<outputable, super>::~callable(void) {
 
     }
 
-    template<class Output, class Super>
-    inline Callable<Output, Super>::Callable(const Callable<Output, Super> & o) : Super(o) {
+    template<class outputable, class super>
+    inline callable<outputable, super>::callable(const callable<outputable, super> & o) : super(o) {
 
     }
 
-    template<class Output, class Super>
-    inline Callable<Output, Super>::Callable(Callable<Output, Super> && o) noexcept : Super(std::move(o)) {
+    template<class outputable, class super>
+    inline callable<outputable, super>::callable(callable<outputable, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template<class Output, class Super>
-    inline Callable<Output, Super> & Callable<Output, Super>::operator=(const Callable<Output, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template<class outputable, class super>
+    inline callable<outputable, super> & callable<outputable, super>::operator=(const callable<outputable, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template<class Output, class Super>
-    inline Callable<Output, Super> & Callable<Output, Super>::operator=(Callable<Output, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template<class outputable, class super>
+    inline callable<outputable, super> & callable<outputable, super>::operator=(callable<outputable, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

@@ -15,44 +15,44 @@
 
 namespace pokemonism::collection {
 
-    template <class Element, class Super = Collectable<Element, Container>>
-    class Collection : public Super {
-    public:     inline Collection(void);
-    public:     inline ~Collection(void) override;
-    public:     inline Collection(const Collection<Element, Super> & o);
-    public:     inline Collection(Collection<Element, Super> && o) noexcept;
-    public:     inline Collection<Element, Super> & operator=(const Collection<Element, Super> & o);
-    public:     inline Collection<Element, Super> & operator=(Collection<Element, Super> && o) noexcept;
+    template <class element, class Super = collectable<element, container>>
+    class collection : public Super {
+    public:     inline collection(void);
+    public:     inline ~collection(void) override;
+    public:     inline collection(const collection<element, Super> & o);
+    public:     inline collection(collection<element, Super> && o) noexcept;
+    public:     inline collection<element, Super> & operator=(const collection<element, Super> & o);
+    public:     inline collection<element, Super> & operator=(collection<element, Super> && o) noexcept;
     };
 
-    template<class Element, class Super>
-    inline Collection<Element, Super>::Collection(void) {
+    template<class element, class Super>
+    inline collection<element, Super>::collection(void) {
 
     }
 
-    template<class Element, class Super>
-    inline Collection<Element, Super>::~Collection(void) {
+    template<class element, class Super>
+    inline collection<element, Super>::~collection(void) {
 
     }
 
-    template<class Element, class Super>
-    inline Collection<Element, Super>::Collection(const Collection<Element, Super> & o) : Super(o) {
+    template<class element, class Super>
+    inline collection<element, Super>::collection(const collection<element, Super> & o) : Super(o) {
 
     }
 
-    template<class Element, class Super>
-    inline Collection<Element, Super>::Collection(Collection<Element, Super> && o) noexcept : Super(std::move(o)) {
+    template<class element, class Super>
+    inline collection<element, Super>::collection(collection<element, Super> && o) noexcept : Super(std::move(o)) {
 
     }
 
-    template<class Element, class Super>
-    inline Collection<Element, Super> & Collection<Element, Super>::operator=(const Collection<Element, Super> & o) {
+    template<class element, class Super>
+    inline collection<element, Super> & collection<element, Super>::operator=(const collection<element, Super> & o) {
         if (pointof(o) != this) Super::operator=(o);
         return *this;
     }
 
-    template<class Element, class Super>
-    inline Collection<Element, Super> & Collection<Element, Super>::operator=(Collection<Element, Super> && o) noexcept {
+    template<class element, class Super>
+    inline collection<element, Super> & collection<element, Super>::operator=(collection<element, Super> && o) noexcept {
         if (pointof(o) != this) Super::operator=(std::move(o));
         return *this;
     }

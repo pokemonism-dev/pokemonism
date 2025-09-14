@@ -11,12 +11,12 @@
 #define   __POKEMONISM_WINDOW_CONFIG_HH__
 
 #include <pokemonism/collection/string.hh>
-#include <pokemonism/window/structure/rect.hh>
+#include <pokemonism/window/src/pokemonism/window.old/structure/rect.hh>
 
 namespace pokemonism::window {
 
     class WindowConfig {
-    public:     String          title;
+    public:     string          title;
     public:     Rect            rect;
     public:     unsigned int    style;
     public:     inline WindowConfig(void);

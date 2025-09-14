@@ -12,7 +12,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include <pokemonism/window/platform/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/platform/window.hh>
 
 namespace pokemonism::window {
 

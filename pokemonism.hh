@@ -14,7 +14,13 @@
 
 namespace pokemonism {
 
-    struct Tag {};
+    struct tag {
+    public:     struct disposable;
+    public:     struct nondisposable;
+    };
+
+    struct tag::disposable : public tag {};
+    struct tag::nondisposable : public tag {};
 
     namespace declaration {
         typedef char                int8;

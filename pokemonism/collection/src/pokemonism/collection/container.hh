@@ -14,36 +14,36 @@
 
 namespace pokemonism::collection {
 
-    class Container : public Containable {
-    public:     inline Container(void);
-    public:     inline ~Container(void) override;
-    public:     inline Container(const Container & o);
-    public:     inline Container(Container && o) noexcept;
-    public:     inline Container & operator=(const Container & o);
-    public:     inline Container & operator=(Container && o) noexcept;
+    class container : public containable {
+    public:     inline container(void);
+    public:     inline ~container(void) override;
+    public:     inline container(const container & o);
+    public:     inline container(container && o) noexcept;
+    public:     inline container & operator=(const container & o);
+    public:     inline container & operator=(container && o) noexcept;
     };
 
-    inline Container::Container(void) {
+    inline container::container(void) {
 
     }
 
-    inline Container::~Container(void) {
+    inline container::~container(void) {
 
     }
 
-    inline Container::Container(const Container & o) {
+    inline container::container(const container & o) {
 
     }
 
-    inline Container::Container(Container && o) noexcept {
+    inline container::container(container && o) noexcept {
 
     }
 
-    inline Container & Container::operator=(const Container & o) {
+    inline container & container::operator=(const container & o) {
         return *this;
     }
 
-    inline Container & Container::operator=(Container && o) noexcept {
+    inline container & container::operator=(container && o) noexcept {
         return *this;
     }
 

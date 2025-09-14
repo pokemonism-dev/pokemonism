@@ -15,47 +15,47 @@
 
 namespace pokemonism {
 
-    template <typename Element, class Observer = Observerable<Element>, class Super = Virtualable>
-    class Observable : public Super {
-    public:     virtual Observer * subscribe(Observer * o) = 0;
-    public:     inline Observable(void);
-    public:     inline virtual ~Observable(void);
-    public:     inline Observable(const Observable<Element, Observer, Super> & o);
-    public:     inline Observable(Observable<Element, Observer, Super> && o) noexcept;
-    public:     inline Observable<Element, Observer, Super> & operator=(const Observable<Element, Observer, Super> & o);
-    public:     inline Observable<Element, Observer, Super> & operator=(Observable<Element, Observer, Super> && o) noexcept;
+    template <typename element, class observer = observerable<element>, class super = virtualable>
+    class observable : public super {
+    public:     virtual observer * subscribe(observer * o) = 0;
+    public:     inline observable(void);
+    public:     inline virtual ~observable(void);
+    public:     inline observable(const observable<element, observer, super> & o);
+    public:     inline observable(observable<element, observer, super> && o) noexcept;
+    public:     inline observable<element, observer, super> & operator=(const observable<element, observer, super> & o);
+    public:     inline observable<element, observer, super> & operator=(observable<element, observer, super> && o) noexcept;
     };
 
-    template <typename Element, class Observer, class Super>
-    Observable<Element, Observer, Super>::Observable(void) {
+    template <typename element, class observer, class super>
+    observable<element, observer, super>::observable(void) {
 
     }
 
-    template <typename Element, class Observer, class Super>
-    Observable<Element, Observer, Super>::~Observable(void) {
+    template <typename element, class observer, class super>
+    observable<element, observer, super>::~observable(void) {
 
     }
 
-    template <typename Element, class Observer, class Super>
-    inline Observable<Element, Observer, Super>::Observable(const Observable<Element, Observer, Super> & o) : Super(o) {
+    template <typename element, class observer, class super>
+    inline observable<element, observer, super>::observable(const observable<element, observer, super> & o) : super(o) {
 
     }
 
-    template <typename Element, class Observer, class Super>
-    inline Observable<Element, Observer, Super>::Observable(Observable<Element, Observer, Super> && o) noexcept : Super(std::move(o)) {
+    template <typename element, class observer, class super>
+    inline observable<element, observer, super>::observable(observable<element, observer, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <typename Element, class Observer, class Super>
-    inline Observable<Element, Observer, Super> & Observable<Element, Observer, Super>::operator=(const Observable<Element, Observer, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <typename element, class observer, class super>
+    inline observable<element, observer, super> & observable<element, observer, super>::operator=(const observable<element, observer, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template <typename Element, class Observer, class Super>
-    inline Observable<Element, Observer, Super> & Observable<Element, Observer, Super>::operator=(Observable<Element, Observer, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template <typename element, class observer, class super>
+    inline observable<element, observer, super> & observable<element, observer, super>::operator=(observable<element, observer, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

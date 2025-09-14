@@ -16,18 +16,18 @@ namespace pokemonism {
 
     namespace sdk {
 
-        class Stream {
-        public:     Stream(void) {}
-        public:     virtual ~Stream(void) {}
-        public:     Stream(const Stream & o) {}
-        public:     Stream(Stream && o) noexcept {}
-        public:     Stream & operator=(const Stream & o) { return *this; }
-        public:     Stream & operator=(Stream && o) noexcept { return *this; }
+        class stream {
+        public:     stream(void) {}
+        public:     virtual ~stream(void) {}
+        public:     stream(const stream & o) {}
+        public:     stream(stream && o) noexcept {}
+        public:     stream & operator=(const stream & o) { return *this; }
+        public:     stream & operator=(stream && o) noexcept { return *this; }
         };
 
     }
 
-    using Stream = pokemonism::sdk::Stream;
+    using stream = pokemonism::sdk::stream;
 
 }
 

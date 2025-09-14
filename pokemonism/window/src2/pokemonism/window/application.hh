@@ -13,7 +13,7 @@
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/sdk/application.hh>
 
-#include <pokemonism/window/cfg.hh>
+#include <pokemonism/window/src/pokemonism/window.old/cfg.hh>
 
 namespace pokemonism::window {
 

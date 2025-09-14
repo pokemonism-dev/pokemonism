@@ -18,8 +18,8 @@ namespace pokemonism::window {
 #else
 #include <cstdio>
 #include <pokemonism/sdk/application.hh>
-#include <pokemonism/window/platform/application.hh>
-#include <pokemonism/window/config.hh>
+#include <pokemonism/window/src/pokemonism/window.old/platform/application.hh>
+#include <pokemonism/window/src/pokemonism/window.old/config.hh>
 
 using namespace pokemonism;
 using namespace pokemonism::window;

@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_WINDOW_PLATFORM_HH__
 #define   __POKEMONISM_WINDOW_PLATFORM_HH__
 
-#include <pokemonism/window/cocoa/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/cocoa/window.hh>
 
 namespace pokemonism::window::platform {
 

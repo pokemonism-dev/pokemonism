@@ -10,51 +10,53 @@
 #ifndef   __POKEMONISM_RUNNABLE_HH__
 #define   __POKEMONISM_RUNNABLE_HH__
 
+#include <pokemonism.hh>
+
 #include <pokemonism/virtualable.hh>
 
 namespace pokemonism {
 
-    template <class Super = Virtualable>
-    class Runnable : public Super {
+    template <class super = virtualable>
+    class runnable : public super {
     public:     virtual int run(void) = 0;
-    public:     inline Runnable(void);
-    public:     inline ~Runnable(void) override;
-    public:     inline Runnable(const Runnable<Super> & o);
-    public:     inline Runnable(Runnable<Super> && o) noexcept;
-    public:     inline Runnable<Super> & operator=(const Runnable<Super> & o);
-    public:     inline Runnable<Super> & operator=(Runnable<Super> && o) noexcept;
+    public:     inline runnable(void);
+    public:     inline ~runnable(void) override;
+    public:     inline runnable(const runnable<super> & o);
+    public:     inline runnable(runnable<super> && o) noexcept;
+    public:     inline runnable<super> & operator=(const runnable<super> & o);
+    public:     inline runnable<super> & operator=(runnable<super> && o) noexcept;
     };
 
-    template<class Super>
-    inline Runnable<Super>::Runnable(void) {
+    template<class super>
+    inline runnable<super>::runnable(void) {
 
     }
 
-    template<class Super>
-    inline Runnable<Super>::~Runnable(void) {
+    template<class super>
+    inline runnable<super>::~runnable(void) {
 
     }
 
-    template<class Super>
-    inline Runnable<Super>::Runnable(const Runnable<Super> & o) : Super(o) {
+    template<class super>
+    inline runnable<super>::runnable(const runnable<super> & o) : super(o) {
 
     }
 
-    template<class Super>
-    inline Runnable<Super>::Runnable(Runnable<Super> && o) noexcept : Super(std::move(o)) {
+    template<class super>
+    inline runnable<super>::runnable(runnable<super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template<class Super>
-    inline Runnable<Super> & Runnable<Super>::operator=(const Runnable<Super> & o) {
-        if (pointof(o) != this) Runnable<Super>::operator=(o);
+    template<class super>
+    inline runnable<super> & runnable<super>::operator=(const runnable<super> & o) {
+        if (pointof(o) != this) runnable<super>::operator=(o);
 
         return *this;
     }
 
-    template<class Super>
-    inline Runnable<Super> & Runnable<Super>::operator=(Runnable<Super> && o) noexcept {
-        if (pointof(o) != this) Runnable<Super>::operator=(std::move(o));
+    template<class super>
+    inline runnable<super> & runnable<super>::operator=(runnable<super> && o) noexcept {
+        if (pointof(o) != this) runnable<super>::operator=(std::move(o));
 
         return *this;
     }

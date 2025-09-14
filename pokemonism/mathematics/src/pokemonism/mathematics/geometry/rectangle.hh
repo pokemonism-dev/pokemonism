@@ -14,75 +14,76 @@
 
 namespace pokemonism::mathematics::geometry {
 
-    template <typename Precisional = ScalarTag>
-    struct Rectangle {
-    public:     Precisional::Type x;
-    public:     Precisional::Type y;
-    public:     Precisional::Type width;
-    public:     Precisional::Type height;
-    public:     inline void set(Precisional::Type _x, Precisional::Type _y, Precisional::Type _width, Precisional::Type _height);
-    public:     inline Rectangle(Precisional::Type x, Precisional::Type y, Precisional::Type width, Precisional::Type height);
-    public:     inline Rectangle(void);
-    public:     inline ~Rectangle(void);
-    public:     inline Rectangle(const Rectangle<Precisional> & o);
-    public:     inline Rectangle(Rectangle<Precisional> && o) noexcept;
-    public:     inline Rectangle<Precisional> & operator=(const Rectangle<Precisional> & o);
-    public:     inline Rectangle<Precisional> & operator=(Rectangle<Precisional> && o) noexcept;
+    template <typename unit = generic::length<double, mathematics::unit::length::none>>
+    struct rectangle {
+    public:     unit::type x;
+    public:     unit::type y;
+    public:     unit::type width;
+    public:     unit::type height;
+    public:     inline void set(unit::type x, unit::type y, unit::type width, unit::type height);
+    public:     inline rectangle(unit::type x, unit::type y, unit::type width, unit::type height);
+    public:     inline rectangle(void);
+    public:     inline ~rectangle(void);
+    public:     inline rectangle(const rectangle<unit> & o);
+    public:     inline rectangle(rectangle<unit> && o) noexcept;
+    public:     inline rectangle<unit> & operator=(const rectangle<unit> & o);
+    public:     inline rectangle<unit> & operator=(rectangle<unit> && o) noexcept;
     };
 
-    template <typename Precisional>
-    inline void Rectangle<Precisional>::set(typename Precisional::Type _x, typename Precisional::Type _y, typename Precisional::Type _width, typename Precisional::Type _height) {
-        this->x      = _x;
-        this->y      = _y;
-        this->width  = _width;
-        this->height = _height;
+    template <typename unit>
+    inline void rectangle<unit>::set(typename unit::type x, typename unit::type y, typename unit::type width, typename unit::type height) {
+        this->x = x;
+        this->y = y;
+        this->width = width;
+        this->height = height;
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional>::Rectangle(typename Precisional::Type x, typename Precisional::Type y, typename Precisional::Type width, typename Precisional::Type height) :
-    x(x), y(y), width(width), height(height) {
-
-    }
-
-    template <typename Precisional>
-    inline Rectangle<Precisional>::Rectangle(void) : x(declaration::zero), y(declaration::zero), width(declaration::zero), height(declaration::zero) {
+    template <typename unit>
+    inline rectangle<unit>::rectangle(typename unit::type x, typename unit::type y, typename unit::type width, typename unit::type height) : x(x), y(y), width(width), height(height) {
 
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional>::~Rectangle(void) {
+    template <typename unit>
+    inline rectangle<unit>::rectangle(void) : x(unit::zero), y(unit::zero), width(unit::zero), height(unit::zero) {
 
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional>::Rectangle(const Rectangle<Precisional> & o) : x(o.x), y(o.y), width(o.width), height(o.height) {
+    template <typename unit>
+    inline rectangle<unit>::~rectangle(void) {
 
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional>::Rectangle(Rectangle<Precisional> && o) noexcept : x(o.x), y(o.y), width(o.width), height(o.height) {
+    template <typename unit>
+    inline rectangle<unit>::rectangle(const rectangle<unit> & o) : x(o.x), y(o.y), width(o.width), height(o.height) {
 
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional> & Rectangle<Precisional>::operator=(const Rectangle<Precisional> & o) {
+    template <typename unit>
+    inline rectangle<unit>::rectangle(rectangle<unit> && o) noexcept : x(o.x), y(o.y), width(o.width), height(o.height) {
+
+    }
+
+    template <typename unit>
+    inline rectangle<unit> & rectangle<unit>::operator=(const rectangle<unit> & o) {
         if (pointof(o) != this) {
             x = o.x;
             y = o.y;
             width = o.width;
             height = o.height;
         }
+
         return *this;
     }
 
-    template <typename Precisional>
-    inline Rectangle<Precisional> & Rectangle<Precisional>::operator=(Rectangle<Precisional> && o) noexcept {
+    template <typename unit>
+    inline rectangle<unit> & rectangle<unit>::operator=(rectangle<unit> && o) noexcept {
         if (pointof(o) != this) {
             x = o.x;
             y = o.y;
             width = o.width;
             height = o.height;
         }
+
         return *this;
     }
 

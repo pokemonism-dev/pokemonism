@@ -10,54 +10,55 @@
 #ifndef   __POKEMONISM_COMMUNICATABLE_HH__
 #define   __POKEMONISM_COMMUNICATABLE_HH__
 
+#include <pokemonism.hh>
 #include <pokemonism/virtualable.hh>
 
 namespace pokemonism {
 
-    template <class Super = Virtualable>
-    class Communicatable : public Super {
+    template <class super = virtualable>
+    class communicatable : public super {
     public:     virtual int open(void) = 0;
     public:     virtual long read(void) = 0;
     public:     virtual long write(void) = 0;
     public:     virtual int close(void) = 0;
-    public:     inline Communicatable(void);
-    public:     inline ~Communicatable(void) override;
-    public:     inline Communicatable(const Communicatable<Super> & o);
-    public:     inline Communicatable(Communicatable<Super> && o) noexcept;
-    public:     inline Communicatable<Super> & operator=(const Communicatable<Super> & o);
-    public:     inline Communicatable<Super> & operator=(Communicatable<Super> && o) noexcept;
+    public:     inline communicatable(void);
+    public:     inline ~communicatable(void) override;
+    public:     inline communicatable(const communicatable<super> & o);
+    public:     inline communicatable(communicatable<super> && o) noexcept;
+    public:     inline communicatable<super> & operator=(const communicatable<super> & o);
+    public:     inline communicatable<super> & operator=(communicatable<super> && o) noexcept;
     };
 
-    template <class Super>
-    inline Communicatable<Super>::Communicatable(void) {
+    template <class super>
+    inline communicatable<super>::communicatable(void) {
 
     }
 
-    template <class Super>
-    inline Communicatable<Super>::~Communicatable(void) {
+    template <class super>
+    inline communicatable<super>::~communicatable(void) {
 
     }
 
-    template <class Super>
-    inline Communicatable<Super>::Communicatable(const Communicatable<Super> & o) : Super(o) {
+    template <class super>
+    inline communicatable<super>::communicatable(const communicatable<super> & o) : super(o) {
 
     }
 
-    template <class Super>
-    inline Communicatable<Super>::Communicatable(Communicatable<Super> && o) noexcept : Super(std::move(o)) {
+    template <class super>
+    inline communicatable<super>::communicatable(communicatable<super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <class Super>
-    inline Communicatable<Super> & Communicatable<Super>::operator=(const Communicatable<Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <class super>
+    inline communicatable<super> & communicatable<super>::operator=(const communicatable<super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template <class Super>
-    inline Communicatable<Super> & Communicatable<Super>::operator=(Communicatable<Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template <class super>
+    inline communicatable<super> & communicatable<super>::operator=(communicatable<super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

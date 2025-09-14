@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_WINDOW_COCOA_MOUSE_HH__
 #define   __POKEMONISM_WINDOW_COCOA_MOUSE_HH__
 
-#include <pokemonism/window/interface/mouse.hh>
+#include <pokemonism/window/src/pokemonism/window.old/interface/mouse.hh>
 
 namespace pokemonism::window::cocoa {
 

@@ -10,43 +10,38 @@
 #ifndef   __POKEMONISM_VIRTUALABLE_HH__
 #define   __POKEMONISM_VIRTUALABLE_HH__
 
-#include <pokemonism.hh>
-
 namespace pokemonism {
 
-    /**
-     * 가상 함수
-     */
-    class Virtualable {
-    public:     inline Virtualable(void);
-    public:     inline virtual ~Virtualable(void);
-    public:     inline Virtualable(const Virtualable & o);
-    public:     inline Virtualable(Virtualable && o) noexcept;
-    public:     inline Virtualable & operator=(const Virtualable & o);
-    public:     inline Virtualable & operator=(Virtualable && o) noexcept;
+    class virtualable {
+    public:     inline virtualable(void);
+    public:     inline virtual ~virtualable(void);
+    public:     inline virtualable(const virtualable & o);
+    public:     inline virtualable(virtualable && o) noexcept;
+    public:     inline virtualable & operator=(const virtualable & o);
+    public:     inline virtualable & operator=(virtualable && o) noexcept;
     };
 
-    inline Virtualable::Virtualable(void) {
+    inline virtualable::virtualable(void) {
 
     }
 
-    inline Virtualable::~Virtualable(void) {
+    inline virtualable::~virtualable(void) {
 
     }
 
-    inline Virtualable::Virtualable(const Virtualable & o) {
+    inline virtualable::virtualable(const virtualable & o) {
 
     }
 
-    inline Virtualable::Virtualable(Virtualable && o) noexcept {
+    inline virtualable::virtualable(virtualable && o) noexcept {
 
     }
 
-    inline Virtualable & Virtualable::operator=(const Virtualable & o) {
+    inline virtualable & virtualable::operator=(const virtualable & o) {
         return *this;
     }
 
-    inline Virtualable & Virtualable::operator=(Virtualable && o) noexcept {
+    inline virtualable & virtualable::operator=(virtualable && o) noexcept {
         return *this;
     }
 

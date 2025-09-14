@@ -10,8 +10,8 @@
 #ifndef   __POKEMONISM_WINDOW_PLATFORM_APPLICATION_HH__
 #define   __POKEMONISM_WINDOW_PLATFORM_APPLICATION_HH__
 
-#include <pokemonism/window/applicationable.hh>
-#include <pokemonism/window/platform/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/applicationable.hh>
+#include <pokemonism/window/src/pokemonism/window.old/platform/window.hh>
 
 namespace pokemonism::window {
 

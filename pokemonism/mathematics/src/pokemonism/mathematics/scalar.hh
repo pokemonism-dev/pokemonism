@@ -14,96 +14,82 @@
 
 namespace pokemonism::mathematics {
 
-    struct ScalarTag : public Tag {
-    public:     typedef int                 Type;
-    public:     constexpr static int        zero = 0.0F;
+    struct scalar : public pokemonism::tag {
+    public:     typedef long                        type;
+    public:     constexpr static long               zero    = 0;
     };
 
-    struct FloatTag : public ScalarTag {
-    public:     typedef float               Type;
-    public:     constexpr static float      zero = 0.0F;
+    struct number : public scalar {};
+
+    struct integer : public number {};
+
+    struct real : public number {
+    public:     typedef double                      type;
+    public:     constexpr static double             zero    = 0.0f;
     };
 
-    struct DoubleTag : public FloatTag {
-    public:     typedef double              Type;
-    public:     constexpr static double     zero = 0.0F;
-    };
-
-    struct IntegerTag : public ScalarTag {
-    public:     typedef int                 Type;
-    public:     constexpr static int        zero = 0;
-    };
-
-    struct LongTag : public IntegerTag {
-    public:     typedef long                Type;
-    public:     constexpr static long       zero = 0;
-    };
-
-    struct UnitType {
-    public:     constexpr static unsigned int   none   = 0;
-    public:     constexpr static unsigned int   length = 1;
-    public:     constexpr static unsigned int   mass   = 2;
-    };
-
-    template <typename Super = ScalarTag>
-    struct UnitTag : public Super {
-    public:     constexpr static unsigned int   type   = UnitType::none;
-    };
-
-    struct UnitSuffixType {
-    public:     constexpr static int            yotta       =  24;
-    public:     constexpr static int            zetta       =  21;
-    public:     constexpr static int            exa         =  18;
-    public:     constexpr static int            peta        =  15;
-    public:     constexpr static int            tera        =  12;
-    public:     constexpr static int            giga        =   9;
-    public:     constexpr static int            mega        =   6;
-    public:     constexpr static int            kilo        =   3;
-    public:     constexpr static int            hecto       =   2;
-    public:     constexpr static int            deka        =   1;
-    public:     constexpr static int            base        =   0;
-    public:     constexpr static int            deci        =  -1;
-    public:     constexpr static int            centi       =  -2;
-    public:     constexpr static int            milli       =  -3;
-    public:     constexpr static int            micro       =  -6;
-    public:     constexpr static int            nano        =  -9;
-    public:     constexpr static int            pico        = -12;
-    public:     constexpr static int            femto       = -15;
-    public:     constexpr static int            atto        = -18;
-    public:     constexpr static int            zepto       = -21;
-    public:     constexpr static int            yocto       = -24;
-    };
-
-    struct LengthUnitType {
-    public:     constexpr static unsigned int   none        = 0;
-    public:     constexpr static unsigned int   meter       = 1;
-    };
-
-    struct SecondUnitType {
-    public:     constexpr static unsigned int   none        = 0;
-    public:     constexpr static unsigned int   second      = 1;
-    };
-
-    struct MassUnitType {
-    public:     constexpr static unsigned int   none        = 0;
-    public:     constexpr static unsigned int   gram        = 1;
+    struct unit : public real {
+    public:     struct prefix {
+                public:     constexpr static int    yotta   = 24;
+                public:     constexpr static int    zetta   = 21;
+                public:     constexpr static int    exa     = 18;
+                public:     constexpr static int    peta    = 15;
+                public:     constexpr static int    tera    = 12;
+                public:     constexpr static int    giga    = 9;
+                public:     constexpr static int    mega    = 6;
+                public:     constexpr static int    kilo    = 3;
+                public:     constexpr static int    hecto   = 2;
+                public:     constexpr static int    deka    = 1;
+                public:     constexpr static int    none    = 0;
+                public:     constexpr static int    deci    = -1;
+                public:     constexpr static int    centi   = -2;
+                public:     constexpr static int    milli   = -3;
+                public:     constexpr static int    micro   = -6;
+                public:     constexpr static int    nano    = -9;
+                public:     constexpr static int    pico    = -12;
+                public:     constexpr static int    femto   = -15;
+                public:     constexpr static int    atto    = -18;
+                public:     constexpr static int    zepto   = -21;
+                public:     constexpr static int    yocto   = -24;
+                };
+    public:     struct classification {
+                public:     constexpr static int    scalar  = 0;
+                public:     constexpr static int    length  = 1;
+                public:     constexpr static int    mass    = 2;
+                public:     constexpr static int    second  = 3;
+                public:     constexpr static int    color   = 4;
+                };
+    public:     struct length {
+                public:     constexpr static int    none    = 0;
+                public:     constexpr static int    meter   = 1;
+                public:     constexpr static int    pixel   = 2;
+                };
+    public:     constexpr static int                kind    = unit::classification::scalar;
+    public:     constexpr static int                fix     = unit::prefix::none;
     };
 
     namespace generic {
-        template <typename scalar = ScalarTag>
-        struct meter : public scalar {
-        public:     constexpr static unsigned int unit = LengthUnitType::meter;
+        template <typename declaration>
+        struct number : public mathematics::number {
+        public:     typedef declaration             type;
+        public:     constexpr static type           zero    = 0;
         };
 
-        template <typename unit>
-        struct milli : public unit {
-        public:     constexpr static int            suffix = UnitSuffixType::milli;
+        template <typename declaration, int classification, int prefix = mathematics::unit::prefix::none>
+        struct unit : public generic::number<declaration> {
+        public:     constexpr static int            kind    = classification;
+        public:     constexpr static int            subkind = declaration::none;
+        public:     constexpr static int            fix     = prefix;
         };
+
+        template <typename declaration, int category, int prefix = mathematics::unit::prefix::none>
+        struct length : public generic::unit<declaration, mathematics::unit::classification::length, prefix> {
+        public:     constexpr static int            subkind = category;
+        };
+
     }
 
-
-    struct millimeter : public generic::milli<generic::meter<>> {};
-
+    struct millimeter : public generic::length<double, mathematics::unit::length::meter, mathematics::unit::prefix::milli> {};
 
 }
 

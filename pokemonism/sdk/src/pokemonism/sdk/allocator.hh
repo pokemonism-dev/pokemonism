@@ -16,48 +16,48 @@ namespace pokemonism {
 
     namespace sdk {
 
-        class Allocator {
-        public:     template <typename Element> static inline Element * gen(unsigned long n);
-        public:     template <typename Element> static inline Element * gen(Element * destination, unsigned long n);
-        public:     template <typename Element> static inline Element * reset(Element * destination, unsigned long n);
-        public:     template <typename Element> static inline Element * rel(Element * destination);
-        public:     template <typename Element> static inline Element * del(Element * o);
-        public:     template <typename Element> static inline Element * del(Element * o, unsigned long n);
-        public:     inline Allocator(void);
-        public:     inline virtual ~Allocator(void);
-        public:     Allocator(const Allocator & o) = delete;
-        public:     Allocator(Allocator && o) noexcept = delete;
-        public:     Allocator & operator=(const Allocator & o) = delete;
-        public:     Allocator & operator=(Allocator && o) noexcept = delete;
+        class allocator {
+        public:     template <typename element> static inline element * gen(unsigned long n);
+        public:     template <typename element> static inline element * gen(element * destination, unsigned long n);
+        public:     template <typename element> static inline element * reset(element * destination, unsigned long n);
+        public:     template <typename element> static inline element * rel(element * destination);
+        public:     template <typename element> static inline element * del(element * o);
+        public:     template <typename element> static inline element * del(element * o, unsigned long n);
+        public:     inline allocator(void);
+        public:     inline virtual ~allocator(void);
+        public:     allocator(const allocator & o) = delete;
+        public:     allocator(allocator && o) noexcept = delete;
+        public:     allocator & operator=(const allocator & o) = delete;
+        public:     allocator & operator=(allocator && o) noexcept = delete;
         };
 
-        template <typename Element>
-        inline Element * Allocator::gen(unsigned long n) {
-            return static_cast<Element *>(n > 0 ? malloc(n * sizeof(Element)) : nullptr);
+        template <typename element>
+        inline element * allocator::gen(unsigned long n) {
+            return static_cast<element *>(n > 0 ? malloc(n * sizeof(element)) : nullptr);
         }
 
-        template <typename Element>
-        inline Element * Allocator::gen(Element * destination, unsigned long n) {
+        template <typename element>
+        inline element * allocator::gen(element * destination, unsigned long n) {
             if (n == 0) {
                 if (destination) free(destination);
                 return nullptr;
             }
 
-            return static_cast<Element *>(destination != nullptr ? realloc(destination, n * sizeof(Element)) : malloc(n * sizeof(Element)));
+            return static_cast<element *>(destination != nullptr ? realloc(destination, n * sizeof(element)) : malloc(n * sizeof(element)));
         }
 
-        template <typename Element>
-        inline Element * Allocator::reset(Element * destination, unsigned long n) {
+        template <typename element>
+        inline element * allocator::reset(element * destination, unsigned long n) {
             if (destination) free(destination);
 
-            return static_cast<Element *>(n > 0 ? malloc(n * sizeof(Element)) : nullptr);
+            return static_cast<element *>(n > 0 ? malloc(n * sizeof(element)) : nullptr);
         }
 
-        template <> inline void * Allocator::gen<void>(unsigned long n) {
+        template <> inline void * allocator::gen<void>(unsigned long n) {
             return n > 0 ? malloc(n) : nullptr;
         }
 
-        template <> inline void * Allocator::gen<void>(void * destination, unsigned long n) {
+        template <> inline void * allocator::gen<void>(void * destination, unsigned long n) {
             if (n == 0) {
                 if (destination) free(destination);
                 return nullptr;
@@ -66,17 +66,17 @@ namespace pokemonism {
             return destination != nullptr ? realloc(destination, n) : malloc(n);
         }
 
-        template <> inline void * Allocator::reset(void * destination, unsigned long n) {
+        template <> inline void * allocator::reset(void * destination, unsigned long n) {
             if (destination) free(destination);
 
             return n > 0 ? malloc(n) : nullptr;
         }
 
-        template <> inline unsigned char * Allocator::gen<unsigned char>(unsigned long n) {
+        template <> inline unsigned char * allocator::gen<unsigned char>(unsigned long n) {
             return static_cast<unsigned char *>(n > 0 ? malloc(n) : nullptr);
         }
 
-        template <> inline unsigned char * Allocator::gen(unsigned char * destination, unsigned long n) {
+        template <> inline unsigned char * allocator::gen(unsigned char * destination, unsigned long n) {
             if (n == 0) {
                 if (destination) free(destination);
                 return nullptr;
@@ -85,17 +85,17 @@ namespace pokemonism {
             return static_cast<unsigned char *>(destination != nullptr ? realloc(destination, n) : malloc(n));
         }
 
-        template <> inline unsigned char * Allocator::reset(unsigned char * destination, unsigned long n) {
+        template <> inline unsigned char * allocator::reset(unsigned char * destination, unsigned long n) {
             if (destination) free(destination);
 
             return static_cast<unsigned char *>(n > 0 ? malloc(n) : nullptr);
         }
 
-        template <> inline char * Allocator::gen<char>(unsigned long n) {
+        template <> inline char * allocator::gen<char>(unsigned long n) {
             return static_cast<char *>(n > 0 ? malloc(n) : nullptr);
         }
 
-        template <> inline char * Allocator::gen(char * destination, unsigned long n) {
+        template <> inline char * allocator::gen(char * destination, unsigned long n) {
             if (n == 0) {
                 if (destination) free(destination);
                 return nullptr;
@@ -104,41 +104,41 @@ namespace pokemonism {
             return static_cast<char *>(destination != nullptr ? realloc(destination, n) : malloc(n));
         }
 
-        template <> inline char * Allocator::reset(char * destination, unsigned long n) {
+        template <> inline char * allocator::reset(char * destination, unsigned long n) {
             if (destination) free(destination);
 
             return static_cast<char *>(n > 0 ? malloc(n) : nullptr);
         }
 
-        template <typename Element>
-        inline Element * Allocator::rel(Element * destination) {
+        template <typename element>
+        inline element * allocator::rel(element * destination) {
             if (destination) free(destination);
 
             return nullptr;
         }
 
-        template <typename Element>
-        inline Element * Allocator::del(Element * o) {
+        template <typename element>
+        inline element * allocator::del(element * o) {
             if (o != nullptr) delete o;
             return nullptr;
         }
 
-        template <typename Element>
-        inline Element * Allocator::del(Element * o, unsigned long n) {
+        template <typename element>
+        inline element * allocator::del(element * o, unsigned long n) {
             if (o != nullptr) delete[] o;
             return nullptr;
         }
 
-        inline Allocator::Allocator(void) {
+        inline allocator::allocator(void) {
 
         }
 
-        inline Allocator::~Allocator(void) {
+        inline allocator::~allocator(void) {
 
         }
     }
 
-    using Allocator = pokemonism::sdk::Allocator;
+    using allocator = pokemonism::sdk::allocator;
 
 }
 

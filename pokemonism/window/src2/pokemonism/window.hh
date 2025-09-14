@@ -10,11 +10,11 @@
 #ifndef   __POKEMONISM_WINDOW_HH__
 #define   __POKEMONISM_WINDOW_HH__
 
-#include <pokemonism/window/interface/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/interface/window.hh>
 
-#include <pokemonism/window/input/mouse.hh>
-#include <pokemonism/window/input/keyboard.hh>
-#include <pokemonism/window/monitor.hh>
+#include <pokemonism/window/src/pokemonism/window.old/input/mouse.hh>
+#include <pokemonism/window/src/pokemonism/window.old/input/keyboard.hh>
+#include <pokemonism/window/src/pokemonism/window.old/monitor.hh>
 
 namespace pokemonism {
 

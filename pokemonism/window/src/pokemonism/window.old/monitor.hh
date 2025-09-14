@@ -11,11 +11,13 @@
 #define   __POKEMONISM_WINDOW_MONITOR_HH__
 
 #include <pokemonism/collection/string.hh>
+#include <pokemonism/window/src/pokemonism/window.old/structure/dimension.hh>
 
 namespace pokemonism::window {
 
     class WindowMonitor {
     protected:  String name;
+    protected:  Dimension dimension;
     public:     inline WindowMonitor(void);
     public:     inline virtual ~WindowMonitor(void);
     public:     inline WindowMonitor(const WindowMonitor & o);

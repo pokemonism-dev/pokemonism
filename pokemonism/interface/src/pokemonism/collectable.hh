@@ -10,53 +10,54 @@
 #ifndef   __POKEMONISM_COLLECTABLE_HH__
 #define   __POKEMONISM_COLLECTABLE_HH__
 
+#include <pokemonism.hh>
 #include <pokemonism/containable.hh>
 
 namespace pokemonism {
 
-    template <typename Elementable, class Super = Containable>
-    class Collectable : public Super {
-    public:     virtual void add(const Elementable & item) = 0;
-    public:     virtual void add(Elementable && item) = 0;
-    public:     virtual void del(Elementable & item) = 0;
-    public:     inline Collectable(void);
-    public:     inline ~Collectable(void);
-    public:     inline Collectable(const Collectable<Elementable, Super> & o);
-    public:     inline Collectable(Collectable<Elementable, Super> && o) noexcept;
-    public:     inline Collectable<Elementable, Super> & operator=(const Collectable<Elementable, Super> & o);
-    public:     inline Collectable<Elementable, Super> & operator=(Collectable<Elementable, Super> && o) noexcept;
+    template <typename elementable, class super = containable>
+    class collectable : public super {
+    public:     virtual void add(const elementable & item) = 0;
+    public:     virtual void add(elementable && item) = 0;
+    public:     virtual void del(elementable & item) = 0;
+    public:     inline collectable(void);
+    public:     inline ~collectable(void);
+    public:     inline collectable(const collectable<elementable, super> & o);
+    public:     inline collectable(collectable<elementable, super> && o) noexcept;
+    public:     inline collectable<elementable, super> & operator=(const collectable<elementable, super> & o);
+    public:     inline collectable<elementable, super> & operator=(collectable<elementable, super> && o) noexcept;
     };
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super>::Collectable(void) {
+    template <typename elementable, class super>
+    inline collectable<elementable, super>::collectable(void) {
 
     }
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super>::~Collectable(void) {
+    template <typename elementable, class super>
+    inline collectable<elementable, super>::~collectable(void) {
 
     }
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super>::Collectable(const Collectable<Elementable, Super> & o) : Super(o) {
+    template <typename elementable, class super>
+    inline collectable<elementable, super>::collectable(const collectable<elementable, super> & o) : super(o) {
 
     }
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super>::Collectable(Collectable<Elementable, Super> && o) noexcept : Super(std::move(o)) {
+    template <typename elementable, class super>
+    inline collectable<elementable, super>::collectable(collectable<elementable, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super> & Collectable<Elementable, Super>::operator=(const Collectable<Elementable, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <typename elementable, class super>
+    inline collectable<elementable, super> & collectable<elementable, super>::operator=(const collectable<elementable, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template <typename Elementable, class Super>
-    inline Collectable<Elementable, Super> & Collectable<Elementable, Super>::operator=(Collectable<Elementable, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template <typename elementable, class super>
+    inline collectable<elementable, super> & collectable<elementable, super>::operator=(collectable<elementable, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

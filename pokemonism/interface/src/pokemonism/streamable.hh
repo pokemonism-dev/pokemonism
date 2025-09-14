@@ -10,50 +10,51 @@
 #ifndef   __POKEMONISM_STREAMABLE_HH__
 #define   __POKEMONISM_STREAMABLE_HH__
 
+#include <pokemonism.hh>
 #include <pokemonism/containable.hh>
 
 namespace pokemonism {
 
-    template <class Elementable, class Super = Containable>
-    class Streamable : public Super {
-    public:     inline Streamable(void);
-    public:     inline ~Streamable(void) override;
-    public:     inline Streamable(const Streamable<Elementable, Super> & o);
-    public:     inline Streamable(Streamable<Elementable, Super> && o) noexcept;
-    public:     inline Streamable<Elementable, Super> & operator=(const Streamable<Elementable, Super> & o);
-    public:     inline Streamable<Elementable, Super> & operator=(Streamable<Elementable, Super> && o) noexcept;
+    template <class elementable, class super = containable>
+    class streamable : public super {
+    public:     inline streamable(void);
+    public:     inline ~streamable(void) override;
+    public:     inline streamable(const streamable<elementable, super> & o);
+    public:     inline streamable(streamable<elementable, super> && o) noexcept;
+    public:     inline streamable<elementable, super> & operator=(const streamable<elementable, super> & o);
+    public:     inline streamable<elementable, super> & operator=(streamable<elementable, super> && o) noexcept;
     };
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super>::Streamable(void) {
+    template <class elementable, class super>
+    inline streamable<elementable, super>::streamable(void) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super>::~Streamable(void) {
+    template <class elementable, class super>
+    inline streamable<elementable, super>::~streamable(void) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super>::Streamable(const Streamable<Elementable, Super> & o) : Super(o) {
+    template <class elementable, class super>
+    inline streamable<elementable, super>::streamable(const streamable<elementable, super> & o) : super(o) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super>::Streamable(Streamable<Elementable, Super> && o) noexcept : Super(std::move(o)) {
+    template <class elementable, class super>
+    inline streamable<elementable, super>::streamable(streamable<elementable, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super> & Streamable<Elementable, Super>::operator=(const Streamable<Elementable, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <class elementable, class super>
+    inline streamable<elementable, super> & streamable<elementable, super>::operator=(const streamable<elementable, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template <class Elementable, class Super>
-    inline Streamable<Elementable, Super> & Streamable<Elementable, Super>::operator=(Streamable<Elementable, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template <class elementable, class super>
+    inline streamable<elementable, super> & streamable<elementable, super>::operator=(streamable<elementable, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

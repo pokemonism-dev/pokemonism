@@ -12,6 +12,6 @@
 
 namespace pokemonism {
 
-    Applicationable * Applicationable::singleton = nullptr;
+    applicationable * applicationable::singleton = nullptr;
 
 }

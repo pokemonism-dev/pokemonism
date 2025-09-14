@@ -10,52 +10,52 @@
 #ifndef   __POKEMONISM_ENVELOPEABLE_HH__
 #define   __POKEMONISM_ENVELOPEABLE_HH__
 
-#include <pokemonism/virtualable.hh>
+#include <pokemonism.hh>
 #include <pokemonism/primitivable.hh>
 
 namespace pokemonism {
 
-    template <class Super>
-    class Envelopeable : public Super {
-    public:     virtual Primitivable * messagePop(void) = 0;
-    public:     inline Envelopeable(void);
-    public:     inline ~Envelopeable(void) override;
-    public:     inline Envelopeable(const Envelopeable<Super> & o);
-    public:     inline Envelopeable(Envelopeable<Super> && o) noexcept;
-    public:     inline Envelopeable<Super> & operator=(const Envelopeable<Super> & o);
-    public:     inline Envelopeable<Super> & operator=(Envelopeable<Super> && o) noexcept;
+    template <class super>
+    class envelopeable : public super {
+    public:     virtual primitivable * messagePop(void) = 0;
+    public:     inline envelopeable(void);
+    public:     inline ~envelopeable(void) override;
+    public:     inline envelopeable(const envelopeable<super> & o);
+    public:     inline envelopeable(envelopeable<super> && o) noexcept;
+    public:     inline envelopeable<super> & operator=(const envelopeable<super> & o);
+    public:     inline envelopeable<super> & operator=(envelopeable<super> && o) noexcept;
     };
 
-    template<class Super>
-    inline Envelopeable<Super>::Envelopeable(void) {
+    template<class super>
+    inline envelopeable<super>::envelopeable(void) {
 
     }
 
-    template<class Super>
-    inline Envelopeable<Super>::~Envelopeable(void) {
+    template<class super>
+    inline envelopeable<super>::~envelopeable(void) {
 
     }
 
-    template<class Super>
-    inline Envelopeable<Super>::Envelopeable(const Envelopeable<Super> & o) : Super(o) {
+    template<class super>
+    inline envelopeable<super>::envelopeable(const envelopeable<super> & o) : super(o) {
 
     }
 
-    template<class Super>
-    inline Envelopeable<Super>::Envelopeable(Envelopeable<Super> && o) noexcept : Super(std::move(o)) {
+    template<class super>
+    inline envelopeable<super>::envelopeable(envelopeable<super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template<class Super>
-    inline Envelopeable<Super> & Envelopeable<Super>::operator=(const Envelopeable<Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template<class super>
+    inline envelopeable<super> & envelopeable<super>::operator=(const envelopeable<super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template<class Super>
-    inline Envelopeable<Super> & Envelopeable<Super>::operator=(Envelopeable<Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template<class super>
+    inline envelopeable<super> & envelopeable<super>::operator=(envelopeable<super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

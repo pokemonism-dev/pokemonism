@@ -10,55 +10,56 @@
 #ifndef   __POKEMONISM_CONTINUABLE_HH__
 #define   __POKEMONISM_CONTINUABLE_HH__
 
+#include <pokemonism.hh>
 #include <pokemonism/virtualable.hh>
 
 namespace pokemonism {
 
-    template <class Elementable, class Super = Virtualable>
-    class Continuable : public Super {
+    template <class elementable, class super = virtualable>
+    class continuable : public super {
     public:     virtual unsigned long capacityCal(unsigned long n) = 0;
-    public:     virtual void set(const Elementable & item, unsigned long n) = 0;
-    public:     virtual void set(const Elementable * source, unsigned long sourceLen) = 0;
-    public:     virtual void cat(const Elementable & item, unsigned long n) = 0;
-    public:     virtual void cat(const Elementable * source, unsigned long sourceLen) = 0;
-    public:     inline Continuable(void);
-    public:     inline ~Continuable(void) override;
-    public:     inline Continuable(const Continuable<Elementable, Super> & o);
-    public:     inline Continuable(Continuable<Elementable, Super> && o) noexcept;
-    public:     inline Continuable<Elementable, Super> & operator=(const Continuable<Elementable, Super> & o);
-    public:     inline Continuable<Elementable, Super> & operator=(Continuable<Elementable, Super> && o) noexcept;
+    public:     virtual void set(const elementable & item, unsigned long n) = 0;
+    public:     virtual void set(const elementable * source, unsigned long sourceLen) = 0;
+    public:     virtual void cat(const elementable & item, unsigned long n) = 0;
+    public:     virtual void cat(const elementable * source, unsigned long sourceLen) = 0;
+    public:     inline continuable(void);
+    public:     inline ~continuable(void) override;
+    public:     inline continuable(const continuable<elementable, super> & o);
+    public:     inline continuable(continuable<elementable, super> && o) noexcept;
+    public:     inline continuable<elementable, super> & operator=(const continuable<elementable, super> & o);
+    public:     inline continuable<elementable, super> & operator=(continuable<elementable, super> && o) noexcept;
     };
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super>::Continuable(void) {
+    template <class elementable, class super>
+    inline continuable<elementable, super>::continuable(void) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super>::~Continuable(void) {
+    template <class elementable, class super>
+    inline continuable<elementable, super>::~continuable(void) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super>::Continuable(const Continuable<Elementable, Super> & o) : Super(o) {
+    template <class elementable, class super>
+    inline continuable<elementable, super>::continuable(const continuable<elementable, super> & o) : super(o) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super>::Continuable(Continuable<Elementable, Super> && o) noexcept : Super(std::move(o)) {
+    template <class elementable, class super>
+    inline continuable<elementable, super>::continuable(continuable<elementable, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super> & Continuable<Elementable, Super>::operator=(const Continuable<Elementable, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <class elementable, class super>
+    inline continuable<elementable, super> & continuable<elementable, super>::operator=(const continuable<elementable, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template <class Elementable, class Super>
-    inline Continuable<Elementable, Super> & Continuable<Elementable, Super>::operator=(Continuable<Elementable, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(o);
+    template <class elementable, class super>
+    inline continuable<elementable, super> & continuable<elementable, super>::operator=(continuable<elementable, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }

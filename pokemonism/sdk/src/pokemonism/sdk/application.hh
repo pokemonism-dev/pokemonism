@@ -20,64 +20,64 @@ namespace pokemonism {
          * 이 구조의 어플리케이션 클래스는 다양한 어플리케이션을 만들기 좋다.
          *
          */
-        template <class Super = Applicationable>
-        class Application : public Super {
-        protected:  static Application<Super> * singleton;
-        public:     static Application<Super> * gen(void);
-        public:     static Application<Super> * get(void);
-        public:     static int exec(Application<Super> * application);
-        protected:  Application(void);
-        protected:  ~Application(void) override;
-        public:     Application(const Application & o) = delete;
-        public:     Application(Application && o) noexcept = delete;
-        public:     Application & operator=(const Application & o) = delete;
-        public:     Application & operator=(Application && o) noexcept = delete;
+        template <class super = applicationable>
+        class application : public super {
+        protected:  static application<super> * singleton;
+        public:     static application<super> * gen(void);
+        public:     static application<super> * get(void);
+        public:     static int exec(application<super> * o);
+        protected:  application(void);
+        protected:  ~application(void) override;
+        public:     application(const application & o) = delete;
+        public:     application(application && o) noexcept = delete;
+        public:     application & operator=(const application & o) = delete;
+        public:     application & operator=(application && o) noexcept = delete;
         };
 
-        template<class Super>
-        Application<Super> * Application<Super>::singleton = nullptr;
+        template<class super>
+        application<super> * application<super>::singleton = nullptr;
 
-        template<class Super>
-        Application<Super> * Application<Super>::gen(void) {
-            if (Applicationable::singleton == nullptr) {
-                Applicationable::singleton = Application<Super>::singleton = new Application<Super>();
+        template<class super>
+        application<super> * application<super>::gen(void) {
+            if (applicationable::singleton == nullptr) {
+                applicationable::singleton = application<super>::singleton = new application<super>();
 
-                return Application<Super>::singleton;
+                return application<super>::singleton;
             }
             return nullptr;
         }
 
-        template<class Super>
-        Application<Super> * Application<Super>::get(void) {
-            return Application<Super>::singleton;
+        template<class super>
+        application<super> * application<super>::get(void) {
+            return application<super>::singleton;
         }
 
-        template<class Super>
-        int Application<Super>::exec(Application<Super> * application) {
-            pokemon_develop_check(application == nullptr || application != Applicationable::singleton, return declaration::fail);
+        template<class super>
+        int application<super>::exec(application<super> * o) {
+            pokemon_develop_check(o == nullptr || o != applicationable::singleton, return declaration::fail);
 
-            const int ret = application->run();
+            const int ret = o->run();
 
-            delete Applicationable::singleton;
-            Applicationable::singleton = nullptr;
-            Application<Super>::singleton = nullptr;
+            delete applicationable::singleton;
+            applicationable::singleton = nullptr;
+            application<super>::singleton = nullptr;
 
             return ret;
         }
 
-        template<class Super>
-        inline Application<Super>::Application(void) {
+        template<class super>
+        inline application<super>::application(void) {
 
         }
 
-        template<class Super>
-        inline Application<Super>::~Application(void) {
+        template<class super>
+        inline application<super>::~application(void) {
 
         }
 
     }
 
-    template <class Super = pokemonism::Applicationable> using Application = pokemonism::sdk::Application<Super>;
+    template <class super = pokemonism::applicationable> using application = pokemonism::sdk::application<super>;
 
 }
 

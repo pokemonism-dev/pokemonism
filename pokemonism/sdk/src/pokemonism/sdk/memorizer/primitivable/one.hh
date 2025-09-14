@@ -14,24 +14,24 @@
 
 namespace pokemonism::sdk {
 
-    template <typename Elementable>
-    class Memorizer<Elementable, unsigned, 1> {
-    public:     static Elementable * set(Elementable * destination, const Elementable & item);
-    public:     static Elementable * set(Elementable * destination, Elementable && item);
-    public:     static Elementable * set(Elementable * destination, const Elementable & item, unsigned long n);
-    public:     static Elementable * set(Elementable * destination, const Elementable * source, unsigned long sourceLen);
-    public:     static Elementable * del(Elementable * destination);
-    public:     static Elementable * del(Elementable * destination, unsigned long destinationLen);
-    public:     Memorizer(void);
-    public:     virtual ~Memorizer(void);
-    public:     Memorizer(const Memorizer<Elementable, unsigned, 1> & o) = delete;
-    public:     Memorizer(Memorizer<Elementable, unsigned, 1> && o) noexcept = delete;
-    public:     Memorizer<Elementable, unsigned, 1> & operator=(const Memorizer<Elementable, unsigned, 1> & o) = delete;
-    public:     Memorizer<Elementable, unsigned, 1> & operator=(Memorizer<Elementable, unsigned, 1> && o) noexcept = delete;
+    template <typename elementable>
+    class memorizer<elementable, unsigned, 1> {
+    public:     static elementable * set(elementable * destination, const elementable & item);
+    public:     static elementable * set(elementable * destination, elementable && item);
+    public:     static elementable * set(elementable * destination, const elementable & item, unsigned long n);
+    public:     static elementable * set(elementable * destination, const elementable * source, unsigned long sourceLen);
+    public:     static elementable * del(elementable * destination);
+    public:     static elementable * del(elementable * destination, unsigned long destinationLen);
+    public:     memorizer(void);
+    public:     virtual ~memorizer(void);
+    public:     memorizer(const memorizer<elementable, unsigned, 1> & o) = delete;
+    public:     memorizer(memorizer<elementable, unsigned, 1> && o) noexcept = delete;
+    public:     memorizer<elementable, unsigned, 1> & operator=(const memorizer<elementable, unsigned, 1> & o) = delete;
+    public:     memorizer<elementable, unsigned, 1> & operator=(memorizer<elementable, unsigned, 1> && o) noexcept = delete;
     };
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::set(Elementable * destination, const Elementable & item) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::set(elementable * destination, const elementable & item) {
         pokemon_develop_check(destination == nullptr, return nullptr);
 
         referenceof(destination) = item;
@@ -39,8 +39,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::set(Elementable * destination, Elementable && item) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::set(elementable * destination, elementable && item) {
         pokemon_develop_check(destination == nullptr, return nullptr);
 
         referenceof(destination) = std::move(item);
@@ -48,8 +48,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::set(Elementable * destination, const Elementable & item, unsigned long n) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::set(elementable * destination, const elementable & item, unsigned long n) {
         pokemon_develop_check(destination == nullptr || n == 0, return nullptr);
 
         memset(destination, item, n);
@@ -57,8 +57,8 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::set(Elementable * destination, const Elementable * source, unsigned long sourceLen) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
         pokemon_develop_check(destination == nullptr || sourceLen == 0, return nullptr);
 
         memcpy(destination, source, sourceLen);
@@ -66,27 +66,27 @@ namespace pokemonism::sdk {
         return destination;
     }
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::del(Elementable * destination) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::del(elementable * destination) {
         pokemon_develop_check(destination == nullptr, return destination);
 
         return destination;
     }
 
-    template <typename Elementable>
-    Elementable * Memorizer<Elementable, unsigned, 1>::del(Elementable * destination, unsigned long destinationLen) {
+    template <typename elementable>
+    elementable * memorizer<elementable, unsigned, 1>::del(elementable * destination, unsigned long destinationLen) {
         pokemon_develop_check(destination == nullptr || destinationLen == 0, return destination);
 
         return destination;
     }
 
-    template <typename Elementable>
-    Memorizer<Elementable, unsigned, 1>::Memorizer(void) {
+    template <typename elementable>
+    memorizer<elementable, unsigned, 1>::memorizer(void) {
 
     }
 
-    template <typename Elementable>
-    Memorizer<Elementable, unsigned, 1>::~Memorizer(void) {
+    template <typename elementable>
+    memorizer<elementable, unsigned, 1>::~memorizer(void) {
 
     }
 

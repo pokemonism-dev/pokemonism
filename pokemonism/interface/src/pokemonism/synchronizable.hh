@@ -10,56 +10,57 @@
 #ifndef   __POKEMONISM_SYNCHRONIZABLE_HH__
 #define   __POKEMONISM_SYNCHRONIZABLE_HH__
 
+#include <pokemonism.hh>
 #include <pokemonism/virtualable.hh>
 
 namespace pokemonism {
 
-    template <class Super = Virtualable>
-    class Synchronizable : public Super {
+    template <class super = virtualable>
+    class synchronizable : public super {
     public:     virtual int lock(void) = 0;
     public:     virtual int unlock(void) = 0;
     public:     virtual int wait(void) = 0;
     public:     virtual int wakeup(void) = 0;
     public:     virtual int wait(long second, long nano) = 0;
     public:     virtual int wakeup(bool all) = 0;
-    public:     inline Synchronizable(void);
-    public:     inline ~Synchronizable(void) override;
-    public:     inline Synchronizable(const Synchronizable<Super> & o);
-    public:     inline Synchronizable(Synchronizable<Super> && o);
-    public:     inline Synchronizable<Super> & operator=(const Synchronizable<Super> & o);
-    public:     inline Synchronizable<Super> & operator=(Synchronizable<Super> && o);
+    public:     inline synchronizable(void);
+    public:     inline ~synchronizable(void) override;
+    public:     inline synchronizable(const synchronizable<super> & o);
+    public:     inline synchronizable(synchronizable<super> && o) noexcept;
+    public:     inline synchronizable<super> & operator=(const synchronizable<super> & o);
+    public:     inline synchronizable<super> & operator=(synchronizable<super> && o) noexcept;
     };
 
-    template<class Super>
-    inline Synchronizable<Super>::Synchronizable(void) {
+    template<class super>
+    inline synchronizable<super>::synchronizable(void) {
 
     }
 
-    template<class Super>
-    inline Synchronizable<Super>::~Synchronizable(void) {
+    template<class super>
+    inline synchronizable<super>::~synchronizable(void) {
 
     }
 
-    template<class Super>
-    inline Synchronizable<Super>::Synchronizable(const Synchronizable<Super> & o) : Super(o) {
+    template<class super>
+    inline synchronizable<super>::synchronizable(const synchronizable<super> & o) : super(o) {
 
     }
 
-    template<class Super>
-    inline Synchronizable<Super>::Synchronizable(Synchronizable<Super> && o) : Super(std::move(o)) {
+    template<class super>
+    inline synchronizable<super>::synchronizable(synchronizable<super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template<class Super>
-    inline Synchronizable<Super> & Synchronizable<Super>::operator=(const Synchronizable<Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template<class super>
+    inline synchronizable<super> & synchronizable<super>::operator=(const synchronizable<super> & o) {
+        if (pointof(o) != this) super::operator=(o);
 
         return *this;
     }
 
-    template<class Super>
-    inline Synchronizable<Super> & Synchronizable<Super>::operator=(Synchronizable<Super> && o) {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template<class super>
+    inline synchronizable<super> & synchronizable<super>::operator=(synchronizable<super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

@@ -10,8 +10,8 @@
 #ifndef   __POKEMONISM_WINDOW_MONITOR_HH__
 #define   __POKEMONISM_WINDOW_MONITOR_HH__
 
-#include <pokemonism/window/graphics/videomode.hh>
-#include <pokemonism/window/graphics/gammaramp.hh>
+#include <pokemonism/window/src/pokemonism/window.old/graphics/videomode.hh>
+#include <pokemonism/window/src/pokemonism/window.old/graphics/gammaramp.hh>
 
 namespace pokemonism::window {
 

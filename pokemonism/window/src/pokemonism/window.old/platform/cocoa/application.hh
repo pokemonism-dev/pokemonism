@@ -19,9 +19,9 @@
 @end
 
 
-#include <pokemonism/window/platform/application.hh>
-#include <pokemonism/window/platform/cocoa/window.hh>
-#include <pokemonism/window/structure/videomode.hh>
+#include <pokemonism/window/src/pokemonism/window.old/platform/application.hh>
+#include <pokemonism/window/src/pokemonism/window.old/platform/cocoa/window.hh>
+#include <pokemonism/window/src/pokemonism/window.old/structure/videomode.hh>
 
 namespace pokemonism::window {
     class CocoaPlatformWindowApplication : public PlatformWindowApplication {

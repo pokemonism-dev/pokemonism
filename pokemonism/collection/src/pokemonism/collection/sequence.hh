@@ -15,45 +15,45 @@
 
 namespace pokemonism::collection {
 
-    template <class Element, class Super = Sequenceable<Element, Collection<Element>>>
-    class Sequence : public Super {
-    public:     inline Sequence(void);
-    public:     inline ~Sequence(void) override;
-    public:     inline Sequence(const Sequence<Element, Super> & o);
-    public:     inline Sequence(Sequence<Element, Super> && o) noexcept;
-    public:     inline Sequence<Element, Super> & operator=(const Sequence<Element, Super> & o);
-    public:     inline Sequence<Element, Super> & operator=(Sequence<Element, Super> && o) noexcept;
+    template <class element, class super = sequenceable<element, collection<element>>>
+    class sequence : public super {
+    public:     inline sequence(void);
+    public:     inline ~sequence(void) override;
+    public:     inline sequence(const sequence<element, super> & o);
+    public:     inline sequence(sequence<element, super> && o) noexcept;
+    public:     inline sequence<element, super> & operator=(const sequence<element, super> & o);
+    public:     inline sequence<element, super> & operator=(sequence<element, super> && o) noexcept;
     };
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super>::Sequence(void) {
+    template <class element, class super>
+    inline sequence<element, super>::sequence(void) {
 
     }
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super>::~Sequence(void) {
+    template <class element, class super>
+    inline sequence<element, super>::~sequence(void) {
 
     }
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super>::Sequence(const Sequence<Element, Super> & o) : Super(o) {
+    template <class element, class super>
+    inline sequence<element, super>::sequence(const sequence<element, super> & o) : super(o) {
 
     }
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super>::Sequence(Sequence<Element, Super> && o) noexcept : Super(std::move(o)) {
+    template <class element, class super>
+    inline sequence<element, super>::sequence(sequence<element, super> && o) noexcept : super(std::move(o)) {
 
     }
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super> & Sequence<Element, Super>::operator=(const Sequence<Element, Super> & o) {
-        if (pointof(o) != this) Super::operator=(o);
+    template <class element, class super>
+    inline sequence<element, super> & sequence<element, super>::operator=(const sequence<element, super> & o) {
+        if (pointof(o) != this) super::operator=(o);
         return *this;
     }
 
-    template <class Element, class Super>
-    inline Sequence<Element, Super> & Sequence<Element, Super>::operator=(Sequence<Element, Super> && o) noexcept {
-        if (pointof(o) != this) Super::operator=(std::move(o));
+    template <class element, class super>
+    inline sequence<element, super> & sequence<element, super>::operator=(sequence<element, super> && o) noexcept {
+        if (pointof(o) != this) super::operator=(std::move(o));
         return *this;
     }
 

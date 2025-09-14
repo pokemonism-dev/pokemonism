@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_WINDOW_COCOA_KEYBOARD_HH__
 #define   __POKEMONISM_WINDOW_COCOA_KEYBOARD_HH__
 
-#include <pokemonism/window/interface/keyboard.hh>
+#include <pokemonism/window/src/pokemonism/window.old/interface/keyboard.hh>
 
 namespace pokemonism::window::cocoa {
 

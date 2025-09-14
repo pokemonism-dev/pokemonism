@@ -13,25 +13,11 @@
 #include <pokemonism/collection/string.hh>
 
 namespace pokemonism {
-
     namespace sdk {
 
-        using String = pokemonism::collection::String;
-        //
-        //
-        // class String : public pokemonism::collection::String {
-        // public:     String(void) {}
-        // public:     ~String(void) override {}
-        // public:     String(const String & o) {}
-        // public:     String(String && o) noexcept {}
-        // public:     String & operator=(const String & o) { return *this; }
-        // public:     String & operator=(String && o) noexcept { return *this; }
-        // };
+        using string = pokemonism::collection::string;
 
     }
-
-    // using String = pokemonism::sdk::String;
-
 }
 
 #endif // __POKEMONISM_SDK_STRING_HH__

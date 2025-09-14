@@ -9,6 +9,7 @@ include_directories(./
                     pokemonism/collection/src
                     pokemonism/physics/src
                     pokemonism/mathematics/src
+                    pokemonism/graphics/src
                     pokemonism/window/src)
 
 add_subdirectory(pokemonism/interface)
@@ -17,6 +18,7 @@ add_subdirectory(pokemonism/sdk)
 add_subdirectory(pokemonism/window)
 add_subdirectory(pokemonism/vulkan)
 add_subdirectory(pokemonism/mathematics)
+add_subdirectory(pokemonism/graphics)
 add_subdirectory(pokemonism/physics)
 
 

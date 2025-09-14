@@ -12,35 +12,36 @@
 
 namespace pokemonism {
     namespace sdk {
-        template <typename Elementable>
-        struct Typographer {
+
+        template <typename elementable>
+        struct typographer {
         public:     constexpr static const char *   name = "basic";
-        public:     typedef Elementable             Type;
-        public:     typedef void                    PrimitiveType;
-        public:     typedef void                    CharacterType;
-        public:     constexpr static unsigned long  unit = sizeof(Elementable);
+        public:     typedef elementable             type;
+        public:     typedef void                    primitivable;
+        public:     typedef void                    characterable;
+        public:     constexpr static unsigned long  unit = sizeof(elementable);
         };
 
-        template <typename Elementable>
-        struct Typographer<Elementable *> {
+        template <typename elementable>
+        struct typographer<elementable *> {
         public:     constexpr static const char *   name = "pointer";
-        public:     typedef Elementable *           Type;
-        public:     typedef unsigned char           PrimitiveType;
-        public:     typedef void                    CharacterType;
-        public:     constexpr static unsigned long  unit = sizeof(Elementable *);
+        public:     typedef elementable *           type;
+        public:     typedef unsigned char           primitivable;
+        public:     typedef void                    characterable;
+        public:     constexpr static unsigned long  unit = sizeof(elementable *);
         };
     }
 
-    template <typename Elementable> using Typographer = pokemonism::sdk::Typographer<Elementable>;
+    template <typename elementable> using typographer = pokemonism::sdk::typographer<elementable>;
 
 }
 
 #define describe_typographer(elementType, primitiveType, characterType, size)       \
-template <> struct pokemonism::sdk::Typographer<elementType> {                      \
+template <> struct pokemonism::sdk::typographer<elementType> {                      \
 public:     constexpr static const char *   name = #elementType;                    \
-public:     typedef elementType             Type;                                   \
-public:     typedef primitiveType           PrimitiveType;                          \
-public:     typedef characterType           CharacterType;                          \
+public:     typedef elementType             type;                                   \
+public:     typedef primitiveType           Primitivable;                           \
+public:     typedef characterType           characterable;                          \
 public:     constexpr static unsigned long  unit = size;                            \
 }
 

@@ -14,7 +14,7 @@
 
 namespace pokemonism::mathematics {
 
-    struct Tag : public pokemonism::Tag {};
+    struct tag : public pokemonism::tag {};
 
 }
 

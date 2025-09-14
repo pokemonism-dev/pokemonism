@@ -15,41 +15,41 @@
 
 namespace pokemonism {
 
-    class Applicationable : public Runnable<Virtualable> {
-    protected:  static Applicationable * singleton;
+    class applicationable : public runnable<virtualable> {
+    protected:  static applicationable * singleton;
     public:     virtual const char * platformNameGet(void) const noexcept = 0;
     protected:  int run(void) override = 0;
-    public:     inline Applicationable(void);
-    public:     inline ~Applicationable(void) override;
-    public:     inline Applicationable(const Applicationable & o);
-    public:     inline Applicationable(Applicationable && o) noexcept;
-    public:     inline Applicationable & operator=(const Applicationable & o);
-    public:     inline Applicationable & operator=(Applicationable && o) noexcept;
+    public:     inline applicationable(void);
+    public:     inline ~applicationable(void) override;
+    public:     inline applicationable(const applicationable & o);
+    public:     inline applicationable(applicationable && o) noexcept;
+    public:     inline applicationable & operator=(const applicationable & o);
+    public:     inline applicationable & operator=(applicationable && o) noexcept;
     };
 
-    Applicationable::Applicationable(void) {
+    applicationable::applicationable(void) {
 
     }
 
-    Applicationable::~Applicationable(void) {
+    applicationable::~applicationable(void) {
 
     }
 
-    inline Applicationable::Applicationable(const Applicationable & o) : Runnable<Virtualable>(o) {
+    inline applicationable::applicationable(const applicationable & o) : runnable<virtualable>(o) {
 
     }
 
-    inline Applicationable::Applicationable(Applicationable && o) noexcept : Runnable<Virtualable>(std::move(o)) {
+    inline applicationable::applicationable(applicationable && o) noexcept : runnable<virtualable>(std::move(o)) {
 
     }
 
-    inline Applicationable & Applicationable::operator=(const Applicationable & o) {
-        if (pointof(o) != this) Runnable<Virtualable>::operator=(o);
+    inline applicationable & applicationable::operator=(const applicationable & o) {
+        if (pointof(o) != this) runnable<virtualable>::operator=(o);
         return *this;
     }
 
-    inline Applicationable & Applicationable::operator=(Applicationable && o) noexcept {
-        if (pointof(o) != this) Runnable<Virtualable>::operator=(std::move(o));
+    inline applicationable & applicationable::operator=(applicationable && o) noexcept {
+        if (pointof(o) != this) runnable<virtualable>::operator=(std::move(o));
         return *this;
     }
 

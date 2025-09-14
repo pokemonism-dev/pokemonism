@@ -10,7 +10,7 @@
 #ifndef   __POKEMONISM_WINDOW_COCOA_LIB_HH__
 #define   __POKEMONISM_WINDOW_COCOA_LIB_HH__
 
-#include <pokemonism/window/lib.hh>
+#include <pokemonism/window/src/pokemonism/window.old/lib.hh>
 
 namespace pokemonism::window {
 

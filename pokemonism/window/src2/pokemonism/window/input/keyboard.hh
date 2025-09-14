@@ -12,7 +12,7 @@
 
 #include <pokemonism/observable.hh>
 #include <pokemonism/sdk/linked/list.hh>
-#include <pokemonism/window/input/keyboard/key.hh>
+#include <pokemonism/window/src/pokemonism/window.old/input/keyboard/key.hh>
 
 namespace pokemonism::window::input {
 
