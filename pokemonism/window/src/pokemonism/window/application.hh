@@ -4,16 +4,15 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           Sep 14, 2025
+ * @since           9월 15, 2025
  */
 
-#ifndef   __POKEMONISM_INTERFACE_WINDOW_APPLICATION_HH__
-#define   __POKEMONISM_INTERFACE_WINDOW_APPLICATION_HH__
+#ifndef   __POKEMONISM_WINDOW_APPLICATION_HH__
+#define   __POKEMONISM_WINDOW_APPLICATION_HH__
 
-// ReSharper disable once CppUnusedIncludeDirective
-#include <pokemonism/interface/window.hh>
+#include <pokemonism/window.hh>
 
-namespace pokemonism::interface {
+namespace pokemonism {
 
     inline window::application::application(void) {
 
@@ -41,4 +40,4 @@ namespace pokemonism::interface {
 
 }
 
-#endif // __POKEMONISM_INTERFACE_WINDOW_APPLICATION_HH__
+#endif // __POKEMONISM_WINDOW_APPLICATION_HH__

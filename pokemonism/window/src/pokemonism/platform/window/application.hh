@@ -4,15 +4,24 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 15, 2025
+ * @since           Sep 15, 2025
  */
 
 #ifndef   __POKEMONISM_PLATFORM_WINDOW_APPLICATION_HH__
 #define   __POKEMONISM_PLATFORM_WINDOW_APPLICATION_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/window.hh>
 
-namespace pokemonism {
+namespace pokemonism::platform {
+
+    inline window::application::application(void) {
+
+    }
+
+    inline window::application::~application(void) {
+
+    }
+
 }
 
 #endif // __POKEMONISM_PLATFORM_WINDOW_APPLICATION_HH__

@@ -5,25 +5,46 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(POKEMONISM_WINDOW_HEARER                                            src/pokemonism/window.cc
-                                                                        src/pokemonism/interface/window.cc
-                                                                        src/pokemonism/interface/window/config.cc
-                                                                        src/pokemonism/interface/window/application.cc
+                                                                        src/pokemonism/window/application.cc
                                                                         src/pokemonism/abstract/window.cc
                                                                         src/pokemonism/abstract/window/application.cc
                                                                         src/pokemonism/platform/window.cc
                                                                         src/pokemonism/platform/window/application.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window.hh
-                                                                        src/pokemonism/interface/window.hh
-                                                                        src/pokemonism/interface/window/config.hh
-                                                                        src/pokemonism/interface/window/application.hh
+                                                                        src/pokemonism/window/application.hh
                                                                         src/pokemonism/abstract/window.hh
                                                                         src/pokemonism/abstract/window/application.hh
                                                                         src/pokemonism/platform/window.hh
                                                                         src/pokemonism/platform/window/application.hh)
 
+
 add_library(pokemonism-window-dev                                       ${POKEMONISM_WINDOW_HEARER}
                                                                         ${POKEMONISM_WINDOW_SOURCE})
+
+set(POKEMONISM_WINDOW_COCOA_SOURCE                                      src/pokemonism/platform/cocoa/window.mm
+                                                                        src/pokemonism/platform/cocoa/window/application.mm)
+
+set(POKEMONISM_WINDOW_COCOA_HEADER                                      src/pokemonism/platform/cocoa/window.hh
+                                                                        src/pokemonism/platform/cocoa/window/application.hh)
+
+target_sources(pokemonism-window-dev                    PRIVATE         ${POKEMONISM_WINDOW_COCOA_SOURCE}
+                                                                        ${POKEMONISM_WINDOW_COCOA_HEADER})
+target_link_libraries(pokemonism-window-dev             PRIVATE         "-framework Cocoa"
+                                                                        "-framework IOKit"
+                                                                        "-framework CoreFoundation")
+
+add_executable(pokemonism-window-application-run                        test/pokemonism/window/application.cc)
+target_link_libraries(pokemonism-window-application-run PRIVATE         "-framework Cocoa"
+                                                                        "-framework IOKit"
+                                                                        "-framework CoreFoundation"
+                                                                        pokemonism-window-dev
+                                                                        pokemonism-sdk
+                                                                        pokemonism-interface-dev)
+
+
+
+
 
 
 #
