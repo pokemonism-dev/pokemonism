@@ -90,6 +90,7 @@ namespace pokemonism::mathematics {
     }
 
     struct millimeter : public generic::length<double, mathematics::unit::length::meter, mathematics::unit::prefix::milli> {};
+    struct pixel : public generic::length<int, mathematics::unit::length::meter> {};
 
 }
 

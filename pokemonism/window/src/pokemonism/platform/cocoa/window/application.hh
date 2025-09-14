@@ -10,9 +10,14 @@
 #ifndef   __POKEMONISM_APPLICATION_HH__
 #define   __POKEMONISM_APPLICATION_HH__
 
-#include <pokemonism.hh>
+#include <pokemonism/platform/cocoa/window.hh>
 
-namespace pokemonism {
+namespace pokemonism::platform::cocoa {
+
+    inline const char * window::application::platformNameGet(void) const noexcept {
+        return "cocoa";
+    }
+
 }
 
 #endif // __POKEMONISM_APPLICATION_HH__

@@ -13,10 +13,12 @@
 #include <pokemonism/applicationable.hh>
 
 #include <pokemonism/sdk/linked/list.hh>
+#include <pokemonism/mathematics/geometry/rectangle.hh>
 
 namespace pokemonism {
 
     class window {
+    public:     using rectangle = mathematics::geometry::rectangle<mathematics::pixel>;
     public:     struct config;
     public:     class application;
     public:     inline window(void);
@@ -81,7 +83,8 @@ namespace pokemonism {
         protected:  unsigned long                       size;
         protected:  abstract::window *                  head;
         protected:  abstract::window *                  tail;
-        protected:  virtual pokemonism::window * windowGen(const window::config & config);
+        public:     const char * platformNameGet(void) const noexcept override;
+        public:     virtual pokemonism::window * windowGen(const window::config & config);
         protected:  abstract::window * del(abstract::window * node);
         protected:  inline int run(void) override;
         protected:  application(void);
@@ -115,8 +118,11 @@ namespace pokemonism {
 }
 
 // ReSharper disable CppUnusedIncludeDirective
+#include <pokemonism/window/config.hh>
 #include <pokemonism/window/application.hh>
+#include <pokemonism/abstract/window.hh>
 #include <pokemonism/abstract/window/application.hh>
+#include <pokemonism/platform/window.hh>
 #include <pokemonism/platform/window/application.hh>
 // ReSharper restore CppUnusedIncludeDirective
 

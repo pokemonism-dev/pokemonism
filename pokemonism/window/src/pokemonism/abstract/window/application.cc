@@ -12,6 +12,10 @@
 
 namespace pokemonism::abstract {
 
+    const char * window::application::platformNameGet(void) const noexcept {
+        return adapter.platformNameGet();
+    }
+
     pokemonism::window * window::application::windowGen(const window::config & config) {
         abstract::window * window = new abstract::window(adapter.windowGen(config));
 

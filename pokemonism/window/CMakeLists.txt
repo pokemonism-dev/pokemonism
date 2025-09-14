@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(POKEMONISM_WINDOW_HEARER                                            src/pokemonism/window.cc
+                                                                        src/pokemonism/window/config.cc
                                                                         src/pokemonism/window/application.cc
                                                                         src/pokemonism/abstract/window.cc
                                                                         src/pokemonism/abstract/window/application.cc
@@ -12,6 +13,7 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
                                                                         src/pokemonism/platform/window/application.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window.hh
+                                                                        src/pokemonism/window/config.hh
                                                                         src/pokemonism/window/application.hh
                                                                         src/pokemonism/abstract/window.hh
                                                                         src/pokemonism/abstract/window/application.hh
