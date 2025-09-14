@@ -11,19 +11,22 @@
 #define   __POKEMONISM_WINDOW_ABSTRACT_WINDOW_HH__
 
 #include <pokemonism/window/window.hh>
+#include <pokemonism/window/platform/window.hh>
 
 #include <pokemonism/sdk/linked/list.hh>
 
 namespace pokemonism::window {
 
     class AbstractWindowApplication;
-    class PlatformWindow;
+    // class PlatformWindow;
 
     class AbstractWindow : public Window {
     protected:  AbstractWindowApplication * container;
     protected:  AbstractWindow * prev;
     protected:  AbstractWindow * next;
     protected:  PlatformWindow * adapter;
+    public:     int create(void) override { return adapter != nullptr ? adapter->create() : declaration::fail; }
+    public:     int destroy(void) override { return adapter != nullptr ? adapter->destroy() : declaration::fail; }
     protected:  explicit AbstractWindow(PlatformWindow * window);
     protected:  inline AbstractWindow(void);
     public:     ~AbstractWindow(void) override;

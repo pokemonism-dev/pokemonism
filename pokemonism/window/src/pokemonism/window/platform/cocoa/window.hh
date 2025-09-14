@@ -14,10 +14,14 @@
 
 #include <pokemonism/window/platform/window.hh>
 
+
 namespace pokemonism::window {
 
     class CocoaPlatformWindow : public PlatformWindow {
     protected:  NSWindow * window;
+    public:     int create(void) override;
+    public:     int destroy(void) override;
+    public:     explicit CocoaPlatformWindow(const WindowConfig & config);
     public:     CocoaPlatformWindow(void);
     public:     ~CocoaPlatformWindow(void) override;
     public:     CocoaPlatformWindow(const CocoaPlatformWindow & o) = delete;

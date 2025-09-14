@@ -12,7 +12,8 @@ set(POKEMONISM_WINDOW_HEARER                                            src/poke
                                                                         src/pokemonism/window/abstract/window.cc
                                                                         src/pokemonism/window/platform/application.cc
                                                                         src/pokemonism/window/platform/window.cc
-                                                                        src/pokemonism/window/structure/rect.cc)
+                                                                        src/pokemonism/window/structure/rect.cc
+                                                                        src/pokemonism/window/structure/style.cc)
 
 set(POKEMONISM_WINDOW_SOURCE                                            src/pokemonism/window/application.hh
                                                                         src/pokemonism/window/window.hh
@@ -22,7 +23,8 @@ set(POKEMONISM_WINDOW_SOURCE                                            src/poke
                                                                         src/pokemonism/window/abstract/window.hh
                                                                         src/pokemonism/window/platform/application.hh
                                                                         src/pokemonism/window/platform/window.hh
-                                                                        src/pokemonism/window/structure/rect.hh)
+                                                                        src/pokemonism/window/structure/rect.hh
+                                                                        src/pokemonism/window/structure/style.hh)
 
 add_library(pokemonism-window-dev                                       ${POKEMONISM_WINDOW_HEARER}
                                                                         ${POKEMONISM_WINDOW_SOURCE})

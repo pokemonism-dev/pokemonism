@@ -11,10 +11,13 @@
 #define   __POKEMONISM_WINDOW_HH__
 
 #include <pokemonism/window/window.hh>
+#include <pokemonism/window/config.hh>
 
 namespace pokemonism::window {
 
     class PlatformWindow : public Window {
+    protected:  WindowConfig config;
+    protected:  inline explicit PlatformWindow(const WindowConfig & config);
     protected:  inline PlatformWindow(void);
     protected:  inline ~PlatformWindow(void) override;
     public:     PlatformWindow(const PlatformWindow & o) = delete;
@@ -22,6 +25,10 @@ namespace pokemonism::window {
     public:     PlatformWindow & operator=(const PlatformWindow & o) = delete;
     public:     PlatformWindow & operator=(PlatformWindow && o) noexcept = delete;
     };
+
+    inline PlatformWindow::PlatformWindow(const WindowConfig & config) : config(config) {
+
+    }
 
     inline PlatformWindow::PlatformWindow(void) {
 

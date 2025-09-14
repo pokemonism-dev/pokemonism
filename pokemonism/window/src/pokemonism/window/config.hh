@@ -21,10 +21,10 @@ namespace pokemonism::window {
     public:     unsigned int    style;
     public:     inline WindowConfig(void);
     public:     inline virtual ~WindowConfig(void);
-    public:     WindowConfig(const WindowConfig & o) = delete;
-    public:     WindowConfig(WindowConfig && o) noexcept = delete;
-    public:     WindowConfig & operator=(const WindowConfig & o) = delete;
-    public:     WindowConfig & operator=(WindowConfig && o) noexcept = delete;
+    public:     inline WindowConfig(const WindowConfig & o);
+    public:     inline WindowConfig(WindowConfig && o) noexcept;
+    public:     inline WindowConfig & operator=(const WindowConfig & o);
+    public:     inline WindowConfig & operator=(WindowConfig && o) noexcept;
     };
 
     inline WindowConfig::WindowConfig(void) : style(declaration::none) {
@@ -33,6 +33,34 @@ namespace pokemonism::window {
 
     inline WindowConfig::~WindowConfig(void) {
 
+    }
+
+    inline WindowConfig::WindowConfig(const WindowConfig & o) : title(o.title), rect(o.rect), style(o.style) {
+
+    }
+
+    inline WindowConfig::WindowConfig(WindowConfig && o) noexcept : title(std::move(o.title)), rect(o.rect), style(o.style) {
+
+    }
+
+    inline WindowConfig & WindowConfig::operator=(const WindowConfig & o) {
+        if (pointof(o) != this) {
+            title = o.title;
+            rect = o.rect;
+            style = o.style;
+        }
+
+        return *this;
+    }
+
+    inline WindowConfig & WindowConfig::operator=(WindowConfig && o) noexcept {
+        if (pointof(o) != this) {
+            title = std::move(o.title);
+            rect = std::move(o.rect);
+            style = o.style;
+        }
+
+        return *this;
     }
 
 }

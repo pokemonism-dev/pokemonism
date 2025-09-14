@@ -66,7 +66,7 @@ namespace pokemonism::window {
     }
 
     CocoaPlatformWindow * CocoaPlatformWindowApplication::windowGen(const WindowConfig & config) {
-        CocoaPlatformWindow * window = new CocoaPlatformWindow();
+        CocoaPlatformWindow * window = new CocoaPlatformWindow(config);
 
         return window;
     }
