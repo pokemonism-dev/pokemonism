@@ -70,18 +70,6 @@ namespace pokemonism::vulkan {
     public:     vulkan::window & operator=(vulkan::window && o) noexcept = delete;
     };
 
-    // namespace platform {
-    //     class window : public pokemonism::platform::window {
-    //     public:     class application {
-    //                 public:     static vulkan::platform::window::application & get(void);
-    //                 public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info);
-    //                 public:     application(void);
-    //                 public:
-    //                 };
-    //     };
-    // }
-
-
 }
 
 // ReSharper disable CppUnusedIncludeDirective

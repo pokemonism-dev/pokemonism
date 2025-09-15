@@ -10,8 +10,6 @@
 #ifndef   __POKEMONISM_LAMBDABLE_HH__
 #define   __POKEMONISM_LAMBDABLE_HH__
 
-#include <pokemonism.hh>
-
 namespace pokemonism {
 
     struct lambdable {
