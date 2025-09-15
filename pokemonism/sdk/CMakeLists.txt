@@ -7,6 +7,7 @@ set(POKEMONISM_SDK_SOURCE               src/pokemonism/sdk/log.cc
                                         src/pokemonism/sdk/string.cc
                                         src/pokemonism/sdk/stream.cc
                                         src/pokemonism/sdk/linked/list.cc
+                                        src/pokemonism/sdk/continuous.cc
                                         src/pokemonism/sdk/typographer.cc
                                         src/pokemonism/sdk/application.cc
                                         src/pokemonism/sdk/exception.cc
@@ -19,6 +20,7 @@ set(POKEMONISM_SDK_HEADER               src/pokemonism/sdk/log.hh
                                         src/pokemonism/sdk/string.hh
                                         src/pokemonism/sdk/stream.hh
                                         src/pokemonism/sdk/linked/list.hh
+                                        src/pokemonism/sdk/continuous.hh
                                         src/pokemonism/sdk/typographer.hh
                                         src/pokemonism/sdk/application.hh
                                         src/pokemonism/sdk/exception.hh

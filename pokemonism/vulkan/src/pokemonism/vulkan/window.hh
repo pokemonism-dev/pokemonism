@@ -13,6 +13,7 @@
 #include <vulkan/vulkan.h>
 
 #include <pokemonism/window.hh>
+#include <pokemonism/vulkan.hh>
 #include <pokemonism/vulkan/platform/window.hh>
 
 namespace pokemonism::vulkan {
@@ -21,7 +22,11 @@ namespace pokemonism::vulkan {
         class window : public pokemonism::platform::window {
         public:     class application : public applicationable {
                     public:     static vulkan::platform::window::application & get(void);
-                    public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, collection::continuous<VkExtensionProperties> & properties) = 0;
+                    public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
+                    public:     virtual void extensionCat(const char * name) = 0;
+                    public:     virtual void layerCat(const char * name) = 0;
+                    public:     virtual void debugSet(vulkan::extension::debug::callback callback) = 0;
+                    public:     virtual vulkan::extension::debug::callback debugGet(void) const = 0;
                     public:     inline application(void);
                     public:     inline ~application(void) override;
                     public:     inline application(const vulkan::platform::window::application & o);
@@ -35,12 +40,18 @@ namespace pokemonism::vulkan {
     class window : public pokemonism::window {
     public:     template <class super = pokemonism::window::application> class application : public super {
                 protected:  VkInstance instance;
+                protected:  VkDebugUtilsMessengerEXT messenger;
                 protected:  vulkan::platform::window::application & vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
+                protected:  collection::continuous<VkLayerProperties> layers;
                 public:     int run(void) override;
-                public:     virtual int vulkanRet(void);
+                public:     virtual int vulkanGen(void);
                 public:     virtual void vulkanRel(void);
-                public:     virtual int extensionRet(void);
+                public:     virtual const collection::continuous<VkExtensionProperties> & extensionGet(void);
+                public:     virtual const collection::continuous<VkLayerProperties> & layerGet(void);
+                public:     virtual void extensionCat(const char * name);
+                public:     virtual void layerCat(const char * name);
+                public:     virtual void debugSet(vulkan::extension::debug::callback callback);
                 public:     application(void);
                 public:     ~application(void) override;
                 public:     application(const vulkan::window::application<super> & o) = delete;

@@ -8,12 +8,7 @@
  */
 
 
-#include "application.hh"
+#include "continuous.hh"
 
 namespace pokemonism {
-
-    void window::application::t800(window::application & o) {
-        printf("I'll be back!\n");
-    }
-
 }

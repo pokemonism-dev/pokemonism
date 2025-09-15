@@ -70,6 +70,8 @@ namespace pokemonism {
 
         class platform::window::application : public applicationable {
         public:     static platform::window::application & get(void);
+        public:     virtual void eventWait(void) = 0;
+        public:     virtual void eventPoll(void) = 0;
         public:     virtual platform::window * windowGen(const window::config & config) = 0;
         public:     inline application(void);
         public:     inline ~application(void) override;
@@ -113,13 +115,17 @@ namespace pokemonism {
     }
 
     class window::application : public abstract::window::application {
+    public:     static void t800(window::application & o);
+    protected:  typedef void (*terminator)(window::application &);
+    public:     terminator terminate;
+    public:     inline virtual void cancel(window::application::terminator f);
     public:     inline explicit application(platform::window::application & adapter);
     public:     inline application(void);
     public:     inline ~application(void) override;
-    public:     inline application(const window::application & o);
-    public:     inline application(window::application && o) noexcept;
-    public:     inline window::application & operator=(const window::application & o);
-    public:     inline window::application & operator=(window::application && o) noexcept;
+    public:     inline application(const window::application & o) = delete;
+    public:     inline application(window::application && o) noexcept = delete;
+    public:     inline window::application & operator=(const window::application & o) = delete;
+    public:     inline window::application & operator=(window::application && o) noexcept = delete;
     };
 
     inline window::window(void) {

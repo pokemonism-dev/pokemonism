@@ -10,36 +10,28 @@
 #ifndef   __POKEMONISM_WINDOW_APPLICATION_HH__
 #define   __POKEMONISM_WINDOW_APPLICATION_HH__
 
+// ReSharper disable CppUnusedIncludeDirective
 #include <pokemonism/window.hh>
+// ReSharper restore CppUnusedIncludeDirective
 
 namespace pokemonism {
 
-    inline window::application::application(platform::window::application & adapter) : abstract::window::application(adapter) {
+    inline void window::application::cancel(window::application::terminator f) {
+        if (f == nullptr) f = window::application::t800;
+
+        if (terminate == nullptr) terminate = f;
+    }
+
+    inline window::application::application(platform::window::application & adapter) : abstract::window::application(adapter), terminate(nullptr) {
 
     }
 
-    inline window::application::application(void) {
+    inline window::application::application(void) : terminate(nullptr) {
 
     }
 
     inline window::application::~application(void) {
 
-    }
-
-    inline window::application::application(const window::application & o) {
-
-    }
-
-    inline window::application::application(window::application && o) noexcept {
-
-    }
-
-    inline window::application & window::application::operator=(const window::application & o) {
-        return *this;
-    }
-
-    inline window::application & window::application::operator=(window::application && o) noexcept {
-        return *this;
     }
 
 }

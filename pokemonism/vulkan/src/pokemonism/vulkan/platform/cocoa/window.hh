@@ -20,8 +20,14 @@ namespace pokemonism::vulkan::platform::cocoa {
                 public:     static vulkan::platform::cocoa::window::application & get(void);
                 protected:  pokemonism::platform::cocoa::window::application & windowable;
                 protected:  collection::continuous<const char *> extensions;
+                protected:  collection::continuous<const char *> layers;
+                protected:  vulkan::extension::debug::callback debugger;
+                public:     void debugSet(vulkan::extension::debug::callback callback) override;
+                public:     vulkan::extension::debug::callback debugGet(void) const override;
                 public:     inline const char * platformNameGet(void) const noexcept override;
-                public:     VkInstanceCreateInfo creationGen(VkApplicationInfo & info, collection::continuous<VkExtensionProperties> & properties) override;
+                public:     VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) override;
+                public:     void extensionCat(const char * name) override;
+                public:     void layerCat(const char * name) override;
                 public:     int run(void) override;
                 public:     application(void);
                 public:     ~application(void) override;

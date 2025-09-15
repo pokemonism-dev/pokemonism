@@ -16,9 +16,13 @@
 @implementation PokemonismWindowApplicationDelegator
 
 - (void) applicationDidFinishLaunching:(NSNotification *) notification {
+     // ### TODO: CHECK WHY NOT CALL THIS WHEN USE EVENT
+     printf("notification\n");
   }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) sender {
+      // ### TODO: CHECK WHY NOT CALL THIS WHEN USE EVENT
+      printf("hello\n");
       return NO;
   }
 
@@ -44,12 +48,12 @@ namespace pokemonism::platform {
             return new platform::cocoa::window(config);
         }
 
-        window::application::application(void) : internal(nil) {
+        window::application::application(void) : internal(nil), delegator(nil) {
             @autoreleasepool {
                 internal = [NSApplication sharedApplication];
                 delegator = [[PokemonismWindowApplicationDelegator alloc] init];
                 delegator.application = this;
-                internal.delegate = delegator;
+                [NSApp setDelegate: delegator];
             }
         }
 
@@ -62,6 +66,33 @@ namespace pokemonism::platform {
                 printf("fail\n");
             }
             return declaration::success;
+        }
+
+        void window::application::eventPoll(void) {
+            @autoreleasepool {
+                while(true) {
+                    NSEvent * event = [NSApp nextEventMatchingMask: NSEventMaskAny
+                                                                    untilDate: [NSDate distantFuture]
+                                                                    inMode: NSDefaultRunLoopMode
+                                                                    dequeue: YES];
+
+                    if(event == nil) break;
+
+                    [NSApp sendEvent: event];
+                }
+            }
+        }
+
+        void window::application::eventWait(void) {
+            @autoreleasepool {
+                NSEvent * event = [NSApp nextEventMatchingMask: NSEventMaskAny
+                                                                untilDate: [NSDate distantFuture]
+                                                                inMode: NSDefaultRunLoopMode
+                                                                dequeue: YES];
+
+                [NSApp sendEvent: event];
+                eventPoll();
+            }
         }
     }
 }

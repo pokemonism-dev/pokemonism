@@ -11,12 +11,13 @@
 #define   __POKEMONISM_VULKAN_WINDOW_APPLICATION_HH__
 
 #include <pokemonism/collection/continuous.hh>
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/vulkan/window.hh>
 
 namespace pokemonism::vulkan {
 
     template <class super>
-    window::application<super>::application(void) : instance(nullptr), vulkanable(vulkan::platform::window::application::get()) {
+    window::application<super>::application(void) : instance(nullptr), messenger(nullptr), vulkanable(vulkan::platform::window::application::get()) {
 
     }
 
@@ -25,10 +26,12 @@ namespace pokemonism::vulkan {
 
     }
 
+
     template <class super>
-    int window::application<super>::vulkanRet(void) {
+    int window::application<super>::vulkanGen(void) {
         if (instance == nullptr) {
-            extensionRet();
+            if (extensions.sizeGet() == 0) extensionGet();
+            if (layers.sizeGet() == 0) layerGet();
 
             VkApplicationInfo info;
 
@@ -40,7 +43,21 @@ namespace pokemonism::vulkan {
             info.pEngineName = this->name.stringGet();
             info.engineVersion = VK_MAKE_VERSION(this->major, this->minor, this->revision);
 
-            const VkInstanceCreateInfo creation = vulkanable.creationGen(info, extensions);
+            VkInstanceCreateInfo creation = vulkanable.creationGen(info, extensions, layers);
+
+            if (vulkanable.debugGet() != nullptr) {
+                VkDebugUtilsMessengerCreateInfoEXT debug;
+
+                debug.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+                debug.pNext = nullptr;
+                debug.flags = declaration::none;
+                debug.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+                debug.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT;
+                debug.pUserData = nullptr;
+                debug.pfnUserCallback = vulkanable.debugGet();
+
+                creation.pNext = pointof(debug);
+            }
 
             if (const VkResult result = vkCreateInstance(pointof(creation), nullptr, pointof(instance)); result != VK_SUCCESS) return declaration::fail;
         }
@@ -50,24 +67,33 @@ namespace pokemonism::vulkan {
 
     template <class super>
     void window::application<super>::vulkanRel(void) {
-        vkDestroyInstance(instance, nullptr);
-        instance = nullptr;
+        if (messenger != nullptr) {
+            vulkan::process::DestroyDebugUtilsMessengerEXT(instance, messenger, nullptr);
+            messenger = nullptr;
+        }
+
+        if (instance != nullptr) {
+            vkDestroyInstance(instance, nullptr);
+            instance = nullptr;
+        }
     }
 
     template <class super>
     int window::application<super>::run(void) {
-        if (vulkanRet() == declaration::success) {
-            const int ret = super::run();
+        if (vulkanGen() == declaration::success) {
+            while (this->terminate == nullptr) {
+                this->adapter.eventWait();
+            }
             vulkanRel();
             printf("rel\n");
-            return ret;
+            return declaration::success;
         }
 
         return declaration::fail;
     }
 
     template <class super>
-    int window::application<super>::extensionRet(void) {
+    const collection::continuous<VkExtensionProperties> & window::application<super>::extensionGet(void) {
         extensions.clean();
         unsigned int count = 0;
 
@@ -77,7 +103,46 @@ namespace pokemonism::vulkan {
 
         vkEnumerateInstanceExtensionProperties(nullptr, pointof(count), extensions.storageGet());
 
-        return declaration::success;
+        for (unsigned long i = 0; i < extensions.sizeGet(); i = i + 1) {
+            printf("%s\n", extensions[i].extensionName);
+        }
+
+        return extensions;
+    }
+
+    template <class super>
+    void window::application<super>::extensionCat(const char * name) {
+        vulkanable.extensionCat(name);
+    }
+
+    template <class super>
+    void window::application<super>::layerCat(const char * name) {
+        vulkanable.layerCat(name);
+    }
+
+    template <class super>
+    void window::application<super>::debugSet(vulkan::extension::debug::callback callback) {
+        vulkanable.debugSet(callback);
+    }
+
+    template <class super>
+    const collection::continuous<VkLayerProperties> & window::application<super>::layerGet(void) {
+        layers.clean();
+        unsigned int count = 0;
+
+        vkEnumerateInstanceLayerProperties(pointof(count), nullptr);
+
+        layers.grow(count);
+
+        vkEnumerateInstanceLayerProperties(pointof(count), layers.storageGet());
+
+        for (unsigned long i = 0; i < layers.sizeGet(); i = i + 1) {
+            printf("%s\n", layers[i].layerName);
+        }
+
+        return layers;
+
+
     }
 
 }

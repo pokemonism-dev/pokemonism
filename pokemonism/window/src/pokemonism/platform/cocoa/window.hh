@@ -35,6 +35,8 @@ namespace pokemonism::platform::cocoa {
                 protected:  PokemonismWindowApplicationDelegator * delegator;
                 public:     inline const char * platformNameGet(void) const noexcept override;
                 public:     platform::cocoa::window * windowGen(const window::config & config) override;
+                public:     void eventWait(void) override;
+                public:     void eventPoll(void) override;
                 public:     int run(void) override;
                 public:     application(void);
                 public:     ~application(void) override;

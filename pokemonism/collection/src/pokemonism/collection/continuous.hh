@@ -79,7 +79,7 @@ namespace pokemonism::collection {
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline element * continuous<element, super, unit, characterable, primitivable>::storageGet(void) {
-        return storage;
+        return size > 0 ? storage : nullptr;
     }
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
