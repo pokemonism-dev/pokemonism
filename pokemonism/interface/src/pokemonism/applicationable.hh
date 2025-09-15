@@ -25,7 +25,10 @@ namespace pokemonism {
     public:     inline applicationable(applicationable && o) noexcept;
     public:     inline applicationable & operator=(const applicationable & o);
     public:     inline applicationable & operator=(applicationable && o) noexcept;
+    public:     friend int run(applicationable * o);
     };
+
+    extern int run(applicationable * o);
 
     applicationable::applicationable(void) {
 

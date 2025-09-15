@@ -14,6 +14,10 @@
 
 namespace pokemonism {
 
+    inline window::application::application(platform::window::application & adapter) : abstract::window::application(adapter) {
+
+    }
+
     inline window::application::application(void) {
 
     }

@@ -7,6 +7,9 @@
  * @since           9월 15, 2025
  */
 
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <ApplicationServices/ApplicationServices.h>
 
 #include "application.hh"
 
@@ -16,7 +19,7 @@
   }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) sender {
-      return YES;
+      return NO;
   }
 
 @end
@@ -24,17 +27,21 @@
 namespace pokemonism::platform {
 
     namespace cocoa {
-        pokemonism::platform::cocoa::window::application singleton;
+        static platform::cocoa::window::application singleton;
     }
 
     platform::window::application & platform::window::application::get(void) {
-        return pokemonism::platform::cocoa::singleton;
+        return platform::cocoa::singleton;
     }
 
     namespace cocoa {
 
+        platform::cocoa::window::application & platform::cocoa::window::application::get(void) {
+            return platform::cocoa::singleton;
+        }
+
         platform::cocoa::window * window::application::windowGen(const window::config & config) {
-            return nullptr;
+            return new platform::cocoa::window(config);
         }
 
         window::application::application(void) : internal(nil) {
@@ -52,6 +59,7 @@ namespace pokemonism::platform {
         int window::application::run(void) {
             @autoreleasepool {
                 [internal run];
+                printf("fail\n");
             }
             return declaration::success;
         }

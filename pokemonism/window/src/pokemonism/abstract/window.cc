@@ -14,6 +14,12 @@ namespace pokemonism::abstract {
 
     window::~window(void) {
         if (container != nullptr) container->del(this);
+
+        if (adapter != nullptr) {
+            adapter->close();
+            delete adapter;
+            adapter = nullptr;
+        }
     }
 
 }

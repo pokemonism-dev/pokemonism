@@ -10,7 +10,8 @@ include_directories(./
                     pokemonism/physics/src
                     pokemonism/mathematics/src
                     pokemonism/graphics/src
-                    pokemonism/window/src)
+                    pokemonism/window/src
+                    pokemonism/vulkan/src)
 
 add_subdirectory(pokemonism/interface)
 add_subdirectory(pokemonism/collection)

@@ -10,20 +10,41 @@
 
 #include "window.hh"
 
+@implementation PokemonismWindowDelegator
+
+@end
+
 namespace pokemonism::platform::cocoa {
 
-    window::window(const window::config & o) : internal(nil) {
+    int window::open(void) {
+        [internal makeKeyAndOrderFront: nil];
+
+        return declaration::success;
+    }
+
+    int window::close(void) {
+        // TODO: SEND CLOSE
+
+        return declaration::success;
+    }
+
+    window::window(const window::config & o) : internal(nil), delegator(nil) {
         @autoreleasepool {
             NSRect contentRect = NSMakeRect(o.rect.x, o.rect.y, o.rect.width, o.rect.height);
             internal = [[NSWindow alloc] initWithContentRect: contentRect
                                                               styleMask: NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable
                                                               backing: NSBackingStoreBuffered
                                                               defer: NO];
+
+            internal.title = [NSString stringWithUTF8String: o.title.stringGet()];
+
+            delegator = [[PokemonismWindowDelegator alloc] init];
+            delegator.window = this;
         }
     }
-//
-//
-//    public:     window(void) = delete;
-//    public:     ~window(void) override;
+
+    window::~window(void) {
+        // TODO: REMOVE `internal` OBJECT
+    }
 
 }

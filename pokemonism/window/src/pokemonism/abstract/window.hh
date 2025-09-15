@@ -14,6 +14,18 @@
 
 namespace pokemonism::abstract {
 
+    inline int window::open(void) {
+        pokemon_develop_check(adapter == nullptr, return declaration::fail);
+
+        return adapter->open();
+    }
+
+    inline int window::close(void) {
+        pokemon_develop_check(adapter == nullptr, return declaration::fail);
+
+        return adapter->close();
+    }
+
     inline window::window(platform::window * adapter) : container(nullptr), prev(nullptr), next(nullptr), adapter(adapter) {
 
     }

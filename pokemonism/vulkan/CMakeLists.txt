@@ -3,13 +3,55 @@ cmake_minimum_required(VERSION 3.28.3)
 project(pokemonism-vulkan LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 
-set(POKEMONISM_VULKAN_SOURCE            src/pokemonism/vulkan.cc
-                                        src/pokemonism/vulkan/window.cc
-                                        src/pokemonism/vulkan/application.cc)
+set(ENVIRONMENT_VULKAN_SDK_PATH $ENV{VULKAN_SDK_PATH})
 
-set(POKEMONISM_VULKAN_HEADER            src/pokemonism/vulkan.hh
-                                        src/pokemonism/vulkan/window.hh
-                                        src/pokemonism/vulkan/application.hh)
+if (NOT ENVIRONMENT_VULKAN_SDK_PATH)
+    message(FATAL_ERROR "VULKAN_SDK environment variable not set. Please install Vulkan SDK.")
+else()
+    message(STATUS "VULKAN_SDK_PATH is set to: ${ENVIRONMENT_VULKAN_SDK_PATH}")
+endif()
 
-add_library(pokemonism-vulkan-dev       ${POKEMONISM_VULKAN_SOURCE}
-                                        ${POKEMONISM_VULKAN_HEADER})
+set(POKEMONISM_VULKAN_SOURCE                                                    src/pokemonism/vulkan.cc
+                                                                                src/pokemonism/vulkan/window.cc
+                                                                                src/pokemonism/vulkan/window/application.cc
+                                                                                src/pokemonism/vulkan/platform/window.cc
+                                                                                src/pokemonism/vulkan/platform/window/application.cc)
+
+set(POKEMONISM_VULKAN_HEADER                                                    src/pokemonism/vulkan.hh
+                                                                                src/pokemonism/vulkan/window.hh
+                                                                                src/pokemonism/vulkan/window/application.hh
+                                                                                src/pokemonism/vulkan/platform/window.hh
+                                                                                src/pokemonism/vulkan/platform/window/application.hh)
+
+add_library(pokemonism-vulkan-dev                                               ${POKEMONISM_VULKAN_SOURCE}
+                                                                                ${POKEMONISM_VULKAN_HEADER})
+
+set(POKEMONISM_VULKAN_COCOA_SOURCE                                              src/pokemonism/vulkan/platform/cocoa/window.mm
+                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.mm)
+
+set(POKEMONISM_VULKAN_COCOA_HEADER                                              src/pokemonism/vulkan/platform/cocoa/window.hh
+                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.hh)
+
+target_sources(pokemonism-vulkan-dev                                PRIVATE     ${POKEMONISM_VULKAN_COCOA_SOURCE}
+                                                                                ${POKEMONISM_VULKAN_COCOA_HEADER})
+target_link_options(pokemonism-vulkan-dev                           PRIVATE     -Wl, -rpath "${ENVIRONMENT_VULKAN_SDK_PATH}/macOS/lib")
+target_link_libraries(pokemonism-vulkan-dev                         PRIVATE     "-framework Cocoa"
+                                                                                "-framework IOKit"
+                                                                                "-framework CoreFoundation"
+                                                                                pokemonism-window-dev
+                                                                                pokemonism-sdk
+                                                                                pokemonism-interface-dev
+                                                                                vulkan)
+
+
+add_executable(pokemonism-vulkan-window-application-run                         test/pokemonism/vulkan/window/application.cc)
+target_link_options(pokemonism-vulkan-window-application-run        PRIVATE     -Wl, -rpath "${ENVIRONMENT_VULKAN_SDK_PATH}/macOS/lib")
+target_link_libraries(pokemonism-vulkan-window-application-run      PRIVATE     "-framework Cocoa"
+                                                                                "-framework IOKit"
+                                                                                "-framework CoreFoundation"
+                                                                                pokemonism-vulkan-dev
+                                                                                pokemonism-window-dev
+                                                                                pokemonism-sdk
+                                                                                pokemonism-interface-dev
+                                                                                vulkan)
+

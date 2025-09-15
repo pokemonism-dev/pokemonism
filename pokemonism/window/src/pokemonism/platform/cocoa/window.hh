@@ -20,15 +20,22 @@
 
 @end
 
+@interface PokemonismWindowDelegator : NSObject <NSWindowDelegate>
+
+@property (nonatomic, assign) pokemonism::platform::window * window;
+
+@end
+
 namespace pokemonism::platform::cocoa {
 
     class window : public platform::window {
     public:     class application : public platform::window::application {
+                public:     static platform::cocoa::window::application & get(void);
                 protected:  NSApplication * internal;
                 protected:  PokemonismWindowApplicationDelegator * delegator;
                 public:     inline const char * platformNameGet(void) const noexcept override;
                 public:     platform::cocoa::window * windowGen(const window::config & config) override;
-                protected:  int run(void) override;
+                public:     int run(void) override;
                 public:     application(void);
                 public:     ~application(void) override;
                 public:     application(const platform::cocoa::window::application & o) = delete;
@@ -37,6 +44,9 @@ namespace pokemonism::platform::cocoa {
                 public:     platform::cocoa::window::application & operator=(platform::cocoa::window::application && o) noexcept = delete;
                 };
     protected:  NSWindow * internal;
+    protected:  PokemonismWindowDelegator * delegator;
+    public:     int open(void) override;
+    public:     int close(void) override;
 
     public:     explicit window(const window::config & o);
     public:     window(void) = delete;

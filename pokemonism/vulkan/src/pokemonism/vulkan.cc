@@ -12,13 +12,13 @@
 
 namespace pokemonism::vulkan {
 
-    void Vulkan::init(void) {
-
-    }
-
-    void Vulkan::term(void) {
-
-    }
+    // void Vulkan::init(void) {
+    //
+    // }
+    //
+    // void Vulkan::term(void) {
+    //
+    // }
 
     // int Vulkan::run(void) {
     //     try {

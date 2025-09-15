@@ -26,8 +26,8 @@ namespace pokemonism {
         public:     static application<super> * gen(void);
         public:     static application<super> * get(void);
         public:     static int exec(application<super> * o);
-        public:  application(void);
-        public:  ~application(void) override;
+        public:     application(void);
+        public:     ~application(void) override;
         public:     application(const application & o) = delete;
         public:     application(application && o) noexcept = delete;
         public:     application & operator=(const application & o) = delete;

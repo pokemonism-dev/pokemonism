@@ -12,6 +12,7 @@
 
 #include <pokemonism/applicationable.hh>
 
+#include <pokemonism/sdk/string.hh>
 #include <pokemonism/sdk/linked/list.hh>
 #include <pokemonism/mathematics/geometry/rectangle.hh>
 
@@ -21,6 +22,8 @@ namespace pokemonism {
     public:     using rectangle = mathematics::geometry::rectangle<mathematics::pixel>;
     public:     struct config;
     public:     class application;
+    public:     virtual int open(void) = 0;
+    public:     virtual int close(void) = 0;
     public:     inline window(void);
     public:     inline virtual ~window(void);
     public:     inline window(const window & o) = delete;
@@ -40,6 +43,8 @@ namespace pokemonism {
         protected:  abstract::window *                  prev;
         protected:  abstract::window *                  next;
         public:     platform::window *                  adapter;
+        public:     int open(void) override;
+        public:     int close(void) override;
         public:     inline explicit window(platform::window * adapter);
         public:     window(void) = delete;
         public:     ~window(void) override;
@@ -83,10 +88,19 @@ namespace pokemonism {
         protected:  unsigned long                       size;
         protected:  abstract::window *                  head;
         protected:  abstract::window *                  tail;
+        protected:  string                              name;
+        protected:  unsigned int                        major;
+        protected:  unsigned int                        minor;
+        protected:  unsigned int                        revision;
+        public:     inline void nameSet(const char * s);
+        public:     inline void majorSet(unsigned int v);
+        public:     inline void minorSet(unsigned int v);
+        public:     inline void revisionSet(unsigned int v);
         public:     const char * platformNameGet(void) const noexcept override;
         public:     virtual pokemonism::window * windowGen(const window::config & config);
         protected:  abstract::window * del(abstract::window * node);
         protected:  inline int run(void) override;
+        protected:  explicit application(platform::window::application & adapter);
         protected:  application(void);
         protected:  ~application(void) override;
         public:     application(const abstract::window::application & o) = delete;
@@ -99,6 +113,7 @@ namespace pokemonism {
     }
 
     class window::application : public abstract::window::application {
+    public:     inline explicit application(platform::window::application & adapter);
     public:     inline application(void);
     public:     inline ~application(void) override;
     public:     inline application(const window::application & o);

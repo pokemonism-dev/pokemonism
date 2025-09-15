@@ -17,7 +17,7 @@
 namespace pokemonism {
     namespace collection {
         class string : public continuous<char> {
-        public:     inline virtual const char * cstringGet(void) const;
+        public:     inline virtual const char * stringGet(void) const;
         public:     inline virtual void set(char c);
         public:     inline void set(const char & item, unsigned long n) override;
         public:     inline void set(const char * source, unsigned long sourceLen) override;
@@ -30,6 +30,7 @@ namespace pokemonism {
         public:     inline string & operator=(char c);
         public:     inline string & operator+=(const char * s);
         public:     inline string & operator+=(char c);
+        public:     inline string(const char * s);
         public:     inline string(void);
         public:     inline ~string(void) override;
         public:     inline string(const string & o);
@@ -38,7 +39,7 @@ namespace pokemonism {
         public:     inline string & operator=(string && o) noexcept;
         };
 
-        inline const char * string::cstringGet(void) const {
+        inline const char * string::stringGet(void) const {
             return size > 0 ? storage : nullptr;
         }
 
@@ -95,6 +96,11 @@ namespace pokemonism {
             cat(c, 1);
 
             return *this;
+        }
+
+        inline string::string(const char * s) :
+            continuous<char>(s, s != nullptr ? ::strlen(s) : declaration::zero) {
+
         }
 
         inline string::string(void) {

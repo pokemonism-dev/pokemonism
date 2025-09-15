@@ -26,7 +26,7 @@ namespace pokemonism::collection {
     public:     inline void cat(const element * source, unsigned long sourceLen) override;
     public:     inline void add(const element & item) override;
     public:     inline void add(element && item) override;
-    public:     inline void del(element & item) override;
+    // public:     inline void del(element & item) override;
     public:     inline void clear(void) override;
     public:     inline stream(void);
     public:     inline ~stream(void) override;
@@ -86,17 +86,17 @@ namespace pokemonism::collection {
         this->size = this->size + 1;
     }
 
-    template <class element, class super, unsigned long unit, typename characterable, typename primitivable>
-    inline void stream<element, super, unit, characterable, primitivable>::del(element & item) {
-        for (unsigned int i = position; i < this->size; i = i + 1) {
-            if (item == this->storage[i]) {
-                memorizer::del(this->storage + i);
-                if (this->size - i - 1 > 0) ::memmove(this->storage + i, this->storage + i + 1, (this->size - i - 1) * unit);
-                this->size = this->size - 1;
-                return;
-            }
-        }
-    }
+    // template <class element, class super, unsigned long unit, typename characterable, typename primitivable>
+    // inline void stream<element, super, unit, characterable, primitivable>::del(element & item) {
+    //     for (unsigned int i = position; i < this->size; i = i + 1) {
+    //         if (item == this->storage[i]) {
+    //             memorizer::del(this->storage + i);
+    //             if (this->size - i - 1 > 0) ::memmove(this->storage + i, this->storage + i + 1, (this->size - i - 1) * unit);
+    //             this->size = this->size - 1;
+    //             return;
+    //         }
+    //     }
+    // }
 
     template <class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline void stream<element, super, unit, characterable, primitivable>::clear(void) {

@@ -28,7 +28,15 @@ namespace pokemonism::abstract {
         return collection::del(this, node);
     }
 
-    window::application::application(void) : adapter(platform::window::application::get()), size(declaration::zero), head(nullptr), tail(nullptr) {
+    window::application::application(void) :
+    adapter(platform::window::application::get()), size(declaration::zero), head(nullptr),
+    tail(nullptr), name("pokemonism"), major(declaration::one), minor(declaration::zero), revision(declaration::zero) {
+
+    }
+
+    window::application::application(platform::window::application & adapter) :
+    adapter(adapter), size(declaration::zero), head(nullptr), tail(nullptr),
+    name("pokemonism"), major(declaration::one), minor(declaration::zero), revision(declaration::zero) {
 
     }
 
