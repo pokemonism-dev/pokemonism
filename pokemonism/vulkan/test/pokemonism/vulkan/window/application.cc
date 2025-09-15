@@ -27,8 +27,23 @@ int main(int argc, char ** argv) {
 
     application->debugSet(nullptr);
 
-
     application->vulkanGen();
+
+    const collection::continuous<vulkan::physical::device> & devices = application->deviceGet();
+
+
+    for (unsigned long i = 0; i < devices.sizeGet(); i = i + 1) {
+        VkPhysicalDeviceFeatures features;
+        devices[i].get(features);
+        VkPhysicalDeviceProperties properties;
+        devices[i].get(properties);
+        collection::continuous<VkQueueFamilyProperties> queueFamilyProperties;
+        devices[i].get(queueFamilyProperties);
+        VkPhysicalDeviceMemoryProperties memory;
+        devices[i].get(memory);
+        collection::continuous<VkLayerProperties> deviceLayers;
+        devices[i].get(deviceLayers);
+    }
 
     window::config config;  // ### TODO: BUILDER PATTERN
 

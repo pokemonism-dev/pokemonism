@@ -14,6 +14,7 @@
 
 #include <pokemonism/window.hh>
 #include <pokemonism/vulkan.hh>
+#include <pokemonism/vulkan/physical/device.hh>
 #include <pokemonism/vulkan/platform/window.hh>
 
 namespace pokemonism::vulkan {
@@ -44,11 +45,13 @@ namespace pokemonism::vulkan {
                 protected:  vulkan::platform::window::application & vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
                 protected:  collection::continuous<VkLayerProperties> layers;
+                protected:  collection::continuous<vulkan::physical::device> devices;
                 public:     int run(void) override;
                 public:     virtual int vulkanGen(void);
                 public:     virtual void vulkanRel(void);
                 public:     virtual const collection::continuous<VkExtensionProperties> & extensionGet(void);
                 public:     virtual const collection::continuous<VkLayerProperties> & layerGet(void);
+                public:     virtual const collection::continuous<vulkan::physical::device> & deviceGet(void);
                 public:     virtual void extensionCat(const char * name);
                 public:     virtual void layerCat(const char * name);
                 public:     virtual void debugSet(vulkan::extension::debug::callback callback);

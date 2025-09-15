@@ -14,6 +14,7 @@
 
 #include <pokemonism/sdk/memorizer.hh>
 #include <pokemonism/sdk/allocator.hh>
+#include <pokemonism/sdk/continuous.hh>
 
 #include <pokemonism/continuable.hh>
 #include <pokemonism/collection/sequence.hh>
@@ -54,6 +55,7 @@ namespace pokemonism::collection {
     public:     inline continuous(continuous<element, super, unit, characterable, primitivable> && o) noexcept;
     public:     inline continuous<element, super, unit, characterable, primitivable> & operator=(const continuous<element, super, unit, characterable, primitivable> & o);
     public:     inline continuous<element, super, unit, characterable, primitivable> & operator=(continuous<element, super, unit, characterable, primitivable> && o) noexcept;
+    public:     template <typename elementable, class continuable> friend class pokemonism::sdk::continuous;
     };
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
@@ -135,14 +137,14 @@ namespace pokemonism::collection {
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline void continuous<element, super, unit, characterable, primitivable>::add(const element & item) {
         if (capacity <= size) storage = allocator::gen(storage, capacity = capacityCal(size + 1));
-        memorizer::set(storage + size, item);
+        new (storage + size) element(item);
         size = size + 1;
     }
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline void continuous<element, super, unit, characterable, primitivable>::add(element && item) {
         if (capacity <= size) storage = allocator::gen(storage, capacity = capacityCal(size + 1));
-        memorizer::set(storage + size, std::move(item));
+        new (storage + size) element(std::move(item));
         size = size + 1;
     }
 

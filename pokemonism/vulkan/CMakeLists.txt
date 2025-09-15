@@ -12,12 +12,16 @@ else()
 endif()
 
 set(POKEMONISM_VULKAN_SOURCE                                                    src/pokemonism/vulkan.cc
+                                                                                src/pokemonism/vulkan/physical/device.cc
+                                                                                src/pokemonism/vulkan/process.cc
                                                                                 src/pokemonism/vulkan/window.cc
                                                                                 src/pokemonism/vulkan/window/application.cc
                                                                                 src/pokemonism/vulkan/platform/window.cc
                                                                                 src/pokemonism/vulkan/platform/window/application.cc)
 
 set(POKEMONISM_VULKAN_HEADER                                                    src/pokemonism/vulkan.hh
+                                                                                src/pokemonism/vulkan/physical/device.hh
+                                                                                src/pokemonism/vulkan/process.hh
                                                                                 src/pokemonism/vulkan/window.hh
                                                                                 src/pokemonism/vulkan/window/application.hh
                                                                                 src/pokemonism/vulkan/platform/window.hh

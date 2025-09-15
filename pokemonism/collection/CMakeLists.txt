@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 include_directories(./src)
 
 set(POKEMONISM_COLLECTION_SOURCE            src/pokemonism/collection/string.cc
+                                            src/pokemonism/collection/tuple/pair.cc
                                             src/pokemonism/collection/stream.cc
                                             src/pokemonism/collection/stream/string.cc
                                             src/pokemonism/collection/container.cc
@@ -18,6 +19,7 @@ set(POKEMONISM_COLLECTION_SOURCE            src/pokemonism/collection/string.cc
                                             src/pokemonism/collection/continuous/primitivable/unsigned/char/one.cc)
 
 set(POKEMONISM_COLLECTION_HEADER            src/pokemonism/collection/string.hh
+                                            src/pokemonism/collection/tuple/pair.hh
                                             src/pokemonism/collection/stream.hh
                                             src/pokemonism/collection/stream/string.hh
                                             src/pokemonism/collection/container.hh

@@ -14,6 +14,8 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/vulkan/window.hh>
 
+#include "pokemonism/sdk/continuous.hh"
+
 namespace pokemonism::vulkan {
 
     template <class super>
@@ -103,11 +105,32 @@ namespace pokemonism::vulkan {
 
         vkEnumerateInstanceExtensionProperties(nullptr, pointof(count), extensions.storageGet());
 
-        for (unsigned long i = 0; i < extensions.sizeGet(); i = i + 1) {
-            printf("%s\n", extensions[i].extensionName);
-        }
+        for (unsigned long i = 0; i < extensions.sizeGet(); i = i + 1) printf("%s\n", extensions[i].extensionName);
 
         return extensions;
+    }
+
+    template <class super>
+    const collection::continuous<vulkan::physical::device> & window::application<super>::deviceGet(void) {
+        devices.clean();
+        unsigned int count = 0;
+
+        vkEnumeratePhysicalDevices(instance, pointof(count), nullptr);
+
+        pokemon_develop_check(count == 0, return devices);
+
+        collection::continuous<VkPhysicalDevice> handles;
+
+        handles.grow(count);
+        vkEnumeratePhysicalDevices(instance, pointof(count), handles.storageGet());
+
+        pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, devices);
+
+        // for (unsigned long i = 0; i < devices.sizeGet(); i = i + 1) {
+        //     printf("%s\n", devices[i].deviceName);
+        // }
+
+        return devices;
     }
 
     template <class super>

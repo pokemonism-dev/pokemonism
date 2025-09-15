@@ -32,6 +32,13 @@ namespace pokemonism::vulkan {
     struct extension::debug {
     public:     typedef VKAPI_ATTR VkBool32 VKAPI_CALL (*callback)(VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagsEXT, const VkDebugUtilsMessengerCallbackDataEXT *, void *);
     public:     inline static VKAPI_ATTR VkBool32 VKAPI_CALL consoleOut(VkDebugUtilsMessageSeverityFlagBitsEXT severity, VkDebugUtilsMessageTypeFlagsEXT type, const VkDebugUtilsMessengerCallbackDataEXT * data, void * user);
+    public:     struct string {
+                public:     inline static const char * to(VkBool32 v) { return v ? "true" : "false"; }
+                public:     inline static const char * to(VkPhysicalDeviceType v);
+                public:     struct uuid {
+                            public:     inline static const char * to(const unsigned char * storage, char * buffer);
+                            };
+                };
     };
 
     inline VKAPI_ATTR VkBool32 VKAPI_CALL extension::debug::consoleOut(VkDebugUtilsMessageSeverityFlagBitsEXT severity, VkDebugUtilsMessageTypeFlagsEXT type, const VkDebugUtilsMessengerCallbackDataEXT * data, void * user) {
@@ -39,31 +46,26 @@ namespace pokemonism::vulkan {
         return VK_FALSE;
     }
 
-    struct process {
-    public:     template <typename func = PFN_vkVoidFunction> static func get(VkInstance o, const char * name);
-    public:     inline static VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger);
-    public:     inline static void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
-    };
-
-    template <typename func>
-    func process::get(VkInstance o, const char * name) {
-        return reinterpret_cast<func>(vkGetInstanceProcAddr(o, name));
-    }
-
-    inline VkResult process::CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger) {
-        const PFN_vkCreateDebugUtilsMessengerEXT func = process::get<PFN_vkCreateDebugUtilsMessengerEXT>(instance, "vkCreateDebugUtilsMessengerEXT");
-
-        pokemon_develop_check(func == nullptr, return VK_ERROR_EXTENSION_NOT_PRESENT);
-
-        return func(instance, pCreateInfo, pAllocator, pMessenger);
-    }
-
-    inline void process::DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator) {
-        if (const PFN_vkDestroyDebugUtilsMessengerEXT func = process::get<PFN_vkDestroyDebugUtilsMessengerEXT>(instance, "vkDestroyDebugUtilsMessengerEXT"); func != nullptr) {
-            func(instance, debugMessenger, pAllocator);
+    inline const char * extension::debug::string::to(VkPhysicalDeviceType v) {
+        switch (v) {
+            case VK_PHYSICAL_DEVICE_TYPE_OTHER:             return "other";
+            case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU:    return "integrated gpu";
+            case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU:      return "discrete gpu";
+            case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:       return "virtual gpu";
+            case VK_PHYSICAL_DEVICE_TYPE_CPU:               return "cpu";
+            default:                                        return "other";
         }
     }
 
+    inline const char * extension::debug::string::uuid::to(const unsigned char * storage, char * buffer) {
+        for (int i = 0; i < 32; i = i + 1) {
+            snprintf(buffer + i * 2, 4, "%02x", storage[i]);
+        }
+        return buffer;
+    }
+
 }
+
+#include <pokemonism/vulkan/process.hh>
 
 #endif // __POKEMONISM_VULKAN_HH__
