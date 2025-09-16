@@ -15,8 +15,9 @@
 namespace pokemonism::vulkan::physical {
 
     VkPhysicalDeviceFeatures & device::get(VkPhysicalDeviceFeatures & features) const {
-        vulkan::process::GetPhysicalDeviceFeatures(handle, pointof(features));
+        vulkan::process::GetPhysicalDeviceFeatures(*handle, pointof(features));
 
+#ifndef   RELEASE_MODE
         printf("robustBufferAccess: %s\n", vulkan::extension::debug::string::to(features.robustBufferAccess));
         printf("fullDrawIndexUint32: %s\n", vulkan::extension::debug::string::to(features.fullDrawIndexUint32));
         printf("imageCubeArray: %s\n", vulkan::extension::debug::string::to(features.imageCubeArray));
@@ -72,27 +73,29 @@ namespace pokemonism::vulkan::physical {
         printf("sparseResidencyAliased: %s\n", vulkan::extension::debug::string::to(features.sparseResidencyAliased));
         printf("variableMultisampleRate: %s\n", vulkan::extension::debug::string::to(features.variableMultisampleRate));
         printf("inheritedQueries: %s\n", vulkan::extension::debug::string::to(features.inheritedQueries));
+#endif // RELEASE_MODE
 
         return features;
     }
 
     VkFormatProperties & device::get(VkFormat format, VkFormatProperties & properties) const {
-        vulkan::process::GetPhysicalDeviceFormatProperties(handle, format, pointof(properties));
+        vulkan::process::GetPhysicalDeviceFormatProperties(*handle, format, pointof(properties));
 
         return properties;
     }
 
     VkImageFormatProperties & device::get(VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlags usage, VkImageCreateFlags flags, VkImageFormatProperties & properties) const {
-        vulkan::process::GetPhysicalDeviceImageFormatProperties(handle, format, type, tiling, usage, flags, pointof(properties));
+        vulkan::process::GetPhysicalDeviceImageFormatProperties(*handle, format, type, tiling, usage, flags, pointof(properties));
 
         return properties;
     }
 
     VkPhysicalDeviceProperties & device::get(VkPhysicalDeviceProperties & properties) const {
-        vulkan::process::GetPhysicalDeviceProperties(handle, pointof(properties));
+        vulkan::process::GetPhysicalDeviceProperties(*handle, pointof(properties));
 
         char buffer[128];
 
+#ifndef   RELEASE_MODE
         printf("apiVersion: %u\n", properties.apiVersion);
         printf("driverVersion: %u\n", properties.driverVersion);
         printf("vendorID: %u\n", properties.vendorID);
@@ -218,6 +221,7 @@ namespace pokemonism::vulkan::physical {
         printf("sparseProperties.residencyStandard3DBlockShape: %s\n", vulkan::extension::debug::string::to(properties.sparseProperties.residencyStandard3DBlockShape));
         printf("sparseProperties.residencyAlignedMipSize: %s\n", vulkan::extension::debug::string::to(properties.sparseProperties.residencyAlignedMipSize));
         printf("sparseProperties.residencyNonResidentStrict: %s\n", vulkan::extension::debug::string::to(properties.sparseProperties.residencyNonResidentStrict));
+#endif // RELEASE_MODE
 
         return properties;
     }
@@ -226,13 +230,14 @@ namespace pokemonism::vulkan::physical {
         properties.clean();
 
         unsigned int count = 0;
-        vulkan::process::GetPhysicalDeviceQueueFamilyProperties(handle, pointof(count), nullptr);
+        vulkan::process::GetPhysicalDeviceQueueFamilyProperties(*handle, pointof(count), nullptr);
 
         if (count > 0) {
             properties.grow(count);
 
-            vulkan::process::GetPhysicalDeviceQueueFamilyProperties(handle, pointof(count), properties.storageGet());
+            vulkan::process::GetPhysicalDeviceQueueFamilyProperties(*handle, pointof(count), properties.storageGet());
 
+#ifndef   RELEASE_MODE
             for (unsigned long i = 0; i < properties.sizeGet(); i = i + 1) {
                 printf("properties[%lu].queueFlags: %08x\n", i, properties[i].queueFlags);
                 printf("properties[%lu].queueCount: %u\n", i, properties[i].queueCount);
@@ -241,14 +246,16 @@ namespace pokemonism::vulkan::physical {
                 printf("properties[%lu].minImageTransferGranularity.height: %u\n", i, properties[i].minImageTransferGranularity.height);
                 printf("properties[%lu].minImageTransferGranularity.depth: %u\n", i, properties[i].minImageTransferGranularity.depth);
             }
+#endif // RELEASE_MODE
         }
 
         return properties;
     }
 
     VkPhysicalDeviceMemoryProperties & device::get(VkPhysicalDeviceMemoryProperties & properties) const {
-        vulkan::process::GetPhysicalDeviceMemoryProperties(handle, pointof(properties));
+        vulkan::process::GetPhysicalDeviceMemoryProperties(*handle, pointof(properties));
 
+#ifndef   RELEASE_MODE
         printf("memoryTypeCount: %u\n", properties.memoryTypeCount);
         for (unsigned int i = 0; i < properties.memoryTypeCount; i = i + 1) {
             printf("memoryTypes[%u].propertyFlags: %08x\n", i, properties.memoryTypes[i].propertyFlags);
@@ -260,6 +267,7 @@ namespace pokemonism::vulkan::physical {
             printf("memoryHeaps[%u].flags: %08x\n", i, properties.memoryHeaps[i].flags);
             printf("memoryHeaps[%u].size: %llu\n", i, properties.memoryHeaps[i].size);
         }
+#endif // RELEASE_MODE
 
         return properties;
     }
@@ -269,17 +277,19 @@ namespace pokemonism::vulkan::physical {
 
         unsigned int count = 0;
 
-        vulkan::process::EnumerateDeviceExtensionProperties(handle, pLayerName, pointof(count), nullptr);
+        vulkan::process::EnumerateDeviceExtensionProperties(*handle, pLayerName, pointof(count), nullptr);
 
         if (count > 0) {
             properties.grow(count);
 
-            vulkan::process::EnumerateDeviceExtensionProperties(handle, pLayerName, pointof(count), properties.storageGet());
+            vulkan::process::EnumerateDeviceExtensionProperties(*handle, pLayerName, pointof(count), properties.storageGet());
 
+#ifndef   RELEASE_MODE
             for (unsigned long i = 0; i < properties.sizeGet(); i = i + 1) {
                 printf("properties[%lu].extensionName: %s\n", i, properties[i].extensionName);
                 printf("properties[%lu].specVersion: %u\n", i, properties[i].specVersion);
             }
+#endif // RELEASE_MODE
         }
 
         return properties;
@@ -290,19 +300,21 @@ namespace pokemonism::vulkan::physical {
 
         unsigned int count = 0;
 
-        vulkan::process::EnumerateDeviceLayerProperties(handle, pointof(count), nullptr);
+        vulkan::process::EnumerateDeviceLayerProperties(*handle, pointof(count), nullptr);
 
         if (count > 0) {
             properties.grow(count);
 
-            vulkan::process::EnumerateDeviceLayerProperties(handle, pointof(count), properties.storageGet());
+            vulkan::process::EnumerateDeviceLayerProperties(*handle, pointof(count), properties.storageGet());
 
+#ifndef   RELEASE_MODE
             for (unsigned long i = 0; i < properties.sizeGet(); i = i + 1) {
                 printf("properties[%lu].layerName: %s\n", i, properties[i].layerName);
                 printf("properties[%lu].description: %s\n", i, properties[i].description);
                 printf("properties[%lu].implementationVersion: %u\n", i, properties[i].implementationVersion);
                 printf("properties[%lu].specVersion: %u\n", i, properties[i].specVersion);
             }
+#endif // RELEASE_MODE
         }
 
         return properties;
@@ -313,13 +325,14 @@ namespace pokemonism::vulkan::physical {
 
         unsigned int count = 0;
 
-        vulkan::process::GetPhysicalDeviceSparseImageFormatProperties(handle, format, type, samples, usage, tiling, pointof(count), nullptr);
+        vulkan::process::GetPhysicalDeviceSparseImageFormatProperties(*handle, format, type, samples, usage, tiling, pointof(count), nullptr);
 
         if (count > 0) {
             properties.grow(count);
 
-            vulkan::process::GetPhysicalDeviceSparseImageFormatProperties(handle, format, type, samples, usage, tiling, pointof(count), properties.storageGet());
+            vulkan::process::GetPhysicalDeviceSparseImageFormatProperties(*handle, format, type, samples, usage, tiling, pointof(count), properties.storageGet());
 
+#ifndef   RELEASE_MODE
             for (unsigned long i = 0; i < properties.sizeGet(); i = i + 1) {
                 printf("properties[%lu].layerName: %08x\n", i, properties[i].aspectMask);
                 printf("properties[%lu].description: %08x\n", i, properties[i].flags);
@@ -327,13 +340,14 @@ namespace pokemonism::vulkan::physical {
                 printf("properties[%lu].imageGranularity.height: %u\n", i, properties[i].imageGranularity.height);
                 printf("properties[%lu].imageGranularity.depth: %u\n", i, properties[i].imageGranularity.depth);
             }
+#endif // RELEASE_MODE
         }
 
         return properties;
     }
 
     VkDevice device::gen(const VkDeviceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator) {
-        if (VkDevice device = nullptr; vulkan::process::CreateDevice(handle, pCreateInfo, pAllocator, pointof(device)) == VK_SUCCESS) return device;
+        if (VkDevice device = nullptr; vulkan::process::CreateDevice(*handle, pCreateInfo, pAllocator, pointof(device)) == VK_SUCCESS) return device;
 
         return nullptr;
     }

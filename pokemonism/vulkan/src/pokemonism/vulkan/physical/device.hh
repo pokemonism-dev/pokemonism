@@ -14,15 +14,16 @@
 
 #include <vulkan/vulkan.h>
 
+#include <pokemonism/vulkan.hh>
 #include <pokemonism/closeable.hh>
-#include <pokemonism/sdk/exception.hh>
+#include <pokemonism/collection/reference.hh>
 #include <pokemonism/collection/continuous.hh>
 #include <pokemonism/collection/tuple/pair.hh>
 
 namespace pokemonism::vulkan::physical {
 
     class device : public closeable<> {
-    protected:  VkPhysicalDevice handle;
+    protected:  reference<VkPhysicalDevice, vulkan::del> handle;
     protected:  VkPhysicalDeviceFeatures feature;
     protected:  VkPhysicalDeviceProperties property;
     protected:  collection::continuous<VkQueueFamilyProperties> queueSet;
@@ -53,7 +54,6 @@ namespace pokemonism::vulkan::physical {
     public:     inline vulkan::physical::device & operator=(vulkan::physical::device && o) noexcept;
     };
 
-
     inline int device::close(void) {
         handle = nullptr;
         memset(pointof(feature), declaration::zero, sizeof(VkPhysicalDeviceFeatures));
@@ -76,66 +76,36 @@ namespace pokemonism::vulkan::physical {
         handle = nullptr;
     }
 
-    inline device::device(const vulkan::physical::device & o) : handle(nullptr) {
-        pokemon_develop_throw((void)(0));
+    inline device::device(const vulkan::physical::device & o) : handle(o.handle) {
+        memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
+        memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
+        queueSet = o.queueSet;
+    }
 
-        // ReSharper disable CppDFAUnreachableCode
-        if (o.handle != nullptr) {
+    inline device::device(vulkan::physical::device && o) noexcept : handle(std::move(o.handle)) {
+        memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
+        memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
+        queueSet = std::move(o.queueSet);
+    }
+
+    inline vulkan::physical::device & device::operator=(const vulkan::physical::device & o) {
+        if (pointof(o) != this) {
+            handle = o.handle;
             memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
             memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
             queueSet = o.queueSet;
-        } else {
-            memset(pointof(feature), declaration::zero, sizeof(VkPhysicalDeviceFeatures));
-            memset(pointof(property), declaration::zero, sizeof(VkPhysicalDeviceProperties));
         }
-        // ReSharper restore CppDFAUnreachableCode
+        return *this;
     }
 
-    inline device::device(vulkan::physical::device && o) noexcept : handle(o.handle), feature(), property() {
-        if (handle != nullptr) {
+    inline vulkan::physical::device & device::operator=(vulkan::physical::device && o) noexcept {
+        if (pointof(o) != this) {
+            handle = std::move(o.handle);
             memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
             memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
             queueSet = std::move(o.queueSet);
         }
-        o.handle = nullptr;
-    }
-
-    inline vulkan::physical::device & device::operator=(const vulkan::physical::device & o) {
-        pokemon_develop_throw((void)(0));
-        // ReSharper disable CppDFAUnreachableCode
-        if (pointof(o) != this) {
-            if (o.handle) {
-                memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
-                memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
-                queueSet = o.queueSet;
-            } else {
-                memset(pointof(feature), declaration::zero, sizeof(VkPhysicalDeviceFeatures));
-                memset(pointof(property), declaration::zero, sizeof(VkPhysicalDeviceProperties));
-                queueSet.clean();
-            }
-        }
         return *this;
-        // ReSharper restore CppDFAUnreachableCode
-    }
-
-    inline vulkan::physical::device & device::operator=(vulkan::physical::device && o) noexcept {
-        pokemon_develop_exit_check(true, (void)(0));
-        // ReSharper disable CppDFAUnreachableCode
-        if (pointof(o) != this) {
-            handle = o.handle;
-            if (o.handle) {
-                memcpy(pointof(feature), pointof(o.feature), sizeof(VkPhysicalDeviceFeatures));
-                memcpy(pointof(property), pointof(o.property), sizeof(VkPhysicalDeviceProperties));
-                queueSet = std::move(o.queueSet);
-            } else {
-                memset(pointof(feature), declaration::zero, sizeof(VkPhysicalDeviceFeatures));
-                memset(pointof(property), declaration::zero, sizeof(VkPhysicalDeviceProperties));
-                queueSet.clean();
-            }
-            o.handle = nullptr;
-        }
-        return *this;
-        // ReSharper restore CppDFAUnreachableCode
     }
 
     inline const VkPhysicalDeviceFeatures & device::featuresGen(void) {
@@ -154,7 +124,7 @@ namespace pokemonism::vulkan::physical {
             return property;
         }
 
-        memset(pointof(property), declaration::zero, sizeof(VkPhysicalDeviceFeatures));
+        memset(pointof(property), declaration::zero, sizeof(VkPhysicalDeviceProperties));
         return property;
     }
 

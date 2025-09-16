@@ -12,6 +12,7 @@ set(POKEMONISM_COLLECTION_SOURCE            src/pokemonism/collection/string.cc
                                             src/pokemonism/collection/container.cc
                                             src/pokemonism/collection/collection.cc
                                             src/pokemonism/collection/sequence.cc
+                                            src/pokemonism/collection/reference.cc
                                             src/pokemonism/collection/continuous.cc
                                             src/pokemonism/collection/continuous/primitivable.cc
                                             src/pokemonism/collection/continuous/primitivable/unsigned.cc
@@ -24,6 +25,7 @@ set(POKEMONISM_COLLECTION_HEADER            src/pokemonism/collection/string.hh
                                             src/pokemonism/collection/stream/string.hh
                                             src/pokemonism/collection/container.hh
                                             src/pokemonism/collection/collection.hh
+                                            src/pokemonism/collection/reference.hh
                                             src/pokemonism/collection/sequence.hh
                                             src/pokemonism/collection/continuous.hh
                                             src/pokemonism/collection/continuous/primitivable.hh

@@ -12,25 +12,8 @@
 
 namespace pokemonism::vulkan {
 
-    // void Vulkan::init(void) {
-    //
-    // }
-    //
-    // void Vulkan::term(void) {
-    //
-    // }
-
-    // int Vulkan::run(void) {
-    //     try {
-    //         Window::init();
-    //         Vulkan::init();
-    //
-    //         Vulkan::term();
-    //         return declaration::success;
-    //     } catch (const std::exception & e) {
-    //         printf("%s\n", e.what());
-    //     }
-    //     return declaration::fail;
-    // }
+    VkPhysicalDevice del(VkPhysicalDevice o) {
+        return nullptr;
+    }
 
 }

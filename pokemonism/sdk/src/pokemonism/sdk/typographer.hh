@@ -19,6 +19,8 @@ namespace pokemonism {
         public:     typedef elementable             type;
         public:     typedef void                    primitivable;
         public:     typedef void                    characterable;
+        public:     typedef type *                  pointer;
+        public:     typedef type &                  reference;
         public:     constexpr static unsigned long  unit = sizeof(elementable);
         };
 
@@ -28,7 +30,22 @@ namespace pokemonism {
         public:     typedef elementable *           type;
         public:     typedef unsigned char           primitivable;
         public:     typedef void                    characterable;
+        public:     typedef type *                  pointer;
+        public:     typedef type &                  reference;
+        public:     static reference referenceOf(pointer o){ return *o; }
         public:     constexpr static unsigned long  unit = sizeof(elementable *);
+        };
+
+        template <>
+        struct typographer<void> {
+        public:     constexpr static const char *   name = "basic";
+        public:     typedef void                    type;
+        public:     typedef void                    primitivable;
+        public:     typedef void                    characterable;
+        public:     typedef type *                  pointer;
+        public:     typedef unsigned char &         reference;
+        public:     static reference referenceOf(pointer o){ return *(static_cast<unsigned char *>(o)); }
+        public:     constexpr static unsigned long  unit = sizeof(unsigned char);
         };
     }
 
@@ -42,10 +59,11 @@ public:     constexpr static const char *   name = #elementType;                
 public:     typedef elementType             type;                                   \
 public:     typedef primitiveType           Primitivable;                           \
 public:     typedef characterType           characterable;                          \
+public:     typedef type *                  pointer;                                \
+public:     typedef type &                  reference;                              \
+public:     static reference referenceOf(pointer o){ return *o; }                   \
 public:     constexpr static unsigned long  unit = size;                            \
 }
-
-describe_typographer(void              , unsigned, void, sizeof(unsigned char)     );
 
 describe_typographer(wchar_t           , unsigned, char, sizeof(wchar_t)           );
 describe_typographer(bool              , unsigned, void, sizeof(bool)              );
@@ -64,5 +82,17 @@ describe_typographer(long              , unsigned, void, sizeof(long)           
 describe_typographer(unsigned long     , unsigned, void, sizeof(unsigned long)     );
 describe_typographer(long long         , unsigned, void, sizeof(long long)         );
 describe_typographer(unsigned long long, unsigned, void, sizeof(unsigned long long));
+
+#define describe_handle_typographer(elementType, primitiveType, characterType, pointerType, size)   \
+template <> struct pokemonism::sdk::typographer<elementType> {                                      \
+public:     constexpr static const char *   name = #elementType;                                    \
+public:     typedef elementType             type;                                                   \
+public:     typedef primitiveType           Primitivable;                                           \
+public:     typedef characterType           characterable;                                          \
+public:     typedef pointerType             pointer;                                                \
+public:     typedef pointerType             reference;                                              \
+public:     static reference referenceOf(pointer o){ return o; }                                    \
+public:     constexpr static unsigned long  unit = size;                                            \
+}
 
 #endif // __POKEMONISM_SDK_TYPOGRAPHER_HH__

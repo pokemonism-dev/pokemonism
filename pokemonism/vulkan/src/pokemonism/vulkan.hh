@@ -14,7 +14,12 @@
 
 #include <pokemonism/window.hh>
 
+
+describe_handle_typographer(VkPhysicalDevice, unsigned, void, VkPhysicalDevice, sizeof(VkPhysicalDevice));
+
 namespace pokemonism::vulkan {
+
+    extern VkPhysicalDevice del(VkPhysicalDevice o);
 
     struct extension {
     public:     struct properties;
