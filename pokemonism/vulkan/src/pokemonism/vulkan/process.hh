@@ -18,8 +18,6 @@ namespace pokemonism::vulkan {
     public:     template <typename func = PFN_vkVoidFunction> static func get(VkInstance o, const char * name);
     public:     inline static VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger);
     public:     inline static void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
-        // public:     static
-
     public:     constexpr static PFN_vkGetPhysicalDeviceFeatures GetPhysicalDeviceFeatures = vkGetPhysicalDeviceFeatures;
     public:     constexpr static PFN_vkGetPhysicalDeviceFormatProperties GetPhysicalDeviceFormatProperties = vkGetPhysicalDeviceFormatProperties;
     public:     constexpr static PFN_vkGetPhysicalDeviceImageFormatProperties GetPhysicalDeviceImageFormatProperties = vkGetPhysicalDeviceImageFormatProperties;

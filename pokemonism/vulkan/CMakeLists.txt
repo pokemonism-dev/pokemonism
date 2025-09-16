@@ -16,6 +16,7 @@ set(POKEMONISM_VULKAN_SOURCE                                                    
                                                                                 src/pokemonism/vulkan/process.cc
                                                                                 src/pokemonism/vulkan/window.cc
                                                                                 src/pokemonism/vulkan/device.cc
+                                                                                src/pokemonism/vulkan/surface.cc
                                                                                 src/pokemonism/vulkan/queue.cc
                                                                                 src/pokemonism/vulkan/window/application.cc
                                                                                 src/pokemonism/vulkan/platform/window.cc
@@ -26,6 +27,7 @@ set(POKEMONISM_VULKAN_HEADER                                                    
                                                                                 src/pokemonism/vulkan/process.hh
                                                                                 src/pokemonism/vulkan/window.hh
                                                                                 src/pokemonism/vulkan/device.hh
+                                                                                src/pokemonism/vulkan/surface.hh
                                                                                 src/pokemonism/vulkan/queue.hh
                                                                                 src/pokemonism/vulkan/window/application.hh
                                                                                 src/pokemonism/vulkan/platform/window.hh
@@ -35,10 +37,18 @@ add_library(pokemonism-vulkan-dev                                               
                                                                                 ${POKEMONISM_VULKAN_HEADER})
 
 set(POKEMONISM_VULKAN_COCOA_SOURCE                                              src/pokemonism/vulkan/platform/cocoa/window.mm
-                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.mm)
+                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.mm
+                                                                                src/pokemonism/vulkan/platform/cocoa/surface.mm
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal.mm
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal/surface.mm
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal/process.mm)
 
 set(POKEMONISM_VULKAN_COCOA_HEADER                                              src/pokemonism/vulkan/platform/cocoa/window.hh
-                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.hh)
+                                                                                src/pokemonism/vulkan/platform/cocoa/window/application.hh
+                                                                                src/pokemonism/vulkan/platform/cocoa/surface.hh
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal.hh
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal/surface.hh
+                                                                                src/pokemonism/vulkan/platform/cocoa/metal/process.hh)
 
 target_sources(pokemonism-vulkan-dev                                PRIVATE     ${POKEMONISM_VULKAN_COCOA_SOURCE}
                                                                                 ${POKEMONISM_VULKAN_COCOA_HEADER})

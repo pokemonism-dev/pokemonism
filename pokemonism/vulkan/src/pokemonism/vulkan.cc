@@ -26,4 +26,9 @@ namespace pokemonism::vulkan {
         return nullptr;
     }
 
+    VkSurfaceKHR del(VkSurfaceKHR o) {
+        // ### TODO: IMPLEMENT THIS
+        return nullptr;
+    }
+
 }

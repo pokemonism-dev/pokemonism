@@ -18,12 +18,14 @@
 describe_handle_typographer(VkPhysicalDevice, unsigned, void, VkPhysicalDevice, sizeof(VkPhysicalDevice));
 describe_handle_typographer(VkQueue, unsigned, void, VkQueue, sizeof(VkQueue));
 describe_handle_typographer(VkDevice, unsigned, void, VkDevice, sizeof(VkDevice));
+describe_handle_typographer(VkSurfaceKHR, unsigned, void, VkSurfaceKHR, sizeof(VkSurfaceKHR));
 
 namespace pokemonism::vulkan {
 
     extern VkPhysicalDevice del(VkPhysicalDevice o);
     extern VkQueue del(VkQueue o);
     extern VkDevice del(VkDevice o);
+    extern VkSurfaceKHR del(VkSurfaceKHR o);
 
     struct extension {
     public:     struct properties;

@@ -37,6 +37,7 @@ namespace pokemonism::vulkan {
 
     inline VkQueue device::queueGet(unsigned int index) const {
         return index < queueSet.sizeGet() ? queueSet[index] : nullptr;
+
     }
 
     inline device::device(void) : handle(nullptr) {

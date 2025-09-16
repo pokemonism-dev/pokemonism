@@ -37,7 +37,7 @@ int main(int argc, char ** argv) {
 
     pokemon_develop_check(index == declaration::invalid, return pokemonism::goodbye(application));
 
-    VkDevice dev = devices[0].deviceGen(vulkan::queue::flag::graphics | vulkan::queue::flag::compute, application->layerNameGet(), application->extensionNameGet());
+    vulkan::device dev = devices[0].deviceGen(vulkan::queue::flag::graphics | vulkan::queue::flag::compute, application->layerNameGet(), application->extensionNameGet());
 
     // VkDeviceQueueCreateInfo deviceQueueCreateInfo = devices[0].queueCreateInformationGen(index);
     // VkDeviceCreateInfo deviceCreateInfo = devices[0].createInformationGen(deviceQueueCreateInfo, application->layerNameGet(), application->extensionNameGet(), devices[0].featuresGet());
