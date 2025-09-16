@@ -12,6 +12,10 @@
 
 namespace pokemonism {
 
+    /**
+     * 아무 것도 아닌 그저 상속가능한 기저 클래스
+     *
+     */
     class virtualable {
     public:     inline virtualable(void);
     public:     inline virtual ~virtualable(void);

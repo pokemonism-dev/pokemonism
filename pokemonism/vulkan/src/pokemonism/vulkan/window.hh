@@ -52,7 +52,7 @@ namespace pokemonism::vulkan {
                 public:     virtual void vulkanRel(void);
                 public:     virtual const collection::continuous<VkExtensionProperties> & extensionGet(void);
                 public:     virtual const collection::continuous<VkLayerProperties> & layerGet(void);
-                public:     virtual const collection::continuous<vulkan::physical::device> & deviceGet(void);
+                public:     virtual const collection::continuous<vulkan::physical::device> & physicalDeviceGet(void);
                 public:     virtual void extensionCat(const char * name);
                 public:     virtual void layerCat(const char * name);
                 public:     virtual void debugSet(vulkan::extension::debug::callback callback);

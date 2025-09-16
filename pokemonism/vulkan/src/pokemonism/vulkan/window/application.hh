@@ -111,7 +111,7 @@ namespace pokemonism::vulkan {
     }
 
     template <class super>
-    const collection::continuous<vulkan::physical::device> & window::application<super>::deviceGet(void) {
+    const collection::continuous<vulkan::physical::device> & window::application<super>::physicalDeviceGet(void) {
         physicalDev = nullptr;
         physicalDeviceSet.clean();
         unsigned int count = 0;

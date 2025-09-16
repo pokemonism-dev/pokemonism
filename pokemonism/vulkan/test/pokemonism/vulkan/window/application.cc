@@ -18,18 +18,21 @@ int main(int argc, char ** argv) {
 
     const collection::continuous<VkExtensionProperties> & extensions = application->extensionGet();
     const collection::continuous<VkLayerProperties> & layers = application->layerGet();
+    const collection::continuous<vulkan::physical::device> & devices = application->physicalDeviceGet();
 
     application->extensionCat(VK_KHR_SURFACE_EXTENSION_NAME);
     application->extensionCat("VK_EXT_metal_surface");
     application->extensionCat("VK_MVK_macos_surface");
 
     application->layerCat("VK_LAYER_KHRONOS_validation");
-
     application->debugSet(nullptr);
 
     application->vulkanGen();
+    // ### TODO: IMPLEMENT THIS
+    // application->deviceGen();
+    // application->
 
-    const collection::continuous<vulkan::physical::device> & devices = application->deviceGet();
+
 
     for (unsigned long i = 0; i < devices.sizeGet(); i = i + 1) {
         VkPhysicalDeviceFeatures features;
