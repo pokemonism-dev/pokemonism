@@ -354,11 +354,11 @@ namespace pokemonism::vulkan::physical {
         return properties;
     }
 
-    VkDevice device::deviceGen(unsigned int flags, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator) const {
+    vulkan::device device::deviceGen(unsigned int flags, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator) const {
         if (handle != nullptr) {
             const unsigned int index = queueFamilyIndexGet(flags);
 
-            pokemon_develop_check(index == declaration::fail, return nullptr);
+            pokemon_develop_check(index == declaration::fail, return vulkan::device());
 
             const VkDeviceQueueCreateInfo deviceQueueCreateInfo = queueCreateInformationGen(index);
             const VkDeviceCreateInfo deviceCreateInfo = createInformationGen(deviceQueueCreateInfo, layers, extensions, feature);
@@ -366,8 +366,17 @@ namespace pokemonism::vulkan::physical {
             return deviceGen(deviceCreateInfo, nullptr);
         }
 
-        return nullptr;
+        return vulkan::device();
+    }
 
+    vulkan::device device::deviceGen(const collection::continuous<VkDeviceQueueCreateInfo> & queueCreateInfoSet, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator) const {
+        if (handle != nullptr) {
+            const VkDeviceCreateInfo deviceCreateInfo = createInformationGen(queueCreateInfoSet, layers, extensions, feature);
+
+            return deviceGen(deviceCreateInfo, nullptr);
+        }
+
+        return vulkan::device();
     }
 
 }

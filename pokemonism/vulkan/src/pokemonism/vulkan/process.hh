@@ -31,6 +31,7 @@ namespace pokemonism::vulkan {
     public:     constexpr static PFN_vkGetPhysicalDeviceSparseImageFormatProperties GetPhysicalDeviceSparseImageFormatProperties = vkGetPhysicalDeviceSparseImageFormatProperties;
     public:     constexpr static PFN_vkCreateDevice CreateDevice = vkCreateDevice;
     public:     constexpr static PFN_vkDestroyDevice DestroyDevice = vkDestroyDevice;
+    public:     constexpr static PFN_vkGetDeviceQueue GetDeviceQueue = vkGetDeviceQueue;
     };
 
     template <typename func>

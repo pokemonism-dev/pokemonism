@@ -27,7 +27,7 @@ namespace pokemonism::vulkan::physical {
 
     class device : public closeable<> {
     protected:  reference<VkPhysicalDevice, vulkan::del> handle;
-    protected:  VkPhysicalDeviceFeatures feature;               // TODO: OPTIONAL fh qkRnwk...
+    protected:  VkPhysicalDeviceFeatures feature;
     protected:  VkPhysicalDeviceProperties property;
     protected:  collection::continuous<VkQueueFamilyProperties> queueSet;
     public:     inline static VkDeviceQueueCreateInfo queueCreateInformationGen(unsigned int index);
@@ -38,13 +38,14 @@ namespace pokemonism::vulkan::physical {
     public:     virtual VkImageFormatProperties & get(VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlags usage, VkImageCreateFlags flags, VkImageFormatProperties & properties) const;
     public:     virtual VkPhysicalDeviceProperties & get(VkPhysicalDeviceProperties & properties) const;
     public:     virtual collection::continuous<VkQueueFamilyProperties> & get(collection::continuous<VkQueueFamilyProperties> & properties) const;
-    public:     virtual unsigned int queueFamilyIndexGet(unsigned int flags) const;
+    public:     unsigned int queueFamilyIndexGet(unsigned int flags) const;
     public:     virtual VkPhysicalDeviceMemoryProperties & get(VkPhysicalDeviceMemoryProperties & properties) const;
     public:     virtual collection::continuous<VkExtensionProperties> & get(const char* pLayerName, collection::continuous<VkExtensionProperties> & properties) const;
     public:     virtual collection::continuous<VkLayerProperties> & get(collection::continuous<VkLayerProperties> & properties) const;
     public:     virtual collection::continuous<VkSparseImageFormatProperties> & get(VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlags usage, VkImageTiling tiling, collection::continuous<VkSparseImageFormatProperties> & properties) const;
-    public:     inline virtual VkDevice deviceGen(const VkDeviceCreateInfo & createInfo, const VkAllocationCallbacks * pAllocator = nullptr) const;
-    public:     virtual VkDevice deviceGen(unsigned int flags, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator = nullptr) const;
+    public:     inline virtual vulkan::device deviceGen(const VkDeviceCreateInfo & createInfo, const VkAllocationCallbacks * pAllocator = nullptr) const;
+    public:     virtual vulkan::device deviceGen(unsigned int flags, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator = nullptr) const;
+    public:     virtual vulkan::device deviceGen(const collection::continuous<VkDeviceQueueCreateInfo> & queueCreateInfoSet, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator) const;
     public:     inline const VkQueueFamilyProperties * queueFamilyPropertyGet(unsigned long index) const;
     public:     inline const VkPhysicalDeviceFeatures & featuresGet(void) const;
     public:     inline const VkPhysicalDeviceProperties & propertiesGet(void) const;
@@ -219,10 +220,10 @@ namespace pokemonism::vulkan::physical {
     }
 
 
-    VkDevice device::deviceGen(const VkDeviceCreateInfo & createInfo, const VkAllocationCallbacks * pAllocator) const {
-        if (VkDevice dev = nullptr; vulkan::process::CreateDevice(*handle, pointof(createInfo), pAllocator, pointof(dev)) == VK_SUCCESS) return dev;
+    vulkan::device device::deviceGen(const VkDeviceCreateInfo & createInfo, const VkAllocationCallbacks * pAllocator) const {
+        if (VkDevice dev = nullptr; vulkan::process::CreateDevice(*handle, pointof(createInfo), pAllocator, pointof(dev)) == VK_SUCCESS) return vulkan::device(dev, createInfo.pQueueCreateInfos, createInfo.queueCreateInfoCount);
 
-        return nullptr;
+        return vulkan::device();
     }
 
 
