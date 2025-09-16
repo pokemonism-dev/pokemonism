@@ -16,4 +16,14 @@ namespace pokemonism::vulkan {
         return nullptr;
     }
 
+    VkQueue del(VkQueue o) {
+        return nullptr;
+    }
+
+    VkDevice del(VkDevice o) {
+        if (o != nullptr) vulkan::process::DestroyDevice(o, nullptr);
+
+        return nullptr;
+    }
+
 }

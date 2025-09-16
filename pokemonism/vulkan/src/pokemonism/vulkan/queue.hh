@@ -12,12 +12,38 @@
 
 #include <vulkan/vulkan.h>
 
-#include <pokemonism.hh>
+#include <pokemonism/vulkan.hh>
+#include <pokemonism/collection/reference.hh>
 
 namespace pokemonism::vulkan {
 
     class queue {
-    protected:  VkQueue handle;
+    public:     struct priority {
+                public:     constexpr static float                      standard    = 1.0f;
+                };
+    public:     struct flag {
+                public:     constexpr static unsigned int               none        = declaration::zero;
+                public:     constexpr static unsigned int               graphics    = VK_QUEUE_GRAPHICS_BIT;
+                public:     constexpr static unsigned int               compute     = VK_QUEUE_COMPUTE_BIT;
+                public:     constexpr static unsigned int               transfer    = VK_QUEUE_TRANSFER_BIT;
+                public:     struct sparse {
+                            public:     constexpr static unsigned int   binding     = VK_QUEUE_SPARSE_BINDING_BIT;
+                            };
+                public:     constexpr static unsigned int               protect     = VK_QUEUE_PROTECTED_BIT;
+                public:     struct video {
+                            public:     constexpr static unsigned int   decode      = VK_QUEUE_VIDEO_DECODE_BIT_KHR;
+                            public:     constexpr static unsigned int   encode      = VK_QUEUE_VIDEO_DECODE_BIT_KHR;
+                            };
+                public:     struct optical {
+                            public:     constexpr static unsigned int   flow        = VK_QUEUE_OPTICAL_FLOW_BIT_NV;
+                            };
+                public:     struct data {
+                            public:     constexpr static unsigned int   graph       = VK_QUEUE_DATA_GRAPH_BIT_ARM;
+                            };
+                };
+    protected:  reference<VkQueue, vulkan::del> handle;
+    protected:  unsigned int flags;
+
     public:     inline queue(void);
     public:     inline virtual ~queue(void);
     public:     inline queue(const vulkan::queue & o);
@@ -26,30 +52,34 @@ namespace pokemonism::vulkan {
     public:     inline vulkan::queue & operator=(vulkan::queue && o) noexcept;
     };
 
-    inline queue::queue(void) : handle(nullptr) {
-        // ### TODO: IMPLEMENT THIS
+    inline queue::queue(void) : handle(nullptr), flags(queue::flag::none) {
     }
 
     inline queue::~queue(void) {
-        // ### TODO: IMPLEMENT THIS
     }
 
-    inline queue::queue(const vulkan::queue & o) : handle(nullptr) {
-        // ### TODO: IMPLEMENT THIS
+    inline queue::queue(const vulkan::queue & o) : handle(o.handle), flags(o.flags) {
     }
 
-    inline queue::queue(vulkan::queue && o) noexcept : handle(o.handle) {
-        o.handle = nullptr;
-        // ### TODO: IMPLEMENT THIS
+    inline queue::queue(vulkan::queue && o) noexcept : handle(std::move(o.handle)), flags(o.flags) {
+        o.flags = queue::flag::none;
     }
 
     inline vulkan::queue & queue::operator=(const vulkan::queue & o) {
-        // ### TODO: IMPLEMENT THIS
+        if (pointof(o) != this) {
+            handle = o.handle;
+            flags = o.flags;
+        }
         return *this;
     }
 
     inline vulkan::queue & queue::operator=(vulkan::queue && o) noexcept {
-        // ### TODO: IMPLEMENT THIS
+        if (pointof(o) != this) {
+            handle = std::move(o.handle);
+            flags = o.flags;
+
+            o.flags = queue::flag::none;
+        }
         return *this;
     }
 

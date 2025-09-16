@@ -12,6 +12,9 @@
 
 #include <vulkan/vulkan.h>
 
+#include <pokemonism/vulkan.hh>
+#include <pokemonism/collection/reference.hh>
+
 #include <cstdio>
 #include <pokemonism/sdk/exception.hh>
 #include <pokemonism/collection/continuous.hh>
@@ -20,14 +23,46 @@
 namespace pokemonism::vulkan {
 
     class device {
-    protected:  VkDevice handle;
-    public:     device(void);
-    public:     virtual ~device(void);
-    public:     device(const device & o);
-    public:     device(device && o) noexcept;
-    public:     device & operator=(const device & o);
-    public:     device & operator=(device && o) noexcept;
+    protected:  reference<VkDevice, vulkan::del> handle;
+    public:     inline device(void);
+    public:     inline virtual ~device(void);
+    public:     inline device(const device & o);
+    public:     inline device(device && o) noexcept;
+    public:     inline device & operator=(const device & o);
+    public:     inline device & operator=(device && o) noexcept;
     };
+
+    inline device::device(void) : handle(nullptr) {
+
+    }
+
+    inline device::~device(void) {
+
+    }
+
+    inline device::device(const device & o) : handle(o.handle) {
+
+    }
+
+    inline device::device(device && o) noexcept : handle(std::move(o.handle)) {
+
+    }
+
+    inline device & device::operator=(const device & o) {
+        if (pointof(o) != this) {
+            handle = o.handle;
+        }
+
+        return *this;
+    }
+
+    inline device & device::operator=(device && o) noexcept {
+        if (pointof(o) != this) {
+            handle = std::move(o.handle);
+        }
+
+        return *this;
+    }
 
 }
 

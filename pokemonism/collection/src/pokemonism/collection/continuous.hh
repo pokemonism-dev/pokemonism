@@ -33,6 +33,7 @@ namespace pokemonism::collection {
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
     public:     inline virtual element * storageGet(void);
+    public:     inline virtual const element * storageGet(void) const;
     public:     inline virtual unsigned long sizeGet(void) const;
     public:     inline virtual element & at(unsigned long index);
     public:     inline virtual const element & at(unsigned long index) const;
@@ -84,6 +85,11 @@ namespace pokemonism::collection {
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline element * continuous<element, super, unit, characterable, primitivable>::storageGet(void) {
+        return size > 0 ? storage : nullptr;
+    }
+
+    template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
+    inline const element * continuous<element, super, unit, characterable, primitivable>::storageGet(void) const {
         return size > 0 ? storage : nullptr;
     }
 

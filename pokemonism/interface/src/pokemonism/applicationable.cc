@@ -25,4 +25,10 @@ namespace pokemonism {
         return declaration::fail;
     }
 
+    int exit(const applicationable * o) {
+        if (o != nullptr) delete o;
+
+        return declaration::fail;
+    }
+
 }

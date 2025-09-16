@@ -24,10 +24,12 @@ namespace pokemonism::vulkan::platform::cocoa {
                 protected:  vulkan::extension::debug::callback debugger;
                 public:     void debugSet(vulkan::extension::debug::callback callback) override;
                 public:     vulkan::extension::debug::callback debugGet(void) const override;
-                public:     inline const char * platformNameGet(void) const noexcept override;
                 public:     VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) override;
                 public:     void extensionCat(const char * name) override;
                 public:     void layerCat(const char * name) override;
+                public:     inline const char * platformNameGet(void) const noexcept override;
+                public:     inline const collection::continuous<const char *> & extensionGet(void) const override;
+                public:     inline const collection::continuous<const char *> & layerGet(void) const override;
                 public:     int run(void) override;
                 public:     application(void);
                 public:     ~application(void) override;

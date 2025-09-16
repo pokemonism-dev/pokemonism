@@ -252,6 +252,14 @@ namespace pokemonism::vulkan::physical {
         return properties;
     }
 
+    unsigned int device::queueFamilyIndexGet(unsigned int flags) const {
+        for (unsigned int i = 0; i < queueSet.sizeGet(); i = i + 1) {
+            if ((queueSet[i].queueFlags & flags) == flags) return i;
+        }
+
+        pokemon_develop_throw(return declaration::invalid);
+    }
+
     VkPhysicalDeviceMemoryProperties & device::get(VkPhysicalDeviceMemoryProperties & properties) const {
         vulkan::process::GetPhysicalDeviceMemoryProperties(*handle, pointof(properties));
 
@@ -259,7 +267,7 @@ namespace pokemonism::vulkan::physical {
         printf("memoryTypeCount: %u\n", properties.memoryTypeCount);
         for (unsigned int i = 0; i < properties.memoryTypeCount; i = i + 1) {
             printf("memoryTypes[%u].propertyFlags: %08x\n", i, properties.memoryTypes[i].propertyFlags);
-            printf("memoryTypes[%u].propertyFlags: %u\n", i, properties.memoryTypes[i].heapIndex);
+            printf("memoryTypes[%u].heapIndex: %u\n", i, properties.memoryTypes[i].heapIndex);
         }
 
         printf("memoryHeapCount: %u\n", properties.memoryHeapCount);
@@ -346,10 +354,20 @@ namespace pokemonism::vulkan::physical {
         return properties;
     }
 
-    VkDevice device::gen(const VkDeviceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator) {
-        if (VkDevice device = nullptr; vulkan::process::CreateDevice(*handle, pCreateInfo, pAllocator, pointof(device)) == VK_SUCCESS) return device;
+    VkDevice device::deviceGen(unsigned int flags, const collection::continuous<const char *> & layers, const collection::continuous<const char *> & extensions, const VkAllocationCallbacks * pAllocator) const {
+        if (handle != nullptr) {
+            const unsigned int index = queueFamilyIndexGet(flags);
+
+            pokemon_develop_check(index == declaration::fail, return nullptr);
+
+            const VkDeviceQueueCreateInfo deviceQueueCreateInfo = queueCreateInformationGen(index);
+            const VkDeviceCreateInfo deviceCreateInfo = createInformationGen(deviceQueueCreateInfo, layers, extensions, feature);
+
+            return deviceGen(deviceCreateInfo, nullptr);
+        }
 
         return nullptr;
+
     }
 
 }

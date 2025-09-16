@@ -18,6 +18,14 @@ namespace pokemonism::vulkan::platform::cocoa {
         return windowable.platformNameGet();
     }
 
+    inline const collection::continuous<const char *> & window::application::extensionGet(void) const {
+        return extensions;
+    }
+
+    inline const collection::continuous<const char *> & window::application::layerGet(void) const {
+        return layers;
+    }
+
 }
 
 #endif // __POKEMONISM_VULKAN_PLATFORM_COCOA_WINDOW_APPLICATION_HH__

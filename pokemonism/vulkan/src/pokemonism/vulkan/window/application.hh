@@ -30,10 +30,11 @@ namespace pokemonism::vulkan {
 
 
     template <class super>
-    int window::application<super>::vulkanGen(void) {
+    int window::application<super>::vulkanLoad(void) {
         if (instance == nullptr) {
-            if (extensions.sizeGet() == 0) extensionGet();
-            if (layers.sizeGet() == 0) layerGet();
+            if (extensions.sizeGet() == 0) extensionLoad();
+            if (layers.sizeGet() == 0) layerLoad();
+            if (physicalDeviceSet.sizeGet() == 0) physicalDeviceLoad();
 
             VkApplicationInfo info;
 
@@ -82,7 +83,7 @@ namespace pokemonism::vulkan {
 
     template <class super>
     int window::application<super>::run(void) {
-        if (vulkanGen() == declaration::success) {
+        if (vulkanLoad() == declaration::success) {
             while (this->terminate == nullptr) {
                 this->adapter.eventWait();
             }
@@ -95,7 +96,7 @@ namespace pokemonism::vulkan {
     }
 
     template <class super>
-    const collection::continuous<VkExtensionProperties> & window::application<super>::extensionGet(void) {
+    const collection::continuous<VkExtensionProperties> & window::application<super>::extensionLoad(void) {
         extensions.clean();
         unsigned int count = 0;
 
@@ -111,7 +112,7 @@ namespace pokemonism::vulkan {
     }
 
     template <class super>
-    const collection::continuous<vulkan::physical::device> & window::application<super>::physicalDeviceGet(void) {
+    const collection::continuous<vulkan::physical::device> & window::application<super>::physicalDeviceLoad(void) {
         physicalDev = nullptr;
         physicalDeviceSet.clean();
         unsigned int count = 0;
@@ -125,11 +126,7 @@ namespace pokemonism::vulkan {
         handles.grow(count);
         vkEnumeratePhysicalDevices(instance, pointof(count), handles.storageGet());
 
-        pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, physicalDeviceSet, [](vulkan::physical::device & o) {
-            o.featuresGen();
-            o.propertiesGen();
-            o.queuesGen();
-        });
+        pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, physicalDeviceSet);
 
         physicalDev = pointof(physicalDeviceSet[0]);
 
@@ -152,7 +149,7 @@ namespace pokemonism::vulkan {
     }
 
     template <class super>
-    const collection::continuous<VkLayerProperties> & window::application<super>::layerGet(void) {
+    const collection::continuous<VkLayerProperties> & window::application<super>::layerLoad(void) {
         layers.clean();
         unsigned int count = 0;
 
@@ -167,8 +164,46 @@ namespace pokemonism::vulkan {
         }
 
         return layers;
+    }
 
+    template <class super>
+    inline const collection::continuous<VkExtensionProperties> & window::application<super>::extensionGet(void) const {
+        return extensions;
+    }
 
+    template <class super>
+    inline collection::continuous<VkExtensionProperties> & window::application<super>::extensionGet(void) {
+        return extensions;
+    }
+
+    template <class super>
+    inline const collection::continuous<VkLayerProperties> & window::application<super>::layerGet(void) const {
+        return layers;
+    }
+
+    template <class super>
+    inline collection::continuous<VkLayerProperties> & window::application<super>::layerGet(void) {
+        return layers;
+    }
+
+    template <class super>
+    inline const collection::continuous<vulkan::physical::device> & window::application<super>::physicalDeviceGet(void) const {
+        return physicalDeviceSet;
+    }
+
+    template <class super>
+    inline collection::continuous<vulkan::physical::device> & window::application<super>::physicalDeviceGet(void) {
+        return physicalDeviceSet;
+    }
+
+    template <class super>
+    inline const collection::continuous<const char *> & window::application<super>::layerNameGet(void) const {
+        return vulkanable.layerGet();
+    }
+
+    template <class super>
+    inline const collection::continuous<const char *> & window::application<super>::extensionNameGet(void) const {
+        return vulkanable.extensionGet();
     }
 
 }
