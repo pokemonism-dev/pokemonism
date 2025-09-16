@@ -4,7 +4,7 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 12, 2025
+ * @since           Sep 12, 2025
  */
 
 #ifndef   __POKEMONISM_VULKAN_WINDOW_HH__
@@ -45,7 +45,8 @@ namespace pokemonism::vulkan {
                 protected:  vulkan::platform::window::application & vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
                 protected:  collection::continuous<VkLayerProperties> layers;
-                protected:  collection::continuous<vulkan::physical::device> devices;
+                protected:  collection::continuous<vulkan::physical::device> physicalDeviceSet;
+                protected:  vulkan::physical::device * physicalDev;
                 public:     int run(void) override;
                 public:     virtual int vulkanGen(void);
                 public:     virtual void vulkanRel(void);

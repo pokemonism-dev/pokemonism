@@ -12,6 +12,7 @@ set(POKEMONISM_INTERFACE_SOURCE             src/pokemonism/virtualable.cc
                                             src/pokemonism/callable.cc
                                             src/pokemonism/lambdable.cc
                                             src/pokemonism/cloneable.cc
+                                            src/pokemonism/closeable.cc
                                             src/pokemonism/containable.cc
                                             src/pokemonism/continuable.cc
                                             src/pokemonism/collectable.cc
@@ -30,6 +31,7 @@ set(POKEMONISM_INTERFACE_HEADER             src/pokemonism/virtualable.hh
                                             src/pokemonism/callable.hh
                                             src/pokemonism/lambdable.hh
                                             src/pokemonism/cloneable.hh
+                                            src/pokemonism/closeable.hh
                                             src/pokemonism/containable.hh
                                             src/pokemonism/continuable.hh
                                             src/pokemonism/collectable.hh

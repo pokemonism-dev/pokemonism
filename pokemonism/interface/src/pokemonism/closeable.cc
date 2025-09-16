@@ -2,10 +2,13 @@
  * @file
  * @brief
  * @details
- *
+ * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 15, 2025
+ * @since           9월 16, 2025
  */
 
 
-#include "device.hh"
+#include "closeable.hh"
+
+namespace pokemonism {
+}

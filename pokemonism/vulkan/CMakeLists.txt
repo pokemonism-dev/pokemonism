@@ -15,6 +15,7 @@ set(POKEMONISM_VULKAN_SOURCE                                                    
                                                                                 src/pokemonism/vulkan/physical/device.cc
                                                                                 src/pokemonism/vulkan/process.cc
                                                                                 src/pokemonism/vulkan/window.cc
+                                                                                src/pokemonism/vulkan/device.cc
                                                                                 src/pokemonism/vulkan/window/application.cc
                                                                                 src/pokemonism/vulkan/platform/window.cc
                                                                                 src/pokemonism/vulkan/platform/window/application.cc)
@@ -23,6 +24,7 @@ set(POKEMONISM_VULKAN_HEADER                                                    
                                                                                 src/pokemonism/vulkan/physical/device.hh
                                                                                 src/pokemonism/vulkan/process.hh
                                                                                 src/pokemonism/vulkan/window.hh
+                                                                                src/pokemonism/vulkan/device.hh
                                                                                 src/pokemonism/vulkan/window/application.hh
                                                                                 src/pokemonism/vulkan/platform/window.hh
                                                                                 src/pokemonism/vulkan/platform/window/application.hh)

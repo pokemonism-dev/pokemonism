@@ -19,7 +19,7 @@
 namespace pokemonism::vulkan {
 
     template <class super>
-    window::application<super>::application(void) : instance(nullptr), messenger(nullptr), vulkanable(vulkan::platform::window::application::get()) {
+    window::application<super>::application(void) : instance(nullptr), messenger(nullptr), vulkanable(vulkan::platform::window::application::get()), physicalDev(nullptr) {
 
     }
 
@@ -112,25 +112,28 @@ namespace pokemonism::vulkan {
 
     template <class super>
     const collection::continuous<vulkan::physical::device> & window::application<super>::deviceGet(void) {
-        devices.clean();
+        physicalDev = nullptr;
+        physicalDeviceSet.clean();
         unsigned int count = 0;
 
         vkEnumeratePhysicalDevices(instance, pointof(count), nullptr);
 
-        pokemon_develop_check(count == 0, return devices);
+        pokemon_develop_check(count == 0, return physicalDeviceSet);
 
         collection::continuous<VkPhysicalDevice> handles;
 
         handles.grow(count);
         vkEnumeratePhysicalDevices(instance, pointof(count), handles.storageGet());
 
-        pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, devices);
+        pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, physicalDeviceSet, [](vulkan::physical::device & o) {
+            o.featuresGen();
+            o.propertiesGen();
+            o.queuesGen();
+        });
 
-        // for (unsigned long i = 0; i < devices.sizeGet(); i = i + 1) {
-        //     printf("%s\n", devices[i].deviceName);
-        // }
+        physicalDev = pointof(physicalDeviceSet[0]);
 
-        return devices;
+        return physicalDeviceSet;
     }
 
     template <class super>

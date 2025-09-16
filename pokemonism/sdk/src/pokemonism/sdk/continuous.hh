@@ -27,6 +27,8 @@ namespace pokemonism {
         public:     template <typename itemable> static bool scan(const continuable & o, const itemable & item, bool (*func)(const elementable &, const itemable &));
         public:     static bool scan(const continuable & o, const char * item, bool (*func)(const elementable &, const char *));
         public:     template <typename itemable, class containable> static containable & map(const continuable & o, containable & container);
+        public:     template <typename itemable, class containable> static containable & map(const continuable & o, containable & container, void (*initializer)(itemable &));
+        public:     template <typename itemable, class containable> static containable & map(const continuable & o, containable & container, void (*initializer)(const itemable &));
         public:     template <typename itemable, class containable, typename... argumentSet> static containable & map(const continuable & o, containable & container, lambdable::run<itemable *, const elementable *, argumentSet...>::type func, argumentSet... args);
         public:     inline continuous(void);
         public:     inline virtual ~continuous(void);
@@ -68,8 +70,38 @@ namespace pokemonism {
         }
 
         template <typename elementable, class continuable>
+        template <typename itemable, class containable>
+        containable & continuous<elementable, continuable>::map(const continuable & o, containable & container, void (*initializer)(itemable &)) {
+            container.clean();
+
+            if (container.capacity < o.capacity) container.storage = allocator::reset(container.storage, container.capacity = o.capacity);
+            for (unsigned long i = 0; i < o.size; i = i + 1) {
+                new (container.storage + i) itemable(o[i]);
+                initializer(referenceof(container.storage + i));
+            }
+            container.size = o.size;
+
+            return container;
+        }
+
+        template <typename elementable, class continuable>
+        template <typename itemable, class containable>
+        containable & continuous<elementable, continuable>::map(const continuable & o, containable & container, void (*initializer)(const itemable &)) {
+            container.clean();
+
+            if (container.capacity < o.capacity) container.storage = allocator::reset(container.storage, container.capacity = o.capacity);
+            for (unsigned long i = 0; i < o.size; i = i + 1) {
+                new (container.storage + i) itemable(o[i]);
+                initializer(referenceof(container.storage + i));
+            }
+            container.size = o.size;
+
+            return container;
+        }
+
+        template <typename elementable, class continuable>
         template <typename itemable, class containable, typename... argumentSet>
-        containable & continuous<elementable, continuable>::map(const continuable & o, containable & container, lambdable::run<itemable *, const elementable *, argumentSet...>::type func, argumentSet... args) {
+        containable & continuous<elementable, continuable>::map(const continuable & o, containable & container, typename lambdable::run<itemable *, const elementable *, argumentSet...>::type func, argumentSet... args) {
             container.clean();
 
             if (container.capacity < o.capacity) container.storage = allocator::reset(container.storage, container.capacity = o.capacity);

@@ -10,6 +10,7 @@
 #ifndef   __POKEMONISM_COLLECTION_CONTINUOUS_HH__
 #define   __POKEMONISM_COLLECTION_CONTINUOUS_HH__
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <cstring>
 
 #include <pokemonism/sdk/memorizer.hh>
@@ -35,6 +36,8 @@ namespace pokemonism::collection {
     public:     inline virtual unsigned long sizeGet(void) const;
     public:     inline virtual element & at(unsigned long index);
     public:     inline virtual const element & at(unsigned long index) const;
+    public:     inline virtual void each(void (*fun)(element &));
+    public:     inline virtual void each(void (*fun)(const element &)) const;
     public:     inline void set(const element & item, unsigned long n) override;
     public:     inline void set(const element * source, unsigned long sourceLen) override;
     public:     inline void cat(const element & item, unsigned long n) override;
@@ -99,6 +102,20 @@ namespace pokemonism::collection {
     inline const element & continuous<element, super, unit, characterable, primitivable>::at(unsigned long index) const {
         pokemon_develop_check(size <= index, exit(0));
         return storage[index];
+    }
+
+    template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
+    inline void continuous<element, super, unit, characterable, primitivable>::each(void (*fun)(element &)) {
+        pokemon_develop_check(fun == nullptr, return);
+
+        for (unsigned long i = 0; i < size; i = i + 1) fun(referenceof(storage + i));
+    }
+
+    template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
+    inline void continuous<element, super, unit, characterable, primitivable>::each(void (*fun)(const element &)) const {
+        pokemon_develop_check(fun == nullptr, return);
+
+        for (unsigned long i = 0; i < size; i = i + 1) fun(referenceof(storage + i));
     }
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
@@ -183,8 +200,12 @@ namespace pokemonism::collection {
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
     inline continuous<element, super, unit, characterable, primitivable>::continuous(const element * source, unsigned long sourceLen) : storage(nullptr), size(sourceLen), capacity(capacityCal(sourceLen)) {
+        // ReSharper disable CppDFAUnreachableCode
+        // ReSharper disable CppDFANotInitializedField
         if (capacity > 0) storage = allocator::gen<element>(capacity);
         if (size > 0) memorizer::set(storage, source, sourceLen);
+        // ReSharper restore CppDFANotInitializedField
+        // ReSharper restore CppDFAUnreachableCode
     }
 
     template<class element, class super, unsigned long unit, typename characterable, typename primitivable>
