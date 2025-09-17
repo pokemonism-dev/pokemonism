@@ -10,5 +10,8 @@
 
 #include "application.hh"
 
-namespace pokemonism {
+namespace pokemonism::platform {
+
+    window::application * window::application::singleton = nullptr;
+
 }

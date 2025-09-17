@@ -28,7 +28,7 @@ namespace pokemonism::vulkan {
     class window : public pokemonism::window {
     public:     template <class super = pokemonism::window::application> class application : public super {
                 protected:  VkDebugUtilsMessengerEXT messenger;
-                protected:  vulkan::platform::window::application & vulkanable;
+                protected:  vulkan::platform::window::application * vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
                 protected:  collection::continuous<VkLayerProperties> layers;
                 protected:  collection::continuous<vulkan::physical::device> physicalDeviceSet;
@@ -65,11 +65,11 @@ namespace pokemonism::vulkan {
     public:     vulkan::window & operator=(vulkan::window && o) noexcept = delete;
     };
 
-    class platform::window::application : public applicationable {
+    class platform::window::application : public pokemonism::platform::window::application {
     protected:  static VkInstance instance;
     public:     static VkInstance instanceGet(void);
     protected:  static void instanceSet(VkInstance instance);
-    public:     static vulkan::platform::window::application & get(void);
+    public:     static vulkan::platform::window::application * get(void);
     public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
     public:     virtual void extensionCat(const char * name) = 0;
     public:     virtual void layerCat(const char * name) = 0;

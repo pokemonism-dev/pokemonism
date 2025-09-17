@@ -4,7 +4,7 @@
  * @details
  * 
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 14, 2025
+ * @since           Sep 14, 2025
  */
 
 #ifndef   __POKEMONISM_MATHEMATICS_GEOMETRY_RECTANGLE_HH__
@@ -14,14 +14,14 @@
 
 namespace pokemonism::mathematics::geometry {
 
-    template <typename unit = generic::length<double, mathematics::unit::length::none>>
+    template <typename unit = mathematics::generic::length<double, mathematics::unit::length::none>>
     struct rectangle {
-    public:     unit::type x;
-    public:     unit::type y;
-    public:     unit::type width;
-    public:     unit::type height;
-    public:     inline void set(unit::type x, unit::type y, unit::type width, unit::type height);
-    public:     inline rectangle(unit::type x, unit::type y, unit::type width, unit::type height);
+    public:     typename unit::type x;
+    public:     typename unit::type y;
+    public:     typename unit::type width;
+    public:     typename unit::type height;
+    public:     inline void set(typename unit::type x, typename unit::type y, typename unit::type width, typename unit::type height);
+    public:     inline rectangle(typename unit::type x, typename unit::type y, typename unit::type width, typename unit::type height);
     public:     inline rectangle(void);
     public:     inline ~rectangle(void);
     public:     inline rectangle(const rectangle<unit> & o);

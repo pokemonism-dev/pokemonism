@@ -30,7 +30,7 @@ namespace pokemonism {
         public:     inline string & operator=(char c);
         public:     inline string & operator+=(const char * s);
         public:     inline string & operator+=(char c);
-        public:     inline string(const char * s);
+        public:     inline explicit string(const char * s);
         public:     inline string(void);
         public:     inline ~string(void) override;
         public:     inline string(const string & o);

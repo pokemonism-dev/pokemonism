@@ -12,7 +12,7 @@
 
 namespace pokemonism {
 
-    void window::application::t800(window::application & o) {
+    void window::application::goodbye(window::application & o) {
         printf("I'll be back!\n");
     }
 

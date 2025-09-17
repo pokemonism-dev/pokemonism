@@ -14,7 +14,12 @@
 
 namespace pokemonism::platform::cocoa {
 
-    inline const char * window::application::platformNameGet(void) const noexcept {
+    template <class super>
+    window::application<super> window::application<super>::singleton = nullptr;
+
+
+    template <class super>
+    inline const char * window::application<super>::platformNameGet(void) const noexcept {
         return "cocoa";
     }
 

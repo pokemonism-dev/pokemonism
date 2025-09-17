@@ -36,6 +36,12 @@ namespace pokemonism::platform::cocoa {
                                                               backing: NSBackingStoreBuffered
                                                               defer: NO];
 
+//NSRect frame = NSMakeRect(0, 0, 800, 600);
+//NSWindowStyleMask style = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable;
+//NSWindow* window = [[NSWindow alloc] initWithContentRect:frame styleMask:style backing:NSBackingStoreBuffered defer:NO];
+//[window setTitle:@"Vulkan Window"];
+//[window center];
+
             internal.title = [NSString stringWithUTF8String: o.title.stringGet()];
 
             delegator = [[PokemonismWindowDelegator alloc] init];

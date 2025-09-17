@@ -16,10 +16,6 @@
 #include <pokemonism/lambdable.hh>
 
 namespace pokemonism {
-    // template <typename... argumentSet>
-    // struct fun {
-    // public:     typedef void (*type)(argumentSet...);
-    // };
 
     namespace sdk {
         template <typename elementable, class continuable>

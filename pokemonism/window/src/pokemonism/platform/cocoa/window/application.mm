@@ -30,25 +30,30 @@
 
 namespace pokemonism::platform {
 
-    namespace cocoa {
-        static platform::cocoa::window::application singleton;
-    }
-
-    platform::window::application & platform::window::application::get(void) {
-        return platform::cocoa::singleton;
+    platform::window::application * platform::window::application::get(void) {
+        return platform::window::application::singleton;
     }
 
     namespace cocoa {
 
-        platform::cocoa::window::application & platform::cocoa::window::application::get(void) {
-            return platform::cocoa::singleton;
+        template <class super>
+        platform::cocoa::window::application<super> * platform::cocoa::window::application<super>::get(void) {
+            if(platform::window::application::singleton == nullptr) {
+                static platform::cocoa::window::application<super> instance;
+                platform::cocoa::window::application<super>::singleton = pointof(instance);
+                platform::window::application::singleton = platform::cocoa::window::application<super>::singleton;
+            }
+
+            return platform::window::application::singleton;
         }
 
-        platform::cocoa::window * window::application::windowGen(const window::config & config) {
+        template <class super>
+        platform::cocoa::window * window::application<super>::windowGen(const window::config & config) {
             return new platform::cocoa::window(config);
         }
 
-        window::application::application(void) : internal(nil), delegator(nil) {
+        template <class super>
+        window::application<super>::application(void) : internal(nil), delegator(nil) {
             @autoreleasepool {
                 internal = [NSApplication sharedApplication];
                 delegator = [[PokemonismWindowApplicationDelegator alloc] init];
@@ -57,10 +62,12 @@ namespace pokemonism::platform {
             }
         }
 
-        window::application::~application(void) {
+        template <class super>
+        window::application<super>::~application(void) {
         }
 
-        int window::application::run(void) {
+        template <class super>
+        int window::application<super>::run(void) {
             @autoreleasepool {
                 [internal run];
                 printf("fail\n");
@@ -68,7 +75,8 @@ namespace pokemonism::platform {
             return declaration::success;
         }
 
-        void window::application::eventPoll(void) {
+        template <class super>
+        void window::application<super>::eventPoll(void) {
             @autoreleasepool {
                 while(true) {
                     NSEvent * event = [NSApp nextEventMatchingMask: NSEventMaskAny
@@ -83,7 +91,8 @@ namespace pokemonism::platform {
             }
         }
 
-        void window::application::eventWait(void) {
+        template <class super>
+        void window::application<super>::eventWait(void) {
             @autoreleasepool {
                 NSEvent * event = [NSApp nextEventMatchingMask: NSEventMaskAny
                                                                 untilDate: [NSDate distantFuture]

@@ -13,11 +13,13 @@
 namespace pokemonism::abstract {
 
     const char * window::application::platformNameGet(void) const noexcept {
-        return adapter.platformNameGet();
+        return adapter != nullptr ? adapter->platformNameGet() : nullptr;
     }
 
     pokemonism::window * window::application::windowGen(const window::config & config) {
-        abstract::window * window = new abstract::window(adapter.windowGen(config));
+        pokemon_develop_check(adapter == nullptr, return nullptr);
+
+        abstract::window * window = new abstract::window(adapter->windowGen(config));
 
         collection::add(this, window);
 
@@ -34,7 +36,7 @@ namespace pokemonism::abstract {
 
     }
 
-    window::application::application(platform::window::application & adapter) :
+    window::application::application(platform::window::application * adapter) :
     adapter(adapter), size(declaration::zero), head(nullptr), tail(nullptr),
     name("pokemonism"), major(declaration::one), minor(declaration::zero), revision(declaration::zero) {
 

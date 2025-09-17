@@ -14,15 +14,18 @@
 
 namespace pokemonism::vulkan::platform::cocoa {
 
-    inline const char * window::application::platformNameGet(void) const noexcept {
+    template <class super>
+    inline const char * window::application<super>::platformNameGet(void) const noexcept {
         return windowable.platformNameGet();
     }
 
-    inline const collection::continuous<const char *> & window::application::extensionGet(void) const {
+    template <class super>
+    inline const collection::continuous<const char *> & window::application<super>::extensionGet(void) const {
         return extensions;
     }
 
-    inline const collection::continuous<const char *> & window::application::layerGet(void) const {
+    template <class super>
+    inline const collection::continuous<const char *> & window::application<super>::layerGet(void) const {
         return layers;
     }
 

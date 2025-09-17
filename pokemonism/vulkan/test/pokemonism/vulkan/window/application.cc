@@ -39,16 +39,6 @@ int main(int argc, char ** argv) {
 
     vulkan::device dev = devices[0].deviceGen(vulkan::queue::flag::graphics | vulkan::queue::flag::compute, application->layerNameGet(), application->extensionNameGet());
 
-    // VkDeviceQueueCreateInfo deviceQueueCreateInfo = devices[0].queueCreateInformationGen(index);
-    // VkDeviceCreateInfo deviceCreateInfo = devices[0].createInformationGen(deviceQueueCreateInfo, application->layerNameGet(), application->extensionNameGet(), devices[0].featuresGet());
-    // devices[0].deviceGen(deviceCreateInfo, nullptr);
-
-
-
-
-
-    // application->deviceGen()
-
 #ifndef   RELEASE_MODE
     for (unsigned long i = 0; i < devices.sizeGet(); i = i + 1) {
         VkPhysicalDeviceFeatures features;

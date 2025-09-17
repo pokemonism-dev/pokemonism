@@ -1,10 +1,10 @@
 /**
  * @file
  * @brief
- * @details
+ * @details         ![ClassDiagramMathematicsScalar](/docs/assets/diagram/pokemonism/mathematics/ClassDiagramMathematicsScalar.jpg)
  *
  * @author          snorlax <snorlax@pokemonism.dev>
- * @since           9월 12, 2025
+ * @since           Sep 12, 2025
  */
 
 #ifndef   __POKEMONISM_MATHEMATICS_SCALAR_HH__
@@ -15,20 +15,13 @@
 namespace pokemonism::mathematics {
 
     struct scalar : public pokemonism::tag {
-    public:     typedef long                        type;
-    public:     constexpr static long               zero    = 0;
-    };
-
-    struct number : public scalar {};
-
-    struct integer : public number {};
-
-    struct real : public number {
     public:     typedef double                      type;
     public:     constexpr static double             zero    = 0.0f;
     };
 
-    struct unit : public real {
+    struct number : public scalar {};
+
+    struct unit : public number {
     public:     struct prefix {
                 public:     constexpr static int    yotta   = 24;
                 public:     constexpr static int    zetta   = 21;
@@ -64,8 +57,8 @@ namespace pokemonism::mathematics {
                 public:     constexpr static int    meter   = 1;
                 public:     constexpr static int    pixel   = 2;
                 };
-    public:     constexpr static int                kind    = unit::classification::scalar;
-    public:     constexpr static int                fix     = unit::prefix::none;
+    public:     constexpr static int                kind    = mathematics::unit::classification::scalar;
+    public:     constexpr static int                fix     = mathematics::unit::prefix::none;
     };
 
     namespace generic {
@@ -75,22 +68,24 @@ namespace pokemonism::mathematics {
         public:     constexpr static type           zero    = 0;
         };
 
-        template <typename declaration, int classification, int prefix = mathematics::unit::prefix::none>
-        struct unit : public generic::number<declaration> {
-        public:     constexpr static int            kind    = classification;
+        template <typename declaration, int classificationVal, int prefixVal = mathematics::unit::prefix::none>
+        struct unit : public generic::number<declaration>, public mathematics::unit {
+        public:     typedef declaration             type;
+        public:     constexpr static int            kind    = classificationVal;
         public:     constexpr static int            subkind = declaration::none;
-        public:     constexpr static int            fix     = prefix;
+        public:     constexpr static int            fix     = prefixVal;
+        public:     constexpr static type           zero    = generic::number<declaration>::zero;
         };
 
-        template <typename declaration, int category, int prefix = mathematics::unit::prefix::none>
-        struct length : public generic::unit<declaration, mathematics::unit::classification::length, prefix> {
-        public:     constexpr static int            subkind = category;
+        template <typename declaration, int categoryVal, int prefixVal = mathematics::unit::prefix::none>
+        struct length : public generic::unit<declaration, mathematics::unit::classification::length, prefixVal> {
+        public:     constexpr static int            subkind = categoryVal;
         };
 
     }
 
     struct millimeter : public generic::length<double, mathematics::unit::length::meter, mathematics::unit::prefix::milli> {};
-    struct pixel : public generic::length<int, mathematics::unit::length::meter> {};
+    struct pixel : public generic::length<int, mathematics::unit::length::pixel> {};
 
 }
 

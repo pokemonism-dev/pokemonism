@@ -15,7 +15,7 @@
 
 namespace pokemonism {
     namespace sdk {
-        template <typename elementable, typename primitivable = typographer<elementable>::primitivable, unsigned long size = typographer<elementable>::unit>
+        template <typename elementable, typename primitivable = typename typographer<elementable>::primitivable, unsigned long size = typographer<elementable>::unit>
         class memorizer {
         public:     static elementable * set(elementable * destination, const elementable & item);
         public:     static elementable * set(elementable * destination, elementable && item);

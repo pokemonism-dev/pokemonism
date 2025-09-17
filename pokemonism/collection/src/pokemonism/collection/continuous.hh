@@ -28,7 +28,7 @@ namespace pokemonism::collection {
     public:     static continuous<element, super, unit, characterable, primitivable> sizeGen(unsigned long n);
     protected:  using memorizer = pokemonism::sdk::memorizer<element, primitivable, unit>;
     protected:  using allocator = pokemonism::sdk::allocator;
-    protected:  constexpr static unsigned long page = 8;
+    public:     constexpr static unsigned long page = 8;
     protected:  element *       storage;
     protected:  unsigned long   size;
     protected:  unsigned long   capacity;
@@ -46,7 +46,6 @@ namespace pokemonism::collection {
     public:     inline unsigned long capacityCal(unsigned long n) override;
     public:     inline void add(const element & item) override;
     public:     inline void add(element && item) override;
-    // public:     inline void del(element & item) override;
     public:     inline void clear(void) override;
     public:     inline virtual void clean(void);
     public:     inline virtual void grow(unsigned long n);

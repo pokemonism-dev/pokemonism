@@ -46,9 +46,9 @@ namespace pokemonism::vulkan {
             info.pEngineName = this->name.stringGet();
             info.engineVersion = VK_MAKE_VERSION(this->major, this->minor, this->revision);
 
-            VkInstanceCreateInfo creation = vulkanable.creationGen(info, extensions, layers);
+            VkInstanceCreateInfo creation = vulkanable->creationGen(info, extensions, layers);
 
-            if (vulkanable.debugGet() != nullptr) {
+            if (vulkanable->debugGet() != nullptr) {
                 VkDebugUtilsMessengerCreateInfoEXT debug;
 
                 debug.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -57,7 +57,7 @@ namespace pokemonism::vulkan {
                 debug.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
                 debug.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT;
                 debug.pUserData = nullptr;
-                debug.pfnUserCallback = vulkanable.debugGet();
+                debug.pfnUserCallback = vulkanable->debugGet();
 
                 creation.pNext = pointof(debug);
             }
@@ -88,7 +88,7 @@ namespace pokemonism::vulkan {
     int window::application<super>::run(void) {
         if (vulkanLoad() == declaration::success) {
             while (this->terminate == nullptr) {
-                this->adapter.eventWait();
+                this->adapter->eventWait();
             }
             vulkanRel();
             printf("rel\n");
@@ -138,17 +138,17 @@ namespace pokemonism::vulkan {
 
     template <class super>
     void window::application<super>::extensionCat(const char * name) {
-        vulkanable.extensionCat(name);
+        vulkanable->extensionCat(name);
     }
 
     template <class super>
     void window::application<super>::layerCat(const char * name) {
-        vulkanable.layerCat(name);
+        vulkanable->layerCat(name);
     }
 
     template <class super>
     void window::application<super>::debugSet(vulkan::extension::debug::callback callback) {
-        vulkanable.debugSet(callback);
+        vulkanable->debugSet(callback);
     }
 
     template <class super>
@@ -201,12 +201,12 @@ namespace pokemonism::vulkan {
 
     template <class super>
     inline const collection::continuous<const char *> & window::application<super>::layerNameGet(void) const {
-        return vulkanable.layerGet();
+        return vulkanable->layerGet();
     }
 
     template <class super>
     inline const collection::continuous<const char *> & window::application<super>::extensionNameGet(void) const {
-        return vulkanable.extensionGet();
+        return vulkanable->extensionGet();
     }
 
 }

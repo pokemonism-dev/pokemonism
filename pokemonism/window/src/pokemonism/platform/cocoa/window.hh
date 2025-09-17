@@ -29,8 +29,10 @@
 namespace pokemonism::platform::cocoa {
 
     class window : public platform::window {
-    public:     class application : public platform::window::application {
-                public:     static platform::cocoa::window::application & get(void);
+    public:     template <class super = platform::window::application>
+                class application : public super {
+                protected:  static platform::cocoa::window::application<super> singleton;
+                public:     static platform::cocoa::window::application<super> * get(void);
                 protected:  NSApplication * internal;
                 protected:  PokemonismWindowApplicationDelegator * delegator;
                 public:     inline const char * platformNameGet(void) const noexcept override;
@@ -40,16 +42,15 @@ namespace pokemonism::platform::cocoa {
                 public:     int run(void) override;
                 public:     application(void);
                 public:     ~application(void) override;
-                public:     application(const platform::cocoa::window::application & o) = delete;
-                public:     application(platform::cocoa::window::application && o) noexcept = delete;
-                public:     platform::cocoa::window::application & operator=(const platform::cocoa::window::application & o) = delete;
-                public:     platform::cocoa::window::application & operator=(platform::cocoa::window::application && o) noexcept = delete;
+                public:     application(const platform::cocoa::window::application<super> & o) = delete;
+                public:     application(platform::cocoa::window::application<super> && o) noexcept = delete;
+                public:     platform::cocoa::window::application<super> & operator=(const platform::cocoa::window::application<super> & o) = delete;
+                public:     platform::cocoa::window::application<super> & operator=(platform::cocoa::window::application<super> && o) noexcept = delete;
                 };
     protected:  NSWindow * internal;
     protected:  PokemonismWindowDelegator * delegator;
     public:     int open(void) override;
     public:     int close(void) override;
-
     public:     explicit window(const window::config & o);
     public:     window(void) = delete;
     public:     ~window(void) override;

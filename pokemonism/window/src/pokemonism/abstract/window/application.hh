@@ -15,7 +15,7 @@
 namespace pokemonism::abstract {
 
     inline int abstract::window::application::run(void) {
-        return adapter.run();
+        return adapter != nullptr ? adapter->run() : declaration::fail;
     }
 
     inline void abstract::window::application::nameSet(const char * s) {

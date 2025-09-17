@@ -26,10 +26,10 @@ namespace pokemonism {
     public:     virtual int close(void) = 0;
     public:     inline window(void);
     public:     inline virtual ~window(void);
-    public:     inline window(const window & o) = delete;
-    public:     inline window(window && o) noexcept = delete;
-    public:     inline window & operator=(const window & o) = delete;
-    public:     inline window & operator=(window && o) noexcept = delete;
+    public:     window(const window & o) = delete;
+    public:     window(window && o) noexcept = delete;
+    public:     window & operator=(const window & o) = delete;
+    public:     window & operator=(window && o) noexcept = delete;
     };
 
     namespace platform {
@@ -69,7 +69,8 @@ namespace pokemonism {
         };
 
         class platform::window::application : public applicationable {
-        public:     static platform::window::application & get(void);
+        protected:  static platform::window::application * singleton;
+        public:     static platform::window::application * get(void);
         public:     virtual void eventWait(void) = 0;
         public:     virtual void eventPoll(void) = 0;
         public:     virtual platform::window * windowGen(const window::config & config) = 0;
@@ -86,7 +87,7 @@ namespace pokemonism {
     namespace abstract {
         class abstract::window::application : public applicationable {
         protected:  using collection = sdk::linked::list<abstract::window::application, abstract::window>;
-        protected:  platform::window::application &     adapter;
+        protected:  platform::window::application *     adapter;
         protected:  unsigned long                       size;
         protected:  abstract::window *                  head;
         protected:  abstract::window *                  tail;
@@ -102,7 +103,7 @@ namespace pokemonism {
         public:     virtual pokemonism::window * windowGen(const window::config & config);
         protected:  abstract::window * del(abstract::window * node);
         protected:  inline int run(void) override;
-        protected:  explicit application(platform::window::application & adapter);
+        protected:  explicit application(platform::window::application * adapter);
         protected:  application(void);
         protected:  ~application(void) override;
         public:     application(const abstract::window::application & o) = delete;
@@ -115,11 +116,11 @@ namespace pokemonism {
     }
 
     class window::application : public abstract::window::application {
-    public:     static void t800(window::application & o);
+    public:     static void goodbye(window::application & o);
     protected:  typedef void (*terminator)(window::application &);
     public:     terminator terminate;
     public:     inline virtual void cancel(window::application::terminator f);
-    public:     inline explicit application(platform::window::application & adapter);
+    public:     inline explicit application(platform::window::application * adapter);
     public:     inline application(void);
     public:     inline ~application(void) override;
     public:     inline application(const window::application & o) = delete;

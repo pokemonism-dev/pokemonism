@@ -17,12 +17,12 @@
 namespace pokemonism {
 
     inline void window::application::cancel(window::application::terminator f) {
-        if (f == nullptr) f = window::application::t800;
+        if (f == nullptr) f = window::application::goodbye;
 
         if (terminate == nullptr) terminate = f;
     }
 
-    inline window::application::application(platform::window::application & adapter) : abstract::window::application(adapter), terminate(nullptr) {
+    inline window::application::application(platform::window::application * adapter) : abstract::window::application(adapter), terminate(nullptr) {
 
     }
 

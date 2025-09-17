@@ -13,42 +13,49 @@
 
 namespace pokemonism::vulkan::platform {
 
-    namespace cocoa {
-        static vulkan::platform::cocoa::window::application singleton;
+//    namespace cocoa {
+//        static vulkan::platform::cocoa::window::application singleton;
+//    }
+
+    vulkan::platform::window::application * window::application::get(void) {
+        return nullptr;
     }
 
-    vulkan::platform::window::application & window::application::get(void) {
-        return vulkan::platform::cocoa::singleton;
-    }
-
     namespace cocoa {
-        vulkan::platform::cocoa::window::application & window::application::get(void) {
-            return vulkan::platform::cocoa::singleton;
+
+        template <class super>
+        vulkan::platform::cocoa::window::application<super> * window::application<super>::get(void) {
+            return vulkan::platform::cocoa::window::application<super>::singleton;
         }
 
-        void window::application::extensionCat(const char * name) {
+        template <class super>
+        void window::application<super>::extensionCat(const char * name) {
             pokemon_develop_check(name == nullptr, return);
 
             extensions.add(name);
         }
 
-        void window::application::layerCat(const char * name) {
+        template <class super>
+        void window::application<super>::layerCat(const char * name) {
             pokemon_develop_check(name == nullptr, return);
 
             layers.add(name);
         }
 
-        void window::application::debugSet(vulkan::extension::debug::callback callback) {
+        template <class super>
+        void window::application<super>::debugSet(vulkan::extension::debug::callback callback) {
             debugger = callback;
 
             if(debugger != nullptr) extensions.add(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
         }
 
-        vulkan::extension::debug::callback window::application::debugGet(void) const {
+        template <class super>
+        vulkan::extension::debug::callback window::application<super>::debugGet(void) const {
             return debugger;
         }
 
-        VkInstanceCreateInfo window::application::creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) {
+        template <class super>
+        VkInstanceCreateInfo window::application<super>::creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) {
             VkInstanceCreateInfo creation;
 
             extensions.add(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
@@ -65,16 +72,19 @@ namespace pokemonism::vulkan::platform {
             return creation;
         }
 
-        int window::application::run(void) {
+        template <class super>
+        int window::application<super>::run(void) {
 
             int ret = windowable.run();
             return ret;
         }
 
-        window::application::application(void) : windowable(pokemonism::platform::cocoa::window::application::get()), debugger(nullptr) {
+        template <class super>
+        window::application<super>::application(void) : windowable(pokemonism::platform::cocoa::window::application<super>::get()), debugger(nullptr) {
         }
 
-        window::application::~application(void) {
+        template <class super>
+        window::application<super>::~application(void) {
         }
     }
 
