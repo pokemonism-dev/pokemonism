@@ -19,7 +19,7 @@
 namespace pokemonism::vulkan {
 
     template <class super>
-    window::application<super>::application(void) : instance(nullptr), messenger(nullptr), vulkanable(vulkan::platform::window::application::get()), physicalDev(nullptr) {
+    window::application<super>::application(void) : messenger(nullptr), vulkanable(vulkan::platform::window::application::get()), physicalDev(nullptr) {
 
     }
 
@@ -31,7 +31,7 @@ namespace pokemonism::vulkan {
 
     template <class super>
     int window::application<super>::vulkanLoad(void) {
-        if (instance == nullptr) {
+        if (VkInstance instance = platform::window::application::instanceGet(); instance == nullptr) {
             if (extensions.sizeGet() == 0) extensionLoad();
             if (layers.sizeGet() == 0) layerLoad();
             if (physicalDeviceSet.sizeGet() == 0) physicalDeviceLoad();
@@ -62,7 +62,10 @@ namespace pokemonism::vulkan {
                 creation.pNext = pointof(debug);
             }
 
-            if (const VkResult result = vkCreateInstance(pointof(creation), nullptr, pointof(instance)); result != VK_SUCCESS) return declaration::fail;
+            if (const VkResult result = vkCreateInstance(pointof(creation), nullptr, pointof(instance)); result != VK_SUCCESS) {
+                platform::window::application::instanceSet(instance);
+                return declaration::fail;
+            }
         }
 
         return declaration::success;
@@ -71,13 +74,13 @@ namespace pokemonism::vulkan {
     template <class super>
     void window::application<super>::vulkanRel(void) {
         if (messenger != nullptr) {
-            vulkan::process::DestroyDebugUtilsMessengerEXT(instance, messenger, nullptr);
+            vulkan::process::DestroyDebugUtilsMessengerEXT(platform::window::application::instanceGet(), messenger, nullptr);
             messenger = nullptr;
         }
 
-        if (instance != nullptr) {
-            vkDestroyInstance(instance, nullptr);
-            instance = nullptr;
+        if (platform::window::application::instanceGet() != nullptr) {
+            vkDestroyInstance(platform::window::application::instanceGet(), nullptr);
+            platform::window::application::instanceSet(nullptr);
         }
     }
 
@@ -117,14 +120,14 @@ namespace pokemonism::vulkan {
         physicalDeviceSet.clean();
         unsigned int count = 0;
 
-        vkEnumeratePhysicalDevices(instance, pointof(count), nullptr);
+        vkEnumeratePhysicalDevices(platform::window::application::instanceGet(), pointof(count), nullptr);
 
         pokemon_develop_check(count == 0, return physicalDeviceSet);
 
         collection::continuous<VkPhysicalDevice> handles;
 
         handles.grow(count);
-        vkEnumeratePhysicalDevices(instance, pointof(count), handles.storageGet());
+        vkEnumeratePhysicalDevices(platform::window::application::instanceGet(), pointof(count), handles.storageGet());
 
         pokemonism::sdk::continuous<VkPhysicalDevice, collection::continuous<VkPhysicalDevice>>::map<vulkan::physical::device>(handles, physicalDeviceSet);
 

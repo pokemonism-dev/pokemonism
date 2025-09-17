@@ -21,28 +21,12 @@ namespace pokemonism::vulkan {
 
     namespace platform {
         class window : public pokemonism::platform::window {
-        public:     class application : public applicationable {
-                    public:     static vulkan::platform::window::application & get(void);
-                    public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
-                    public:     virtual void extensionCat(const char * name) = 0;
-                    public:     virtual void layerCat(const char * name) = 0;
-                    public:     virtual void debugSet(vulkan::extension::debug::callback callback) = 0;
-                    public:     virtual vulkan::extension::debug::callback debugGet(void) const = 0;
-                    public:     virtual const collection::continuous<const char *> & extensionGet(void) const = 0;
-                    public:     virtual const collection::continuous<const char *> & layerGet(void) const = 0;
-                    public:     inline application(void);
-                    public:     inline ~application(void) override;
-                    public:     inline application(const vulkan::platform::window::application & o);
-                    public:     inline application(vulkan::platform::window::application && o) noexcept;
-                    public:     inline vulkan::platform::window::application & operator=(const vulkan::platform::window::application & o);
-                    public:     inline vulkan::platform::window::application & operator=(vulkan::platform::window::application && o) noexcept;
-                    };
+        public:     class application;
         };
     }
 
     class window : public pokemonism::window {
     public:     template <class super = pokemonism::window::application> class application : public super {
-                protected:  VkInstance instance;
                 protected:  VkDebugUtilsMessengerEXT messenger;
                 protected:  vulkan::platform::window::application & vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
@@ -79,6 +63,27 @@ namespace pokemonism::vulkan {
     public:     window(vulkan::window && o) noexcept = delete;
     public:     vulkan::window & operator=(const vulkan::window & o) = delete;
     public:     vulkan::window & operator=(vulkan::window && o) noexcept = delete;
+    };
+
+    class platform::window::application : public applicationable {
+    protected:  static VkInstance instance;
+    public:     static VkInstance instanceGet(void);
+    protected:  static void instanceSet(VkInstance instance);
+    public:     static vulkan::platform::window::application & get(void);
+    public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
+    public:     virtual void extensionCat(const char * name) = 0;
+    public:     virtual void layerCat(const char * name) = 0;
+    public:     virtual void debugSet(vulkan::extension::debug::callback callback) = 0;
+    public:     virtual vulkan::extension::debug::callback debugGet(void) const = 0;
+    public:     virtual const collection::continuous<const char *> & extensionGet(void) const = 0;
+    public:     virtual const collection::continuous<const char *> & layerGet(void) const = 0;
+    public:     inline application(void);
+    public:     inline ~application(void) override;
+    public:     inline application(const vulkan::platform::window::application & o);
+    public:     inline application(vulkan::platform::window::application && o) noexcept;
+    public:     inline vulkan::platform::window::application & operator=(const vulkan::platform::window::application & o);
+    public:     inline vulkan::platform::window::application & operator=(vulkan::platform::window::application && o) noexcept;
+    public:     template <class super> friend class vulkan::window::application;
     };
 
 }

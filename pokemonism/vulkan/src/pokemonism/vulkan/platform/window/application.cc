@@ -10,5 +10,16 @@
 
 #include "application.hh"
 
-namespace pokemonism {
+namespace pokemonism::vulkan::platform {
+
+    VkInstance window::application::instance = nullptr;
+
+    VkInstance window::application::instanceGet(void) {
+        return window::application::instance;
+    }
+
+    void window::application::instanceSet(VkInstance o) {
+        window::application::instance = o;
+    }
+
 }

@@ -10,6 +10,8 @@
 
 #include "vulkan.hh"
 
+#include "vulkan/window.hh"
+
 namespace pokemonism::vulkan {
 
     VkPhysicalDevice del(VkPhysicalDevice o) {
@@ -27,7 +29,8 @@ namespace pokemonism::vulkan {
     }
 
     VkSurfaceKHR del(VkSurfaceKHR o) {
-        // ### TODO: IMPLEMENT THIS
+        if (o != nullptr) vulkan::process::DestroySurfaceKHR(vulkan::platform::window::application::instanceGet(), o, nullptr);
+
         return nullptr;
     }
 
