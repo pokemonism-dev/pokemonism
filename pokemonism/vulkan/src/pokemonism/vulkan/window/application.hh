@@ -20,6 +20,7 @@ namespace pokemonism::vulkan {
 
     template <class policy>
     window::application<policy>::application(void) : policy(vulkan::platform::window::application::gen()),  messenger(nullptr), physicalDev(nullptr) {
+
     }
 
     template <class super>

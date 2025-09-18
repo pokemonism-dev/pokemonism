@@ -13,6 +13,8 @@ set(POKEMONISM_SDK_SOURCE               src/pokemonism/sdk/log.cc
                                         src/pokemonism/sdk/exception.cc
                                         src/pokemonism/sdk/allocator.cc
                                         src/pokemonism/sdk/memorizer.cc
+                                        src/pokemonism/sdk/synchronizer.cc
+                                        src/pokemonism/sdk/synchronizer/guard.cc
                                         src/pokemonism/sdk/memorizer/primitivable.cc
                                         src/pokemonism/sdk/memorizer/primitivable/one.cc)
 
@@ -26,10 +28,13 @@ set(POKEMONISM_SDK_HEADER               src/pokemonism/sdk/log.hh
                                         src/pokemonism/sdk/exception.hh
                                         src/pokemonism/sdk/allocator.hh
                                         src/pokemonism/sdk/memorizer.hh
+                                        src/pokemonism/sdk/synchronizer.hh
+                                        src/pokemonism/sdk/synchronizer/guard.hh
                                         src/pokemonism/sdk/memorizer/primitivable.hh
                                         src/pokemonism/sdk/memorizer/primitivable/one.hh)
 
 add_library(pokemonism-sdk              ${POKEMONISM_SDK_SOURCE}
                                         ${POKEMONISM_SDK_HEADER})
 
-
+add_executable(pokemonism-sdk-test-synchronizer-guard                       src/pokemonism/sdk/synchronizer/guard.cc)
+target_compile_options(pokemonism-sdk-test-synchronizer-guard   PRIVATE     -D__EXPORT_POKEMONISM_SDK_SYNCHRONIZER_GUARD)

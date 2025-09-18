@@ -12,15 +12,18 @@
 
 #include <pokemonism/sdk/exception.hh>
 #include <pokemonism/sdk/allocator.hh>
+#include <pokemonism/synchronizable.hh>
 
 namespace pokemonism::sdk {
     namespace linked {
         template <typename collection, typename element>
         class list {
         public:     static element * add(collection * container, element * node);
+        public:     template <class super> static element * add(collection * container, element * node, synchronizable<super> & o);
         public:     static element * del(collection * container, element * node);
         public:     static element * pop(collection * container);
         public:     static void clear(collection * container);
+        public:     template <class super> static void clear(collection * container, synchronizable<super> & o);
         public:     static void clear(collection * container, element * (*rel)(element *));
         public:     inline list(void);
         public:     inline virtual ~list(void);
@@ -44,6 +47,27 @@ namespace pokemonism::sdk {
             container->tail = node;
             container->size = container->size + 1;
             node->container = container;
+
+            return nullptr;
+        }
+
+        // ReSharper disable once CppDFAConstantFunctionResult
+        template <class collection, class element>
+        template <class super>
+        element * list<collection, element>::add(collection * container, element * node, synchronizable<super> & o) {
+            pokemon_develop_check(container == nullptr || node == nullptr || node->container != nullptr, return node);
+
+            o.lock();
+            node->prev = container->tail;
+            if (node->prev) {
+                node->prev->next = node;
+            } else {
+                container->head = node;
+            }
+            container->tail = node;
+            container->size = container->size + 1;
+            node->container = container;
+            o.unlock();
 
             return nullptr;
         }
@@ -101,6 +125,20 @@ namespace pokemonism::sdk {
             pokemon_develop_check(container == nullptr, return);
 
             while (element * node = list<collection, element>::pop(container)) allocator::del(node);
+        }
+
+        template <class collection, class element>
+        template <class super>
+        void list<collection, element>::clear(collection * container, synchronizable<super> & o) {
+            pokemon_develop_check(container == nullptr, return);
+
+            o.lock();
+            while (element * node = list<collection, element>::pop(container)) {
+                o.unlock();
+                allocator::del(node);
+                o.lock();
+            }
+            o.unlock();
         }
 
 

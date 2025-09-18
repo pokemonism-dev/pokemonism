@@ -24,7 +24,7 @@ namespace pokemonism {
     public:     virtual int wait(long second, long nano) = 0;
     public:     virtual int wakeup(bool all) = 0;
     public:     inline synchronizable(void);
-    public:     inline ~synchronizable(void) override;
+    public:     inline virtual ~synchronizable(void) override;
     public:     inline synchronizable(const synchronizable<super> & o);
     public:     inline synchronizable(synchronizable<super> && o) noexcept;
     public:     inline synchronizable<super> & operator=(const synchronizable<super> & o);
