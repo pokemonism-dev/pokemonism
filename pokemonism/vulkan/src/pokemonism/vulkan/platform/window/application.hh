@@ -10,6 +10,7 @@
 #ifndef   __POKEMONISM_VULKAN_PLATFORM_WINDOW_APPLICATION_HH__
 #define   __POKEMONISM_VULKAN_PLATFORM_WINDOW_APPLICATION_HH__
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <pokemonism/vulkan/window.hh>
 
 namespace pokemonism::vulkan::platform {

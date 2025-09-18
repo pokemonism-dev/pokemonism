@@ -14,6 +14,8 @@ namespace pokemonism::vulkan::platform {
 
     VkInstance window::application::instance = nullptr;
 
+    vulkan::platform::window::application * window::application::singleton = nullptr;
+
     VkInstance window::application::instanceGet(void) {
         return window::application::instance;
     }

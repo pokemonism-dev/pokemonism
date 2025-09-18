@@ -7,18 +7,20 @@
  * @since           9월 17, 2025
  */
 
-#ifndef   __POKEMONISM_METAL_HH__
-#define   __POKEMONISM_METAL_HH__
+#ifndef   __POKEMONISM_VULKAN_PLATFORM_COCOA_METAL_HH__
+#define   __POKEMONISM_VULKAN_PLATFORM_COCOA_METAL_HH__
 
+#ifdef    __OBJC__
 #import <QuartzCore/CAMetalLayer.h>
 #import <Cocoa/Cocoa.h>
+#endif // __OBJC__
 
 #include <pokemonism/vulkan.hh>
 
 #ifdef __OBJC__
 @class CAMetalLayer;
 #else
-typedef void CAMetalLayer;
+typedef void    CAMetalLayer;
 #endif
 
 typedef VkFlags VkMetalSurfaceCreateFlagsEXT;
@@ -45,4 +47,4 @@ public:     explicit VkMetalSurfaceCreateInfoEXT(const CAMetalLayer * layer) {
 namespace pokemonism::vulkan::platform::cocoa::metal {
 }
 
-#endif // __POKEMONISM_METAL_HH__
+#endif // __POKEMONISM_VULKAN_PLATFORM_COCOA_METAL_HH__

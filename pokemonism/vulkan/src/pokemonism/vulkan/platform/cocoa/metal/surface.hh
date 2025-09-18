@@ -15,6 +15,10 @@
 #include <pokemonism/vulkan/platform/cocoa/metal.hh>
 #include <pokemonism/vulkan/platform/cocoa/surface.hh>
 
+#ifndef   __OBJC__
+typedef void NSView;
+#endif // __OBJC__
+
 namespace pokemonism::vulkan::platform::cocoa::metal {
 
     class surface : public cocoa::surface {

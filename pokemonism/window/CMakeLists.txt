@@ -25,10 +25,10 @@ add_library(pokemonism-window-dev                                       ${POKEMO
                                                                         ${POKEMONISM_WINDOW_SOURCE})
 
 set(POKEMONISM_WINDOW_COCOA_SOURCE                                      src/pokemonism/platform/cocoa/window.mm
-                                                                        src/pokemonism/platform/cocoa/window/application.mm)
+                                                                        src/pokemonism/platform/cocoa/application.mm)
 
 set(POKEMONISM_WINDOW_COCOA_HEADER                                      src/pokemonism/platform/cocoa/window.hh
-                                                                        src/pokemonism/platform/cocoa/window/application.hh)
+                                                                        src/pokemonism/platform/cocoa/application.hh)
 
 target_sources(pokemonism-window-dev                    PRIVATE         ${POKEMONISM_WINDOW_COCOA_SOURCE}
                                                                         ${POKEMONISM_WINDOW_COCOA_HEADER})

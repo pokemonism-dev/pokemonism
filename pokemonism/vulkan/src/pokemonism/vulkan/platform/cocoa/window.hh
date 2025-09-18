@@ -11,62 +11,72 @@
 #define   __POKEMONISM_VULKAN_PLATFORM_COCOA_WINDOW_HH__
 
 #include <Cocoa/Cocoa.h>
+#import <QuartzCore/CAMetalLayer.h>
+
+#include <pokemonism/vulkan.hh>
 
 #include <pokemonism/vulkan/window.hh>
 #include <pokemonism/platform/cocoa/window.hh>
+#include <pokemonism/collection/continuous.hh>
+
+#ifdef __OBJC__
+@class CAMetalLayer;
+#else
+typedef void CAMetalLayer;
+#endif
 
 /**
  * 이 뷰는 불칸 렌더링을 위한 메탈 레이어를 제공하는 역할을 합니다.
  */
+#ifdef    __OBJC__
 @interface PokemonismVulkanView : NSView
 @end
-
+#else
+typedef void PokemonismVulkanView;
+#endif // __OBJC__
 
 namespace pokemonism::vulkan::platform::cocoa {
 
-    class window : public pokemonism::platform::cocoa::window {
-    public:     template <class super = pokemonism::platform::cocoa::window::application<vulkan::platform::window::application>>
-                class application : public vulkan::platform::window::application {
-                protected:  static vulkan::platform::cocoa::window::application<super> * singleton;
-                public:     static vulkan::platform::cocoa::window::application<super> * get(void);
-                protected:  pokemonism::platform::cocoa::window::application<super> * windowable;
-                protected:  collection::continuous<const char *> extensions;
-                protected:  collection::continuous<const char *> layers;
-                protected:  vulkan::extension::debug::callback debugger;
-                public:     void debugSet(vulkan::extension::debug::callback callback) override;
-                public:     vulkan::extension::debug::callback debugGet(void) const override;
-                public:     VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) override;
-                public:     void extensionCat(const char * name) override;
-                public:     void layerCat(const char * name) override;
-                public:     inline const char * platformNameGet(void) const noexcept override;
-                public:     inline const collection::continuous<const char *> & extensionGet(void) const override;
-                public:     inline const collection::continuous<const char *> & layerGet(void) const override;
-                public:     int run(void) override;
-                public:     vulkan::platform::cocoa::window * windowGen(const window::config & config) override;
-                public:     application(void);
-                public:     ~application(void) override;
-                public:     application(const vulkan::platform::cocoa::window::application<super> & o) = delete;
-                public:     application(vulkan::platform::cocoa::window::application<super> && o) noexcept = delete;
-                public:     vulkan::platform::cocoa::window::application<super> & operator=(const vulkan::platform::cocoa::window::application<super> & o) = delete;
-                public:     vulkan::platform::cocoa::window::application<super> & operator=(vulkan::platform::cocoa::window::application<super> && o) noexcept = delete;
-                };
+    template <class super = pokemonism::platform::cocoa::window<vulkan::platform::window>>
+    class window : public super {
     protected:  PokemonismVulkanView * vulkanView;
     public:     int open(void) override;
     public:     int close(void) override;
-    public:     explicit window(window::config & o);
+    public:     explicit window(const pokemonism::window::config & o);
     public:     window(void) = delete;
     public:     ~window(void) override;
-    public:     window(const vulkan::platform::cocoa::window & o) = delete;
-    public:     window(vulkan::platform::cocoa::window && o) noexcept = delete;
-    public:     vulkan::platform::cocoa::window & operator=(const vulkan::platform::cocoa::window & o) = delete;
-    public:     vulkan::platform::cocoa::window & operator=(vulkan::platform::cocoa::window && o) noexcept = delete;
+    public:     window(const vulkan::platform::cocoa::window<super> & o) = delete;
+    public:     window(vulkan::platform::cocoa::window<super> && o) noexcept = delete;
+    public:     vulkan::platform::cocoa::window<super> & operator=(const vulkan::platform::cocoa::window<super> & o) = delete;
+    public:     vulkan::platform::cocoa::window<super> & operator=(vulkan::platform::cocoa::window<super> && o) noexcept = delete;
     };
 
     template <class super>
-    vulkan::platform::cocoa::window::application<super> * vulkan::platform::cocoa::window::application<super>::singleton = nullptr;
+    int window<super>::open(void) {
+        return declaration::fail;
+    }
+
+    template <class super>
+    int window<super>::close(void) {
+        return declaration::fail;
+    }
+
+    template <class super>
+    window<super>::window(const pokemonism::window::config & o) : super(o), vulkanView(nullptr) {
+#ifdef    __OBJC__
+        @autoreleasepool {
+            NSRect contentRect = [this->internal.contentView bounds];
+            vulkanView = [[PokemonismVulkanView alloc] initWithFrame: contentRect];
+            [this->internal setContentView: vulkanView];
+        }
+#endif // __OBJC__
+    }
+
+    template <class super>
+    window<super>::~window(void) {
+
+    }
 
 }
-
-#include <pokemonism/vulkan/platform/cocoa/window/application.hh>
 
 #endif // __POKEMONISM_VULKAN_PLATFORM_COCOA_WINDOW_HH__

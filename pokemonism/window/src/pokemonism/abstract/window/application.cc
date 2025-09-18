@@ -31,7 +31,7 @@ namespace pokemonism::abstract {
     }
 
     window::application::application(void) :
-    adapter(platform::window::application::get()), size(declaration::zero), head(nullptr),
+    adapter(platform::window::application::gen()), size(declaration::zero), head(nullptr),
     tail(nullptr), name("pokemonism"), major(declaration::one), minor(declaration::zero), revision(declaration::zero) {
 
     }
@@ -44,6 +44,7 @@ namespace pokemonism::abstract {
 
     window::application::~application(void) {
         collection::clear(this);
+        if (adapter != nullptr) adapter = allocator::del(adapter);
     }
 
 }

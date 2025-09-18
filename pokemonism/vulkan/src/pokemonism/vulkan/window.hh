@@ -2,7 +2,7 @@
  * @file
  * @brief
  * @details
- * 
+ *
  * @author          snorlax <snorlax@pokemonism.dev>
  * @since           Sep 12, 2025
  */
@@ -28,11 +28,13 @@ namespace pokemonism::vulkan {
     class window : public pokemonism::window {
     public:     template <class super = pokemonism::window::application> class application : public super {
                 protected:  VkDebugUtilsMessengerEXT messenger;
-                protected:  vulkan::platform::window::application * vulkanable;
+                // protected:  vulkan::platform::window::application * vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
                 protected:  collection::continuous<VkLayerProperties> layers;
                 protected:  collection::continuous<vulkan::physical::device> physicalDeviceSet;
                 protected:  vulkan::physical::device * physicalDev;
+                public:     inline vulkan::platform::window::application * vulkanApp(void);
+                public:     inline const vulkan::platform::window::application * vulkanApp(void) const;
                 public:     int run(void) override;
                 public:     virtual int vulkanLoad(void);
                 public:     virtual void vulkanRel(void);
@@ -66,11 +68,12 @@ namespace pokemonism::vulkan {
     };
 
     class platform::window::application : public pokemonism::platform::window::application {
+    protected:  static vulkan::platform::window::application * singleton;
     protected:  static VkInstance instance;
     public:     static VkInstance instanceGet(void);
     protected:  static void instanceSet(VkInstance instance);
-    public:     static vulkan::platform::window::application * get(void);
-    public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
+    public:     static vulkan::platform::window::application * gen(void);
+    public:     virtual VkInstanceCreateInfo creationGen(const VkApplicationInfo & info, const collection::continuous<VkExtensionProperties> & extensionSet, const collection::continuous<VkLayerProperties> & layerSet) = 0;
     public:     virtual void extensionCat(const char * name) = 0;
     public:     virtual void layerCat(const char * name) = 0;
     public:     virtual void debugSet(vulkan::extension::debug::callback callback) = 0;

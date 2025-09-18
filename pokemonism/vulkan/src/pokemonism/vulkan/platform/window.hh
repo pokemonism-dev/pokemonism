@@ -13,17 +13,6 @@
 #include <pokemonism/platform/window.hh>
 
 namespace pokemonism::vulkan::platform {
-
-
-    // class window : public pokemonism::platform::window {
-    // public:     class application {
-    //             public:     static vulkan::platform::window::application & get(void);
-    //             public:     virtual VkInstanceCreateInfo creationGen(VkApplicationInfo & info);
-    //             public:     application(void);
-    //             public:
-    //             };
-    // };
-
 }
 
 #endif // __POKEMONISM_VULKAN_PLATFORM_WINDOW_HH__

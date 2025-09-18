@@ -7,8 +7,6 @@
  * @since           9월 15, 2025
  */
 
-#import <QuartzCore/CAMetalLayer.h>
-
 #include "window.hh"
 
 @implementation PokemonismVulkanView
@@ -33,26 +31,3 @@
   }
 
 @end
-
-namespace pokemonism::vulkan::platform::cocoa {
-
-    int window::open(void) {
-        return declaration::fail;
-    }
-
-    int window::close(void) {
-        return declaration::fail;
-    }
-
-    window::window(window::config & o) : pokemonism::platform::cocoa::window(o), vulkanView(nullptr) {
-        @autoreleasepool {
-            NSRect contentRect = [internal.contentView bounds];
-            vulkanView = [[PokemonismVulkanView alloc] initWithFrame: contentRect];
-            [internal setContentView: vulkanView];
-        }
-    }
-
-    window::~window(void) {
-    }
-
-}

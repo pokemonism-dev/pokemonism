@@ -10,58 +10,92 @@
 #ifndef   __POKEMONISM_PLATFORM_COCOA_WINDOW_HH__
 #define   __POKEMONISM_PLATFORM_COCOA_WINDOW_HH__
 
-#import <Cocoa/Cocoa.h>
-
 #include <pokemonism/window.hh>
 
-@interface PokemonismWindowApplicationDelegator : NSObject <NSApplicationDelegate>
-
-@property (nonatomic, assign) pokemonism::platform::window::application * application;
-
-@end
+#ifdef    __OBJC__
+#import <Cocoa/Cocoa.h>
 
 @interface PokemonismWindowDelegator : NSObject <NSWindowDelegate>
 
 @property (nonatomic, assign) pokemonism::platform::window * window;
 
 @end
+#else
+typedef void NSWindow;
+typedef void PokemonismWindowDelegator;
+#endif // __OBJC__
 
 namespace pokemonism::platform::cocoa {
 
-    class window : public platform::window {
-    public:     template <class super = platform::window::application>
-                class application : public super {
-                protected:  static platform::cocoa::window::application<super> singleton;
-                public:     static platform::cocoa::window::application<super> * get(void);
-                protected:  NSApplication * internal;
-                protected:  PokemonismWindowApplicationDelegator * delegator;
-                public:     inline const char * platformNameGet(void) const noexcept override;
-                public:     platform::cocoa::window * windowGen(const window::config & config) override;
-                public:     void eventWait(void) override;
-                public:     void eventPoll(void) override;
-                public:     int run(void) override;
-                public:     application(void);
-                public:     ~application(void) override;
-                public:     application(const platform::cocoa::window::application<super> & o) = delete;
-                public:     application(platform::cocoa::window::application<super> && o) noexcept = delete;
-                public:     platform::cocoa::window::application<super> & operator=(const platform::cocoa::window::application<super> & o) = delete;
-                public:     platform::cocoa::window::application<super> & operator=(platform::cocoa::window::application<super> && o) noexcept = delete;
-                };
+    template <class super = pokemonism::platform::window>
+    class window : public super {
     protected:  NSWindow * internal;
     protected:  PokemonismWindowDelegator * delegator;
     public:     int open(void) override;
     public:     int close(void) override;
-    public:     explicit window(const window::config & o);
+    public:     explicit window(const pokemonism::window::config & o);
     public:     window(void) = delete;
     public:     ~window(void) override;
-    public:     window(const platform::cocoa::window & o) = delete;
-    public:     window(platform::cocoa::window && o) noexcept = delete;
-    public:     platform::cocoa::window & operator=(const platform::cocoa::window & o) = delete;
-    public:     platform::cocoa::window & operator=(platform::cocoa::window && o) noexcept = delete;
+    public:     window(const platform::cocoa::window<super> & o) = delete;
+    public:     window(platform::cocoa::window<super> && o) noexcept = delete;
+    public:     platform::cocoa::window<super> & operator=(const platform::cocoa::window<super> & o) = delete;
+    public:     platform::cocoa::window<super> & operator=(platform::cocoa::window<super> && o) noexcept = delete;
     };
 
-}
+    template <class super>
+    int window<super>::close(void) {
+        // ### TODO: SEND CLOSE
 
-#include <pokemonism/platform/cocoa/window/application.hh>
+        return declaration::success;
+    }
+
+    template <class super>
+    window<super>::~window(void) {
+        // ### TODO: REMOVE `internal` OBJECT
+    }
+
+#ifdef    __OBJC__
+    template <class super>
+    int window<super>::open(void) {
+
+        [internal makeKeyAndOrderFront: nil];
+
+        return declaration::success;
+    }
+
+    template <class super>
+    window<super>::window(const pokemonism::window::config & o) : internal(nil), delegator(nil) {
+        @autoreleasepool {
+            NSRect contentRect = NSMakeRect(o.rect.x, o.rect.y, o.rect.width, o.rect.height);
+            internal = [[NSWindow alloc] initWithContentRect: contentRect
+                                                              styleMask: NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable
+                                                              backing: NSBackingStoreBuffered
+                                                              defer: NO];
+
+            internal.title = [NSString stringWithUTF8String: o.title.stringGet()];
+
+            delegator = [[PokemonismWindowDelegator alloc] init];
+            delegator.window = this;
+        }
+
+    }
+#else
+    /**
+     * Objective C 로 컴파일 시에 링크되지 않습니다.
+     * IDE 에서 오류 출력을 피하기 위한 더미 코드입니다.
+     */
+    template <class super>
+    int window<super>::open(void) {
+        pokemon_develop_throw(return declaration::success);
+    }
+
+    template <class super>
+    window<super>::window(const pokemonism::window::config & o) : internal(nil), delegator(nil) {
+        pokemon_develop_throw(void(0));
+    }
+
+#endif // __OBJC__
+
+}
 
 #endif // __POKEMONISM_PLATFORM_COCOA_WINDOW_HH__

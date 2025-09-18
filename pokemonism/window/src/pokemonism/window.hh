@@ -70,7 +70,7 @@ namespace pokemonism {
 
         class platform::window::application : public applicationable {
         protected:  static platform::window::application * singleton;
-        public:     static platform::window::application * get(void);
+        public:     static platform::window::application * gen(void);
         public:     virtual void eventWait(void) = 0;
         public:     virtual void eventPoll(void) = 0;
         public:     virtual platform::window * windowGen(const window::config & config) = 0;
