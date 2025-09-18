@@ -26,9 +26,9 @@ namespace pokemonism::vulkan {
     }
 
     class window : public pokemonism::window {
-    public:     template <class super = pokemonism::window::application> class application : public super {
+    public:     template <class policy = pokemonism::window::application>
+                class application : public policy {
                 protected:  VkDebugUtilsMessengerEXT messenger;
-                // protected:  vulkan::platform::window::application * vulkanable;
                 protected:  collection::continuous<VkExtensionProperties> extensions;
                 protected:  collection::continuous<VkLayerProperties> layers;
                 protected:  collection::continuous<vulkan::physical::device> physicalDeviceSet;
@@ -54,10 +54,10 @@ namespace pokemonism::vulkan {
                 public:     virtual void debugSet(vulkan::extension::debug::callback callback);
                 public:     application(void);
                 public:     ~application(void) override;
-                public:     application(const vulkan::window::application<super> & o) = delete;
-                public:     application(vulkan::window::application<super> && o) noexcept = delete;
-                public:     vulkan::window::application<super> & operator=(const vulkan::window::application<super> & o) = delete;
-                public:     vulkan::window::application<super> & operator=(vulkan::window::application<super> && o) noexcept = delete;
+                public:     application(const vulkan::window::application<policy> & o) = delete;
+                public:     application(vulkan::window::application<policy> && o) noexcept = delete;
+                public:     vulkan::window::application<policy> & operator=(const vulkan::window::application<policy> & o) = delete;
+                public:     vulkan::window::application<policy> & operator=(vulkan::window::application<policy> && o) noexcept = delete;
                 };
     public:     window(void) {}
     public:     ~window(void) override {}
