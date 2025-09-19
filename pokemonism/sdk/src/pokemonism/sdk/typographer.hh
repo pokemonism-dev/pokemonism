@@ -10,15 +10,18 @@
 #ifndef   __POKEMONISM_SDK_TYPOGRAPHER_HH__
 #define   __POKEMONISM_SDK_TYPOGRAPHER_HH__
 
+
+#include <concepts>
+
 namespace pokemonism {
     namespace sdk {
 
         template <typename elementable>
         struct typographer {
-        public:     constexpr static const char *   name = "basic";
+        public:     constexpr static const char *   name = "basic";                     /** 디버깅을 위해서 만들어 놓은 상수 */
         public:     typedef elementable             type;
-        public:     typedef void                    primitivable;
-        public:     typedef void                    characterable;
+        public:     typedef void                    primitivable;                       // 이부분에 concept 커버하면서. 명시적 특수화 시에 사용되어지는 기본 타입도 나오는거지...
+        public:     typedef void                    characterable;                      // 이것도 마찬가지고....
         public:     typedef type *                  pointer;
         public:     typedef type &                  reference;
         public:     constexpr static unsigned long  unit = sizeof(elementable);
@@ -57,7 +60,7 @@ namespace pokemonism {
 template <> struct pokemonism::sdk::typographer<elementType> {                      \
 public:     constexpr static const char *   name = #elementType;                    \
 public:     typedef elementType             type;                                   \
-public:     typedef primitiveType           Primitivable;                           \
+public:     typedef primitiveType           primitivable;                           \
 public:     typedef characterType           characterable;                          \
 public:     typedef type *                  pointer;                                \
 public:     typedef type &                  reference;                              \
@@ -87,7 +90,7 @@ describe_typographer(unsigned long long, unsigned, void, sizeof(unsigned long lo
 template <> struct pokemonism::sdk::typographer<elementType> {                                      \
 public:     constexpr static const char *   name = #elementType;                                    \
 public:     typedef elementType             type;                                                   \
-public:     typedef primitiveType           Primitivable;                                           \
+public:     typedef primitiveType           primitivable;                                           \
 public:     typedef characterType           characterable;                                          \
 public:     typedef pointerType             pointer;                                                \
 public:     typedef pointerType             reference;                                              \

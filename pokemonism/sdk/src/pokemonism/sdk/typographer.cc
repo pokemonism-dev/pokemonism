@@ -12,3 +12,11 @@
 
 namespace pokemonism {
 }
+
+#include <cstdio>
+
+extern "C" int EXPORT_POKEMONISM_SDK_CHECK_TYPOGRAPHER(int argc, char ** argv) {
+    printf("see this... gemini\n");
+    return 0;
+}
+
