@@ -12,26 +12,28 @@
 
 #include <pokemonism/sdk/exception.hh>
 
+#include "pokemonism/sdk/typographer.hh"
+
 namespace pokemonism::sdk::dictionary::binary {
 
     template <typename collection, typename item, class comparator>
-    // // 이 템플릿이 요구하는 타입들의 '계약서'를 완성했습니다.
-    // // 이제 컴파일러가 "이 타입은 이런 멤버를 가져야 해!"라고 명확히 알려줄 겁니다.
-    // requires requires(collection c, item i, comparator comp) {
-    //     // collection 타입에 대한 계약
-    //     { c.root } -> is::declaration<item*&>;
-    //     { c.size } -> is::integer;
-    //
-    //     // item 타입에 대한 계약
-    //     { i.container } -> is::declaration<collection*&>;
-    //     { i.parent }    -> is::declaration<item*&>;
-    //     { i.left }      -> is::declaration<item*&>;
-    //     { i.right }     -> is::declaration<item*&>;
-    //     i.value; // 'value' 멤버가 존재해야 함
-    //
-    //     // comparator 타입에 대한 계약
-    //     { comp(i.value, i.value) } -> std::convertible_to<int>;
-    // }
+    // 이 템플릿이 요구하는 타입들의 '계약서'를 완성했습니다.
+    // 이제 컴파일러가 "이 타입은 이런 멤버를 가져야 해!"라고 명확히 알려줄 겁니다.
+    requires requires(collection c, item i, comparator comp) {
+        // collection 타입에 대한 계약
+        { c.root } -> is::declaration<item*&>;
+        // { c.size } -> is::declaration<int>;
+        requires typographer<decltype(c.size)>::integerable;
+        // item 타입에 대한 계약
+        { i.container } -> is::declaration<collection*&>;
+        { i.parent }    -> is::declaration<item*&>;
+        { i.left }      -> is::declaration<item*&>;
+        { i.right }     -> is::declaration<item*&>;
+        i.value; // 'value' 멤버가 존재해야 함
+
+        // comparator 타입에 대한 계약
+        { comp(i.value, i.value) } -> std::convertible_to<int>;
+    }
     class search {
     public:     static item * begin(collection * container);
     public:     static item * next(collection * container, item * node);

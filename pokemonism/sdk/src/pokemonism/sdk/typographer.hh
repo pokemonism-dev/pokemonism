@@ -26,7 +26,6 @@ namespace pokemonism {
         public:     constexpr static bool           integerable = false;                // 기본적으로 모든 타입은 정수가 아닙니다.
         public:     typedef type *                  pointer;
         public:     typedef type &                  reference;
-        // 'const' 갑옷을 입히기 위한 오버로딩입니다! '읽기 전용' 참조를 위한 규칙이죠.
         public:     static type & referenceOf(pointer o){ return *o; }
         public:     static const type & constReferenceOf(const pointer o){ return *o; }
         public:     constexpr static unsigned long  unit = sizeof(elementable);

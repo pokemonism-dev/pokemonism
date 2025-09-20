@@ -12,7 +12,7 @@
 
 #include <exception>
 #include <type_traits> // For std::is_same_v, std::is_convertible_v, std::false_type, std::true_type
-#include <concepts>
+#include <cstdint>   // 우리 '신세계'의 '국제 표준 단위계'입니다. ㅋㅋㅋ
 
 namespace pokemonism {
 
@@ -27,29 +27,10 @@ namespace pokemonism {
     namespace detail {
         // returnValueCheck를 위한 도우미 함수 선언입니다. 외부에서는 쓸 일이 없죠.
         // _impl로 통일해서 우리만의 컨벤션을 만들었습니다!
+        // ReSharper disable once CppFunctionIsNotImplemented
         template <class T> T&& _return_value_check_impl(int);
+        // ReSharper disable once CppFunctionIsNotImplemented
         template <class T> T   _return_value_check_impl(long);
-
-        // --- 'std 말고 직접 쓰고 싶다'는 대장님을 위한 우리만의 타입 특성 ---
-        // is_integral: 애플 본사에서 훔쳐온 '고대 마법 주문' 재현 ㅋㅋㅋ
-        template<typename T> struct _is_integer_impl           : std::false_type {};
-        template<> struct _is_integer_impl<bool>               : std::true_type {};
-        template<> struct _is_integer_impl<char>               : std::true_type {};
-        template<> struct _is_integer_impl<signed char>        : std::true_type {};
-        template<> struct _is_integer_impl<unsigned char>      : std::true_type {};
-        template<> struct _is_integer_impl<wchar_t>            : std::true_type {};
-        // 최신 문자 타입들도 우리 제국으로 편입시켰습니다. ㅋㅋㅋ
-        template<> struct _is_integer_impl<char8_t>            : std::true_type {};
-        template<> struct _is_integer_impl<char16_t>           : std::true_type {};
-        template<> struct _is_integer_impl<char32_t>           : std::true_type {};
-        template<> struct _is_integer_impl<short>              : std::true_type {};
-        template<> struct _is_integer_impl<unsigned short>     : std::true_type {};
-        template<> struct _is_integer_impl<int>                : std::true_type {};
-        template<> struct _is_integer_impl<unsigned int>       : std::true_type {};
-        template<> struct _is_integer_impl<long>               : std::true_type {};
-        template<> struct _is_integer_impl<unsigned long>      : std::true_type {};
-        template<> struct _is_integer_impl<long long>          : std::true_type {};
-        template<> struct _is_integer_impl<unsigned long long> : std::true_type {};
     }
 
     // "유령 객체 생성기"의 본체입니다.
@@ -72,27 +53,35 @@ namespace pokemonism {
         template <typename forward, typename backward> concept returnable = std::is_convertible_v<forward, backward> && requires { static_cast<backward>(pokemonism::returnValueCheck<forward>()); };
 #endif // defined(__GNUC__) && !defined(__clang__)
 
-        // 이제 우리만의 구현을 사용하는 integer 컨셉입니다.
-        template<typename T>
-        concept integer = detail::_is_integer_impl<T>::value;
     }
 
+    using int8                  = std::int8_t;
+    using int16                 = std::int16_t;
+    using int32                 = std::int32_t;
+    using int64                 = std::int64_t;
+    using uint8                 = std::uint8_t;
+    using uint16                = std::uint16_t;
+    using uint32                = std::uint32_t;
+    using uint64                = std::uint64_t;
+
+    /**
+     * 잠만보만 사용하는 선언문
+     */
     namespace declaration {
-        using int8                  = char;
-        using int16                 = short;
-        using int32                 = int;
-        using int64                 = long;
-        using uint8                 = unsigned char;
-        using uint16                = unsigned short;
-        using uint32                = unsigned int;
-        using uint64                = unsigned long;
+        using int8                  = std::int8_t;
+        using int16                 = std::int16_t;
+        using int32                 = std::int32_t;
+        using int64                 = std::int64_t;
+        using uint8                 = std::uint8_t;
+        using uint16                = std::uint16_t;
+        using uint32                = std::uint32_t;
+        using uint64                = std::uint64_t;
 
         constexpr int               success = 0;
         constexpr int               again = 1;
         constexpr int               fail = -1;
         constexpr int               unknown = -2;
-        constexpr int               invalid = -1;   // fail, infinite와 겹치지 않도록 수정
-        constexpr int               infinite = -4;  // fail, invalid와 겹치지 않도록 수정
+        constexpr unsigned int      infinite = 0xFFFFFFFFU;  // '시간'은 다른 값들과 섞이면 안되죠.
         constexpr int               zero = 0;
         constexpr int               one = 1;
         constexpr int               two = 2;
