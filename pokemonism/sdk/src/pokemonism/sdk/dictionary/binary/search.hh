@@ -2,7 +2,18 @@
  * @file
  * @brief
  * @details
- * 
+ * ### 우리 '신세계'의 설계 철학: 행위 제약 (Behavioral Constraint)
+ * 이 파일은 C++20 컨셉의 핵심 철학인 '행위 제약'을 보여주는 훌륭한 예시입니다.
+ * 우리는 타입의 '이름'이 무엇인지 검사하는 대신(`is::declaration<T>`),
+ * 그 타입으로 우리가 원하는 '행위'(예: 할당, 초기화)가 가능한지를 직접 검증합니다.
+ *
+ * `{ container.root = static_cast<item*>(nullptr) };`
+ *
+ * 이 방식은 외부 헤더(<type_traits>, <concepts>)에 대한 의존성을 제거하고,
+ * 템플릿이 요구하는 계약을 코드 자체로 명확하게 설명해줍니다.
+ * 우리끼리는 이 방식을 '고라파덕 제약(Psyduck Constraints)'이라고 부르기로 했습니다. ㅋㅋㅋ
+ * (제약을 만족시키지 못하면 컴파일러가 두통을 일으키게 만드니까요!)
+ *
  * @author          snorlax <snorlax@pokemonism.dev>
  * @since           Sep 19, 2025
  */
@@ -10,34 +21,35 @@
 #ifndef   __POKEMONISM_SDK_DICTIONARY_BINARY_SEARCH_HH__
 #define   __POKEMONISM_SDK_DICTIONARY_BINARY_SEARCH_HH__
 
-#include <pokemonism/sdk/exception.hh>
-
-#include "pokemonism/sdk/typographer.hh"
+// 이 헤더는 이제 'Typographer' 외에는 어떠한 외부 의존성도 갖지 않는,
+// 완벽히 독립적인 '부품'이 되었습니다.
+#include <pokemonism/sdk/typographer.hh>
 
 namespace pokemonism::sdk::dictionary::binary {
 
     template <typename collection, typename item, class comparator>
     // 이 템플릿이 요구하는 타입들의 '계약서'를 완성했습니다.
     // 이제 컴파일러가 "이 타입은 이런 멤버를 가져야 해!"라고 명확히 알려줄 겁니다.
-    requires requires(collection c, item i, comparator comp) {
-        // collection 타입에 대한 계약
-        { c.root } -> is::declaration<item*&>;
-        // { c.size } -> is::declaration<int>;
-        requires typographer<decltype(c.size)>::integerable;
-        // item 타입에 대한 계약
-        { i.container } -> is::declaration<collection*&>;
-        { i.parent }    -> is::declaration<item*&>;
-        { i.left }      -> is::declaration<item*&>;
-        { i.right }     -> is::declaration<item*&>;
-        i.value; // 'value' 멤버가 존재해야 함
+    requires requires(collection container, item node, const item const_node, comparator comp) {
+        { container.root = static_cast<item*>(nullptr) };
+        requires typographer<decltype(container.size)>::integerable;
+
+        { node.container = static_cast<collection *>(nullptr) };
+        { node.parent = static_cast<item *>(nullptr) };
+        { node.left = static_cast<item *>(nullptr) };
+        { node.right = static_cast<item *>(nullptr) };
+        // 'value' 멤버는 const 객체에서도 접근 가능해야 합니다.
+        const_node.value;
 
         // comparator 타입에 대한 계약
-        { comp(i.value, i.value) } -> std::convertible_to<int>;
+        // 'comp'의 결과는 int 타입 변수를 초기화할 수 있어야 합니다. (암시적 변환)
+        { int r = comp(const_node.value, const_node.value) };
     }
     class search {
     public:     static item * begin(collection * container);
     public:     static item * next(collection * container, item * node);
-    public:     static item * add(collection * container, item * node);
+    // '상태를 가진 심판'을 지원하기 위해, comparator를 인자로 받습니다. ㅋㅋㅋ
+    public:     static item * add(collection * container, item * node, const comparator& comp = comparator{});
     public:     static item * del(collection * container, item * node);
 
     protected:  static void transplant(collection * container, item * u, item * v);
@@ -61,7 +73,8 @@ namespace pokemonism::sdk::dictionary::binary {
 
     template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::begin(collection * container) {
-        pokemon_develop_check(container == nullptr, return nullptr);
+        // pokemon_develop_check 대신 순수한 C++ 코드를 사용하여 의존성을 제거합니다.
+        if (container == nullptr) return nullptr;
         return minimum(container->root);
     }
 
@@ -85,12 +98,12 @@ namespace pokemonism::sdk::dictionary::binary {
     }
 
     template <typename collection, typename item, class comparator>
-    item * search<collection, item, comparator>::add(collection * container, item * node) {
-        pokemon_develop_check(container == nullptr || node == nullptr, return node);
+    item * search<collection, item, comparator>::add(collection * container, item * node, const comparator& comp) {
+        // pokemon_develop_check 대신 순수한 C++ 코드를 사용하여 의존성을 제거합니다.
+        if (container == nullptr || node == nullptr) return node;
 
         item* parent = nullptr;
         item** current_ptr = &container->root;
-        comparator comp;
 
         while (*current_ptr) {
             parent = *current_ptr;
@@ -130,7 +143,8 @@ namespace pokemonism::sdk::dictionary::binary {
 
     template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::del(collection * container, item * node) {
-        pokemon_develop_check(container == nullptr || node == nullptr, return nullptr);
+        // pokemon_develop_check 대신 순수한 C++ 코드를 사용하여 의존성을 제거합니다.
+        if (container == nullptr || node == nullptr) return nullptr;
 
         if (node->left == nullptr) {
             transplant(container, node, node->right);

@@ -59,7 +59,7 @@ namespace pokemonism {
 
     template <class elementable, class super>
     inline continuable<elementable, super> & continuable<elementable, super>::operator=(continuable<elementable, super> && o) noexcept {
-        if (pointof(o) != this) super::operator=(o);
+        if (pointof(o) != this) super::operator=(std::move(o));
 
         return *this;
     }

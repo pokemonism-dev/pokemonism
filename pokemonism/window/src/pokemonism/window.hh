@@ -39,9 +39,9 @@ namespace pokemonism {
     namespace abstract {
         class window : public pokemonism::window {
         public:     class application;
-        protected:  abstract::window::application *     container;
-        protected:  abstract::window *                  prev;
-        protected:  abstract::window *                  next;
+        private:    abstract::window::application *     container;
+        private:    abstract::window *                  prev;
+        private:    abstract::window *                  next;
         public:     platform::window *                  adapter;
         public:     int open(void) override;
         public:     int close(void) override;
