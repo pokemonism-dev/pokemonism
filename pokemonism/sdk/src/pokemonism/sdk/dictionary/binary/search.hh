@@ -14,16 +14,35 @@
 
 namespace pokemonism::sdk::dictionary::binary {
 
-
     template <typename collection, typename item, class comparator>
+    // // 이 템플릿이 요구하는 타입들의 '계약서'를 완성했습니다.
+    // // 이제 컴파일러가 "이 타입은 이런 멤버를 가져야 해!"라고 명확히 알려줄 겁니다.
+    // requires requires(collection c, item i, comparator comp) {
+    //     // collection 타입에 대한 계약
+    //     { c.root } -> is::declaration<item*&>;
+    //     { c.size } -> is::integer;
+    //
+    //     // item 타입에 대한 계약
+    //     { i.container } -> is::declaration<collection*&>;
+    //     { i.parent }    -> is::declaration<item*&>;
+    //     { i.left }      -> is::declaration<item*&>;
+    //     { i.right }     -> is::declaration<item*&>;
+    //     i.value; // 'value' 멤버가 존재해야 함
+    //
+    //     // comparator 타입에 대한 계약
+    //     { comp(i.value, i.value) } -> std::convertible_to<int>;
+    // }
     class search {
     public:     static item * begin(collection * container);
     public:     static item * next(collection * container, item * node);
-    protected:  static void splice(collection * container, item * x, item * y);
     public:     static item * add(collection * container, item * node);
     public:     static item * del(collection * container, item * node);
-    public:     search(void) {}
-    public:     virtual ~search(void) {}
+
+    protected:  static void transplant(collection * container, item * u, item * v);
+    private:    static item * minimum(item* node);
+
+    public:     search(void) = delete;
+    public:     ~search(void) = delete;
     public:     search(const search<collection, item, comparator> & o) = delete;
     public:     search(search<collection, item, comparator> && o) noexcept = delete;
     public:     search<collection, item, comparator> & operator=(const search<collection, item, comparator> & o) = delete;
@@ -31,189 +50,110 @@ namespace pokemonism::sdk::dictionary::binary {
     };
 
     template <typename collection, typename item, class comparator>
+    item * search<collection, item, comparator>::minimum(item* node) {
+        while (node && node->left) {
+            node = node->left;
+        }
+        return node;
+    }
+
+    template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::begin(collection * container) {
         pokemon_develop_check(container == nullptr, return nullptr);
-
-        item * node = container->root;
-
-        if (node) while (node->left) node = node->left;
-
-        return node;
+        return minimum(container->root);
     }
 
     template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::next(collection * container, item * node) {
-        item * parent = nullptr;
-        if (node != nullptr) {
-            if (node->right != nullptr) {
-                node = node->right;
-                while (node->left) node = node->left;
-            } else {
-                do {
-                    parent = node->parent;
-                    if (parent) {
-                        if (node==parent->left) {
-                            node = parent;
-                            break;
-                        }
-                    }
-                    node = parent;
-                } while (node);
-            }
+        if (node == nullptr) return nullptr;
+
+        // 오른쪽 서브트리가 있다면, 그곳의 가장 작은 노드가 후계자입니다.
+        if (node->right) {
+            return minimum(node->right);
         }
-        return node;
+
+        // 오른쪽 서브트리가 없다면, 부모를 따라 올라가다가
+        // 처음으로 왼쪽 자식이 되는 순간의 부모가 후계자입니다.
+        item* parent = node->parent;
+        while (parent && node == parent->right) {
+            node = parent;
+            parent = parent->parent;
+        }
+        return parent;
     }
 
     template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::add(collection * container, item * node) {
-        item * current = container->root;
-        if (current == nullptr) {
-            container->root = node;
-            container->size = container->size + 1;
-            node->container = container;
-            return current;
-        }
-        do {
-            const int result = comparator(node->value, current->value);
-            if (result == 0) break;
-            if (result > 0) {
-                if (current->right == nullptr) {
-                    current->right = node;
-                    container->size = container->size + 1;
-                    node->parent = current;
-                    node->container = container;
-                    current = nullptr;
-                    break;
-                }
-                current = current->right;
-            } else {
-                if (current->left == nullptr) {
-                    current->left = node;
-                    container->size = container->size + 1;
-                    node->parent = current;
-                    node->container = container;
-                    current = nullptr;
-                    break;
-                }
-                current = current->left;
-            }
-        } while (current);
+        pokemon_develop_check(container == nullptr || node == nullptr, return node);
 
-        return current;
+        item* parent = nullptr;
+        item** current_ptr = &container->root;
+        comparator comp;
+
+        while (*current_ptr) {
+            parent = *current_ptr;
+            const int result = comp(node->value, parent->value);
+
+            if (result == 0) {
+                return parent; // 중복 노드 발견, 기존 노드 반환
+            }
+            if (result > 0) {
+                current_ptr = &parent->right;
+            } else {
+                current_ptr = &parent->left;
+            }
+        }
+
+        *current_ptr = node;
+        node->parent = parent;
+        node->container = container;
+        container->size++;
+
+        return nullptr; // 성공적으로 추가됨
     }
 
     template <typename collection, typename item, class comparator>
-    void search<collection, item, comparator>::splice(collection * container, item * x, item * y) {
-        item * parent = x->parent;
-        item * left = x->left;
-        item * right = x->right;
-        const int parentLeft = parent && parent->left == x;
-
-        x->parent = y->parent;
-        if (x->parent) {
-            if (x->parent->left == y) {
-                x->parent->left = x;
-            } else {
-                x->parent->right = x;
-            }
+    void search<collection, item, comparator>::transplant(collection * container, item * u, item * v) {
+        if (u->parent == nullptr) {
+            container->root = v;
+        } else if (u == u->parent->left) {
+            u->parent->left = v;
         } else {
-            container->root = x;
+            u->parent->right = v;
         }
-
-        x->left = y->left;
-        if (x->left != nullptr) x->left->parent = x;
-        x->right = y->right;
-        if (x->right != nullptr) x->right->parent = x;
-
-        y->parent = parent;
-        if (y->parent != nullptr) {
-            if (parentLeft) {
-                y->parent->left = y;
-            } else {
-                y->parent->right = y;
-            }
-        } else {
-            container->root = y;
+        if (v) {
+            v->parent = u->parent;
         }
-
-        y->left = left;
-        if (y->left) y->left->parent = y;
-        y->right = right;
-        if (y->right) y->right->parent = y;
     }
 
     template <typename collection, typename item, class comparator>
     item * search<collection, item, comparator>::del(collection * container, item * node) {
-        item * current = node;
-        if (current) {
-            if (current->left && current->right) {
-                item * successor = current->right;
-                while (successor->left) successor = successor->left;
-                splice(container, current, successor);
-                if (current->right) {
-                    if(current->parent->left == current) {
-                        current->parent->left = current->right;
-                    } else {
-                        current->parent->right = current->right;
-                    }
-                    current->right->parent = current->parent;
-                    current->right = nullptr;
-                } else {
-                    if(current->parent->left == current) {
-                        current->parent->left = nullptr;
-                    } else {
-                        current->parent->right = nullptr;
-                    }
-                }
-                current->parent = nullptr;
-                current->container = nullptr;
-                container->size = container->size - 1;
-            } else if (current->left) {
-                if (current->parent) {
-                    if (current->parent->left == current) {
-                        current->parent->left = current->left;
-                    } else {
-                        current->parent->right = current->left;
-                    }
-                    current->left->parent = current->parent;
-                    current->parent = nullptr;
-                } else {
-                    container->root = current->left;
-                    current->left->parent = nullptr;
-                }
-                current->left = nullptr;
-                current->container = nullptr;
-                container->size = container->size - 1;
-            } else if (current->right) {
-                if (current->parent) {
-                    if (current->parent->left == current) {
-                        current->parent->left = current->right;
-                    } else {
-                        current->parent->right = current->right;
-                    }
-                    current->right->parent = current->parent;
-                    current->parent = nullptr;
-                } else {
-                    container->root = current->right;
-                    current->right->parent = nullptr;
-                }
-                current->right = nullptr;
-                current->container = nullptr;
-                container->size = container->size - 1;
-            } else {
-                if (current->parent) {
-                    if (current->parent->left == current) {
-                        current->parent->left = nullptr;
-                    } else {
-                        current->parent->right = nullptr;
-                    }
-                    current->parent = nullptr;
-                    container->size = container->size - 1;
-                }
+        pokemon_develop_check(container == nullptr || node == nullptr, return nullptr);
+
+        if (node->left == nullptr) {
+            transplant(container, node, node->right);
+        } else if (node->right == nullptr) {
+            transplant(container, node, node->left);
+        } else {
+            item* successor = minimum(node->right);
+            if (successor->parent != node) {
+                transplant(container, successor, successor->right);
+                successor->right = node->right;
+                successor->right->parent = successor;
             }
-            current->container = nullptr;
+            transplant(container, node, successor);
+            successor->left = node->left;
+            successor->left->parent = successor;
         }
-        return current;
+
+        container->size--;
+        // 안전을 위해 분리된 노드의 포인터들을 정리합니다.
+        node->parent = nullptr;
+        node->left = nullptr;
+        node->right = nullptr;
+        node->container = nullptr;
+
+        return node;
     }
 }
 

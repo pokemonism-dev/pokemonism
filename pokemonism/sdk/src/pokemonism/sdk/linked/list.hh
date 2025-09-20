@@ -12,18 +12,19 @@
 
 #include <pokemonism/sdk/exception.hh>
 #include <pokemonism/sdk/allocator.hh>
-#include <pokemonism/synchronizable.hh>
+#include <pokemonism/sdk/synchronizer.hh>
 
 namespace pokemonism::sdk {
     namespace linked {
         template <typename collection, typename element>
         class list {
         public:     static element * add(collection * container, element * node);
-        public:     template <class super> static element * add(collection * container, element * node, synchronizable<super> & o);
+        public:     template <class super> static element * add(collection * container, element * node, typename synchronizer<super>::guard o);
         public:     static element * del(collection * container, element * node);
         public:     static element * pop(collection * container);
+        public:     template <class super> static element * pop(collection * container, typename synchronizer<super>::guard o);
         public:     static void clear(collection * container);
-        public:     template <class super> static void clear(collection * container, synchronizable<super> & o);
+        public:     template <class super> static void clear(collection * container, typename synchronizer<super>::guard o);
         public:     static void clear(collection * container, element * (*rel)(element *));
         public:     inline list(void);
         public:     inline virtual ~list(void);
@@ -54,10 +55,9 @@ namespace pokemonism::sdk {
         // ReSharper disable once CppDFAConstantFunctionResult
         template <class collection, class element>
         template <class super>
-        element * list<collection, element>::add(collection * container, element * node, synchronizable<super> & o) {
+        element * list<collection, element>::add(collection * container, element * node, typename synchronizer<super>::guard o) {
             pokemon_develop_check(container == nullptr || node == nullptr || node->container != nullptr, return node);
 
-            o.lock();
             node->prev = container->tail;
             if (node->prev) {
                 node->prev->next = node;
@@ -67,7 +67,6 @@ namespace pokemonism::sdk {
             container->tail = node;
             container->size = container->size + 1;
             node->container = container;
-            o.unlock();
 
             return nullptr;
         }
@@ -129,16 +128,36 @@ namespace pokemonism::sdk {
 
         template <class collection, class element>
         template <class super>
-        void list<collection, element>::clear(collection * container, synchronizable<super> & o) {
+        void list<collection, element>::clear(collection * container, typename synchronizer<super>::guard o) {
             pokemon_develop_check(container == nullptr, return);
 
-            o.lock();
             while (element * node = list<collection, element>::pop(container)) {
                 o.unlock();
                 allocator::del(node);
                 o.lock();
             }
-            o.unlock();
+        }
+
+        template <class collection, class element>
+        template <class super>
+        element * list<collection, element>::pop(collection * container, typename synchronizer<super>::guard o) {
+            pokemon_develop_check(container == nullptr, return nullptr);
+
+            element * node = container->head;
+            if (node != nullptr) {
+                if (node->next) {
+                    container->head = node->next;
+                    node->next->prev = nullptr;
+                    node->next = nullptr;
+                } else {
+                    container->head = nullptr;
+                    container->tail = nullptr;
+                }
+                container->size = container->size - 1;
+                node->container = nullptr;
+            }
+
+            return node;
         }
 
 

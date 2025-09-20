@@ -62,7 +62,9 @@ namespace pokemonism::sdk {
     elementable * memorizer<elementable, unsigned, size>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
         pokemon_develop_check(destination == nullptr || sourceLen == 0, return nullptr);
 
-        for (unsigned long i = 0; i < sourceLen; i = i + 1) referenceof(destination + i) = valueof(source + i);
+        memcpy(destination, source, sourceLen * size);
+
+        // for (unsigned long i = 0; i < sourceLen; i = i + 1) referenceof(destination + i) = valueof(source + i);
 
         return destination;
     }

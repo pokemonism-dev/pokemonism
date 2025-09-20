@@ -25,7 +25,7 @@ namespace pokemonism::vulkan::platform::cocoa::metal {
 
             info.sType = VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT;
             info.pNext = nullptr;
-            info.flags = declaration::none;
+            info.flags = 0;
             info.pLayer = layer;
         }
 

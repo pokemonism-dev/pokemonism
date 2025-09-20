@@ -20,8 +20,6 @@ using namespace pokemonism;
 using namespace pokemonism::sdk;
 
 template <class super> void test(typename synchronizer<super>::guard sync) {
-    sync.lock();
-    sync.unlock();
 }
 
 int main(void) {

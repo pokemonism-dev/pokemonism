@@ -27,7 +27,10 @@
 | DRAGONITE  | -                 |
 | RIOLU      | -                 |
 
+---
+> **This is an engine for those who understand the world of Pokémon.**
+> Our unique keywords (`pokemon_name`, `pokemon_trainername`, etc.) are a testament to this philosophy.
+
 REACTIVE LIB
 
 ### 20250825 | STD::MOVE 구현 | TODO
-

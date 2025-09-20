@@ -177,7 +177,7 @@ namespace pokemonism::vulkan::physical {
 
         info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         info.pNext = nullptr;
-        info.flags = declaration::none;
+        info.flags = 0;
         info.queueFamilyIndex = index;
         info.queueCount = declaration::one;
         info.pQueuePriorities = pointof(queue::priority::standard);
@@ -190,7 +190,7 @@ namespace pokemonism::vulkan::physical {
 
         info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
         info.pNext = nullptr;
-        info.flags = declaration::none;
+        info.flags = 0;
         info.queueCreateInfoCount = declaration::one;
         info.pQueueCreateInfos = pointof(queueCreateInfo);
         info.enabledLayerCount = layers.sizeGet();
@@ -207,7 +207,7 @@ namespace pokemonism::vulkan::physical {
 
         info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
         info.pNext = nullptr;
-        info.flags = declaration::none;
+        info.flags = 0;
         info.queueCreateInfoCount = queueCreateInfoSet.sizeGet();
         info.pQueueCreateInfos = queueCreateInfoSet.storageGet();
         info.enabledLayerCount = layers.sizeGet();

@@ -33,4 +33,7 @@ namespace pokemonism::sdk {
 
 }
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include <pokemonism/sdk/synchronizer/guard.hh>
+
 #endif // __POKEMONISM_SDK_SYNCHRONIZER_HH__s

@@ -20,7 +20,7 @@ namespace pokemonism {
     public:     virtual void add(const elementable & item) = 0;
     public:     virtual void add(elementable && item) = 0;
     public:     inline collectable(void);
-    public:     inline ~collectable(void);
+    public:     inline virtual ~collectable(void) override;
     public:     inline collectable(const collectable<elementable, super> & o);
     public:     inline collectable(collectable<elementable, super> && o) noexcept;
     public:     inline collectable<elementable, super> & operator=(const collectable<elementable, super> & o);

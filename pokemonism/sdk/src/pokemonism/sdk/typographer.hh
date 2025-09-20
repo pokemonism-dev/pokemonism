@@ -24,6 +24,9 @@ namespace pokemonism {
         public:     typedef void                    characterable;                      // 이것도 마찬가지고....
         public:     typedef type *                  pointer;
         public:     typedef type &                  reference;
+        // 'const' 갑옷을 입히기 위한 오버로딩입니다! '읽기 전용' 참조를 위한 규칙이죠.
+        public:     static type & referenceOf(pointer o){ return *o; }
+        public:     static const type & constReferenceOf(const pointer o){ return *o; }
         public:     constexpr static unsigned long  unit = sizeof(elementable);
         };
 
@@ -35,6 +38,7 @@ namespace pokemonism {
         public:     typedef void                    characterable;
         public:     typedef type *                  pointer;
         public:     typedef type &                  reference;
+        public:     static const type & constReferenceOf(const pointer o){ return *o; }
         public:     static reference referenceOf(pointer o){ return *o; }
         public:     constexpr static unsigned long  unit = sizeof(elementable *);
         };
@@ -47,6 +51,7 @@ namespace pokemonism {
         public:     typedef void                    characterable;
         public:     typedef type *                  pointer;
         public:     typedef unsigned char &         reference;
+        public:     static const unsigned char & constReferenceOf(const void * o){ return *(static_cast<const unsigned char *>(o)); }
         public:     static reference referenceOf(pointer o){ return *(static_cast<unsigned char *>(o)); }
         public:     constexpr static unsigned long  unit = sizeof(unsigned char);
         };
@@ -64,6 +69,7 @@ public:     typedef primitiveType           primitivable;                       
 public:     typedef characterType           characterable;                          \
 public:     typedef type *                  pointer;                                \
 public:     typedef type &                  reference;                              \
+public:     static const type & constReferenceOf(const pointer o){ return *o; }         \
 public:     static reference referenceOf(pointer o){ return *o; }                   \
 public:     constexpr static unsigned long  unit = size;                            \
 }
@@ -95,6 +101,7 @@ public:     typedef characterType           characterable;                      
 public:     typedef pointerType             pointer;                                                \
 public:     typedef pointerType             reference;                                              \
 public:     static reference referenceOf(pointer o){ return o; }                                    \
+public:     static const pointerType constReferenceOf(const pointerType o){ return o; }                 \
 public:     constexpr static unsigned long  unit = size;                                            \
 }
 

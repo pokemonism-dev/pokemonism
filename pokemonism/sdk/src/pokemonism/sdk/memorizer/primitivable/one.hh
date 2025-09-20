@@ -59,7 +59,7 @@ namespace pokemonism::sdk {
 
     template <typename elementable>
     elementable * memorizer<elementable, unsigned, 1>::set(elementable * destination, const elementable * source, unsigned long sourceLen) {
-        pokemon_develop_check(destination == nullptr || sourceLen == 0, return nullptr);
+        pokemon_develop_check(destination == nullptr || source == nullptr || sourceLen == 0, return nullptr);
 
         memcpy(destination, source, sourceLen);
 
@@ -69,6 +69,8 @@ namespace pokemonism::sdk {
     template <typename elementable>
     elementable * memorizer<elementable, unsigned, 1>::del(elementable * destination) {
         pokemon_develop_check(destination == nullptr, return destination);
+
+        referenceof(destination) = 0;
 
         return destination;
     }
