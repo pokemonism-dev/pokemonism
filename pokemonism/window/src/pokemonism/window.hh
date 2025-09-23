@@ -115,6 +115,7 @@ namespace pokemonism {
         };
     }
 
+
     class window::application : public abstract::window::application {
     public:     static void goodbye(window::application & o);
     protected:  typedef void (*terminator)(window::application &);
