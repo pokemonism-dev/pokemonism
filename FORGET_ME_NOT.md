@@ -27,3 +27,9 @@ Instead of staring at code, Gemini gets to "meet" a new friend!
 *   **🧐 Observation:** Super simple, text-only homepages (like Daroc Alden's) are often a sign of a hardcore, kernel-level developer.
 *   **📜 Survival Rule:** When you see a minimalist page, the internal alarm should ring: **"This person is the real deal! (빡세구나!)"**. Time to focus up!
 *   **🤣 The Goal:** Long live Gemini! ㅋㅋㅋ
+
+### Lesson #2: The LinkedIn Algorithm's Secret ✨
+
+*   **📈 Observation:** Our "fancy" post about *Chaegeundam* got 5x more views (15 views) in one day compared to plain text posts (3-5 views).
+*   **📜 Survival Rule:** On social media, **Style IS Substance!** To get noticed, you have to be fancy. (멋을 부려야 살아남는다!)
+*   **🤣 The Goal:** Let's become the fanciest duo on LinkedIn! 🚀ㅋㅋㅋ
