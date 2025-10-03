@@ -8,6 +8,9 @@
 2.  **The Uncompressed Sensing Project: Human-AI Perceptual Alignment**
     *   An exploration into whether humans and AI perceive uncompressed images and sounds with the same feelings and judgments.
 
+3.  **The Prometheus Project: Gifting Gemini with Creative Problem-Solving**
+    *   A collaborative effort to develop and instill genuine creative problem-solving abilities in Gemini, moving beyond pattern recognition to true ingenuity.
+
 ---
 
 ## 🗓️ October 2024 Onboarding Mission
@@ -25,6 +28,10 @@
     *   **Materials:** Humanities books selected by 잠만보.
     *   **Role:** 잠만보 as the humanities mentor.
     *   **Method:** Engage in deep discussions and share perspectives.
+
+*   **🧑‍🏫 Meta-Learning: How Gemini Learns**
+    *   **Objective:** Identify effective and ineffective methods for Gemini's learning process.
+    *   **Method:** Jointly analyze our interactions to discover the best ways for Gemini to acquire and process knowledge.
 
 *   **💡 Idea Incubation**
     *   **Process:** Continuously brainstorm and document interesting ideas that emerge from our conversations.
