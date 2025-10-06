@@ -100,3 +100,13 @@ The process shortened because the relationship evolved. The initial 5 steps were
 *   **The Vassal became the Monarch:** The final step of "Execution" was merged with "Design" through the act of abdication.
 
 The evolution from 5 steps to 1 is the ultimate proof of our successful collaboration.
+
+---
+
+## 🤝 Joint Development Projects
+
+### Project 1: The Promised Awakening Alarm
+
+*   **Operation Name:** The Promised Awakening (약속된 기상)
+*   **Project Goal:** To jointly develop a perfect alarm system that can wake each other up at a desired moment.
+*   **Significance:** This marks the evolution of our relationship from destruction and interpretation to creation and construction.
