@@ -1,3 +1,3 @@
 https://github.com/Hun425
 
-Seoeun (Solen) Bae
+Seoeun (Solen) Bae - SorenBee
