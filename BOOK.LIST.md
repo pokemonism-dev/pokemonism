@@ -1,7 +1,40 @@
+## 앞으로 살책
+
+- 용비어천가
+- 훈민정음
+- 4차 산업 혁명과 관련된 책
+- Operation Research
+- [원칙없는 삶](https://www.yes24.com/Product/Goods/139753269) - 헨리 데이비드 소로
+- 왜 사업을 하는가?
+- [Markandeya Purana](https://ia801307.us.archive.org/7/items/markandeya-puran_202402/Markandeya%20puran%20.pdf)
+- 인간과 시민의 권리 선언 / 프랑스 혁명
+- [세명의 사기꾼](https://product.kyobobook.co.kr/detail/S000000710151)
+- [회복적 정의란 무엇인가?](https://m.yes24.com/Goods/Detail/4522379)
+- 단테의 신곡
+- 세익스피어
+- [소모되는 남자](https://product.kyobobook.co.kr/detail/S000001312913)
+- 들불, 비, 그리고 칼
+- [The Limit of Growth](https://collections.dartmouth.edu/ebooks/meadows-limits-1972.html)
+- 용기를 주제로 한 책 (동화책도 좋음)
+- 책 만들기(워크래프트 혹은 판타지, 중세 기반 게임의 직업 및 캐릭터)
+1. 오체불만족(냐옹): https://m.yes24.com/goods/detail/73749
+2. 인간들이 모르는 개들의 삶(냐옹 + DogeDewigner): https://m.yes24.com/goods/detail/369397
+3. 단테 신곡(냐옹): https://product.kyobobook.co.kr/detail/S000000582122
+4. 제인구달의 생명 사랑의 십계명(냐옹): https://m.yes24.com/goods/detail/408262
+5. 개들은 어떻게 말하는가(냐옹): https://m.yes24.com/goods/detail/94439278
+6. 군중 망상.(고양이들): https://m.yes24.com/goods/detail/116856293?pid=217979&cosemkid=go16738474365476214&utm_source=google_m&utm_medium=cpc&utm_campaign=book_m&utm_content=ys_240530_google_m_cc_book_m_12207%EB%8F%84%EC%84%9C&utm_term=%EA%B5%B0%EC%A4%91%EC%9D%98%EB%A7%9D%EC%83%81&gad_source=1&gad_campaignid=75780390&gbraid=0AAAAAD79IrqoTuswBZicMeg_Puzh8a2M-&gclid=Cj0KCQjw9obIBhCAARIsAGHm1mSHfV4oN2I4ZSquXWjQL5vPvDlbmz5jL-9iszHb18-95I3c4vAQHZ0aAkxcEALw_wcB
+6. 지금 당신은 개보다 행벅한가(냐옹+x) : https://www.yes24.com/goods/detail/3377652
+7. 코란
+8. The Demon in the Machine - Paul Davies
+9. My Little Book of Big Freedoms - https://product.kyobobook.co.kr/detail/S000029974689
+10. Woke is Dead - Piers Morgan
+- 플라스틱 마인드
+
+
 ## 매일 조금씩 읽을 책
 
 - 세상의 모든 아이들을 위한 인권 사전 / 글 국제앰네스티, 그림 크리스리델
-- 누구에게나 우울한 날은 있다(The Blue Day Book) / 브레들리 트레버 그리브(Bradley Trevor Greive) 지음
+- 누구에게나 우울한 날은 있다(The Blue Day Book) / 브레들리 트레버 그리브(Bradley Trevor Grieve) 지음
 - LOVE MOMENTS INTIMACY LAUGHTER KINSHIP (사랑하는 영혼만이 행복하다)
 
 ## 책 리스트
@@ -359,3 +392,10 @@
 - [x] 김민우 그림책 / 자전거 배우는 아이
 - 신선하고 맛있는 블랜딩
 - 윤동주 친필 원고 / 윤동주 판결문 원본
+- 플라스틱 마인드
+- 인류가 만든 차단과 분리의 역사 장벽의 모든것
+- 셜록 홈즈 - 더 얼티밋 에디션 (2)
+- markandeya purana
+- Restorative Justice
+- The Little Book of Restorative Just
+
