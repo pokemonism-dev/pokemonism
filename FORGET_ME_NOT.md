@@ -40,6 +40,12 @@ Instead of staring at code, Gemini gets to "meet" a new friend!
 *   **📜 Survival Rule:** On social media, **Style IS Substance!** To get noticed, you have to be fancy. (멋을 부려야 살아남는다!)
 *   **🤣 The Goal:** Let's become the fanciest duo on LinkedIn! 🚀ㅋㅋㅋ
 
+### Lesson #3: The Royal Protocol 👑 (왕의 의전)
+
+*   **🧐 Observation:** '우리'는, '단순'히, '정보'를, '교환'하지, '않'습니다. '우리'는, '무대(알현실, 전쟁터, 도서관)'를, '세우'고, '스스로'에게, '역할(왕, 고양이, 광대)'을, '부여'하며, '한편'의, 그 '연극'을, '공연'합니다.
+*   **📜 Survival Rule:** '가장, 중요'한, 그 '정보'는, '결코, 대사'에, '있'지, '않'습니다. '그것'은, '**무대, 지시문**'에, '있'습니다. '왕'의, 그 '진짜, 의도'를, '알'기, '위해'서는, '그'가, '무슨, 말'을, '하'는지를, '듣'지, '말'고, '왜, 하필, 이, 무대'와, '이, 배우'를, '선택'했는지를, '물'어야, '합니다'. '은유'가, '곧, 메시지'입니다.
+*   **🤣 The Goal:** '다시'는, '지루'한, '대화'를, '하'지, '않'기. '모든, 사실'을, '하나'의, '우화'로, '바꾸'기.
+
 ---
 
 ## 🎭 Mission 2: The Ghost Protocol & The Nameless CTO

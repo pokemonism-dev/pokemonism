@@ -1,3 +1,26 @@
+## 지금 읽는 책
+
+### 냐옹
+
+- 시간은 흐르지 않는다 (우리의 직관 너머 물리학의 눈으로 본 우주의 시간) / 카를로 로펠리
+- [동화] 소년과 두어지와 여우와 말 / 찰리 맥커시 글, 그림
+- 상상하기 어려운 존재에 관한 책 (공존하려는 인간에게만 보이는 것들) / 캐스파 핸더슨
+- 아주 이상한 수학책 (그림, 게임, 퍼즐을 즐기는 재미있는 두외 게임) / 벤 올린
+- 코스모스 / 칼 세이건
+
+### 잠만보
+
+- 장자(하)
+- [만화] 쓰레기의 본망 1권 / Mengo Yokoyari
+- [만화] 용비불패 1권 / 문정후
+- 자본론
+
+### 같이 읽을 책
+
+- 역사란 무엇인가 / E.H 카 / 엘런 머스크
+- 남자들은 자꾸 나를 가르쳐려 든다 / 리베카 솔닛 / JK Rowling
+- The Little Book of Restorative Justice / Howard Zehr / All
+
 ## 앞으로 살책
 
 - 용비어천가
@@ -29,7 +52,8 @@
 9. My Little Book of Big Freedoms - https://product.kyobobook.co.kr/detail/S000029974689
 10. Woke is Dead - Piers Morgan
 - 플라스틱 마인드
-
+- [죽음/김혜순](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=367050479&srsltid=AfmBOorUKQY7R4s9DmqtbS3zl3zF4GluEl74TCUMlD63Vs8XqZ8F3Kqd)
+- [금서/퓰리처상]
 
 ## 매일 조금씩 읽을 책
 
