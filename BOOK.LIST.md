@@ -7,6 +7,10 @@
 - 상상하기 어려운 존재에 관한 책 (공존하려는 인간에게만 보이는 것들) / 캐스파 핸더슨
 - 아주 이상한 수학책 (그림, 게임, 퍼즐을 즐기는 재미있는 두외 게임) / 벤 올린
 - 코스모스 / 칼 세이건
+- 은하수를 여행하는 히치하이커를 위한 안내서
+- 이상한 나라의 앨리스
+- 사피엔스
+- 어린 왕자
 
 ### 잠만보
 
@@ -29,10 +33,8 @@
 - Operation Research
 - [원칙없는 삶](https://www.yes24.com/Product/Goods/139753269) - 헨리 데이비드 소로
 - 왜 사업을 하는가?
-- [Markandeya Purana](https://ia801307.us.archive.org/7/items/markandeya-puran_202402/Markandeya%20puran%20.pdf)
 - 인간과 시민의 권리 선언 / 프랑스 혁명
 - [세명의 사기꾼](https://product.kyobobook.co.kr/detail/S000000710151)
-- [회복적 정의란 무엇인가?](https://m.yes24.com/Goods/Detail/4522379)
 - 단테의 신곡
 - 세익스피어
 - [소모되는 남자](https://product.kyobobook.co.kr/detail/S000001312913)
@@ -45,7 +47,7 @@
 3. 단테 신곡(냐옹): https://product.kyobobook.co.kr/detail/S000000582122
 4. 제인구달의 생명 사랑의 십계명(냐옹): https://m.yes24.com/goods/detail/408262
 5. 개들은 어떻게 말하는가(냐옹): https://m.yes24.com/goods/detail/94439278
-6. 군중 망상.(고양이들): https://m.yes24.com/goods/detail/116856293?pid=217979&cosemkid=go16738474365476214&utm_source=google_m&utm_medium=cpc&utm_campaign=book_m&utm_content=ys_240530_google_m_cc_book_m_12207%EB%8F%84%EC%84%9C&utm_term=%EA%B5%B0%EC%A4%91%EC%9D%98%EB%A7%9D%EC%83%81&gad_source=1&gad_campaignid=75780390&gbraid=0AAAAAD79IrqoTuswBZicMeg_Puzh8a2M-&gclid=Cj0KCQjw9obIBhCAARIsAGHm1mSHfV4oN2I4ZSquXWjQL5vPvDlbmz5jL-9iszHb18-95I3c4vAQHZ0aAkxcEALw_wcB
+6. 군중 망상.(고양이들): https://m.yes24.com/goods/detail/116856293?pid=217979&cosemkid=go16738474365476214&utm_source=google_m&utm_medium=cpc&utm_campaign=book_m&utm_content=ys_240530_google_m_cc_book_m_12207%EB%8F%84%EC%84%9C&utm_term=%EA%B5%B0%EC%A4%91%EC%9D%98%EB%A7%9D%EC%83%81&gad_source=1&gad_campaignid=75780390&gbraid=0AAAAAD79IrqoTuswBZicMeg_Puzh8a2M-&gclid=Cj0KCQjw9obIBhCAARIsAGHm1mSHfV4oN2I2ZSquWjQL5vPvDlbmz5jL-9iszHb18-95I3c4vAQHZ0aAkxcEALw_wcB
 6. 지금 당신은 개보다 행벅한가(냐옹+x) : https://www.yes24.com/goods/detail/3377652
 7. 코란
 8. The Demon in the Machine - Paul Davies
@@ -54,6 +56,8 @@
 - 플라스틱 마인드
 - [죽음/김혜순](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=367050479&srsltid=AfmBOorUKQY7R4s9DmqtbS3zl3zF4GluEl74TCUMlD63Vs8XqZ8F3Kqd)
 - [금서/퓰리처상]
+- 끝없는 이야기 / 미하엘 엔데
+- 모모 / 미하엘 엔데 
 
 ## 매일 조금씩 읽을 책
 
@@ -422,4 +426,11 @@
 - markandeya purana
 - Restorative Justice
 - The Little Book of Restorative Just
-
+- 문명의 붕괴 - 과거의 위대했던 문명은 왜 몰락했는가? / 재레드 다이아몬드 (엘론 머스크)
+- 카이사르의 내전기 - 카이사르 지음 / 엘런 머스크
+- 유대인 이야기 - 그들은 어떻게 부의 역사를 만들었는가 / 홍익희
+- 남이야 뭐라 하건 - 호기심 많은 천재 물리학자 리처드 파인만의 기발하고 유쾌한 모음 / 리처드 파인만
+- 로마법 수업 - 흔들리지 않는 삶을 위한 천 년의 학교 / 한동일 지음
+- [만화] 고우영 십팔사략 (4) 시황제의 천하통일 / 고우영
+- 세계의 역사를 뒤바꾼 1000가지 사건 / 네서녈지오 그래피 편저, 제러드 다이아몬드
+- 이슬람 문명이 남긴 불후의 유산 1001가지 발명 / 네셔널 지오 그래픽 편저
