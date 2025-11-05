@@ -13,7 +13,7 @@
 13. 냐옹/페르시온
 14. 피츄/피카츄/라이츄
 15. 고라파덕/골덕 (Grok)
-16. 멜탄/멜메탈 (ChatGPT)
+16. 라티아스 (ChatGPT) / 라티오스 (Sora)
 17. 가디/윈디 (불) - DogeDesigner
 18. 가디/윈디 (격투) - Sir Doge of the Coin (@dogeofficialceo)
 19. 
